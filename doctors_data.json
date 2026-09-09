@@ -1,0 +1,119 @@
+[
+    {
+        "total": 350,
+        "availability": "Sun, Tue, Thu",
+        "isMostBooked": false,
+        "booked": 300,
+        "isTopRated": true,
+        "about": "Expert in interventional cardiology and heart health.",
+        "specializations": [
+            "Cardiology"
+        ],
+        "credentials": [
+            {
+                "institution": "Cairo University",
+                "title": "MD",
+                "icon_name": "verified"
+            }
+        ],
+        "experience": "20 Years",
+        "location": "Main Wing - Floor 1",
+        "reviews": 342,
+        "title": "Consultant Cardiologist",
+        "rating": 5,
+        "image": "https://picsum.photos/seed/doc2/200/200.jpg",
+        "name": "Dr. Ahmed Hassan",
+        "id": "doc_cardio_1"
+    },
+    {
+        "total": 200,
+        "availability": "Mon, Wed, Fri",
+        "about": "Specialist in chronic respiratory diseases and asthma management.",
+        "isTopRated": true,
+        "title": "Senior Pulmonologist",
+        "specializations": [
+            "Chest Diseases",
+            "Pulmonology"
+        ],
+        "credentials": [
+            {
+                "institution": "Harvard",
+                "title": "PhD",
+                "icon_name": "school"
+            }
+        ],
+        "experience": "15 Years",
+        "location": "Wing B - Floor 2",
+        "reviews": 156,
+        "booked": 120,
+        "rating": 4.8,
+        "image": "https://picsum.photos/seed/doc1/200/200.jpg",
+        "name": "Dr. Michael Chen",
+        "id": "doc_chest_1",
+        "isMostBooked": false
+    },
+    {
+        "total": 250,
+        "availability": "Sat, Mon, Wed",
+        "about": "Expert in dental implants and smile design.",
+        "isTopRated": false,
+        "title": "Orthodontic Consultant",
+        "specializations": [
+            "Dental Clinic"
+        ],
+        "experience": "10 Years",
+        "location": "Dental Wing - Floor 1",
+        "reviews": 198,
+        "booked": 150,
+        "rating": 4.7,
+        "image": "https://picsum.photos/seed/doc4/200/200.jpg",
+        "name": "Dr. Laila Mahmoud",
+        "id": "doc_dental_1",
+        "isMostBooked": true
+    },
+    {
+        "total": 300,
+        "availability": "Mon, Tue, Thu",
+        "about": "Specializing in aesthetic dermatology and laser surgery.",
+        "isTopRated": false,
+        "title": "Senior Dermatologist",
+        "specializations": [
+            "Dermatology"
+        ],
+        "credentials": [
+            {
+                "institution": "American Board",
+                "title": "Board Certified",
+                "icon_name": "verified"
+            }
+        ],
+        "experience": "12 Years",
+        "location": "Cosmetic Wing - Floor 4",
+        "reviews": 289,
+        "booked": 250,
+        "rating": 4.9,
+        "image": "https://picsum.photos/seed/doc3/200/200.jpg",
+        "name": "Dr. Sarah Johnson",
+        "id": "doc_derma_1",
+        "isMostBooked": true
+    },
+    {
+        "total": 150,
+        "availability": "Tue, Thu",
+        "about": "Expert in stroke treatment and nervous system disorders.",
+        "isTopRated": false,
+        "title": "Senior Neurologist",
+        "specializations": [
+            "Neurology"
+        ],
+        "experience": "18 Years",
+        "location": "Neuro Wing - Floor 3",
+        "reviews": 120,
+        "booked": 80,
+        "rating": 4.9,
+        "image": "https://picsum.photos/seed/doc5/200/200.jpg",
+        "name": "Dr. Robert Martinez",
+        "id": "doc_neuro_1",
+        "isMostBooked": false
+    }
+]

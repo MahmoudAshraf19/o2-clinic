@@ -1,0 +1,52 @@
+{
+    "services": [
+        {
+            "id": "specialized_clinic",
+            "type": "specialized_clinic",
+            "available": true,
+            "image": "https://example.com/images/specialized_clinic.jpg",
+            "name": {
+                "ar": "العيادات التخصصية",
+                "en": "Specialized Clinic",
+                "he": "מרפאות מומחים"
+            },
+            "description": {
+                "ar": "توفر العيادات التخصصية خدمات طبية متكاملة في مختلف التخصصات مع متابعة دقيقة وتشخيص دقيق وخطة علاج مناسبة لكل حالة.",
+                "en": "The specialized clinic provides comprehensive medical services across multiple specialties with accurate diagnosis, careful follow-up, and suitable treatment plans for every case.",
+                "he": "מרפאות המומחים מספקות שירותים רפואיים מקיפים במגוון תחומים, עם אבחון מדויק, מעקב צמוד ותוכנית טיפול מתאימה לכל מקרה."
+            }
+        },
+        {
+            "id": "radiology",
+            "type": "radiology",
+            "available": true,
+            "image": "https://example.com/images/radiology.jpg",
+            "name": {
+                "ar": "قسم الأشعة",
+                "en": "Radiology",
+                "he": "רדיולוגיה"
+            },
+            "description": {
+                "ar": "يقدم قسم الأشعة خدمات تصوير طبي حديثة تشمل الفحوصات التشخيصية الدقيقة باستخدام أحدث التقنيات للحصول على نتائج واضحة وسريعة.",
+                "en": "The radiology department offers modern medical imaging services, including accurate diagnostic examinations using the latest technologies for clear and fast results.",
+                "he": "מחלקת הרדיולוגיה מציעה שירותי הדמיה רפואית מתקדמים, כולל בדיקות אבחון מדויקות באמצעות הטכנולוגיות החדישות ביותר לקבלת תוצאות ברורות ומהירות."
+            }
+        },
+        {
+            "id": "cosmetic",
+            "type": "cosmetic",
+            "available": true,
+            "image": "https://example.com/images/cosmetic.jpg",
+            "name": {
+                "ar": "قسم التجميل",
+                "en": "Cosmetic",
+                "he": "אסתטיקה"
+            },
+            "description": {
+                "ar": "يقدم قسم التجميل حلولًا آمنة وفعالة لتحسين المظهر والعناية بالبشرة باستخدام تقنيات حديثة وإجراءات احترافية.",
+                "en": "The cosmetic department provides safe and effective solutions to improve appearance and skin care using modern techniques and professional procedures.",
+                "he": "מחלקת האסתטיקה מציעה פתרונות בטוחים ויעילים לשיפור המראה ולטיפוח העור באמצעות טכניקות מודרניות ופרוצדורות מקצועיות."
+            }
+        }
+    ]
+}

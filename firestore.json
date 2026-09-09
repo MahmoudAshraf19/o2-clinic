@@ -1,0 +1,203 @@
+{
+  "app_constants":  {
+    "currency": {
+      "symbol": "₪",
+      "name": "ILS"
+    }
+  },
+
+  "services": {
+    "specialized_clinics": {
+      "id": "svc_clinics",
+      "title_en": "Specialized Clinics",
+      "title_ar": "العيادات التخصصية",
+      "isActive": true,
+      "categories": [
+        {
+          "id": "internal_medicine",
+          "title_en": "Internal Medicine",
+          "title_ar": "الباطنة"
+        }
+      ],
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBaRyUIyZym4hVI3uEQpwh61pn3T0wA77Xn4ZhK6kMLvdL6XlGTAyLERVfCfUDD4fp-9gnxjWLz8l30hk0syC7zAuUvNMaQKNct571WPU78g9NxUEeqWfV4J32YkgtLipXsghDgj09sbGHh4wL0_DgrsFOaiGoalCSNBPScvjbhWJAFTxajl6g3w342puS1UAYzjRInSYjeTiNdE2ZAAWw5PCVrfRpbs6PFPKWWdPc4-PV4s3xABHYENiCb1fXBtHdu18xTSscmPxc"
+    },
+
+    "radiology": {
+      "id": "svc_radiology",
+      "title_en": "Radiology",
+      "title_ar": "الأشعة",
+      "isActive": true,
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDT7YHInWqtEg-GigOHh2MDvZ-x7N96CC36hU1kQDt47hTSSoh4R3DpF8-RKHPbTktdE9iw_yon19BEKT66fwVSXaQX11anVohlCKmD2RQcy0PUKyCqwRUx9rzuhtSACNoY_S2JHmHH8UHx6wRgzB-10g9WBMntp_GqXvj8dYpYbogXr2MLR0Oqp_wENDaB5czCBZT39cqOqP7fRfTJMVZI-X2OCXH0VsWSaV48wR_lc6Bu6cJnP238-_ToBfXeIjBxvVq3S18vpGU"
+    },
+
+    "cosmetic": {
+      "id": "svc_cosmetic",
+      "title_en": "Cosmetic",
+      "title_ar": "التجميل",
+      "isActive": true,
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDuiw_f7C7tMZpzaWrX9s_aD4r8p8onUxfikro8qrFZz7YXCBAP0GVu_dnZ69JMRnwA2vrmNn4ZRXF4YEawmdjeZF1p-Ja_9Y7r_t7xxnvGE6Tp4Boo6n4nMB8XOL3PqppnsZtCRE7Ado0nmGahbFO0jaTlfmRz6L04NI_Uf9injteOZZkObiJX4AjtHTzOdKzrp1AObfq4PVgFDxjl8NT3ys1FbUTuyRRxOToLlNLBQXulRQOrJK3UdwCsovzoN0jOGM2HwZnlqYk"
+    }
+  },
+
+  "departments": [
+    {
+      "id": "chest",
+      "name_en": "Chest Diseases",
+      "name_ar": "أمراض الصدر",
+      "subtitle_en": "Pulmonary & Respiratory Care",
+      "subtitle_ar": "رعاية الجهاز التنفسي",
+      "description_en": "Specialized care for respiratory conditions and lung diseases",
+      "description_ar": "رعاية متخصصة لأمراض الجهاز التنفسي والرئة",
+      "doctors": [
+        {
+          "id": "doc_chest_1",
+          "name_en": "Dr. Michael Chen",
+          "name_ar": "د. مايكل تشن",
+          "title_en": "Senior Pulmonologist",
+          "specialty": "Chest Diseases",
+          "rating": 4.8,
+          "experience": "15 years",
+          "availableDays": ["Monday", "Wednesday", "Friday"]
+        },
+        {
+          "id": "doc_chest_2",
+          "name_en": "Dr. Lisa Anderson",
+          "name_ar": "د. ليزا أندرسون",
+          "title_en": "Respiratory Specialist",
+          "specialty": "Chest Diseases",
+          "rating": 4.9,
+          "experience": "12 years",
+          "availableDays": ["Tuesday", "Thursday", "Saturday"]
+        },
+        {
+          "id": "doc_chest_3",
+          "name_en": "Dr. James Wilson",
+          "name_ar": "د. جيمس ويلسون",
+          "title_en": "Critical Care Pulmonologist",
+          "specialty": "Chest Diseases",
+          "rating": 4.7,
+          "experience": "18 years",
+          "availableDays": ["Monday", "Thursday", "Friday"]
+        }
+      ]
+    },
+
+    {
+      "id": "cardiology",
+      "name_en": "Cardiology",
+      "name_ar": "القلب",
+      "doctors": [
+        {
+          "id": "doc_cardio_1",
+          "name_en": "Dr. Ahmed Hassan",
+          "name_ar": "د. أحمد حسن",
+          "specialty": "Cardiology",
+          "rating": 4.9,
+          "experience": "20 years",
+          "availableDays": ["Sunday", "Tuesday", "Thursday"]
+        }
+      ]
+    }
+  ],
+
+  "radiology_services": [
+    {
+      "id": "ct_scan",
+      "title_en": "CT Scan",
+      "title_ar": "الأشعة المقطعية",
+      "desc_en": "High-resolution imaging for accurate diagnosis",
+      "desc_ar": "تصوير عالي الدقة للتشخيص الطبي",
+      "price": 450,
+      "badge": "Advanced",
+      "isActive": true
+    },
+    {
+      "id": "xray",
+      "title_en": "X-Ray Imaging",
+      "title_ar": "الأشعة السينية",
+      "price": 120,
+      "badge": "Standard",
+      "isActive": true
+    },
+    {
+      "id": "ultrasound",
+      "title_en": "Ultrasound Scan",
+      "title_ar": "السونار",
+      "price": 185,
+      "badge": "Specialized",
+      "isActive": true
+    }
+  ],
+
+  "ct_scan": {
+    "coreDiagnostics": [
+      { "id": "brain", "title_en": "Brain", "title_ar": "المخ", "price": 450 },
+      { "id": "neck", "title_en": "Neck", "title_ar": "الرقبة", "price": 350 },
+      { "id": "chest", "title_en": "Chest", "title_ar": "الصدر", "price": 400 },
+      { "id": "abdomen", "title_en": "Abdomen", "title_ar": "البطن", "price": 500 }
+    ],
+    "specializedImaging": [
+      { "id": "pelvis", "title_en": "Pelvis", "title_ar": "الحوض", "price": 420 },
+      { "id": "spine", "title_en": "Spine", "title_ar": "العمود الفقري", "price": 480 },
+      { "id": "bones", "title_en": "Bones", "title_ar": "العظام", "price": 380 }
+    ]
+  },
+
+  "users": {
+    "user_active_01": {
+      "id": "user_active_01",
+      "name": "Mohamed El-Sayed",
+      "email": "mohamed.active@example.com",
+      "phone": "+201011223344",
+      "gender": "male",
+      "status": "active",
+      "isBlocked": false,
+      "settings": {
+        "notificationsEnabled": true,
+        "language": "ar",
+        "darkMode": false,
+        "currency": "ILS"
+      },
+      "bookings": {
+        "booking_001": {
+          "id": "booking_001",
+          "type": "clinical",
+          "doctorName": "Dr. Sarah Johnson",
+          "status": "upcoming",
+          "amount": 500
+        }
+      },
+      "notifications": {
+        "notif_001": {
+          "title": "Welcome",
+          "body": "Your account is active",
+          "isRead": true,
+          "type": "system"
+        }
+      }
+    }
+  },
+
+  "onboarding_slides": {
+    "slide_1": {
+      "title_en": "Welcome to O2 Clinic",
+      "title_ar": "مرحبًا بك في O2 Clinic",
+      "description_en": "Your health, our priority",
+      "description_ar": "صحتك أولويتنا",
+      "order": 1,
+      "isActive": true
+    },
+    "slide_2": {
+      "title_en": "Easy Booking",
+      "title_ar": "حجز سهل",
+      "order": 2,
+      "isActive": true
+    },
+    "slide_3": {
+      "title_en": "All Services",
+      "title_ar": "كل الخدمات",
+      "order": 3,
+      "isActive": true
+    }
+  }
+}

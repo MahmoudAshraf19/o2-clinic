@@ -1,0 +1,124 @@
+{
+    "cosmetic": {
+        "laser": {
+            "availability_day": {
+                "friday": "09:00 - 21:00",
+                "monday": "09:00 - 21:00",
+                "saturday": "09:00 - 21:00",
+                "sunday": "09:00 - 21:00",
+                "thursday": "09:00 - 21:00",
+                "tuesday": "09:00 - 21:00",
+                "wednesday": "09:00 - 21:00"
+            },
+            "description": {
+                "ar": "يوفر قسم الليزر خدمات تجميلية وعلاجية متقدمة باستخدام تقنيات دقيقة وآمنة، للمساعدة في تحسين مظهر البشرة وتقليل الشعر غير المرغوب فيه وعلاج بعض المشكلات الجلدية بكفاءة ونتائج واضحة.",
+                "en": "The laser department provides advanced cosmetic and therapeutic services using precise and safe technologies to help improve skin appearance, reduce unwanted hair, and treat selected skin concerns effectively with clear results.",
+                "he": "מחלקת הלייזר מספקת שירותים קוסמטיים וטיפוליים מתקדמים באמצעות טכנולוגיות מדויקות ובטוחות, כדי לשפר את מראה העור, להפחית שיער לא רצוי ולטפל בבעיות עור מסוימות ביעילות ובתוצאות ברורות.",
+                "fr": "Le service laser propose des prestations esthétiques et thérapeutiques avancées grâce à des technologies précises et sûres, afin d’améliorer l’apparence de la peau, réduire les poils indésirables et traiter efficacement certaines affections cutanées.",
+                "es": "El departamento de láser ofrece servicios estéticos y terapéuticos avanzados con tecnologías precisas y seguras para mejorar el aspecto de la piel, reducir el vello no deseado y tratar ciertas afecciones cutáneas con eficacia.",
+                "de": "Die Laserabteilung bietet fortschrittliche kosmetische und therapeutische Leistungen mit präzisen und sicheren Technologien, um das Hautbild zu verbessern, unerwünschte Haare zu reduzieren und ausgewählte Hautprobleme wirksam zu behandeln.",
+                "tr": "Lazer bölümü, cilt görünümünü iyileştirmeye, istenmeyen tüyleri azaltmaya ve bazı cilt sorunlarını etkili şekilde tedavi etmeye yardımcı olan, hassas ve güvenli teknolojilerle gelişmiş kozmetik ve tedavi hizmetleri sunar.",
+                "ru": "Лазерное отделение предоставляет современные косметические и лечебные услуги с использованием точных и безопасных технологий, помогая улучшить внешний вид кожи, уменьшить нежелательные волосы и эффективно лечить отдельные кожные проблемы.",
+                "zh": "激光科室采用精准且安全的先进技术，提供美容和治疗服务，帮助改善皮肤外观、减少多余毛发，并有效处理部分皮肤问题。",
+                "ja": "レーザー部門では、精密で安全な技術を用いた先進的な美容・治療サービスを提供し、肌の見た目の改善、不要な毛の軽減、特定の皮膚トラブルの効果的な治療をサポートします。"
+            },
+            "id": "laser",
+            "image": "",
+            "isActive": true,
+            "name": {
+                "ar": "الليزر",
+                "en": "Laser",
+                "he": "לייזר",
+                "fr": "Laser",
+                "es": "Láser",
+                "de": "Laser",
+                "tr": "Lazer",
+                "ru": "Лазер",
+                "zh": "激光",
+                "ja": "レーザー"
+            },
+            "order": 1,
+            "price": 100
+        },
+        "skin": {
+            "availability_day": {
+                "friday": "09:00 - 21:00",
+                "monday": "09:00 - 21:00",
+                "saturday": "09:00 - 21:00",
+                "sunday": "09:00 - 21:00",
+                "thursday": "09:00 - 21:00",
+                "tuesday": "09:00 - 21:00",
+                "wednesday": "09:00 - 21:00"
+            },
+            "description": {
+                "ar": "يوفر قسم البشرة خدمات متكاملة للعناية بالجلد وتحسين مظهره، تشمل التقييم الدقيق، وتنظيف البشرة، وعلاج المشكلات الشائعة مثل الحبوب والالتهابات وآثار الإجهاد، مع دعم صحة البشرة ونضارتها.",
+                "en": "The skin department provides comprehensive skincare services focused on improving skin appearance, including precise evaluation, cleansing, and treatment of common concerns such as acne, inflammation, and signs of fatigue while supporting skin health and radiance.",
+                "he": "מחלקת העור מספקת שירותי טיפוח מקיפים לשיפור מראה העור, כולל הערכה מדויקת, ניקוי, וטיפול בבעיות נפוצות כמו אקנה, דלקות וסימני עייפות, תוך תמיכה בבריאות ובזוהר העור.",
+                "fr": "Le service de dermatologie esthétique propose des soins complets visant à améliorer l’apparence de la peau, incluant une évaluation précise, le nettoyage de la peau et le traitement de problèmes courants comme l’acné, les inflammations et les signes de fatigue, tout en soutenant la santé et l’éclat cutanés.",
+                "es": "El departamento de piel ofrece servicios integrales de cuidado cutáneo enfocados en mejorar su aspecto, incluyendo evaluación precisa, limpieza y tratamiento de problemas comunes como acné, inflamación y signos de cansancio, apoyando la salud y luminosidad de la piel.",
+                "de": "Die Hautabteilung bietet umfassende Hautpflegeleistungen zur Verbesserung des Hautbildes, einschließlich genauer Beurteilung, Reinigung und Behandlung häufiger Probleme wie Akne, Entzündungen und Müdigkeitserscheinungen, und unterstützt zugleich Gesundheit und Ausstrahlung der Haut.",
+                "tr": "Cilt bölümü, cilt görünümünü iyileştirmeye odaklanan kapsamlı bakım hizmetleri sunar; hassas değerlendirme, temizlik ve akne, iltihaplanma ve yorgunluk belirtileri gibi yaygın sorunların tedavisini içerir, cilt sağlığını ve parlaklığını destekler.",
+                "ru": "Отделение ухода за кожей предоставляет комплексные услуги по улучшению внешнего вида кожи, включая точную оценку, очищение и лечение распространённых проблем, таких как акне, воспаление и признаки усталости, поддерживая здоровье и сияние кожи.",
+                "zh": "皮肤科室提供全面的护肤服务，旨在改善皮肤外观，包括精准评估、清洁以及治疗痤疮、炎症和疲劳迹象等常见问题，同时支持皮肤健康与光泽。",
+                "ja": "スキン部門では、肌の外観改善に向けた包括的なケアサービスを提供し、正確な評価、洗浄、ニキビ・炎症・疲労のサインなど一般的な悩みへの対応を行い、肌の健康と輝きを支えます。"
+            },
+            "id": "skin",
+            "image": "",
+            "isActive": true,
+            "name": {
+                "ar": "البشرة",
+                "en": "Skin",
+                "he": "עור",
+                "fr": "Peau",
+                "es": "Piel",
+                "de": "Haut",
+                "tr": "Cilt",
+                "ru": "Кожа",
+                "zh": "皮肤",
+                "ja": "肌"
+            },
+            "order": 2,
+            "price": 100
+        },
+        "nutrition": {
+            "availability_day": {
+                "friday": "09:00 - 21:00",
+                "monday": "09:00 - 21:00",
+                "saturday": "09:00 - 21:00",
+                "sunday": "09:00 - 21:00",
+                "thursday": "09:00 - 21:00",
+                "tuesday": "09:00 - 21:00",
+                "wednesday": "09:00 - 21:00"
+            },
+            "description": {
+                "ar": "يوفر قسم التغذية استشارات وبرامج غذائية مخصصة لدعم الصحة العامة وتحسين نمط الحياة، مع متابعة دقيقة للحالة الغذائية ومساعدة العملاء على الوصول إلى أهدافهم بطريقة آمنة ومتوازنة.",
+                "en": "The nutrition department provides personalized consultations and diet programs to support overall health and improve lifestyle, with careful nutritional assessment and guidance to help clients achieve their goals safely and in a balanced way.",
+                "he": "מחלקת התזונה מספקת ייעוץ ותוכניות תזונה מותאמות אישית לתמיכה בבריאות הכללית ושיפור אורח החיים, עם הערכה תזונתית מדויקת והכוונה המסייעת ללקוחות להשיג את מטרותיהם בצורה בטוחה ומאוזנת.",
+                "fr": "Le service de nutrition propose des consultations et des programmes alimentaires personnalisés pour soutenir la santé globale et améliorer le mode de vie, avec une évaluation nutritionnelle précise et un accompagnement aidant les clients à atteindre leurs objectifs de manière sûre et équilibrée.",
+                "es": "El departamento de nutrición ofrece consultas y planes alimentarios personalizados para apoyar la salud general y mejorar el estilo de vida, con una evaluación nutricional cuidadosa y orientación para ayudar a los clientes a lograr sus objetivos de forma segura y equilibrada.",
+                "de": "Die Ernährungsabteilung bietet personalisierte Beratungen und Ernährungspläne zur Unterstützung der allgemeinen Gesundheit und zur Verbesserung des Lebensstils, mit sorgfältiger Ernährungsbewertung und Begleitung, damit Kunden ihre Ziele sicher und ausgewogen erreichen.",
+                "tr": "Beslenme bölümü, genel sağlığı desteklemek ve yaşam tarzını iyileştirmek için kişiye özel danışmanlık ve diyet programları sunar; müşterilerin hedeflerine güvenli ve dengeli bir şekilde ulaşmalarına yardımcı olacak dikkatli beslenme değerlendirmesi ve yönlendirme sağlar.",
+                "ru": "Отделение питания предоставляет персонализированные консультации и диетические программы для поддержки общего здоровья и улучшения образа жизни, с тщательной оценкой питания и рекомендациями, помогающими клиентам безопасно и сбалансированно достигать своих целей.",
+                "zh": "营养科室提供个性化咨询和饮食方案，以支持整体健康并改善生活方式，配合细致的营养评估和指导，帮助客户安全、均衡地实现目标。",
+                "ja": "栄養部門では、全体的な健康を支え生活習慣を改善するための個別相談と食事プログラムを提供し、丁寧な栄養評価と指導により、利用者が安全かつバランスよく目標を達成できるようサポートします。"
+            },
+            "id": "nutrition",
+            "image": "",
+            "isActive": true,
+            "name": {
+                "ar": "التغذية",
+                "en": "Nutrition",
+                "he": "תזונה",
+                "fr": "Nutrition",
+                "es": "Nutrición",
+                "de": "Ernährung",
+                "tr": "Beslenme",
+                "ru": "Питание",
+                "zh": "营养",
+                "ja": "栄養"
+            },
+            "order": 3,
+            "price": 100
+        }
+    }
+}

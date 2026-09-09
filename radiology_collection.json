@@ -1,0 +1,121 @@
+{
+  "radiology": {
+    "ct_scan": {
+      "availability_day": {
+        "friday": "09:00 - 21:00",
+        "monday": "09:00 - 21:00",
+        "saturday": "09:00 - 21:00",
+        "sunday": "09:00 - 21:00",
+        "thursday": "09:00 - 21:00",
+        "tuesday": "09:00 - 21:00",
+        "wednesday": "09:00 - 21:00"
+      },
+      "description": {
+        "ar": "يوفر التصوير المقطعي المحوسب (CT Scan) صورًا مقطعية عالية الدقة باستخدام الأشعة السينية وتقنيات حاسوبية متقدمة، مما يساعد الأطباء على تشخيص الإصابات والأمراض بدقة، وتقييم الأعضاء الداخلية والعظام والأوعية الدموية، ودعم اتخاذ القرارات العلاجية بسرعة وكفاءة.",
+        "en": "Computed Tomography (CT Scan) provides high-resolution cross-sectional images using advanced X-ray technology and computer processing. It enables physicians to accurately diagnose injuries and diseases, evaluate internal organs, bones, and blood vessels, and support fast, reliable clinical decision-making.",
+        "he": "בדיקת CT (טומוגרפיה ממוחשבת) מספקת תמונות חתך ברזולוציה גבוהה באמצעות טכנולוגיית רנטגן מתקדמת ועיבוד ממוחשב. הבדיקה מסייעת לרופאים לאבחן פציעות ומחלות בדיוק רב, להעריך איברים פנימיים, עצמות וכלי דם, ולתמוך בקבלת החלטות רפואית מהירה ואמינה.",
+        "fr": "La tomodensitométrie (scanner CT) fournit des images en coupe haute résolution grâce à la technologie des rayons X et à un traitement informatique avancés. Elle aide les médecins à diagnostiquer avec précision les blessures et les maladies, à évaluer les organes internes, les os et les vaisseaux sanguins, et à prendre des décisions cliniques rapides et fiables.",
+        "es": "La tomografía computarizada (CT Scan) proporciona imágenes transversales de alta resolución mediante tecnología avanzada de rayos X y procesamiento informático. Permite a los médicos diagnosticar con precisión lesiones y enfermedades, evaluar órganos internos, huesos y vasos sanguíneos, y apoyar decisiones clínicas rápidas y fiables.",
+        "de": "Die Computertomografie (CT) liefert hochauflösende Querschnittsbilder mithilfe fortschrittlicher Röntgentechnologie und computerbasierter Verarbeitung. Sie ermöglicht Ärzten die präzise Diagnose von Verletzungen und Krankheiten, die Beurteilung innerer Organe, Knochen und Blutgefäße sowie schnelle und verlässliche klinische Entscheidungen.",
+        "tr": "Bilgisayarlı tomografi (BT/CT), gelişmiş X-ışını teknolojisi ve bilgisayarlı işleme ile yüksek çözünürlüklü kesitsel görüntüler sağlar. Hekimlerin yaralanma ve hastalıkları doğru şekilde teşhis etmesine, iç organları, kemikleri ve kan damarlarını değerlendirmesine ve hızlı, güvenilir klinik kararlar vermesine yardımcı olur.",
+        "ru": "Компьютерная томография (КТ) обеспечивает высокоточные послойные изображения с помощью передовой рентгеновской технологии и компьютерной обработки. Она помогает врачам точно диагностировать травмы и заболевания, оценивать внутренние органы, кости и кровеносные сосуды, а также принимать быстрые и надежные клинические решения.",
+        "zh": "计算机断层扫描（CT）通过先进的X射线技术和计算机处理提供高分辨率的断层图像。它可帮助医生准确诊断损伤和疾病，评估内脏器官、骨骼和血管，并支持快速、可靠的临床决策。",
+        "ja": "コンピュータ断層撮影（CT）は、高度なX線技術とコンピュータ処理により、高解像度の断層画像を提供します。これにより、医師は外傷や疾患を正確に診断し、内臓・骨・血管を評価し、迅速で信頼性の高い臨床判断を支援できます。"
+      },
+      "id": "ct_scan",
+      "image": "https://firebasestorage.googleapis.com/v0/b/o2-clinic-a5631.firebasestorage.app/o/radiology%20category%2FCT%20Scan.png?alt=media&token=6e61c5e5-6d9f-4ec2-960e-454a8a7589bd",
+      "isActive": true,
+      "name": {
+        "ar": "التصوير الطبقي المحوري",
+        "en": "CT Scan",
+        "he": "סריקת CT",
+        "fr": "Scanner CT",
+        "es": "Tomografía computarizada",
+        "de": "Computertomografie",
+        "tr": "Bilgisayarlı tomografi",
+        "ru": "Компьютерная томография",
+        "zh": "CT扫描",
+        "ja": "CTスキャン"
+      },
+      "order": 1
+    },
+    "x_ray": {
+      "availability_day": {
+        "friday": "09:00 - 21:00",
+        "monday": "09:00 - 21:00",
+        "saturday": "09:00 - 21:00",
+        "sunday": "09:00 - 21:00",
+        "thursday": "09:00 - 21:00",
+        "tuesday": "09:00 - 21:00",
+        "wednesday": "09:00 - 21:00"
+      },
+      "description": {
+        "ar": "يوفر قسم الأشعة السينية (X-Ray) صورًا سريعة وواضحة تساعد في تشخيص الكسور، ومشكلات الصدر، وحالات العظام والمفاصل، باستخدام تقنية تصوير آمنة وفعالة تدعم الوصول إلى تقييم طبي دقيق في وقت قصير.",
+        "en": "X-Ray imaging provides fast and clear images that help diagnose fractures, chest conditions, and bone or joint problems using a safe and efficient imaging technique that supports accurate medical assessment in a short time.",
+        "he": "בדיקת רנטגן (X-Ray) מספקת תמונות מהירות וברורות המסייעות באבחון שברים, מצבי חזה, ובעיות בעצמות ובמפרקים, באמצעות טכניקת הדמיה בטוחה ויעילה התומכת בהערכה רפואית מדויקת בזמן קצר.",
+        "fr": "L’imagerie par rayons X fournit des images rapides et nettes qui aident à diagnostiquer les fractures, les affections thoraciques et les problèmes osseux ou articulaires grâce à une technique d’imagerie sûre et efficace permettant une évaluation médicale précise en peu de temps.",
+        "es": "La radiografía (X-Ray) proporciona imágenes rápidas y claras que ayudan a diagnosticar fracturas, afecciones del tórax y problemas óseos o articulares mediante una técnica de imagen segura y eficiente que respalda una evaluación médica precisa en poco tiempo.",
+        "de": "Röntgenaufnahmen liefern schnelle und klare Bilder, die bei der Diagnose von Frakturen, Brustkorberkrankungen sowie Knochen- und Gelenkproblemen helfen. Die sichere und effiziente Bildgebung unterstützt eine präzise medizinische Beurteilung in kurzer Zeit.",
+        "tr": "Röntgen görüntüleme, kırıklar, göğüs hastalıkları ve kemik ya da eklem problemlerinin teşhisinde yardımcı olan hızlı ve net görüntüler sağlar. Güvenli ve verimli bir görüntüleme tekniğiyle kısa sürede doğru tıbbi değerlendirmeyi destekler.",
+        "ru": "Рентгенография предоставляет быстрые и чёткие изображения, помогающие диагностировать переломы, заболевания грудной клетки и проблемы с костями или суставами. Это безопасный и эффективный метод визуализации, обеспечивающий точную медицинскую оценку за короткое время.",
+        "zh": "X光检查可提供快速清晰的影像，帮助诊断骨折、胸部疾病以及骨骼或关节问题。它是一种安全高效的成像技术，可在短时间内支持准确的医学评估。",
+        "ja": "X線撮影は、骨折、胸部疾患、骨や関節の問題の診断に役立つ、迅速で鮮明な画像を提供します。安全で効率的な画像診断により、短時間で正確な医療評価を支援します。"
+      },
+      "id": "x_ray",
+      "image": "https://firebasestorage.googleapis.com/v0/b/o2-clinic-a5631.firebasestorage.app/o/radiology%20category%2FX-Ray.png?alt=media&token=8af0d469-4e10-4751-b2d7-3cf4ee30b3e0",
+      "isActive": true,
+      "name": {
+        "ar": "الأشعة السينية",
+        "en": "X-Ray",
+        "he": "רנטגן",
+        "fr": "Radiographie",
+        "es": "Radiografía",
+        "de": "Röntgen",
+        "tr": "Röntgen",
+        "ru": "Рентген",
+        "zh": "X光",
+        "ja": "X線"
+      },
+      "order": 2
+    },
+    "ultrasound": {
+      "availability_day": {
+        "friday": "17:00 - 21:00",
+        "monday": "17:00 - 21:00",
+        "saturday": "17:00 - 21:00",
+        "sunday": "17:00 - 21:00",
+        "thursday": "17:00 - 21:00",
+        "tuesday": "17:00 - 21:00",
+        "wednesday": "17:00 - 21:00"
+      },
+      "description": {
+        "ar": "يقدم قسم الموجات فوق الصوتية (Ultrasound) فحوصات آمنة وغير مؤلمة تعتمد على الموجات الصوتية لتصوير الأعضاء الداخلية ومتابعة الحالات الطبية بدقة، مما يساعد في التشخيص المبكر وتقييم الحالة الصحية بصورة موثوقة.",
+        "en": "Ultrasound imaging provides safe and painless examinations based on sound waves to visualize internal organs and monitor medical conditions accurately, helping with early diagnosis and reliable health assessment.",
+        "he": "בדיקת אולטרסאונד מספקת בדיקות בטוחות וללא כאב המבוססות על גלי קול לצורך הדמיית איברים פנימיים ומעקב אחר מצבים רפואיים בדיוק רב, ובכך מסייעת באבחון מוקדם ובהערכה בריאותית אמינה.",
+        "fr": "L’échographie fournit des examens sûrs et indolores basés sur les ondes sonores pour visualiser les organes internes et suivre les conditions médicales avec précision, aidant ainsi au diagnostic précoce et à une évaluation fiable de la santé.",
+        "es": "La ecografía proporciona exámenes seguros e indoloros basados en ondas sonoras para visualizar órganos internos y controlar condiciones médicas con precisión, ayudando al diagnóstico temprano y a una evaluación de salud fiable.",
+        "de": "Die Ultraschalluntersuchung bietet sichere und schmerzfreie Untersuchungen auf Basis von Schallwellen, um innere Organe sichtbar zu machen und medizinische Zustände präzise zu überwachen. So unterstützt sie die Früherkennung und eine zuverlässige Gesundheitsbewertung.",
+        "tr": "Ultrason görüntüleme, iç organları görüntülemek ve tıbbi durumları doğru şekilde takip etmek için ses dalgalarına dayalı, güvenli ve ağrısız bir inceleme sunar; böylece erken tanı ve güvenilir sağlık değerlendirmesine yardımcı olur.",
+        "ru": "Ультразвуковое исследование обеспечивает безопасные и безболезненные процедуры на основе звуковых волн для визуализации внутренних органов и точного наблюдения за медицинскими состояниями, способствуя ранней диагностике и надежной оценке здоровья.",
+        "zh": "超声检查基于声波，提供安全且无痛的检查，用于清晰显示内脏器官并准确监测医疗状况，有助于早期诊断和可靠的健康评估。",
+        "ja": "超音波検査は、音波を用いて内臓を可視化し、医療状態を正確にモニタリングする、安全で痛みのない検査です。早期診断と信頼性の高い健康評価に役立ちます。"
+      },
+      "id": "ultrasound",
+      "image": "https://firebasestorage.googleapis.com/v0/b/o2-clinic-a5631.firebasestorage.app/o/radiology%20category%2FUltrasound.png?alt=media&token=ff46a718-2c46-444e-b666-e54735532b64",
+      "isActive": true,
+      "name": {
+        "ar": "الموجات فوق الصوتية",
+        "en": "Ultrasound",
+        "he": "אולטרסאונד",
+        "fr": "Échographie",
+        "es": "Ecografía",
+        "de": "Ultraschall",
+        "tr": "Ultrason",
+        "ru": "УЗИ",
+        "zh": "超声",
+        "ja": "超音波"
+      },
+      "order": 3
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "firestore": {
+    "database": "(default)",
+    "location": "nam5",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": {
+    "source": "functions",
+    "codebase": "default",
+    "disallowLegacyRuntimeConfig": true,
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "*.local"
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "auth": {
+    "providers": {
+      "anonymous": true,
+      "emailPassword": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "O2 clinic",
+        "supportEmail": "mahmoudashraf.eng19@gmail.com"
+      }
+    }
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "o2-clinic-a5631",
+          "appId": "1:640506659754:android:9f5cddf9d58fac19c3a1d3",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "o2-clinic-a5631",
+          "configurations": {
+            "android": "1:640506659754:android:9f5cddf9d58fac19c3a1d3",
+            "ios": "1:640506659754:ios:05ff9d4d10c17aa3c3a1d3",
+            "web": "1:640506659754:web:90d3dbf1ced5e359c3a1d3"
+          }
+        }
+      }
+    }
+  }
+}

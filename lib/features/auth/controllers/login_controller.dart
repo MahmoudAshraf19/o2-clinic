@@ -1,0 +1,88 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../core/routes/app_routes.dart';
+import '../../../core/utils/auth_error_handler.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../chat_support/screens/support_chat_screen.dart';
+
+class LoginController extends GetxController {
+  final email = TextEditingController();
+  final password = TextEditingController();
+
+  final isLoading = false.obs;
+  final obscurePassword = true.obs;
+
+  Future<void> login() async {
+    try {
+      if (email.text.trim().isEmpty || password.text.trim().isEmpty) {
+        Get.snackbar(
+          'Error',
+          'Please enter email and password',
+          snackPosition: SnackPosition.TOP,
+        );
+        return;
+      }
+
+      isLoading.value = true;
+
+      final userCred = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email.text.trim(),
+        password: password.text.trim(),
+      );
+
+      if (userCred.user != null) {
+        final doc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCred.user!.uid)
+            .get();
+        
+        if (doc.exists && doc.data()?['isBlocked'] == true) {
+          await FirebaseAuth.instance.signOut();
+          Get.snackbar(
+            'Account Blocked',
+            'Your account is currently blocked. Please contact the administration.',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red.withOpacity(0.9),
+            colorText: Colors.white,
+            duration: const Duration(seconds: 8),
+            mainButton: TextButton(
+              onPressed: () {
+                if (Get.isSnackbarOpen) {
+                  Get.closeCurrentSnackbar();
+                }
+                Get.to(() => const SupportChatScreen());
+              },
+              child: const Text('Contact Support', style: TextStyle(color: Colors.white)),
+            ),
+          );
+          return;
+        }
+      }
+
+      Get.offAllNamed(AppRoutes.mainNavigation);
+
+      Get.snackbar(
+        'Success 🎉',
+        'Login successful',
+        snackPosition: SnackPosition.TOP,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Login Failed',
+        AuthErrorHandler.handleException(e),
+        snackPosition: SnackPosition.TOP,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  @override
+  void onClose() {
+    email.dispose();
+    password.dispose();
+    super.onClose();
+  }
+}

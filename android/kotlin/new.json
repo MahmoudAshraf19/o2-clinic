@@ -1,0 +1,399 @@
+{
+  "users": {
+    "user_active_01": {
+      "id": "user_active_01",
+      "name": "Mohamed El-Sayed",
+      "email": "mohamed.active@example.com",
+      "phone": "+201011223344",
+      "gender": "male",
+      "image": "https://i.pravatar.cc/300?u=user_active_01",
+      "lastVisit": "2023-12-01",
+      "lastVisitType": "Dental Checkup",
+      "status": "active",
+      "isBlocked": false,
+      "settings": {
+        "notificationsEnabled": true,
+        "pushToken": "fcm_token_xyz_123",
+        "language": "ar",
+        "darkMode": false
+      },
+      "metadata": {
+        "createdAt": {
+          "_type": "timestamp",
+          "seconds": 1698840000,
+          "nanoseconds": 0
+        },
+        "lastLogin": {
+          "_type": "timestamp",
+          "seconds": 1701432000,
+          "nanoseconds": 0
+        }
+      },
+      "bookings": {
+        "booking_001": {
+          "id": "booking_001",
+          "userId": "user_active_01",
+          "type": "clinical",
+          "doctorName": "Dr. Sarah Johnson",
+          "doctorSpecialty": "Dermatologist",
+          "doctorImageUrl": "https://example.com/doctors/sarah.jpg",
+          "label": "Confirmed",
+          "time": "10:30 AM",
+          "location": "O2 Clinic - Sheikh Zayed",
+          "status": "upcoming",
+          "createdAt": {
+            "_type": "timestamp",
+            "seconds": 1701345600,
+            "nanoseconds": 0
+          }
+        }
+      },
+      "notifications": {
+        "notif_001": {
+          "title": "Welcome to O2 Clinic",
+          "body": "Your account has been successfully verified.",
+          "isRead": true,
+          "type": "system",
+          "createdAt": {
+            "_type": "timestamp",
+            "seconds": 1698840000,
+            "nanoseconds": 0
+          }
+        }
+      }
+    },
+    "user_muted_02": {
+      "id": "user_muted_02",
+      "name": "Laila Mahmoud",
+      "email": "laila.muted@example.com",
+      "phone": "+201288776655",
+      "gender": "female",
+      "image": "https://i.pravatar.cc/300?u=user_muted_02",
+      "lastVisit": "2023-11-15",
+      "lastVisitType": "Ultrasound Scan",
+      "status": "active",
+      "isBlocked": false,
+      "settings": {
+        "notificationsEnabled": false,
+        "pushToken": "none",
+        "language": "en",
+        "darkMode": true
+      },
+      "metadata": {
+        "createdAt": {
+          "_type": "timestamp",
+          "seconds": 1695550000,
+          "nanoseconds": 0
+        },
+        "lastLogin": {
+          "_type": "timestamp",
+          "seconds": 1701210000,
+          "nanoseconds": 0
+        }
+      }
+    },
+    "user_blocked_03": {
+      "id": "user_blocked_03",
+      "name": "Unknown User",
+      "email": "blocked.user@example.com",
+      "phone": "+201500000000",
+      "gender": "male",
+      "image": "https://i.pravatar.cc/300?u=user_blocked_03",
+      "lastVisit": "2023-01-01",
+      "lastVisitType": "None",
+      "status": "banned",
+      "isBlocked": true,
+      "blockingReason": "Violated terms of service - repeated fake bookings",
+      "settings": {
+        "notificationsEnabled": false,
+        "pushToken": "banned",
+        "language": "ar",
+        "darkMode": false
+      }
+    }
+  },
+  "doctors": {
+    "doc_001": {
+      "name": "Dr. Sarah Johnson",
+      "title": "Senior Dermatologist",
+      "image": "https://example.com/doctors/sarah.jpg",
+      "rating": 4.9,
+      "reviews": 1250,
+      "availability": "Mon, Wed, Fri (09:00 AM - 05:00 PM)",
+      "booked": 850,
+      "total": 1000,
+      "isTopRated": true,
+      "isMostBooked": true,
+      "location": "New Cairo Branch - Medical Park 1",
+      "about": "Dr. Sarah is a world-renowned dermatologist with special focus on laser treatments and aesthetic medicine.",
+      "experience": "15 Years",
+      "specializations": [
+        "Dermatology",
+        "Laser Surgery",
+        "Cosmetic Injections"
+      ],
+      "credentials": [
+        {
+          "title": "PhD in Dermatology",
+          "institution": "Harvard Medical School",
+          "icon_name": "school"
+        },
+        {
+          "title": "Board Certified",
+          "institution": "American Board of Dermatology",
+          "icon_name": "verified"
+        }
+      ]
+    },
+    "doc_002": {
+      "name": "Dr. Michael Chen",
+      "title": "Consultant Radiologist",
+      "image": "https://example.com/doctors/michael.jpg",
+      "rating": 4.7,
+      "reviews": 450,
+      "availability": "Daily (10:00 AM - 08:00 PM)",
+      "booked": 320,
+      "total": 500,
+      "isTopRated": true,
+      "isMostBooked": false,
+      "location": "Sheikh Zayed Branch - Arkan Plaza",
+      "about": "Expert in diagnostic radiology, CT scans, and MRI interpretation.",
+      "experience": "12 Years",
+      "specializations": [
+        "Diagnostic Radiology",
+        "Interventional Radiology"
+      ]
+    }
+  },
+  "services": {
+    "serv_derma": {
+      "title": "Dermatology",
+      "subtitle": "Skin, Hair & Nail Care",
+      "image": "assets/icons/derma_icon.png",
+      "doctorsCount": 15,
+      "isActive": true
+    },
+    "serv_dental": {
+      "title": "Dental Clinic",
+      "subtitle": "Orthodontics & Implants",
+      "image": "assets/icons/dental_icon.png",
+      "doctorsCount": 8,
+      "isActive": true
+    },
+    "serv_radiology": {
+      "title": "Radiology Center",
+      "subtitle": "Advanced Diagnostic Imaging",
+      "image": "assets/icons/radio_icon.png",
+      "doctorsCount": 6,
+      "isActive": true
+    }
+  },
+  "radiology_services": {
+    "rad_ct": {
+      "title": "CT Scan",
+      "desc": "Precise computed tomography using advanced Siemens hardware.",
+      "image": "assets/images/ct_scan_banner.png",
+      "specialists": "12 Specialists",
+      "buttonText": "Book CT Appointment",
+      "badge": "Highest Precision",
+      "badgeIcon": "biotech",
+      "isSecondary": false,
+      "price": 1200
+    },
+    "rad_ultra": {
+      "title": "Ultrasound",
+      "desc": "Safe 4D imaging for pregnancy and abdominal diagnostics.",
+      "image": "assets/images/ultrasound_banner.png",
+      "specialists": "8 Specialists",
+      "buttonText": "Book Ultrasound",
+      "badge": "Safe & Fast",
+      "badgeIcon": "health_and_safety",
+      "isSecondary": true,
+      "price": 600
+    }
+  },
+  "cosmetic_services": {
+    "cos_laser": {
+      "title": "Laser Hair Removal",
+      "image": "https://example.com/cosmetic/laser.jpg",
+      "items": [
+        "Full Body (Candela)",
+        "Face & Neck",
+        "Bikini Area"
+      ],
+      "buttonText": "View Packages",
+      "isActive": true
+    },
+    "cos_fillers": {
+      "title": "Fillers & Botox",
+      "image": "https://example.com/cosmetic/fillers.jpg",
+      "items": [
+        "Lip Fillers",
+        "Forehead Botox",
+        "Cheek Augmentation"
+      ],
+      "buttonText": "Book Consultation",
+      "isActive": true
+    }
+  },
+  "bookings": {
+    "booking_001": {
+      "id": "booking_001",
+      "userId": "user_active_01",
+      "type": "clinical",
+      "doctorName": "Dr. Sarah Johnson",
+      "doctorSpecialty": "Dermatologist",
+      "doctorImageUrl": "https://example.com/doctors/sarah.jpg",
+      "label": "Confirmed",
+      "time": "10:30 AM",
+      "date": "2023-12-15",
+      "location": "O2 Clinic - Sheikh Zayed",
+      "status": "upcoming",
+      "paymentStatus": "paid",
+      "amount": 500,
+      "createdAt": {
+        "_type": "timestamp",
+        "seconds": 1701345600,
+        "nanoseconds": 0
+      }
+    },
+    "booking_img_002": {
+      "id": "booking_img_002",
+      "userId": "user_active_01",
+      "type": "imaging",
+      "imagingType": "CT Scan",
+      "appointmentDate": {
+        "_type": "timestamp",
+        "seconds": 1702641600,
+        "nanoseconds": 0
+      },
+      "appointmentTime": "02:00 PM",
+      "status": "confirmed",
+      "location": "Imaging Center - Floor 2",
+      "createdAt": {
+        "_type": "timestamp",
+        "seconds": 1701450000,
+        "nanoseconds": 0
+      }
+    }
+  },
+  "chat_rooms": {
+    "user_active_01": {
+      "userId": "user_active_01",
+      "userName": "Mohamed El-Sayed",
+      "lastMessage": "I want to confirm my CT scan",
+      "lastMessageAt": {
+        "_type": "timestamp",
+        "seconds": 1701500000,
+        "nanoseconds": 0
+      },
+      "isActive": true,
+      "messages": {
+        "msg_1": {
+          "text": "Hello Mohamed, how can we help you today?",
+          "sender": "agent",
+          "kind": "text",
+          "createdAt": {
+            "_type": "timestamp",
+            "seconds": 1701490000,
+            "nanoseconds": 0
+          }
+        },
+        "msg_2": {
+          "text": "I want to confirm my CT scan",
+          "sender": "user",
+          "kind": "text",
+          "createdAt": {
+            "_type": "timestamp",
+            "seconds": 1701500000,
+            "nanoseconds": 0
+          }
+        },
+        "msg_3": {
+          "text": "Please choose the branch",
+          "sender": "agent",
+          "kind": "options",
+          "options": [
+            {
+              "title": "Sheikh Zayed",
+              "subtitle": "Arkan Plaza",
+              "payload": "branch_zayed"
+            },
+            {
+              "title": "New Cairo",
+              "subtitle": "Medical Park",
+              "payload": "branch_cairo"
+            }
+          ],
+          "createdAt": {
+            "_type": "timestamp",
+            "seconds": 1701500500,
+            "nanoseconds": 0
+          }
+        }
+      }
+    }
+  },
+  "onboarding_slides": {
+    "slide_1": {
+      "id": "slide_1",
+      "title": "Welcome to O2 Clinic",
+      "description": "Your premium health destination for medical and cosmetic excellence.",
+      "imageUrl": "https://example.com/onboarding/welcome.png",
+      "order": 1,
+      "isActive": true
+    },
+    "slide_2": {
+      "id": "slide_2",
+      "title": "Book in Seconds",
+      "description": "Choose your preferred doctor and time slot with just a few taps.",
+      "imageUrl": "https://example.com/onboarding/booking.png",
+      "order": 2,
+      "isActive": true
+    },
+    "slide_3": {
+      "id": "slide_3",
+      "title": "Advanced Imaging",
+      "description": "High-tech radiology services including CT Scans and Ultrasound.",
+      "imageUrl": "https://example.com/onboarding/imaging.png",
+      "order": 3,
+      "isActive": true
+    }
+  },
+  "banners": {
+    "banner_promo_1": {
+      "id": "banner_promo_1",
+      "title": "Winter Offer: 30% Off Dental",
+      "description": "Get 30% discount on all dental implants and cleaning sessions.",
+      "imageUrl": "https://example.com/banners/winter_dental.png",
+      "link": "o2clinic://services/dental",
+      "isActive": true,
+      "priority": 1
+    },
+    "banner_cosmetic_2": {
+      "id": "banner_cosmetic_2",
+      "title": "New Laser Technology",
+      "description": "Experience the latest Candela GentleLase Pro technology.",
+      "imageUrl": "https://example.com/banners/laser_tech.png",
+      "link": "o2clinic://cosmetic/laser",
+      "isActive": true,
+      "priority": 2
+    }
+  },
+  "categories": {
+    "cat_001": {
+      "id": "cat_001",
+      "name": "General Health",
+      "icon": "favorite",
+      "color": "FF4B6EEF",
+      "serviceCount": 12
+    },
+    "cat_002": {
+      "id": "cat_002",
+      "name": "Aesthetics",
+      "icon": "face",
+      "color": "FFFF6B6B",
+      "serviceCount": 25
+    }
+  }
+}

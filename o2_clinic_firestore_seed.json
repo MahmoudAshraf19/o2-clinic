@@ -1,0 +1,256 @@
+{
+  "users": {
+    "user_active_01": {
+      "id": "user_active_01",
+      "name": "Mohamed El-Sayed",
+      "email": "mohamed.active@example.com",
+      "phone": "+201011223344",
+      "gender": "male",
+      "image": "https://i.pravatar.cc/300?u=user_active_01",
+      "lastVisit": "2023-12-01",
+      "lastVisitType": "Dental Checkup",
+      "status": "active",
+      "isBlocked": false,
+      "settings": {
+        "notificationsEnabled": true,
+        "pushToken": "fcm_token_xyz_123",
+        "language": "ar",
+        "darkMode": false
+      },
+      "metadata": {
+        "createdAt": {
+          "_type": "timestamp",
+          "seconds": 1698840000,
+          "nanoseconds": 0
+        },
+        "lastLogin": {
+          "_type": "timestamp",
+          "seconds": 1701432000,
+          "nanoseconds": 0
+        }
+      },
+      "bookings": {
+        "booking_001": {
+          "id": "booking_001",
+          "userId": "user_active_01",
+          "type": "clinical",
+          "doctorName": "Dr. Sarah Johnson",
+          "doctorSpecialty": "Dermatology",
+          "doctorImageUrl": "https://example.com/doctors/sarah.jpg",
+          "label": "Confirmed",
+          "time": "10:30 AM",
+          "date": "2023-12-15",
+          "location": "O2 Clinic - Sheikh Zayed",
+          "status": "upcoming",
+          "paymentStatus": "paid",
+          "amount": 500,
+          "createdAt": {
+            "_type": "timestamp",
+            "seconds": 1701345600,
+            "nanoseconds": 0
+          }
+        }
+      },
+      "notifications": {
+        "notif_001": {
+          "title": "Welcome to O2 Clinic",
+          "body": "Your account has been successfully verified.",
+          "isRead": true,
+          "type": "system",
+          "createdAt": {
+            "_type": "timestamp",
+            "seconds": 1698840000,
+            "nanoseconds": 0
+          }
+        }
+      }
+    }
+  },
+  "doctors": {
+    "doc_chest_1": {
+      "name": "Dr. Michael Chen",
+      "title": "Senior Pulmonologist",
+      "image": "https://picsum.photos/seed/doc1/200/200.jpg",
+      "rating": 4.8,
+      "reviews": 156,
+      "availability": "Mon, Wed, Fri",
+      "booked": 120,
+      "total": 200,
+      "isTopRated": true,
+      "location": "Wing B - Floor 2",
+      "about": "Specialist in chronic respiratory diseases and asthma management.",
+      "experience": "15 Years",
+      "specializations": ["Chest Diseases", "Pulmonology"],
+      "credentials": [{ "title": "PhD", "institution": "Harvard", "icon_name": "school" }]
+    },
+    "doc_cardio_1": {
+      "name": "Dr. Ahmed Hassan",
+      "title": "Consultant Cardiologist",
+      "image": "https://picsum.photos/seed/doc2/200/200.jpg",
+      "rating": 5.0,
+      "reviews": 342,
+      "availability": "Sun, Tue, Thu",
+      "booked": 300,
+      "total": 350,
+      "isTopRated": true,
+      "isMostBooked": true,
+      "location": "Main Wing - Floor 1",
+      "about": "Expert in interventional cardiology and heart health.",
+      "experience": "20 Years",
+      "specializations": ["Cardiology"],
+      "credentials": [{ "title": "MD", "institution": "Cairo University", "icon_name": "verified" }]
+    },
+    "doc_derma_1": {
+      "name": "Dr. Sarah Johnson",
+      "title": "Senior Dermatologist",
+      "image": "https://picsum.photos/seed/doc3/200/200.jpg",
+      "rating": 4.9,
+      "reviews": 289,
+      "availability": "Mon, Tue, Thu",
+      "booked": 250,
+      "total": 300,
+      "isTopRated": true,
+      "location": "Cosmetic Wing - Floor 4",
+      "about": "Specializing in aesthetic dermatology and laser surgery.",
+      "experience": "12 Years",
+      "specializations": ["Dermatology"],
+      "credentials": [{ "title": "Board Certified", "institution": "American Board", "icon_name": "verified" }]
+    },
+    "doc_dental_1": {
+      "name": "Dr. Laila Mahmoud",
+      "title": "Orthodontic Consultant",
+      "image": "https://picsum.photos/seed/doc4/200/200.jpg",
+      "rating": 4.7,
+      "reviews": 198,
+      "availability": "Sat, Mon, Wed",
+      "booked": 150,
+      "total": 250,
+      "isTopRated": false,
+      "location": "Dental Wing - Floor 1",
+      "about": "Expert in dental implants and smile design.",
+      "experience": "10 Years",
+      "specializations": ["Dental Clinic"]
+    },
+    "doc_neuro_1": {
+      "name": "Dr. Robert Martinez",
+      "title": "Senior Neurologist",
+      "image": "https://picsum.photos/seed/doc5/200/200.jpg",
+      "rating": 4.9,
+      "reviews": 120,
+      "availability": "Tue, Thu",
+      "booked": 80,
+      "total": 150,
+      "isTopRated": true,
+      "location": "Neuro Wing - Floor 3",
+      "about": "Expert in stroke treatment and nervous system disorders.",
+      "experience": "18 Years",
+      "specializations": ["Neurology"]
+    }
+  },
+  "services": {
+    "chest": {
+      "title": "Chest Diseases",
+      "subtitle": "Pulmonary & Respiratory Care",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBeO47WqR_lbjIuKxfu_ztvh0spAP1jL1fF-RmJB4ofPBeRCkS5j9ct4_rzvjQFl9w6P-mw3ernP7OgYvBprGkkUMKn20MuL10XCaeRDjuazypy_TLRAVt5HjEuDWCNTPj3XaN4zIHNeh1pUWHPAEvrmUjeBIqm8uMLeMvqj_0MnVnFs0WjiPPw33hQDWAduuZXH_P8DFUUfJ3leLh1TefSp6x_2T5BMsN3apoMgm49KZFfXASlU3uLx37PGAWb2Vzxoi8BVjpdJiQ",
+      "doctorsCount": 1,
+      "isActive": true
+    },
+    "cardio": {
+      "title": "Cardiology",
+      "subtitle": "Heart & Vascular Specialists",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuA2UPJKuEiRVPwm68hi6zEtpC7N2FhKrCqH-SNav8dWnKw_9XcLMSekHlx-Hvk-2N2AErOKMtVm8UzJwYwE8XjkKyCfdsYlfooImx53zr8tsB7Zm5yDJG-fiE__eoXggMfnlQBJ5nqEfZXWgZb-2UvAYJMua0Tbw1NSWBeeRJL-0C7j91oM5tIvwy1NL4cka5KbcIXolDgJwD-iaurWO3vBsTHPM9yFLu5Dpo6PUbGLFa_Lyd95Qx2ehyWfqSYSiASdrzIdh308a0U",
+      "doctorsCount": 1,
+      "isActive": true
+    },
+    "derma": {
+      "title": "Dermatology",
+      "subtitle": "Skin Health & Aesthetics",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBeO47WqR_lbjIuKxfu_ztvh0spAP1jL1fF-RmJB4ofPBeRCkS5j9ct4_rzvjQFl9w6P-mw3ernP7OgYvBprGkkUMKn20MuL10XCaeRDjuazypy_TLRAVt5HjEuDWCNTPj3XaN4zIHNeh1pUWHPAEvrmUjeBIqm8uMLeMvqj_0MnVnFs0WjiPPw33hQDWAduuZXH_P8DFUUfJ3leLh1TefSp6x_2T5BMsN3apoMgm49KZFfXASlU3uLx37PGAWb2Vzxoi8BVjpdJiQ",
+      "doctorsCount": 1,
+      "isActive": true
+    },
+    "dental": {
+      "title": "Dental Clinic",
+      "subtitle": "Orthodontics & Implants",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBeO47WqR_lbjIuKxfu_ztvh0spAP1jL1fF-RmJB4ofPBeRCkS5j9ct4_rzvjQFl9w6P-mw3ernP7OgYvBprGkkUMKn20MuL10XCaeRDjuazypy_TLRAVt5HjEuDWCNTPj3XaN4zIHNeh1pUWHPAEvrmUjeBIqm8uMLeMvqj_0MnVnFs0WjiPPw33hQDWAduuZXH_P8DFUUfJ3leLh1TefSp6x_2T5BMsN3apoMgm49KZFfXASlU3uLx37PGAWb2Vzxoi8BVjpdJiQ",
+      "doctorsCount": 1,
+      "isActive": true
+    },
+    "neuro": {
+      "title": "Neurology",
+      "subtitle": "Brain & Nervous System",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBeO47WqR_lbjIuKxfu_ztvh0spAP1jL1fF-RmJB4ofPBeRCkS5j9ct4_rzvjQFl9w6P-mw3ernP7OgYvBprGkkUMKn20MuL10XCaeRDjuazypy_TLRAVt5HjEuDWCNTPj3XaN4zIHNeh1pUWHPAEvrmUjeBIqm8uMLeMvqj_0MnVnFs0WjiPPw33hQDWAduuZXH_P8DFUUfJ3leLh1TefSp6x_2T5BMsN3apoMgm49KZFfXASlU3uLx37PGAWb2Vzxoi8BVjpdJiQ",
+      "doctorsCount": 1,
+      "isActive": true
+    }
+  },
+  "radiology_services": {
+    "rad_ct": {
+      "title": "CT Scan",
+      "desc": "Precise computed tomography using advanced Siemens hardware.",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuD4cq0kGUjeMU5iKEqRNXhwSA3OT_7WWAQtnWUIQpGrJq3hYyFwtBcFg3RoYKWx66ENHfXgssN4FS-B0o9q6T1OeKTDGRDZYRA_exc2Q2BnJhnG5xSMkDGychzm7ZRsDv21gf2oUISneJLt9e0jXeeVlrVKpXljQa-YJB5_T0XmoNfxYfInVdu2DjkIYZhu1MatjjQQwQ15dwpDhEuj2g7P1pJLG2K_Jl0QOvx7WVEvwqeFv48waxaYXhJ7xk7XAG2zCNmgrDXeSqM",
+      "specialists": "12 Specialists",
+      "buttonText": "Book CT Appointment",
+      "badge": "Highest Precision",
+      "badgeIcon": "biotech",
+      "isSecondary": false,
+      "price": 1200
+    },
+    "rad_ultra": {
+      "title": "Ultrasound",
+      "desc": "Safe 4D imaging for pregnancy and abdominal diagnostics.",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDoU85XfzVn4gRdUysOMqisVc4Q8kUvREv_Oodc35YUJ-3lYkOfvYJumWF-RoAhtI_3lvlezKlllYMPjOGSoxTZTTP8SzRgiSGrQJMpLiZGoLXvsmbkbpqhoE3B4BJ0RmboivHP23TH6vy5oLFA8KoKCMLz2fNmufy0SGXi7s6KUM0buH5PHrUDITUoOd9yNBibTqqjkwRtTw4EgF1iFUw4aMn4aPjZcvDpdcER_3fWmFKcsTDomkYrLoDM0us2xSpe2iWTPDwvoGU",
+      "specialists": "8 Specialists",
+      "buttonText": "Book Ultrasound",
+      "badge": "Safe & Fast",
+      "badgeIcon": "health_and_safety",
+      "isSecondary": true,
+      "price": 600
+    }
+  },
+  "cosmetic_services": {
+    "cos_laser": {
+      "title": "Laser Treatments",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuACHY50K-BNpijnjxyzYWooi2mbKBQ1IYiuNbC4uumRXra0NAku1SxHMwGkAtcToDbrTd294QkcWb8iNRBdMoQLPgDqqLzt6hmiVIkacQq7YF9izCaq8Ow35Z8-vPNkbP3ee6CyQUhpDU2oDSQgubyMFoweem5akpLQf8zn94_Q6MC9x1zpzMKynCF_20kTmpSTDaEfDvKAyQQE-MFZkzCv93sVZCI3kfoX7xSz8frTjVtjv64gqkommE9io6MLrv4TCYWsaJkAlS4",
+      "items": ["Hair Removal", "Skin Resurfacing"],
+      "buttonText": "View Packages",
+      "isActive": true
+    },
+    "cos_inject": {
+      "title": "Injectables",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDvFmrUPTvN3YCySYKL0VPxsvw6Zmin81T6AlHvo5et1TbInNyQqqmahv23G8Yf1wM3LFomWyeA2fp4lHkAu1S1CDLwt0sKceqsz9v8JjiUZXBMD5QSIJOxkJwPbmrFewez_pIBLfoLY2rP5dkOZwdmfmdxxZacXToGQFeLus9NRR_fTty26JkFgoi4beY_2d1mFPwuH9C4Y-Z6pEf9f5oPktpOtDh4dAY8kpGw2HwVV8fNzMovgaTEGD3xZGQRV20zw2OiuloS1uI",
+      "items": ["Fillers", "Botox"],
+      "buttonText": "Book Consultation",
+      "isActive": true
+    }
+  },
+  "banners": {
+    "b1": {
+      "id": "b1",
+      "title": "30% Off Dental",
+      "imageUrl": "https://example.com/b1.png",
+      "isActive": true
+    }
+  },
+  "onboarding_slides": {
+    "s1": {
+      "id": "s1",
+      "title": "Welcome to O2 Clinic",
+      "description": "Your premium health destination.",
+      "imageUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuAx0D4BbX0RNidIZslIi4LtD3JYUSTN2-i2Mkjn2c8gTidJ72tBFSEld9OPwy4064B17dinBKvZERrDwDlgnq6kgIGZsDutYuvq3KI5WwQqwN0E5MOC7ilC47wWbdTeJX8gh0mKEoEqgSq7FV8midz8t6vQMl1lnPDEL5OWtojzTcCrX0E2B11XiG1Bi07Uqlm6N0xDhJ6y4aW4lbps_TmZfO68LcqxP5KRwZxCx51MxT1SvOrzssuICKm0Ot0tbWzjSSB_Joc_Wyc",
+      "order": 1,
+      "isActive": true
+    },
+    "s2": {
+      "id": "s2",
+      "title": "Easy Booking",
+      "description": "Book appointments in seconds.",
+      "imageUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuAFb8c13qIzoOyg40DoKt4BSUDJwwKGOv6dzGglrjvQHwXlE3F7A60xEUuD4sv_GBA42XR5lYFj1qb98huW_DmaJ9YxAFYEzvTHgtTDID1VtZ89RaSoqijrHd0QsI2syzZZ4s0q9gJWIyfVxZg7kKd-AFgwgbdy0nloPXE7_lUCIh8VuTDyj6IrnUMofUqOQZi7mS4RKD2rrTvMI3e4Fz4eLIhY2vUOzac4O2bcILWRZRkjqwWBSLlLgwzzOiIhTgpNuBrVsmZYOW4",
+      "order": 2,
+      "isActive": true
+    }
+  },
+  "categories": {
+    "c1": { "id": "c1", "name": "Clinics", "icon": "medical_services", "color": "FF4B6EEF", "serviceCount": 5 }
+  }
+}
