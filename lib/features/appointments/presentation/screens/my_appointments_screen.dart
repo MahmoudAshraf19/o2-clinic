@@ -9,6 +9,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../services_firestore/models/booking_model.dart';
 import '../../../services_firestore/services/bookings_firestore_service.dart';
+import 'report_issue_screen.dart';
+import 'review_doctor_screen.dart';
 
 enum AppointmentFilter { all, upcoming, completed, cancelled }
 
@@ -26,6 +28,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
   AppointmentFilter _selectedFilter = AppointmentFilter.all;
   String _searchText = '';
   Stream<List<BookingModel>>? _bookingsStream;
+  String? _showBookingId;
 
   @override
   void initState() {
@@ -35,6 +38,10 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         _searchText = _searchController.text.trim();
       });
     });
+
+    if (Get.arguments is Map) {
+      _showBookingId = Get.arguments['showBookingId']?.toString();
+    }
   }
 
   @override
@@ -74,6 +81,17 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                   final allBookings = snapshot.data ?? [];
                   final filteredBookings = _applyFilters(allBookings);
                   final nextAppointment = _getNextUpcomingBooking(allBookings);
+
+                  if (_showBookingId != null && allBookings.isNotEmpty) {
+                    final bookingId = _showBookingId;
+                    _showBookingId = null; // Clear to prevent showing again
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      final booking = allBookings.firstWhereOrNull((b) => b.id == bookingId);
+                      if (booking != null && mounted) {
+                        _showBookingDetails(context, booking);
+                      }
+                    });
+                  }
 
                   return RefreshIndicator(
                     onRefresh: () async {
@@ -421,8 +439,12 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: _ActionButton(
-                      text: AppLocalizations.of(context)!.directions,
-                      icon: Icons.directions_rounded,
+                      text: nextAppointment.type == 'online'
+                          ? AppLocalizations.of(context)!.onlineConsultation
+                          : AppLocalizations.of(context)!.directions,
+                      icon: nextAppointment.type == 'online'
+                          ? Icons.videocam_rounded
+                          : Icons.directions_rounded,
                       filled: false,
                       onTap: () => _showBookingDetails(context, nextAppointment),
                     ),
@@ -722,11 +744,12 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     if (status == 'completed' || status == 'cancelled') return false;
 
     final date = _bookingDate(booking);
-    if (date == null) return status == 'confirmed' || status == 'pending';
+    if (date == null) return status == 'confirmed' || status == 'pending' || status == 'upcoming';
 
     return date.isAfter(DateTime.now()) ||
         status == 'confirmed' ||
-        status == 'pending';
+        status == 'pending' ||
+        status == 'upcoming';
   }
 
   DateTime? _bookingDate(BookingModel booking) {
@@ -786,6 +809,12 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                         value: booking.status.label.isNotEmpty
                             ? booking.status.label
                             : booking.status.current,
+                      ),
+                      _DetailRow(
+                        label: AppLocalizations.of(context)!.location,
+                        value: booking.type == 'online'
+                            ? AppLocalizations.of(context)!.onlineConsultation
+                            : '${booking.location.clinic}${booking.location.floor.isNotEmpty ? ' - Floor ${booking.location.floor}' : ''}${booking.location.room.isNotEmpty ? ' - Room ${booking.location.room}' : ''}',
                       ),
                       _DetailRow(
                         label: AppLocalizations.of(context)!.date,
@@ -862,6 +891,60 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                       label: Text(AppLocalizations.of(context)!.done),
                     ),
                   ),
+
+                  if (booking.status.current == 'completed' && booking.reviewId == null) ...[
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Get.to(() => ReviewDoctorScreen(
+                            bookingId: booking.id,
+                            doctorId: booking.doctor?.doctorId ?? '',
+                            patientName: booking.user.name,
+                            patientImage: '', // Can add actual patient image later
+                          ));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orangeAccent,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        icon: const Icon(Icons.star_rounded),
+                        label: Text(AppLocalizations.of(context)!.rateYourExperience ?? 'Rate Experience'),
+                      ),
+                    ),
+                  ],
+
+                  if ((booking.status.current == 'completed' || booking.status.current == 'under_investigation') && booking.patientReport == null) ...[
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Get.to(() => ReportIssueScreen(
+                            bookingId: booking.id,
+                            isPatient: true,
+                          ));
+                        },
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppColors.error,
+                          side: const BorderSide(color: AppColors.error),
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        icon: const Icon(Icons.report_problem_rounded),
+                        label: Text(AppLocalizations.of(context)!.reportIssue ?? 'Report Issue'),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             );
@@ -878,6 +961,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     if (type.contains('service')) return AppLocalizations.of(context)!.serviceAppointment;
     if (type.contains('imaging')) return AppLocalizations.of(context)!.imagingAppointment;
     if (type.contains('cosmetic')) return AppLocalizations.of(context)!.cosmeticAppointment;
+    if (type == 'online') return AppLocalizations.of(context)!.onlineConsultation;
 
     return booking.type.isEmpty ? AppLocalizations.of(context)!.appointmentOnly : booking.type;
   }
@@ -1042,12 +1126,11 @@ class _AppointmentCard extends StatelessWidget {
                     ),
                   ),
                   _StatusBadge(
-                    label: booking.status.label.isNotEmpty
-                        ? booking.status.label
-                        : booking.status.current,
+                    label: _getLocalizedStatusLabel(context, booking.status.current),
                     isUpcoming: isUpcoming,
                     isCancelled: isCancelled,
                     isCompleted: isCompleted,
+                    isPending: booking.status.current.toLowerCase() == 'pending',
                   ),
                 ],
               ),
@@ -1087,6 +1170,24 @@ class _AppointmentCard extends StatelessWidget {
       ),
     ),
     );
+  }
+
+  String _getLocalizedStatusLabel(BuildContext context, String currentStatus) {
+    final status = currentStatus.toLowerCase();
+    switch (status) {
+      case 'upcoming':
+      case 'confirmed':
+        final isAr = Localizations.localeOf(context).languageCode == 'ar';
+        return isAr ? 'مؤكد' : 'Confirmed';
+      case 'pending':
+        return AppLocalizations.of(context)!.pending;
+      case 'completed':
+        return AppLocalizations.of(context)!.completed;
+      case 'cancelled':
+        return AppLocalizations.of(context)!.cancelled;
+      default:
+        return currentStatus;
+    }
   }
 
   static String _title(BuildContext context, BookingModel booking) {
@@ -1137,6 +1238,7 @@ class _AppointmentCard extends StatelessWidget {
     if (t.contains('doctor')) return Icons.medical_services_rounded;
     if (t.contains('imaging')) return Icons.scanner_rounded;
     if (t.contains('cosmetic')) return Icons.spa_rounded;
+    if (t == 'online') return Icons.videocam_rounded;
     return Icons.event_note_rounded;
   }
 }
@@ -1190,12 +1292,14 @@ class _StatusBadge extends StatelessWidget {
   final bool isUpcoming;
   final bool isCancelled;
   final bool isCompleted;
+  final bool isPending;
 
   const _StatusBadge({
     required this.label,
     required this.isUpcoming,
     required this.isCancelled,
     required this.isCompleted,
+    this.isPending = false,
   });
 
   @override
@@ -1209,6 +1313,9 @@ class _StatusBadge extends StatelessWidget {
     } else if (isCompleted) {
       bg = const Color(0xFF2D3737).withOpacity(0.10);
       fg = const Color(0xFF2D3737);
+    } else if (isPending) {
+      bg = Colors.orange.withOpacity(0.15);
+      fg = Colors.orange[800]!;
     } else if (isUpcoming) {
       bg = const Color(0xFF21897E).withOpacity(0.12);
       fg = const Color(0xFF21897E);
@@ -1301,11 +1408,7 @@ class _BottomSheetHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                booking.doctor?.nameAr.isNotEmpty == true
-                    ? booking.doctor!.nameAr
-                    : (booking.doctor?.nameEn.isNotEmpty == true
-                        ? booking.doctor!.nameEn
-                        : 'Booking Details'),
+                _title(context, booking),
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
@@ -1325,6 +1428,37 @@ class _BottomSheetHeader extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _title(BuildContext context, BookingModel booking) {
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    final doctor = booking.doctor;
+    if (doctor != null) {
+      if (isArabic && doctor.nameAr.trim().isNotEmpty) return doctor.nameAr;
+      if (!isArabic && doctor.nameEn.trim().isNotEmpty) return doctor.nameEn;
+      return doctor.nameAr.trim().isNotEmpty ? doctor.nameAr : doctor.nameEn;
+    }
+
+    final service = booking.service;
+    if (service != null) {
+      if (isArabic && service.serviceNameAr.trim().isNotEmpty) return service.serviceNameAr;
+      if (!isArabic && service.serviceNameEn.trim().isNotEmpty) return service.serviceNameEn;
+      return service.serviceNameAr.trim().isNotEmpty ? service.serviceNameAr : service.serviceNameEn;
+    }
+
+    final imaging = booking.imaging;
+    if (imaging != null) {
+      if (isArabic && imaging.nameAr.trim().isNotEmpty) return imaging.nameAr;
+      if (!isArabic && imaging.nameEn.trim().isNotEmpty) return imaging.nameEn;
+      return imaging.nameAr.trim().isNotEmpty ? imaging.nameAr : imaging.nameEn;
+    }
+
+    final cosmetic = booking.cosmetic;
+    if (cosmetic != null && cosmetic.serviceName.trim().isNotEmpty) {
+      return cosmetic.serviceName;
+    }
+
+    return AppLocalizations.of(context)!.appointmentOnly;
   }
 }
 
@@ -1416,6 +1550,7 @@ extension on BookingModel {
     if (t.contains('service')) return AppLocalizations.of(context)!.service;
     if (t.contains('imaging')) return AppLocalizations.of(context)!.imaging;
     if (t.contains('cosmetic')) return AppLocalizations.of(context)!.cosmetic;
+    if (t == 'online') return AppLocalizations.of(context)!.onlineConsultation;
     return type.isEmpty ? AppLocalizations.of(context)!.appointmentOnly : type;
   }
 }

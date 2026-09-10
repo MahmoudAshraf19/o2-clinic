@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 
 import '../../../core/routes/app_routes.dart';
@@ -117,6 +118,9 @@ class SocialAuthController extends GetxController {
       _log("✅ Profile found in Firestore! Welcome back, legend 😍🔥");
       _log("🏡 Navigating to Dashboard... 🏃‍♂️💨");
 
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('user_role', 'patient');
+      
       Get.offAllNamed(AppRoutes.mainNavigation);
       return;
     }
@@ -170,6 +174,9 @@ class SocialAuthController extends GetxController {
       _log("✅ Firestore write success! Profile saved like a pro 🎯💚");
       _log("🏡 Sending you to Dashboard now... 🏃‍♂️💨");
 
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('user_role', 'patient');
+      
       Get.offAllNamed(AppRoutes.mainNavigation);
     } on FirebaseAuthException catch (e) {
       _logError("❌ FirebaseAuthException during Firestore save", e);

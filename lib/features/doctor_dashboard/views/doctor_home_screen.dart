@@ -4,6 +4,9 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../widgets/doctor_home_top_cover.dart';
+import '../widgets/quick_actions_widget.dart';
+import '../widgets/next_patient_widget.dart';
+import '../widgets/past_appointments_widget.dart';
 
 class DoctorHomeScreen extends StatelessWidget {
   const DoctorHomeScreen({super.key});
@@ -15,16 +18,23 @@ class DoctorHomeScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           const DoctorHomeTopCover(),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Center(
-                child: Text(
-                  AppLocalizations.of(context)!.doctorHome, 
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 16),
+          ),
+          const SliverToBoxAdapter(
+            child: QuickActionsWidget(),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 16),
+          ),
+          const SliverToBoxAdapter(
+            child: NextPatientWidget(),
+          ),
+          const SliverToBoxAdapter(
+            child: PastAppointmentsWidget(),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 32),
           ),
         ],
       ),

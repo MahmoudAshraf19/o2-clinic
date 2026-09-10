@@ -138,27 +138,29 @@ class PatientAppointmentCard extends StatelessWidget {
     Color textColor;
     String text;
 
+    final isAr = Get.locale?.languageCode == 'ar';
+
     switch (status) {
       case 'upcoming':
       case 'confirmed':
-        bgColor = Colors.green.withValues(alpha: 0.15);
-        textColor = Colors.green[700]!;
-        text = Get.locale?.languageCode == 'ar' ? 'مؤكد' : 'Confirmed';
+        bgColor = const Color(0xFF21897E).withValues(alpha: 0.12);
+        textColor = const Color(0xFF21897E);
+        text = isAr ? 'مؤكد' : 'Confirmed';
         break;
       case 'pending':
         bgColor = Colors.orange.withValues(alpha: 0.15);
         textColor = Colors.orange[800]!;
-        text = Get.locale?.languageCode == 'ar' ? 'قيد الانتظار' : 'Pending';
+        text = isAr ? 'قيد الانتظار' : 'Pending';
         break;
       case 'cancelled':
-        bgColor = Colors.red.withValues(alpha: 0.15);
-        textColor = Colors.red[700]!;
-        text = Get.locale?.languageCode == 'ar' ? 'ملغي' : 'Cancelled';
+        bgColor = const Color(0xFFE53E3E).withValues(alpha: 0.12);
+        textColor = const Color(0xFFE53E3E);
+        text = isAr ? 'ملغي' : 'Cancelled';
         break;
       case 'completed':
-        bgColor = AppColors.primary.withValues(alpha: 0.15);
-        textColor = AppColors.primary;
-        text = Get.locale?.languageCode == 'ar' ? 'مكتمل' : 'Completed';
+        bgColor = const Color(0xFF2D3737).withValues(alpha: 0.10);
+        textColor = const Color(0xFF2D3737);
+        text = isAr ? 'مكتمل' : 'Completed';
         break;
       default:
         bgColor = AppColors.grey.withValues(alpha: 0.15);

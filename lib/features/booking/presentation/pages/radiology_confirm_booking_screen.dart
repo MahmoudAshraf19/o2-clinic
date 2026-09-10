@@ -534,7 +534,9 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
                   tag: widget.controllerTag,
                 );
 
-                controller.selectDate(widget.selectedDate);
+                // ✅ لو UI عدّل التاريخ/الوقت (احتياطي)
+                controller.selectedDate.value = widget.selectedDate;
+                controller.selectedTime.value = widget.selectedTime;
                 controller.selectTime(widget.selectedTime);
 
                 if (widget.selectedTime.trim().isEmpty) {

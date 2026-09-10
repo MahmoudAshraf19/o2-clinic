@@ -256,6 +256,42 @@ class NotificationService {
     }
   }
 
+  /// ── Schedule 30-minute reminder for Doctor (Online Consultation) ─────────────
+  Future<void> scheduleDoctorOnlineReminder({
+    required String bookingId,
+    required DateTime appointmentDate,
+    required String langCode,
+  }) async {
+    if (kIsWeb) return;
+
+    final now = DateTime.now();
+    final time30m = appointmentDate.subtract(const Duration(minutes: 30));
+    
+    if (time30m.isAfter(now)) {
+      final title = langCode == 'ar' ? 'موعد استشارة أونلاين قريب ⏱️' : 'Upcoming Online Consultation ⏱️';
+      final body = langCode == 'ar' 
+          ? 'تذكير: موعد الكشف الأونلاين يبدأ بعد 30 دقيقة.' 
+          : 'Reminder: Your online consultation starts in 30 minutes.';
+
+      try {
+        await _local.zonedSchedule(
+          _stableId(bookingId, is12h: false) + 1000, // Avoid collision with patient's 3h reminder
+          title,
+          body,
+          tz.TZDateTime.from(time30m, tz.local),
+          _reminderDetails,
+          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime,
+          payload: json.encode({'bookingId': bookingId, 'screen': 'booking_details'}),
+        );
+        debugPrint('Doctor 30m online reminder scheduled for $bookingId at $time30m');
+      } catch (e) {
+        debugPrint('Could not schedule doctor 30m online reminder: $e');
+      }
+    }
+  }
+
   /// ── Cancel all reminders for a booking (cancelled / completed) ────────────
   Future<void> cancelAppointmentReminders(String bookingId) async {
     if (kIsWeb) return;

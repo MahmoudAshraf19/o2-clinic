@@ -108,6 +108,7 @@ class ServicesFirestoreService {
         descriptionAr: data['description_ar'] ?? '',
         descriptionHe: data['description_he'] ?? '',
         image: data['image'] ?? '',
+        price: data['price']?.toString() ?? '0',
       );
     }).toList();
   }

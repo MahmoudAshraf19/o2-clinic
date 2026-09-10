@@ -442,7 +442,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get specialtiesClinics => 'Specialties & Clinics';
 
   @override
-  String get viewAll => 'View All';
+  String get viewAll => 'View all';
 
   @override
   String get today => 'Today';
@@ -947,4 +947,159 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get doctorEmailNotFoundTitle => 'Email Not Found';
+
+  @override
+  String yearsExperienceVal(String years) {
+    return '$years Years Experience';
+  }
+
+  @override
+  String get regularAvailability => 'Regular Availability';
+
+  @override
+  String get unavailable => 'Unavailable';
+
+  @override
+  String get consultationFee => 'Consultation Fee';
+
+  @override
+  String get rating => 'Rating';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get warning => 'Warning';
+
+  @override
+  String get contactAdminToEdit =>
+      'Please contact O2 Clinic administration to request modifications';
+
+  @override
+  String get quickActions => 'Quick Actions';
+
+  @override
+  String get todaysAppointments => 'Today\'s Appointments';
+
+  @override
+  String get statistics => 'Statistics';
+
+  @override
+  String get messages => 'Messages';
+
+  @override
+  String get viewPerformance => 'View performance';
+
+  @override
+  String get allTime => 'All Time';
+
+  @override
+  String get thisYear => 'This Year';
+
+  @override
+  String get thisMonth => 'This Month';
+
+  @override
+  String get thisWeek => 'This Week';
+
+  @override
+  String get totalEarnings => 'Total Earnings';
+
+  @override
+  String get totalAppointments => 'Total Appointments';
+
+  @override
+  String get uniquePatients => 'Unique Patients';
+
+  @override
+  String get statusBreakdown => 'Status Breakdown';
+
+  @override
+  String get appointmentType => 'Appointment Type';
+
+  @override
+  String get nextPatient => 'Next Patient';
+
+  @override
+  String get openChat => 'Open chat';
+
+  @override
+  String get noPatientsToday => 'No consultations today';
+
+  @override
+  String get customDay => 'Specific Day';
+
+  @override
+  String get customRange => 'Specific Period';
+
+  @override
+  String get topServices => 'Top Services';
+
+  @override
+  String get averageEarnings => 'Avg Earnings / Patient';
+
+  @override
+  String get pastAppointments => 'Past Appointments';
+
+  @override
+  String get reportIssue => 'Report Issue';
+
+  @override
+  String get markAsCompleted => 'Complete';
+
+  @override
+  String get underInvestigation => 'Under Investigation';
+
+  @override
+  String get rateYourExperience => 'Rate Experience';
+
+  @override
+  String get writeYourReview => 'Write your review...';
+
+  @override
+  String get submitReview => 'Submit Review';
+
+  @override
+  String get reviewTitle => 'Doctor Reviews';
+
+  @override
+  String get catWaitingTime => 'Waiting Time';
+
+  @override
+  String get catCommunication => 'Communication';
+
+  @override
+  String get catClinicCleanliness => 'Clinic Cleanliness';
+
+  @override
+  String get catEffectiveness => 'Effectiveness';
+
+  @override
+  String get sortNewest => 'Newest';
+
+  @override
+  String get sortOldest => 'Oldest';
+
+  @override
+  String get sortHighest => 'Highest';
+
+  @override
+  String get sortLowest => 'Lowest';
+
+  @override
+  String totalReviewsCount(int count) {
+    return '$count Reviews';
+  }
+
+  @override
+  String get describeTheIssue => 'Describe the issue...';
+
+  @override
+  String get attachImage => 'Attach Image';
+
+  @override
+  String get submitReport => 'Submit Report';
 }

@@ -163,12 +163,13 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
         case "Payment Summary": return "ملخص الدفع";
         case "Patient Info": return "معلومات المريض";
         case "Cosmetic Department": return "قسم التجميل";
+        case "Direct Services": return "خدمات مباشرة";
         case "Total Payment": return "إجمالي الدفع";
         case "Confirm Booking": return "تأكيد الحجز";
         case "Booking Failed": return "فشل الحجز";
         case "Error": return "خطأ";
         case "Please log in first": return "يجب تسجيل الدخول";
-        case "O2 Clinic - Main Branch\\nFloor 1 - Cosmetic Center": return "عيادات O2 - الفرع الرئيسي\nالطابق 1 - قسم التجميل";
+        case "O2 Clinic Headquarters": return "مقر o2 clinic";
         case "Guest Patient": return "مريض زائر";
         case "Unknown Email": return "بريد غير معروف";
       }
@@ -182,12 +183,13 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
         case "Payment Summary": return "סיכום תשלום";
         case "Patient Info": return "פרטי מטופל";
         case "Cosmetic Department": return "מחלקת קוסמטיקה";
+        case "Direct Services": return "שירותים ישירים";
         case "Total Payment": return "תשלום כולל";
         case "Confirm Booking": return "אישור הזמנה";
         case "Booking Failed": return "הזמנה נכשלה";
         case "Error": return "שגיאה";
         case "Please log in first": return "נא להתחבר תחילה";
-        case "O2 Clinic - Main Branch\\nFloor 1 - Cosmetic Center": return "מרפאת O2 - סניף ראשי\nקומה 1 - מרכז קוסמטיקה";
+        case "O2 Clinic Headquarters": return "מטה o2 clinic";
         case "Guest Patient": return "מטופל אורח";
         case "Unknown Email": return "דוא\"ל לא ידוע";
       }
@@ -237,7 +239,9 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  _t("Cosmetic Department"),
+                  (widget.model.id == 'Sleep_study' || widget.model.id == 'pulmonary_function') 
+                      ? _t("Direct Services") 
+                      : _t("Cosmetic Department"),
                   style: TextStyle(
                     color: AppColors.grey,
                     fontSize: 13,
@@ -303,7 +307,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              _t("O2 Clinic - Main Branch\\nFloor 1 - Cosmetic Center"),
+              _t("O2 Clinic Headquarters"),
               style: TextStyle(
                 color: AppColors.grey,
                 
@@ -498,6 +502,10 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
 
       if (userData != null) {
         userName = userData['name'] ?? userData['first_name'] ?? currentUser?.displayName ?? _t("Guest Patient");
+        final contactMap = userData['contact'] as Map<String, dynamic>?;
+        final phoneMap = userData['phone'] as Map<String, dynamic>?;
+        final phone = contactMap?['phone'] ?? phoneMap?['full_phone'];
+        email = phone ?? currentUser?.email ?? _t("Unknown Email");
       } else if (currentUser != null) {
         userName = currentUser.displayName ?? _t("Guest Patient");
         email = currentUser.email ?? _t("Unknown Email");
@@ -636,22 +644,42 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           "original_amount": widget.totalPrice,
         };
       }
+      final isDirect = widget.model.id == 'Sleep_study' || widget.model.id == 'pulmonary_function';
       
-      final bookingRes = await BookingFirestoreService().createCosmeticBooking(
-        user: BookingUserInfo(
-          userId: user.uid,
-          name: user.displayName ?? "Guest",
-          countryCode: "+20",
-          number: "",
-        ),
-        cosmeticId: widget.model.id,
-        nameEn: widget.model.getName('en'),
-        nameAr: widget.model.getName('ar'),
-        selectedDate: widget.selectedDate,
-        selectedTime: widget.selectedTime,
-        amount: finalAmount,
-        discountData: discountData,
-      );
+      BookingResult bookingRes;
+      if (isDirect) {
+        bookingRes = await BookingFirestoreService().createDirectBooking(
+          user: BookingUserInfo(
+            userId: user.uid,
+            name: user.displayName ?? "Guest",
+            countryCode: "+20",
+            number: "",
+          ),
+          serviceId: widget.model.id,
+          nameEn: widget.model.getName('en'),
+          nameAr: widget.model.getName('ar'),
+          selectedDate: widget.selectedDate,
+          selectedTime: widget.selectedTime,
+          amount: finalAmount,
+          discountData: discountData,
+        );
+      } else {
+        bookingRes = await BookingFirestoreService().createCosmeticBooking(
+          user: BookingUserInfo(
+            userId: user.uid,
+            name: user.displayName ?? "Guest",
+            countryCode: "+20",
+            number: "",
+          ),
+          cosmeticId: widget.model.id,
+          nameEn: widget.model.getName('en'),
+          nameAr: widget.model.getName('ar'),
+          selectedDate: widget.selectedDate,
+          selectedTime: widget.selectedTime,
+          amount: finalAmount,
+          discountData: discountData,
+        );
+      }
 
       if (bookingRes.success) {
         if (Get.isRegistered<CosmeticAppointmentBookingController>(tag: widget.controllerTag)) {

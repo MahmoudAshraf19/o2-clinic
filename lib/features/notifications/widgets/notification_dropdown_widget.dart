@@ -8,9 +8,12 @@ import '../controllers/notifications_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/notification_model.dart';
 import '../utils/notification_time_helper.dart';
+import '../../appointments/presentation/screens/my_appointments_screen.dart';
 import '../views/notifications_screen.dart';
 import '../../services_firestore/models/doctor_model.dart';
 import '../../booking/presentation/pages/booking_success_screen.dart';
+import '../../doctor_dashboard/controllers/doctor_navigation_controller.dart';
+import '../../doctor_dashboard/controllers/doctor_appointments_controller.dart';
 
 class NotificationDropdownWidget extends StatelessWidget {
   const NotificationDropdownWidget({super.key});
@@ -27,7 +30,9 @@ class NotificationDropdownWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NotificationsController controller = Get.put(NotificationsController());
+    final NotificationsController controller = Get.isRegistered<NotificationsController>() 
+        ? Get.find<NotificationsController>() 
+        : Get.put(NotificationsController(), permanent: true);
 
     return Material(
       color: Colors.transparent,
@@ -290,24 +295,28 @@ class NotificationDropdownWidget extends StatelessWidget {
           Get.back(); // close loading
           
           if (doc.exists) {
-            final data = doc.data()!;
-            final doctorMap = data['doctor'] as Map<String, dynamic>? ?? {};
-            final doctor = DoctorModel.fromMap(
-              id: doctorMap['id']?.toString() ?? '',
-              map: doctorMap,
-            );
-            
-            final schedule = data['schedule'] as Map<String, dynamic>? ?? {};
-            final dateStr = schedule['date']?.toString();
-            final date = dateStr != null ? DateTime.tryParse(dateStr) : DateTime.now();
-            final time = schedule['time']?.toString() ?? '';
-            
-            Get.to(() => BookingSuccessScreen(
-              doctor: doctor,
-              selectedDate: date ?? DateTime.now(),
-              selectedTime: time,
-              bookingId: doc.id,
-            ));
+            if (Get.isRegistered<DoctorNavigationController>()) {
+              final navCtrl = Get.find<DoctorNavigationController>();
+              navCtrl.changeIndex(1); // Appts tab
+              
+              if (Get.isRegistered<DoctorAppointmentsController>()) {
+                final apptsCtrl = Get.find<DoctorAppointmentsController>();
+                final bookingData = doc.data() as Map<String, dynamic>?;
+                if (bookingData != null && bookingData['schedule'] != null) {
+                  final dateStr = bookingData['schedule']['date'] as String?;
+                  if (dateStr != null && dateStr.isNotEmpty) {
+                    try {
+                      final parsedDate = DateTime.parse(dateStr);
+                      apptsCtrl.setSelectedTargetDate(parsedDate);
+                    } catch (e) {
+                      debugPrint('Could not parse booking date: $e');
+                    }
+                  }
+                }
+              }
+            } else {
+              Get.to(() => const MyAppointmentsScreen(), arguments: {'showBookingId': doc.id});
+            }
           } else {
             Get.snackbar('Error', 'Booking not found');
           }

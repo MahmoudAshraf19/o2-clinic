@@ -6,6 +6,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../chat_doctors/models/doctor_chat_model.dart';
 import '../../chat_doctors/views/doctor_active_chat_screen.dart';
+import '../../../core/services/notification_service.dart';
 
 class DoctorBookingDetailsScreen extends StatefulWidget {
   final Map<String, dynamic> bookingData;
@@ -33,7 +34,7 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
     if (userId.isEmpty) return;
 
     try {
-      final doc = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+      final doc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
       if (doc.exists && doc.data() != null) {
         if (mounted) {
           setState(() {
@@ -53,6 +54,7 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
     final isAr = Get.locale?.languageCode == 'ar';
     
     // User Data
+    final bookingId = widget.bookingData['id'] as String? ?? '';
     final userMap = widget.bookingData['user'] as Map<String, dynamic>? ?? {};
     final userId = userMap['userId'] as String? ?? '';
     final name = userMap['name'] as String? ?? 'Patient';
@@ -119,12 +121,10 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _buildTopProfileSection(name, phoneFull, isAr),
-                
-                const SizedBox(height: 24),
-                
+                _buildTopProfileSection(name, phoneFull, isAr, currentStatus, userId, doctorMap),
+                const SizedBox(height: 16),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -134,6 +134,8 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
                       ),
                       const SizedBox(height: 12),
                       _buildInfoCard([
+                        if (bookingId.isNotEmpty)
+                          _InfoItem(icon: Icons.tag_rounded, title: isAr ? 'رقم الحجز' : 'Booking ID', value: bookingId),
                         _InfoItem(icon: Icons.calendar_today_rounded, title: isAr ? 'تاريخ الموعد' : 'Date', value: displayDate),
                         _InfoItem(icon: Icons.access_time_rounded, title: isAr ? 'الوقت' : 'Time', value: timeStr),
                         _InfoItem(icon: Icons.hourglass_bottom_rounded, title: isAr ? 'المدة' : 'Duration', value: '$duration ${isAr ? 'دقيقة' : 'min'}'),
@@ -165,21 +167,43 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
           ),
 
           // Bottom Action Bar
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(top: Border起(color: AppColors.grey.withValues(alpha: 0.1))),
-              ),
-              child: SafeArea(
-                child: _buildBottomActions(currentStatus, userId, name, isAr, doctorMap),
+          if (currentStatus == 'pending')
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(top: BorderSide(color: AppColors.grey.withValues(alpha: 0.1))),
+                ),
+                child: SafeArea(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: _CustomButton(
+                          title: isAr ? 'رفض' : 'Reject',
+                          textColor: Colors.red[700]!,
+                          bgColor: Colors.red.withValues(alpha: 0.1),
+                          onTap: () => _handleStatusChange('cancelled', isAr),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        flex: 2,
+                        child: _CustomButton(
+                          title: isAr ? 'تأكيد الحجز' : 'Accept Booking',
+                          textColor: Colors.white,
+                          bgColor: AppColors.primary,
+                          onTap: () => _handleStatusChange('upcoming', isAr),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
 
           if (_isLoading)
             Container(
@@ -191,7 +215,7 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
     );
   }
 
-  Widget _buildTopProfileSection(String name, String phone, bool isAr) {
+  Widget _buildTopProfileSection(String name, String phone, bool isAr, String status, String patientId, Map<String, dynamic> doctorMap) {
     String subtitle = '';
     if (_patientAge.isNotEmpty) subtitle += '$_patientAge ${isAr ? 'سنة' : 'yrs'}';
     if (_patientAge.isNotEmpty && _patientGender.isNotEmpty) subtitle += ' • ';
@@ -200,52 +224,57 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
     return Container(
       width: double.infinity,
       color: Colors.white,
-      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
-      child: Column(
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.primary.withValues(alpha: 0.2), width: 2),
-            ),
-            child: CircleAvatar(
-              radius: 44,
-              backgroundColor: AppColors.grey.withValues(alpha: 0.1),
-              backgroundImage: (_patientImageUrl != null && _patientImageUrl!.isNotEmpty) ? NetworkImage(_patientImageUrl!) : null,
-              child: (_patientImageUrl == null || _patientImageUrl!.isEmpty)
-                  ? const Icon(Icons.person, color: AppColors.grey, size: 40)
-                  : null,
-            ),
+          CircleAvatar(
+            radius: 32,
+            backgroundColor: AppColors.grey.withValues(alpha: 0.1),
+            backgroundImage: (_patientImageUrl != null && _patientImageUrl!.isNotEmpty) ? NetworkImage(_patientImageUrl!) : null,
+            child: (_patientImageUrl == null || _patientImageUrl!.isEmpty)
+                ? const Icon(Icons.person, color: AppColors.grey, size: 30)
+                : null,
           ),
-          const SizedBox(height: 16),
-          Text(
-            name,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
-          ),
-          if (subtitle.isNotEmpty) ...[
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: const TextStyle(fontSize: 15, color: AppColors.grey, fontWeight: FontWeight.w500),
-            ),
-          ],
-          const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: AppColors.grey.withValues(alpha: 0.05),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.phone_rounded, size: 14, color: AppColors.grey),
-                const SizedBox(width: 6),
-                Text(phone, style: const TextStyle(color: AppColors.grey, fontWeight: FontWeight.w600, fontSize: 13, letterSpacing: 0.5)),
+                Text(
+                  name,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                ),
+                if (subtitle.isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(fontSize: 14, color: AppColors.grey, fontWeight: FontWeight.w500),
+                  ),
+                ],
+                const SizedBox(height: 6),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.phone_rounded, size: 14, color: AppColors.grey),
+                    const SizedBox(width: 6),
+                    Text(phone, style: const TextStyle(color: AppColors.grey, fontWeight: FontWeight.w600, fontSize: 13, letterSpacing: 0.5)),
+                  ],
+                ),
               ],
             ),
           ),
+          if (status != 'cancelled')
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.chat_bubble_rounded, color: AppColors.primary),
+                onPressed: () => _startConsultation(patientId, name, doctorMap),
+              ),
+            ),
         ],
       ),
     );
@@ -302,53 +331,7 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
     );
   }
 
-  Widget _buildBottomActions(String status, String patientId, String patientName, bool isAr, Map<String, dynamic> doctorMap) {
-    if (status == 'pending') {
-      return Row(
-        children: [
-          Expanded(
-            child: _CustomButton(
-              title: isAr ? 'رفض' : 'Reject',
-              textColor: Colors.red[700]!,
-              bgColor: Colors.red.withValues(alpha: 0.1),
-              onTap: () => _handleStatusChange('cancelled', isAr),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            flex: 2,
-            child: _CustomButton(
-              title: isAr ? 'تأكيد الحجز' : 'Accept Booking',
-              textColor: Colors.white,
-              bgColor: AppColors.primary,
-              onTap: () => _handleStatusChange('confirmed', isAr),
-            ),
-          ),
-        ],
-      );
-    } else if (status == 'confirmed' || status == 'upcoming') {
-      return Row(
-        children: [
-          Expanded(
-            child: _CustomButton(
-              title: isAr ? 'تواصل مع المريض' : 'Chat with Patient',
-              icon: Icons.chat_bubble_rounded,
-              textColor: Colors.white,
-              bgColor: AppColors.primary,
-              onTap: () => _startConsultation(patientId, patientName, doctorMap),
-            ),
-          ),
-        ],
-      );
-    } else {
-      return _CustomButton(
-        title: isAr ? 'رجوع للخلف' : 'Go Back',
-        textColor: AppColors.textPrimary,
-        bgColor: AppColors.grey.withValues(alpha: 0.1),
-        onTap: () => Get.back(),
-      );
-    }
-  }
+
 
   void _startConsultation(String patientId, String patientName, Map<String, dynamic> doctorMap) {
     final doctorId = doctorMap['doctorId'] as String? ?? '';
@@ -380,8 +363,8 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
   Future<void> _handleStatusChange(String newStatus, bool isAr) async {
     final title = isAr ? 'تأكيد الإجراء' : 'Confirm Action';
     final content = isAr 
-        ? 'هل أنت متأكد من ${newStatus == 'confirmed' ? 'قبول' : 'رفض'} هذا الموعد؟ لا يمكن التراجع عن هذا الإجراء لاحقاً.' 
-        : 'Are you sure you want to ${newStatus == 'confirmed' ? 'accept' : 'reject'} this appointment? This action cannot be undone.';
+        ? 'هل أنت متأكد من ${newStatus == 'upcoming' ? 'قبول' : 'رفض'} هذا الموعد؟ لا يمكن التراجع عن هذا الإجراء لاحقاً.' 
+        : 'Are you sure you want to ${newStatus == 'upcoming' ? 'accept' : 'reject'} this appointment? This action cannot be undone.';
         
     final confirmBtn = isAr ? 'نعم، أؤكد' : 'Yes, Confirm';
     final cancelBtn = isAr ? 'تراجع' : 'Cancel';
@@ -400,7 +383,7 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
           ElevatedButton(
             onPressed: () => Get.back(result: true),
             style: ElevatedButton.styleFrom(
-              backgroundColor: newStatus == 'confirmed' ? AppColors.primary : Colors.red,
+              backgroundColor: newStatus == 'upcoming' ? AppColors.primary : Colors.red,
               elevation: 0,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             ),
@@ -420,22 +403,46 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
       
       await FirebaseFirestore.instance.collection('bookings').doc(bookingId).update({
         'status.current': newStatus,
-        'status.label': newStatus == 'confirmed' ? 'Confirmed' : 'Cancelled',
-        'timeline.${newStatus == 'confirmed' ? 'confirmedAt' : 'cancelledAt'}': FieldValue.serverTimestamp(),
+        'status.label': newStatus == 'upcoming' ? 'Confirmed' : 'Cancelled',
+        'timeline.${newStatus == 'upcoming' ? 'confirmedAt' : 'cancelledAt'}': FieldValue.serverTimestamp(),
       });
 
-      final notifTitle = isAr ? 'تحديث حالة الحجز' : 'Booking Update';
-      final notifBody = newStatus == 'confirmed'
-          ? (isAr ? 'تم تأكيد حجزك من قبل الطبيب.' : 'Your booking has been confirmed by the doctor.')
-          : (isAr ? 'نعتذر، تم إلغاء حجزك من قبل الطبيب.' : 'We apologize, your booking was cancelled by the doctor.');
+      final notifTitle = {
+        'ar': 'تحديث حالة الحجز',
+        'en': 'Booking Update',
+      };
+      
+      final notifBody = {
+        'ar': newStatus == 'upcoming' ? 'تم تأكيد حجزك من قبل الطبيب.' : 'نعتذر، تم إلغاء حجزك من قبل الطبيب.',
+        'en': newStatus == 'upcoming' ? 'Your booking has been confirmed by the doctor.' : 'We apologize, your booking was cancelled by the doctor.',
+      };
 
       await FirebaseFirestore.instance.collection('notifications').add({
         'userId': userId,
         'title': notifTitle,
         'body': notifBody,
         'createdAt': FieldValue.serverTimestamp(),
-        'type': 'booking'
+        'type': 'booking',
+        'status': {'read': false},
+        'priority': 'normal',
+        'data': {'bookingId': bookingId},
       });
+
+      // Schedule Doctor Reminder for Online Consultations
+      final type = widget.bookingData['type'] as String? ?? 'clinical';
+      if (newStatus == 'confirmed' && type == 'online') {
+        final scheduleMap = widget.bookingData['schedule'] as Map<String, dynamic>? ?? {};
+        final ts = scheduleMap['timestamp'] as Timestamp?;
+        if (ts != null) {
+          final appointmentDate = ts.toDate();
+          final langCode = Get.locale?.languageCode ?? 'en';
+          await NotificationService.instance.scheduleDoctorOnlineReminder(
+            bookingId: bookingId,
+            appointmentDate: appointmentDate,
+            langCode: langCode,
+          );
+        }
+      }
 
       Get.back(); // Go back to list
     } catch (e) {

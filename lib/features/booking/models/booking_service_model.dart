@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 class BookingServiceModel {
+  final String id;
   final String titleEn;
   final String titleAr;
   final String titleHe;
@@ -9,8 +10,10 @@ class BookingServiceModel {
   final String descriptionHe;
   final String category;
   final String image;
+  final String price;
 
   BookingServiceModel({
+    required this.id,
     required this.titleEn,
     required this.titleAr,
     required this.titleHe,
@@ -19,6 +22,7 @@ class BookingServiceModel {
     required this.descriptionHe,
     required this.category,
     required this.image,
+    required this.price,
   });
 
   String get title {

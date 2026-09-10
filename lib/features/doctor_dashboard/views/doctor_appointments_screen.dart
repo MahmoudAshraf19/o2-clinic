@@ -20,22 +20,56 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
   late ScrollController _scrollController;
   String _selectedStatus = 'pending';
   final DoctorAppointmentsController _controller = Get.put(DoctorAppointmentsController());
+  Worker? _targetDateWorker;
+  Worker? _targetStatusWorker;
 
   @override
   void initState() {
     super.initState();
     final now = DateTime.now();
-    _selectedDate = DateTime(now.year, now.month, now.day);
+    _selectedDate = null;
     _displayedMonth = DateTime(now.year, now.month, 1);
     
     double initialOffset = 0.0;
-    if (_selectedDate != null && _selectedDate!.year == _displayedMonth.year && _selectedDate!.month == _displayedMonth.month) {
-      final index = _selectedDate!.day - 1;
+    if (now.year == _displayedMonth.year && now.month == _displayedMonth.month) {
+      final index = now.day - 1;
       initialOffset = (index * 60.0) - (Get.width / 2) + 30 + 12;
       if (initialOffset < 0) initialOffset = 0;
     }
 
     _scrollController = ScrollController(initialScrollOffset: initialOffset);
+
+    _targetDateWorker = ever(_controller.selectedTargetDate, (DateTime? newDate) {
+      if (newDate != null && mounted) {
+        setState(() {
+          _selectedDate = newDate;
+          _displayedMonth = DateTime(newDate.year, newDate.month, 1);
+        });
+        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToSelectedDate());
+      }
+    });
+
+    _targetStatusWorker = ever(_controller.targetStatus, (String? status) {
+      if (status != null && mounted) {
+        setState(() {
+          _selectedStatus = status;
+        });
+      }
+    });
+
+    if (_controller.targetStatus.value != null) {
+      _selectedStatus = _controller.targetStatus.value!;
+    }
+
+    // Check immediately if there's already a target date set
+    if (_controller.selectedTargetDate.value != null) {
+      final newDate = _controller.selectedTargetDate.value!;
+      _selectedDate = newDate;
+      _displayedMonth = DateTime(newDate.year, newDate.month, 1);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _scrollToSelectedDate();
+      });
+    }
   }
 
   void _scrollToSelectedDate() {
@@ -55,6 +89,8 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
 
   @override
   void dispose() {
+    _targetDateWorker?.dispose();
+    _targetStatusWorker?.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -240,6 +276,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
       {'key': 'upcoming', 'label': AppLocalizations.of(context)!.upcoming},
       {'key': 'completed', 'label': AppLocalizations.of(context)!.completed},
       {'key': 'cancelled', 'label': AppLocalizations.of(context)!.cancelled},
+      {'key': 'under_investigation', 'label': AppLocalizations.of(context)!.underInvestigation},
     ];
 
     return Container(
@@ -249,36 +286,35 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Row(
-        children: statuses.map((status) {
-          final isSelected = _selectedStatus == status['key'];
-          return Expanded(
-            child: GestureDetector(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: statuses.map((status) {
+            final isSelected = _selectedStatus == status['key'];
+            return GestureDetector(
               onTap: () {
                 setState(() => _selectedStatus = status['key']!);
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                margin: const EdgeInsets.only(right: 4),
                 decoration: BoxDecoration(
                   color: isSelected ? AppColors.primary : Colors.transparent,
                   borderRadius: BorderRadius.circular(26),
                 ),
                 alignment: Alignment.center,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    status['label']!,
-                    style: TextStyle(
-                      color: isSelected ? Colors.white : AppColors.grey,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-                      fontSize: 13,
-                    ),
+                child: Text(
+                  status['label']!,
+                  style: TextStyle(
+                    color: isSelected ? Colors.white : AppColors.grey,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                    fontSize: 13,
                   ),
                 ),
               ),
-            ),
-          );
-        }).toList(),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
@@ -296,21 +332,22 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
         // Filter by Status
         final statusMap = data['status'] as Map<String, dynamic>? ?? {};
         final currentStatus = statusMap['current'] as String? ?? 'pending';
-        if (currentStatus != _selectedStatus) return false;
+        
+        if (_selectedStatus == 'upcoming') {
+          if (currentStatus != 'upcoming' && currentStatus != 'confirmed') return false;
+        } else {
+          if (currentStatus != _selectedStatus) return false;
+        }
 
           if (_selectedDate != null) {
             final schedule = data['schedule'] as Map<String, dynamic>? ?? {};
             final dateStr = schedule['date'] as String?; // format: "2026-09-09"
             if (dateStr != null && dateStr.isNotEmpty) {
               try {
-                // If it is '08 Jul 2026', we should try to format it or parse it, 
-                // but if we can't parse it with DateTime.parse, it will throw.
-                // We will use DateFormat to parse it if DateTime.parse fails.
                 DateTime bookingDate;
                 try {
                   bookingDate = DateTime.parse(dateStr);
                 } catch (e) {
-                  // Fallback for formats like "08 Jul 2026"
                   bookingDate = DateFormat('dd MMM yyyy').parse(dateStr);
                 }
                 
@@ -320,7 +357,6 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                   return false;
                 }
               } catch (e) {
-                // If we completely fail to parse the date, hide it when a specific date is selected
                 return false;
               }
             } else {
@@ -328,6 +364,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
             }
           }
         
+        print("✅ Showing booking ${data['id']} with status $currentStatus for date $_selectedDate");
         return true;
       }).toList();
 

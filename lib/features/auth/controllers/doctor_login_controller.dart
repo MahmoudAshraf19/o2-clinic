@@ -9,6 +9,7 @@ import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/auth_error_handler.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DoctorLoginController extends GetxController {
   final email = TextEditingController();
@@ -91,6 +92,9 @@ class DoctorLoginController extends GetxController {
             ? (doctorData['name_ar'] ?? '')
             : (locale == 'he' ? (doctorData['name_he'] ?? '') : (doctorData['name_en'] ?? ''));
 
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_role', 'doctor');
+        
         Get.offAllNamed(AppRoutes.doctorNavigation);
 
         Get.snackbar(

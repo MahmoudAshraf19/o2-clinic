@@ -16,6 +16,7 @@ import 'core/services/notification_service.dart';
 import 'core/theme/app_theme.dart';
 import 'common/controllers/app_constants_controller.dart';
 import 'common/controllers/global_auth_controller.dart';
+import 'features/notifications/controllers/notifications_controller.dart';
 import 'package:device_preview/device_preview.dart';
 import 'firebase_options.dart';
 
@@ -45,6 +46,7 @@ Future<void> main() async {
 
     Get.put(AppConstantsController(), permanent: true);
     Get.put(GlobalAuthController(), permanent: true);
+    Get.put(NotificationsController(), permanent: true);
     print('✅ AppConstantsController initialized');
 
     runApp(

@@ -25,7 +25,9 @@ class CosmeticSuccessScreen extends StatelessWidget {
     if (lang == 'ar') {
       switch (text) {
         case "Cosmetic Confirmed!": return "تم تأكيد الحجز التجميلي!";
+        case "Booking Confirmed!": return "تم تأكيد الحجز!";
         case "Your cosmetic appointment has been scheduled successfully.": return "تم تحديد موعدك التجميلي بنجاح.";
+        case "Your appointment has been scheduled successfully.": return "تم تحديد موعدك بنجاح.";
         case "Type": return "النوع";
         case "Date": return "التاريخ";
         case "Time": return "الوقت";
@@ -35,7 +37,9 @@ class CosmeticSuccessScreen extends StatelessWidget {
     } else if (lang == 'he') {
       switch (text) {
         case "Cosmetic Confirmed!": return "הזמנה קוסמטית אושרה!";
+        case "Booking Confirmed!": return "ההזמנה אושרה!";
         case "Your cosmetic appointment has been scheduled successfully.": return "התור הקוסמטי שלך נקבע בהצלחה.";
+        case "Your appointment has been scheduled successfully.": return "התור שלך נקבע בהצלחה.";
         case "Type": return "סוג";
         case "Date": return "תאריך";
         case "Time": return "זמן";
@@ -91,7 +95,9 @@ class CosmeticSuccessScreen extends StatelessWidget {
           const Icon(Icons.check_circle, size: 70, color: Colors.teal),
           const SizedBox(height: 16),
           Text(
-            _t("Cosmetic Confirmed!"),
+            (model.id == 'Sleep_study' || model.id == 'pulmonary_function')
+                ? _t("Booking Confirmed!")
+                : _t("Cosmetic Confirmed!"),
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -100,7 +106,9 @@ class CosmeticSuccessScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            _t("Your cosmetic appointment has been scheduled successfully."),
+            (model.id == 'Sleep_study' || model.id == 'pulmonary_function')
+                ? _t("Your appointment has been scheduled successfully.")
+                : _t("Your cosmetic appointment has been scheduled successfully."),
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.grey.shade600),
           ),

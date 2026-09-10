@@ -31,6 +31,12 @@ class BookingModel {
 
   final BookingMetaModel meta;
 
+  final BookingReportModel? doctorReport;
+
+  final BookingReportModel? patientReport;
+
+  final String? reviewId;
+
   BookingModel({
     required this.id,
     required this.user,
@@ -46,6 +52,9 @@ class BookingModel {
     required this.timeline,
     required this.reminders,
     required this.meta,
+    this.doctorReport,
+    this.patientReport,
+    this.reviewId,
   });
 
   factory BookingModel.fromMap({
@@ -112,6 +121,47 @@ class BookingModel {
       meta: BookingMetaModel.fromMap(
         map: Map<String, dynamic>.from(map['meta'] ?? {}),
       ),
+
+      doctorReport: map['doctorReport'] != null
+          ? BookingReportModel.fromMap(
+              map: Map<String, dynamic>.from(map['doctorReport']),
+            )
+          : null,
+
+      patientReport: map['patientReport'] != null
+          ? BookingReportModel.fromMap(
+              map: Map<String, dynamic>.from(map['patientReport']),
+            )
+          : null,
+
+      reviewId: map['reviewId'] as String?,
+    );
+  }
+}
+
+class BookingReportModel {
+  final String text;
+  final String? image;
+  final DateTime createdAt;
+
+  BookingReportModel({
+    required this.text,
+    this.image,
+    required this.createdAt,
+  });
+
+  factory BookingReportModel.fromMap({required Map<String, dynamic> map}) {
+    DateTime parseDate(dynamic dateVal) {
+      if (dateVal == null) return DateTime.now();
+      if (dateVal is Timestamp) return dateVal.toDate();
+      if (dateVal is String) return DateTime.tryParse(dateVal) ?? DateTime.now();
+      return DateTime.now();
+    }
+    
+    return BookingReportModel(
+      text: map['text'] ?? '',
+      image: map['image'],
+      createdAt: parseDate(map['createdAt']),
     );
   }
 }

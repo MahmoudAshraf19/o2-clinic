@@ -4,6 +4,7 @@ import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import 'package:get/get.dart';
 import '../controllers/doctor_navigation_controller.dart';
@@ -142,7 +143,7 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                                     Text(
                                       isGuest
                                           ? AppLocalizations.of(context)!.tapToSignIn
-                                          : AppLocalizations.of(context)!.yourHealthComesFirst.toUpperCase(),
+                                          : DateFormat('d MMMM, yyyy').format(DateTime.now()),
                                       style: GoogleFonts.inter(
                                         fontSize: 10,
                                         fontWeight: FontWeight.w600,
@@ -190,8 +191,10 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                               ),
                             ),
                             Obx(() {
-                              final notificationsController = Get.put(NotificationsController());
-                              final unreadCount = notificationsController.unreadCount;
+                              final notificationsController = Get.isRegistered<NotificationsController>() 
+                                  ? Get.find<NotificationsController>() 
+                                  : Get.put(NotificationsController(), permanent: true);
+                              final unreadCount = notificationsController.notifications.where((n) => !n.isRead).length;
                               if (unreadCount == 0) {
                                 return const SizedBox.shrink();
                               }

@@ -15,6 +15,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/countries.dart';
@@ -555,6 +556,9 @@ class RegisterController extends GetxController {
       _log('REGISTER SUCCESS: Account/Profile created successfully.');
 
       _log('REGISTER: redirecting to main navigation');
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('user_role', 'patient');
+
       Get.offAllNamed(AppRoutes.mainNavigation);
 
       Get.snackbar(

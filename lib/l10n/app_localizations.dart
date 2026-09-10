@@ -931,7 +931,7 @@ abstract class AppLocalizations {
   /// No description provided for @viewAll.
   ///
   /// In en, this message translates to:
-  /// **'View All'**
+  /// **'View all'**
   String get viewAll;
 
   /// No description provided for @today.
@@ -1887,6 +1887,306 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Email Not Found'**
   String get doctorEmailNotFoundTitle;
+
+  /// No description provided for @yearsExperienceVal.
+  ///
+  /// In en, this message translates to:
+  /// **'{years} Years Experience'**
+  String yearsExperienceVal(String years);
+
+  /// No description provided for @regularAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular Availability'**
+  String get regularAvailability;
+
+  /// No description provided for @unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable'**
+  String get unavailable;
+
+  /// No description provided for @consultationFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Consultation Fee'**
+  String get consultationFee;
+
+  /// No description provided for @rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating'**
+  String get rating;
+
+  /// No description provided for @editProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfile;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @warning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get warning;
+
+  /// No description provided for @contactAdminToEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Please contact O2 Clinic administration to request modifications'**
+  String get contactAdminToEdit;
+
+  /// No description provided for @quickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActions;
+
+  /// No description provided for @todaysAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Appointments'**
+  String get todaysAppointments;
+
+  /// No description provided for @statistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics'**
+  String get statistics;
+
+  /// No description provided for @messages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get messages;
+
+  /// No description provided for @viewPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'View performance'**
+  String get viewPerformance;
+
+  /// No description provided for @allTime.
+  ///
+  /// In en, this message translates to:
+  /// **'All Time'**
+  String get allTime;
+
+  /// No description provided for @thisYear.
+  ///
+  /// In en, this message translates to:
+  /// **'This Year'**
+  String get thisYear;
+
+  /// No description provided for @thisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This Month'**
+  String get thisMonth;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get thisWeek;
+
+  /// No description provided for @totalEarnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Earnings'**
+  String get totalEarnings;
+
+  /// No description provided for @totalAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Appointments'**
+  String get totalAppointments;
+
+  /// No description provided for @uniquePatients.
+  ///
+  /// In en, this message translates to:
+  /// **'Unique Patients'**
+  String get uniquePatients;
+
+  /// No description provided for @statusBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Status Breakdown'**
+  String get statusBreakdown;
+
+  /// No description provided for @appointmentType.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment Type'**
+  String get appointmentType;
+
+  /// No description provided for @nextPatient.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Patient'**
+  String get nextPatient;
+
+  /// No description provided for @openChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Open chat'**
+  String get openChat;
+
+  /// No description provided for @noPatientsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'No consultations today'**
+  String get noPatientsToday;
+
+  /// No description provided for @customDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Specific Day'**
+  String get customDay;
+
+  /// No description provided for @customRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Specific Period'**
+  String get customRange;
+
+  /// No description provided for @topServices.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Services'**
+  String get topServices;
+
+  /// No description provided for @averageEarnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Earnings / Patient'**
+  String get averageEarnings;
+
+  /// No description provided for @pastAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'Past Appointments'**
+  String get pastAppointments;
+
+  /// No description provided for @reportIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Issue'**
+  String get reportIssue;
+
+  /// No description provided for @markAsCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get markAsCompleted;
+
+  /// No description provided for @underInvestigation.
+  ///
+  /// In en, this message translates to:
+  /// **'Under Investigation'**
+  String get underInvestigation;
+
+  /// No description provided for @rateYourExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Experience'**
+  String get rateYourExperience;
+
+  /// No description provided for @writeYourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your review...'**
+  String get writeYourReview;
+
+  /// No description provided for @submitReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Review'**
+  String get submitReview;
+
+  /// No description provided for @reviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor Reviews'**
+  String get reviewTitle;
+
+  /// No description provided for @catWaitingTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting Time'**
+  String get catWaitingTime;
+
+  /// No description provided for @catCommunication.
+  ///
+  /// In en, this message translates to:
+  /// **'Communication'**
+  String get catCommunication;
+
+  /// No description provided for @catClinicCleanliness.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic Cleanliness'**
+  String get catClinicCleanliness;
+
+  /// No description provided for @catEffectiveness.
+  ///
+  /// In en, this message translates to:
+  /// **'Effectiveness'**
+  String get catEffectiveness;
+
+  /// No description provided for @sortNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest'**
+  String get sortNewest;
+
+  /// No description provided for @sortOldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest'**
+  String get sortOldest;
+
+  /// No description provided for @sortHighest.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest'**
+  String get sortHighest;
+
+  /// No description provided for @sortLowest.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest'**
+  String get sortLowest;
+
+  /// No description provided for @totalReviewsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Reviews'**
+  String totalReviewsCount(int count);
+
+  /// No description provided for @describeTheIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the issue...'**
+  String get describeTheIssue;
+
+  /// No description provided for @attachImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach Image'**
+  String get attachImage;
+
+  /// No description provided for @submitReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Report'**
+  String get submitReport;
 }
 
 class _AppLocalizationsDelegate

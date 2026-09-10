@@ -9,6 +9,7 @@ import '../models/notification_model.dart';
 import '../utils/notification_time_helper.dart';
 import '../../services_firestore/models/doctor_model.dart';
 import '../../booking/presentation/pages/booking_success_screen.dart';
+import '../../appointments/presentation/screens/my_appointments_screen.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -18,7 +19,9 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final NotificationsController controller = Get.put(NotificationsController());
+    final NotificationsController controller = Get.isRegistered<NotificationsController>() 
+        ? Get.find<NotificationsController>() 
+        : Get.put(NotificationsController(), permanent: true);
 
     return Scaffold(
       backgroundColor: _colors.surface,
@@ -179,24 +182,7 @@ class NotificationsScreen extends StatelessWidget {
             Get.back(); // close loading
             
             if (doc.exists) {
-              final data = doc.data()!;
-              final doctorMap = data['doctor'] as Map<String, dynamic>? ?? {};
-              final doctor = DoctorModel.fromMap(
-                id: doctorMap['id']?.toString() ?? '',
-                map: doctorMap,
-              );
-              
-              final schedule = data['schedule'] as Map<String, dynamic>? ?? {};
-              final dateStr = schedule['date']?.toString();
-              final date = dateStr != null ? DateTime.tryParse(dateStr) : DateTime.now();
-              final time = schedule['time']?.toString() ?? '';
-              
-              Get.to(() => BookingSuccessScreen(
-                doctor: doctor,
-                selectedDate: date ?? DateTime.now(),
-                selectedTime: time,
-                bookingId: doc.id,
-              ));
+              Get.to(() => const MyAppointmentsScreen(), arguments: {'showBookingId': doc.id});
             } else {
               Get.snackbar('Error', 'Booking not found');
             }

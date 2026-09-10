@@ -24,8 +24,9 @@ class CosmeticBookingPage extends StatelessWidget {
     if (lang == 'ar') {
       switch (text) {
         case "Booking": return "الحجز";
-        case "Select Date & Time": return "اختر التاريخ والوقت";
+        case "Select Date & Time": return "حدد التاريخ والوقت";
         case "Cosmetic Department": return "قسم التجميل";
+        case "Direct Services": return "خدمات مباشرة";
         case "Available Days": return "الأيام المتاحة";
         case "No available dates": return "لا توجد أيام متاحة";
         case "Time": return "الوقت";
@@ -40,6 +41,7 @@ class CosmeticBookingPage extends StatelessWidget {
         case "Booking": return "הזמנה";
         case "Select Date & Time": return "בחר תאריך ושעה";
         case "Cosmetic Department": return "מחלקת קוסמטיקה";
+        case "Direct Services": return "שירותים ישירים";
         case "Available Days": return "ימים פנויים";
         case "No available dates": return "אין תאריכים פנויים";
         case "Time": return "זמן";
@@ -196,11 +198,13 @@ class CosmeticBookingPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  _t("Cosmetic Department"),
+                  (model.id == 'Sleep_study' || model.id == 'pulmonary_function')
+                      ? _t("Direct Services")
+                      : _t("Cosmetic Department"),
                   style: TextStyle(
-                    
                     color: AppColors.grey,
                     fontSize: 13,
+                    
                   ),
                 ),
               ],

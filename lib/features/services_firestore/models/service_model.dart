@@ -7,6 +7,7 @@ class ServiceModel {
   final String descriptionAr;
   final String descriptionHe;
   final String image;
+  final String price;
 
   ServiceModel({
     required this.id,
@@ -17,6 +18,7 @@ class ServiceModel {
     required this.descriptionAr,
     required this.descriptionHe,
     required this.image,
+    required this.price,
   });
 
   factory ServiceModel.fromMap(Map<String, dynamic> map) {
@@ -29,6 +31,7 @@ class ServiceModel {
       descriptionAr: map['description_ar'] ?? '',
       descriptionHe: map['description_he'] ?? '',
       image: map['image'] ?? '',
+      price: map['price']?.toString() ?? '0',
     );
   }
 
@@ -41,7 +44,8 @@ class ServiceModel {
       'description_en': descriptionEn,
       'description_ar': descriptionAr,
       'description_he': descriptionHe,
-      'image': image
+      'image': image,
+      'price': price
     };
   }
 }

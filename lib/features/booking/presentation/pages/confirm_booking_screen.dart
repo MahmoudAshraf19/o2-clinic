@@ -520,7 +520,8 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 );
 
                 // ✅ لو UI عدّل التاريخ/الوقت (احتياطي)
-                controller.selectDate(widget.selectedDate);
+                controller.selectedDate.value = widget.selectedDate;
+                controller.selectedTime.value = widget.selectedTime;
 
                 // ✅ لازم الوقت يبقى موجود
                 if (widget.selectedTime.trim().isEmpty) {
@@ -638,16 +639,24 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                       'title': 'Online Booking Request',
                       'body': 'Your online consultation request has been sent to the doctor and is pending confirmation.',
                       'createdAt': FieldValue.serverTimestamp(),
-                      'type': 'booking'
+                      'type': 'booking',
+                      'data': {'bookingId': bookingId}
                     });
                     
-                    await FirebaseFirestore.instance.collection('notifications').add({
-                      'userId': widget.doctor.id,
-                      'title': 'New Online Booking Request',
-                      'body': 'You have a new online consultation request from ${user.name} at ${widget.selectedTime} on ${BookingFirestoreService.formatDate(widget.selectedDate)}.',
-                      'createdAt': FieldValue.serverTimestamp(),
-                      'type': 'booking'
-                    });
+                    
+                    final doctorDoc = await FirebaseFirestore.instance.collection('Doctors').doc(widget.doctor.id).get();
+                    final doctorAuthUid = doctorDoc.data()?['auth_uid'] as String?;
+                    
+                    if (doctorAuthUid != null && doctorAuthUid.isNotEmpty) {
+                      await FirebaseFirestore.instance.collection('notifications').add({
+                        'userId': doctorAuthUid,
+                        'title': 'New Online Booking Request',
+                        'body': 'You have a new online consultation request from ${user.name} at ${widget.selectedTime} on ${BookingFirestoreService.formatDate(widget.selectedDate)}.',
+                        'createdAt': FieldValue.serverTimestamp(),
+                        'type': 'booking',
+                        'data': {'bookingId': bookingId}
+                      });
+                    }
                   } catch(e) {
                     debugPrint('Error sending notifications: $e');
                   }

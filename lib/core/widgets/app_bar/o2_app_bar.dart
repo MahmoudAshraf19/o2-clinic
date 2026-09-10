@@ -181,8 +181,11 @@ class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
                               ),
                             ),
                             Obx(() {
-                              final notificationsController = Get.put(NotificationsController());
-                              final unreadCount = notificationsController.unreadCount;
+                              final notificationsController = Get.isRegistered<NotificationsController>() 
+                                  ? Get.find<NotificationsController>() 
+                                  : Get.put(NotificationsController(), permanent: true);
+                              
+                              final unreadCount = notificationsController.notifications.where((n) => !n.isRead).length;
                               if (unreadCount == 0) {
                                 return const SizedBox.shrink();
                               }

@@ -357,5 +357,73 @@
   "doctorPatients": "Patients",
   "doctorChats": "Chats",
   "doctorEmailNotFound": "This email is not found. Please contact administration.",
-  "doctorEmailNotFoundTitle": "Email Not Found"
+  "doctorEmailNotFoundTitle": "Email Not Found",
+  "yearsExperienceVal": "{years} Years Experience",
+  "@yearsExperienceVal": {
+    "placeholders": {
+      "years": {
+        "type": "String",
+        "example": "3"
+      }
+    }
+  },
+  "regularAvailability": "Regular Availability",
+  "unavailable": "Unavailable",
+  "consultationFee": "Consultation Fee",
+  "rating": "Rating",
+  "editProfile": "Edit Profile",
+  "save": "Save",
+  "warning": "Warning",
+  "contactAdminToEdit": "Please contact O2 Clinic administration to request modifications",
+  "quickActions": "Quick Actions",
+  "todaysAppointments": "Today's Appointments",
+  "statistics": "Statistics",
+  "messages": "Messages",
+  "viewPerformance": "View performance",
+  "allTime": "All Time",
+  "thisYear": "This Year",
+  "thisMonth": "This Month",
+  "thisWeek": "This Week",
+  "today": "Today",
+  "totalEarnings": "Total Earnings",
+  "totalAppointments": "Total Appointments",
+  "uniquePatients": "Unique Patients",
+  "statusBreakdown": "Status Breakdown",
+  "appointmentType": "Appointment Type",
+  "nextPatient": "Next Patient",
+  "viewAll": "View all",
+  "openChat": "Open chat",
+  "noPatientsToday": "No consultations today",
+  "customDay": "Specific Day",
+  "customRange": "Specific Period",
+  "topServices": "Top Services",
+  "averageEarnings": "Avg Earnings / Patient",
+  "pastAppointments": "Past Appointments",
+  "reportIssue": "Report Issue",
+  "markAsCompleted": "Complete",
+  "underInvestigation": "Under Investigation",
+  "rateYourExperience": "Rate Experience",
+  "writeYourReview": "Write your review...",
+  "submitReview": "Submit Review",
+  "reviewTitle": "Doctor Reviews",
+  "catWaitingTime": "Waiting Time",
+  "catCommunication": "Communication",
+  "catClinicCleanliness": "Clinic Cleanliness",
+  "catEffectiveness": "Effectiveness",
+  "sortNewest": "Newest",
+  "sortOldest": "Oldest",
+  "sortHighest": "Highest",
+  "sortLowest": "Lowest",
+  "totalReviewsCount": "{count} Reviews",
+  "@totalReviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "10"
+      }
+    }
+  },
+  "describeTheIssue": "Describe the issue...",
+  "attachImage": "Attach Image",
+  "submitReport": "Submit Report"
 }

@@ -134,4 +134,55 @@ class BookingsFirestoreService {
       }
     });
   }
+
+  /// 🚀 UPDATE BOOKING STATUS
+  Future<void> updateBookingStatus(String bookingId, String status) async {
+    try {
+      // 1. Update the booking status
+      await _firestore.collection('bookings').doc(bookingId).update({
+        'status.current': status,
+      });
+
+      // 2. Fetch the booking to get user details for the notification
+      final doc = await _firestore.collection('bookings').doc(bookingId).get();
+      if (!doc.exists) return;
+      final data = doc.data()!;
+      final userMap = data['user'] as Map<String, dynamic>?;
+      if (userMap == null) return;
+      final userId = userMap['userId'] ?? userMap['auth_uid'];
+      if (userId == null || userId.toString().isEmpty) return;
+
+      // 3. Prepare notification details based on status
+      String titleEn = 'Booking Update';
+      String titleAr = 'تحديث الحجز';
+      String bodyEn = 'Your booking has been updated.';
+      String bodyAr = 'تم تحديث حالة حجزك.';
+
+      if (status == 'completed') {
+        bodyEn = 'Your appointment has been completed. You can now rate your experience!';
+        bodyAr = 'تم الانتهاء من موعدك. يمكنك الآن تقييم تجربتك!';
+      } else if (status == 'under_investigation') {
+        titleEn = 'Issue Reported';
+        titleAr = 'تم الإبلاغ عن مشكلة';
+        bodyEn = 'An issue was reported for your booking. We are investigating it.';
+        bodyAr = 'تم الإبلاغ عن مشكلة في حجزك. نحن نقوم بالتحقيق فيها.';
+      }
+
+      // 4. Create the notification document
+      await _firestore.collection('notifications').add({
+        'userId': userId,
+        'type': 'booking',
+        'title': {'en': titleEn, 'ar': titleAr},
+        'body': {'en': bodyEn, 'ar': bodyAr},
+        'data': {'bookingId': bookingId},
+        'priority': 'high',
+        'status': {'read': false},
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+    } catch (e) {
+      debugPrint("💥 Failed to update booking status: $e");
+      rethrow;
+    }
+  }
 }

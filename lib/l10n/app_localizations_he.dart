@@ -435,10 +435,10 @@ class AppLocalizationsHe extends AppLocalizations {
   String get specialtiesClinics => 'התמחויות ומרפאות';
 
   @override
-  String get viewAll => 'הצג הכל';
+  String get viewAll => 'צפה בהכל';
 
   @override
-  String get today => 'הַיוֹם';
+  String get today => 'היום';
 
   @override
   String get text200Pm500Pm => '14:00 – 17:00';
@@ -936,4 +936,159 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get doctorEmailNotFoundTitle => 'אימייל לא נמצא';
+
+  @override
+  String yearsExperienceVal(String years) {
+    return '$years שנות ניסיון';
+  }
+
+  @override
+  String get regularAvailability => 'זמינות רגילה';
+
+  @override
+  String get unavailable => 'לא זמין';
+
+  @override
+  String get consultationFee => 'מחיר ייעוץ';
+
+  @override
+  String get rating => 'דירוג';
+
+  @override
+  String get editProfile => 'ערוך פרופיל';
+
+  @override
+  String get save => 'שמור';
+
+  @override
+  String get warning => 'אזהרה';
+
+  @override
+  String get contactAdminToEdit =>
+      'אנא צור קשר עם הנהלת O2 Clinic כדי לבקש שינויים';
+
+  @override
+  String get quickActions => 'פעולות מהירות';
+
+  @override
+  String get todaysAppointments => 'תורים להיום';
+
+  @override
+  String get statistics => 'סטטיסטיקה';
+
+  @override
+  String get messages => 'הודעות';
+
+  @override
+  String get viewPerformance => 'הצג ביצועים';
+
+  @override
+  String get allTime => 'כל הזמן';
+
+  @override
+  String get thisYear => 'השנה';
+
+  @override
+  String get thisMonth => 'החודש';
+
+  @override
+  String get thisWeek => 'השבוע';
+
+  @override
+  String get totalEarnings => 'סך כל הרווחים';
+
+  @override
+  String get totalAppointments => 'סך כל התורים';
+
+  @override
+  String get uniquePatients => 'מטופלים ייחודיים';
+
+  @override
+  String get statusBreakdown => 'פירוט מצב';
+
+  @override
+  String get appointmentType => 'סוג תור';
+
+  @override
+  String get nextPatient => 'המטופל הבא';
+
+  @override
+  String get openChat => 'פתח צ\'אט';
+
+  @override
+  String get noPatientsToday => 'אין התייעצויות היום';
+
+  @override
+  String get customDay => 'יום ספציפי';
+
+  @override
+  String get customRange => 'תקופה ספציפית';
+
+  @override
+  String get topServices => 'השירותים המובילים';
+
+  @override
+  String get averageEarnings => 'ממוצע רווח למטופל';
+
+  @override
+  String get pastAppointments => 'תורים קודמים';
+
+  @override
+  String get reportIssue => 'דווח על בעיה';
+
+  @override
+  String get markAsCompleted => 'סיים תור';
+
+  @override
+  String get underInvestigation => 'בבדיקה';
+
+  @override
+  String get rateYourExperience => 'דרג את החוויה שלך';
+
+  @override
+  String get writeYourReview => 'כתוב את הביקורת שלך כאן...';
+
+  @override
+  String get submitReview => 'שלח ביקורת';
+
+  @override
+  String get reviewTitle => 'ביקורות רופא';
+
+  @override
+  String get catWaitingTime => 'זמן המתנה';
+
+  @override
+  String get catCommunication => 'תקשורת';
+
+  @override
+  String get catClinicCleanliness => 'ניקיון המרפאה';
+
+  @override
+  String get catEffectiveness => 'יעילות הטיפול';
+
+  @override
+  String get sortNewest => 'הכי חדש';
+
+  @override
+  String get sortOldest => 'הכי ישן';
+
+  @override
+  String get sortHighest => 'הדירוג הגבוה ביותר';
+
+  @override
+  String get sortLowest => 'הדירוג הנמוך ביותר';
+
+  @override
+  String totalReviewsCount(int count) {
+    return '$count ביקורות';
+  }
+
+  @override
+  String get describeTheIssue => 'תאר את הבעיה בפירוט...';
+
+  @override
+  String get attachImage => 'צרף תמונה';
+
+  @override
+  String get submitReport => 'שלח תלונה';
 }

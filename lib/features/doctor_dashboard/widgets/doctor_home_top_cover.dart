@@ -8,6 +8,9 @@ import 'package:intl/intl.dart';
 import '../../../core/constants/app_firestore.dart';
 import '../../../core/theme/app_colors.dart';
 import '../widgets/doctor_app_bar.dart';
+import '../../notifications/controllers/notifications_controller.dart';
+import '../../notifications/widgets/notification_dropdown_widget.dart';
+import 'package:get/get.dart';
 
 class DoctorHomeTopCover extends StatefulWidget {
   const DoctorHomeTopCover({super.key});
@@ -215,10 +218,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                 opacity: isCollapsed ? 1.0 : 0.0,
                 child: const Align(
                   alignment: Alignment.topCenter,
-                  child: SizedBox(
-                    height: 72.0, // Match the toolbarHeight
-                    child: DoctorAppBar(),
-                  ),
+                  child: DoctorAppBar(),
                 ),
               ),
 
@@ -233,18 +233,55 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: surface.withOpacity(0.2),
-                          shape: BoxShape.circle,
-                          border: Border.all(color: surface.withOpacity(0.5), width: 1),
-                        ),
-                        child: const Icon(
-                          Icons.notifications_outlined,
-                          color: Colors.white,
-                          size: 24,
+                      GestureDetector(
+                        onTap: () {
+                          Get.dialog(
+                            const NotificationDropdownWidget(),
+                            barrierColor: Colors.transparent,
+                          );
+                        },
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: surface.withOpacity(0.2),
+                                shape: BoxShape.circle,
+                                border: Border.all(color: surface.withOpacity(0.5), width: 1),
+                              ),
+                              child: const Icon(
+                                Icons.notifications_outlined,
+                                color: Colors.white,
+                                size: 24,
+                              ),
+                            ),
+                            if (Get.isRegistered<NotificationsController>())
+                              Obx(() {
+                                final unreadCount = Get.find<NotificationsController>().unreadCount;
+                                if (unreadCount == 0) return const SizedBox.shrink();
+                                return Positioned(
+                                  top: 0,
+                                  right: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Text(
+                                      unreadCount > 9 ? '9+' : unreadCount.toString(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                          ],
                         ),
                       ),
                     ],

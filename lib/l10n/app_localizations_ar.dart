@@ -946,4 +946,159 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get doctorEmailNotFoundTitle => 'البريد غير موجود';
+
+  @override
+  String yearsExperienceVal(String years) {
+    return 'خبرة $years سنوات';
+  }
+
+  @override
+  String get regularAvailability => 'المواعيد المنتظمة';
+
+  @override
+  String get unavailable => 'غير متاح';
+
+  @override
+  String get consultationFee => 'سعر الاستشارة';
+
+  @override
+  String get rating => 'التقييم';
+
+  @override
+  String get editProfile => 'تعديل الملف الشخصي';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get warning => 'تنبيه';
+
+  @override
+  String get contactAdminToEdit =>
+      'برجاء التواصل مع إدارة O2 Clinic وطلب التعديل منهم';
+
+  @override
+  String get quickActions => 'الإجراءات السريعة';
+
+  @override
+  String get todaysAppointments => 'مواعيد اليوم';
+
+  @override
+  String get statistics => 'الإحصائيات';
+
+  @override
+  String get messages => 'الرسائل';
+
+  @override
+  String get viewPerformance => 'عرض الأداء';
+
+  @override
+  String get allTime => 'كل الأوقات';
+
+  @override
+  String get thisYear => 'هذا العام';
+
+  @override
+  String get thisMonth => 'هذا الشهر';
+
+  @override
+  String get thisWeek => 'هذا الأسبوع';
+
+  @override
+  String get totalEarnings => 'إجمالي الدخل';
+
+  @override
+  String get totalAppointments => 'إجمالي المواعيد';
+
+  @override
+  String get uniquePatients => 'المرضى الفعليين';
+
+  @override
+  String get statusBreakdown => 'حالات المواعيد';
+
+  @override
+  String get appointmentType => 'نوع الموعد';
+
+  @override
+  String get nextPatient => 'المريض القادم';
+
+  @override
+  String get openChat => 'فتح المحادثة';
+
+  @override
+  String get noPatientsToday => 'لا يوجد كشوفات اليوم';
+
+  @override
+  String get customDay => 'يوم محدد';
+
+  @override
+  String get customRange => 'فترة محددة';
+
+  @override
+  String get topServices => 'الخدمات الأكثر طلباً';
+
+  @override
+  String get averageEarnings => 'متوسط ربح الكشف';
+
+  @override
+  String get pastAppointments => 'الكشوفات السابقة';
+
+  @override
+  String get reportIssue => 'إبلاغ عن مشكلة';
+
+  @override
+  String get markAsCompleted => 'إنهاء الكشف';
+
+  @override
+  String get underInvestigation => 'تحت التحقق';
+
+  @override
+  String get rateYourExperience => 'قيم تجربتك';
+
+  @override
+  String get writeYourReview => 'اكتب تقييمك هنا...';
+
+  @override
+  String get submitReview => 'إرسال التقييم';
+
+  @override
+  String get reviewTitle => 'تقييمات الطبيب';
+
+  @override
+  String get catWaitingTime => 'وقت الانتظار';
+
+  @override
+  String get catCommunication => 'التواصل';
+
+  @override
+  String get catClinicCleanliness => 'نظافة العيادة';
+
+  @override
+  String get catEffectiveness => 'فعالية العلاج';
+
+  @override
+  String get sortNewest => 'الأحدث';
+
+  @override
+  String get sortOldest => 'الأقدم';
+
+  @override
+  String get sortHighest => 'الأعلى تقييماً';
+
+  @override
+  String get sortLowest => 'الأقل تقييماً';
+
+  @override
+  String totalReviewsCount(int count) {
+    return '$count تقييم';
+  }
+
+  @override
+  String get describeTheIssue => 'اشرح المشكلة بالتفصيل...';
+
+  @override
+  String get attachImage => 'إرفاق صورة';
+
+  @override
+  String get submitReport => 'إرسال الشكوى';
 }

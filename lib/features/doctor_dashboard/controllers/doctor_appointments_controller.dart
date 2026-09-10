@@ -8,6 +8,8 @@ class DoctorAppointmentsController extends GetxController {
   
   final RxList<DocumentSnapshot> bookings = <DocumentSnapshot>[].obs;
   final RxBool isLoading = true.obs;
+  final Rx<DateTime?> selectedTargetDate = Rx<DateTime?>(null);
+  final Rx<String?> targetStatus = Rx<String?>(null);
   
   StreamSubscription? _bookingsSub;
 
@@ -74,5 +76,9 @@ class DoctorAppointmentsController extends GetxController {
   void onClose() {
     _bookingsSub?.cancel();
     super.onClose();
+  }
+
+  void setSelectedTargetDate(DateTime? date) {
+    selectedTargetDate.value = date;
   }
 }

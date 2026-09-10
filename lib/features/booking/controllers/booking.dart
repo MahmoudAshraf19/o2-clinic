@@ -589,6 +589,143 @@ class BookingFirestoreService {
   }
 
   /// ===============================
+  /// CREATE DIRECT BOOKING (Sleep study, etc.)
+  /// ===============================
+  Future<BookingResult> createDirectBooking({
+    required BookingUserInfo user,
+    required String serviceId,
+    required String nameEn,
+    required String nameAr,
+    required DateTime selectedDate,
+    required String selectedTime,
+    int durationMinutes = 30,
+    String clinicName = "O2 Clinic Headquarters",
+    String floor = "1",
+    String room = "Direct Services Room",
+    String paymentStatus = "pending",
+    String paymentMethod = "cash",
+    String currency = "ILS",
+    num amount = 0,
+    String appVersion = "1.0",
+    Map<String, dynamic>? discountData,
+  }) async {
+    try {
+      final ts = buildTimestamp(selectedDate, selectedTime);
+      final dateKey = formatDate(selectedDate);
+      final counterRef = _firestore.collection("counters").doc("bookings");
+
+      return await _firestore.runTransaction<BookingResult>((tx) async {
+        final counterSnap = await tx.get(counterRef);
+
+        DocumentReference? discountRef;
+        DocumentSnapshot? discountSnap;
+        if (discountData != null && discountData['code_id'] != null) {
+          discountRef = _firestore.collection("discount_codes").doc(discountData['code_id']);
+          discountSnap = await tx.get(discountRef);
+          
+          if (discountSnap.exists) {
+            final data = discountSnap.data() as Map<String, dynamic>? ?? {};
+            final status = data['status'] as String?;
+            final usageLimit = (data['usage_limit'] ?? -1) as int;
+            final usedCount = (data['used_count'] ?? 0) as int;
+            
+            if (status != 'active') {
+              return BookingResult(success: false, message: _getDiscountErrorMessage('not_active'), bookingId: null, bookedCount: 0, maxBookings: 0);
+            }
+            if (usageLimit != -1 && usedCount >= usageLimit) {
+              return BookingResult(success: false, message: _getDiscountErrorMessage('limit_reached'), bookingId: null, bookedCount: 0, maxBookings: 0);
+            }
+          }
+        }
+
+        int currentSeq = 1000;
+        if (counterSnap.exists) {
+          currentSeq = ((counterSnap.data()?['direct'] ?? 1000) as num).toInt();
+        }
+        final newSeq = currentSeq + 1;
+        tx.set(counterRef, {'direct': newSeq}, SetOptions(merge: true));
+        
+        if (discountRef != null && discountSnap != null && discountSnap.exists) {
+          final data = discountSnap.data() as Map<String, dynamic>? ?? {};
+          final usageLimit = (data['usage_limit'] ?? -1) as int;
+          final usedCount = (data['used_count'] ?? 0) as int;
+          
+          final newUsedCount = usedCount + 1;
+          final updates = <String, dynamic>{"used_count": newUsedCount};
+          if (usageLimit != -1 && newUsedCount >= usageLimit) {
+            updates["status"] = "expired";
+          }
+          tx.update(discountRef, updates);
+        }
+
+        final bookingId = "O2-DIR-$newSeq";
+        final bookingRef = _firestore.collection("bookings").doc(bookingId);
+
+        final bookingData = <String, dynamic>{
+          "id": bookingId,
+          "user": user.toMap(),
+          "type": "direct",
+          "service": null,
+          "doctor": null,
+          "imaging": null,
+          "direct": {
+            "serviceId": serviceId,
+            "name_en": nameEn,
+            "name_ar": nameAr,
+          },
+          "schedule": {
+            "date": dateKey,
+            "time": selectedTime,
+            "timestamp": ts,
+            "duration_minutes": durationMinutes,
+          },
+          "location": {"clinic": clinicName, "floor": floor, "room": room},
+          "payment": {
+            "status": paymentStatus,
+            "method": paymentMethod,
+            "amount": amount,
+            "currency": currency,
+            if (discountData != null) "discount": discountData,
+          },
+          "status": {"current": "upcoming", "label": "Upcoming"},
+          "timeline": {
+            "createdAt": FieldValue.serverTimestamp(),
+            "confirmedAt": FieldValue.serverTimestamp(),
+            "cancelledAt": null,
+            "completedAt": null,
+          },
+          "reminders": {
+            "12h_before": {"sent": false, "sentAt": null},
+            "3h_before": {"sent": false, "sentAt": null},
+          },
+          "meta": {"source": "mobile_app", "version": appVersion},
+        };
+
+        tx.set(bookingRef, bookingData);
+
+        print("✅ [Direct Booking] Created: $bookingId");
+
+        return BookingResult(
+          success: true,
+          message: "Booking confirmed",
+          bookingId: bookingId,
+          bookedCount: 0,
+          maxBookings: 0,
+        );
+      });
+    } catch (e) {
+      print("❌ [Direct Booking] Failed: $e");
+      return BookingResult(
+        success: false,
+        message: "Booking failed: $e",
+        bookingId: null,
+        bookedCount: 0,
+        maxBookings: 0,
+      );
+    }
+  }
+
+  /// ===============================
   /// WATCH CAPACITY (LIVE)
   /// ===============================
   Stream<int> watchBookedCount({

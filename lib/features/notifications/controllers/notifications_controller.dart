@@ -28,15 +28,7 @@ class NotificationsController extends GetxController {
         final deduplicated = <NotificationModel>[];
         
         for (final n in data) {
-          if (n.type == 'booking' || n.type == 'booking_confirmation') {
-            final bookingId = n.data['bookingId']?.toString();
-            if (bookingId != null && bookingId.isNotEmpty) {
-              if (seenBookingIds.contains(bookingId)) {
-                continue; // Skip duplicate
-              }
-              seenBookingIds.add(bookingId);
-            }
-          }
+          // Removed deduplication to allow all booking updates to show
           deduplicated.add(n);
         }
         
@@ -53,18 +45,22 @@ class NotificationsController extends GetxController {
     super.onClose();
   }
 
-  int get unreadCount => notifications.where((n) => !n.isRead).length;
+  int get unreadCount {
+    return notifications.where((n) => !n.isRead).length;
+  }
 
-  List<NotificationModel> get latestFive => notifications.take(5).toList();
+  List<NotificationModel> get latestFive {
+    return notifications.take(5).toList();
+  }
 
   void markAsRead(String id) {
     _service.markAsRead(id);
   }
 
   void markAllAsRead() {
-    final uid = FirebaseAuth.instance.currentUser?.uid;
-    if (uid != null) {
-      _service.markAllAsRead(uid);
+    final unread = newNotifications;
+    for (final n in unread) {
+      _service.markAsRead(n.id);
     }
   }
 

@@ -9,22 +9,23 @@ class BookingService {
   /// 🧠 MEMORY CACHE (instant load)
   static List<BookingServiceModel>? _cache;
 
-  static Future<List<BookingServiceModel>> getServices() async {
+  static Future<List<BookingServiceModel>> getServices({bool forceRefresh = false}) async {
     try {
       print("🚀 [BookingService] REQUEST SERVICES");
 
       /// ⚡ لو موجود في الكاش → رجعه فورًا
-      if (_cache != null) {
+      if (!forceRefresh && _cache != null) {
         print("⚡ RETURNING FROM CACHE (${_cache!.length})");
         return _cache!;
       }
 
       print("🌐 FETCHING FROM FIREBASE...");
 
-      final firestoreServices = await _service.getAllServices();
+      final firestoreServices = await _service.getAllServices(forceRefresh: forceRefresh);
 
       final result = firestoreServices.map((e) {
         return BookingServiceModel(
+          id: e.id,
           titleEn: e.titleEn,
           titleAr: e.titleAr,
           titleHe: e.titleHe,
@@ -33,6 +34,7 @@ class BookingService {
           descriptionHe: e.descriptionHe,
           category: _mapCategory(e.id),
           image: e.image,
+          price: e.price,
         );
       }).toList();
 

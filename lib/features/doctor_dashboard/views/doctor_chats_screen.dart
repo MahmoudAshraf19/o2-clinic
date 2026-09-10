@@ -52,7 +52,7 @@ class DoctorChatsScreen extends StatelessWidget {
                 
                 final room = controller.chatRooms[index - 2];
                 return FutureBuilder<DocumentSnapshot>(
-                  future: FirebaseFirestore.instance.collection('Users').doc(room.customerId).get(),
+                  future: FirebaseFirestore.instance.collection('users').doc(room.customerId).get(),
                   builder: (context, snapshot) {
                     String displayName = room.customerName.isNotEmpty ? room.customerName : 'Patient';
                     String displayImage = room.customerProfileImage;

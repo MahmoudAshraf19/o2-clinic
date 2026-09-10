@@ -17,9 +17,11 @@ class DoctorAppointmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userMap = bookingData['user'] as Map<String, dynamic>? ?? {};
-    final userId = userMap['userId'] as String? ?? '';
+    final userId = userMap['auth_uid'] as String? ?? userMap['userId'] as String? ?? '';
     final name = userMap['name'] as String? ?? 'Patient';
     final userImage = userMap['image'] as String? ?? ''; // We'll try to get it from Firestore below if empty
+
+    final bookingId = bookingData['id'] as String? ?? '';
 
     final schedule = bookingData['schedule'] as Map<String, dynamic>? ?? {};
     final timeStr = schedule['time'] as String? ?? '';
@@ -66,7 +68,7 @@ class DoctorAppointmentCard extends StatelessWidget {
         // NO SHADOWS
       ),
       child: FutureBuilder<DocumentSnapshot>(
-        future: FirebaseFirestore.instance.collection('Users').doc(userId).get(),
+        future: FirebaseFirestore.instance.collection('users').doc(userId).get(),
         builder: (context, snapshot) {
           String? imageUrl;
           String gender = '';
@@ -96,8 +98,10 @@ class DoctorAppointmentCard extends StatelessWidget {
                   CircleAvatar(
                     radius: 28,
                     backgroundColor: AppColors.grey.withValues(alpha: 0.2),
-                    backgroundImage: (imageUrl != null && imageUrl.isNotEmpty) ? NetworkImage(imageUrl) : null,
-                    child: (imageUrl == null || imageUrl.isEmpty)
+                    backgroundImage: (imageUrl != null && imageUrl.trim().isNotEmpty) 
+                        ? NetworkImage(imageUrl.trim()) 
+                        : (userImage.trim().isNotEmpty ? NetworkImage(userImage.trim()) : null),
+                    child: (imageUrl == null || imageUrl.trim().isEmpty) && userImage.trim().isEmpty
                         ? const Icon(Icons.person, color: AppColors.grey, size: 30)
                         : null,
                   ),
@@ -154,6 +158,10 @@ class DoctorAppointmentCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         _buildInfoRow(Icons.assignment_outlined, serviceName.isNotEmpty ? serviceName : 'Check-up'),
+                        if (bookingId.isNotEmpty) ...[
+                          const SizedBox(height: 8),
+                          _buildInfoRow(Icons.tag_rounded, 'ID: $bookingId'),
+                        ],
                       ],
                     ),
                   ),
@@ -192,7 +200,7 @@ class DoctorAppointmentCard extends StatelessWidget {
   }
 
   bool _isActionEnabled(String status) {
-    return status == 'upcoming' || status == 'confirmed';
+    return status == 'pending' || status == 'upcoming' || status == 'confirmed';
   }
 
   void _startConsultation(BuildContext context, String patientId, String patientName, String patientImage, Map<String, dynamic> doctorMap) {

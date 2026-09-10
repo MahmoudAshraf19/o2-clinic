@@ -6,6 +6,7 @@ import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/auth_error_handler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../chat_support/screens/support_chat_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   final email = TextEditingController();
@@ -37,6 +38,17 @@ class LoginController extends GetxController {
             .collection('users')
             .doc(userCred.user!.uid)
             .get();
+        if (!doc.exists) {
+          await FirebaseAuth.instance.signOut();
+          Get.snackbar(
+            'Login Failed',
+            'Email does not exist in our records.',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red.withOpacity(0.9),
+            colorText: Colors.white,
+          );
+          return;
+        }
         
         if (doc.exists && doc.data()?['isBlocked'] == true) {
           await FirebaseAuth.instance.signOut();
@@ -60,6 +72,9 @@ class LoginController extends GetxController {
           return;
         }
       }
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('user_role', 'patient');
 
       Get.offAllNamed(AppRoutes.mainNavigation);
 
