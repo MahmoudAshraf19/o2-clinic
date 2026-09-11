@@ -59,17 +59,18 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
       );
 
       await FirebaseFirestore.instance.runTransaction((transaction) async {
-        // 1. Add review
-        transaction.set(docRef, review.toMap());
-        
-        // 2. Update Booking
-        final bookingRef = FirebaseFirestore.instance.collection('bookings').doc(widget.bookingId);
-        transaction.update(bookingRef, {'reviewId': review.id});
-        
-        // 3. Update Doctor Rating Average
+        // 1. Fetch Doctor (GET must come before any writes)
         final doctorRef = FirebaseFirestore.instance.collection('Doctors').doc(widget.doctorId);
         final doctorSnapshot = await transaction.get(doctorRef);
         
+        // 2. Add review (WRITE)
+        transaction.set(docRef, review.toMap());
+        
+        // 3. Update Booking (WRITE)
+        final bookingRef = FirebaseFirestore.instance.collection('bookings').doc(widget.bookingId);
+        transaction.update(bookingRef, {'reviewId': review.id});
+        
+        // 4. Update Doctor Rating Average (WRITE)
         if (doctorSnapshot.exists) {
           final data = doctorSnapshot.data()!;
           int reviewsCount = (data['reviews_count'] ?? 0) as int;

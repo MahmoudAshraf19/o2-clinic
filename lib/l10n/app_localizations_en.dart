@@ -1102,4 +1102,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get submitReport => 'Submit Report';
+
+  @override
+  String get chooseConsultationType => 'Choose Consultation Type';
+
+  @override
+  String get howConsultWithDoctor =>
+      'How would you like to consult with the doctor?';
+
+  @override
+  String get inO2Clinic => 'In O2 Clinic';
 }

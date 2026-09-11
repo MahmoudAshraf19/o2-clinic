@@ -14,6 +14,9 @@ import '../../services_firestore/models/doctor_model.dart';
 import '../../booking/presentation/pages/booking_success_screen.dart';
 import '../../doctor_dashboard/controllers/doctor_navigation_controller.dart';
 import '../../doctor_dashboard/controllers/doctor_appointments_controller.dart';
+import '../../doctor_dashboard/views/doctor_reviews_screen.dart';
+import '../../../core/routes/app_routes.dart';
+import '../../../core/services/notification_router.dart';
 
 class NotificationDropdownWidget extends StatelessWidget {
   const NotificationDropdownWidget({super.key});
@@ -285,7 +288,19 @@ class NotificationDropdownWidget extends StatelessWidget {
       if (!n.isRead) {
         controller.markAsRead(n.id);
       }
-      if ((n.type == 'booking' || n.type == 'booking_confirmation') && n.data['bookingId'] != null && n.data['bookingId'].toString().isNotEmpty) {
+      if (n.type == 'review' && n.data['reviewId'] != null) {
+        Get.back(); // close dropdown
+        Get.to(() => const DoctorReviewsScreen(), arguments: {'highlightReviewId': n.data['reviewId'].toString()});
+        return;
+      }
+      
+      if (n.type == 'message' && n.data.isNotEmpty) {
+        Get.back(); // close dropdown
+        NotificationRouter.handleNotificationTap(n.data);
+        return;
+      }
+      
+      if (n.data.isNotEmpty && n.data['bookingId'] != null && n.data['bookingId'].toString().isNotEmpty) {
         Get.back(); // close dropdown
         
         Get.dialog(const Center(child: CircularProgressIndicator(color: Color(0xFF00685F))), barrierDismissible: false, barrierColor: Colors.black12);

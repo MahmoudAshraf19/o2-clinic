@@ -19,7 +19,10 @@ class PatientChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PatientChatController(DoctorChatService(), doctor));
+    final controller = Get.put(
+      PatientChatController(DoctorChatService(), doctor),
+      tag: doctor.id,
+    );
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -123,7 +126,10 @@ class PatientChatScreen extends StatelessWidget {
                           child: Stack(
                             alignment: Alignment.centerRight,
                             children: [
-                              ChatMessageBubble(message: draftMsg.toChatMessage(controller.patientId)),
+                              ChatMessageBubble(
+                                message: draftMsg.toChatMessage(controller.patientId),
+                                agentAvatarUrl: doctor.image,
+                              ),
                               const Positioned(
                                 right: 20,
                                 bottom: 20,
@@ -147,7 +153,10 @@ class PatientChatScreen extends StatelessWidget {
                       final msg = controller.messages[messagesCount - 1 - msgIndex];
                       return Padding(
                         padding: const EdgeInsets.only(top: 14),
-                        child: ChatMessageBubble(message: msg.toChatMessage(controller.patientId)),
+                        child: ChatMessageBubble(
+                          message: msg.toChatMessage(controller.patientId),
+                          agentAvatarUrl: doctor.image,
+                        ),
                       );
                     }
 

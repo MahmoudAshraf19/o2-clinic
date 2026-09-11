@@ -4,6 +4,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
+import 'package:flutter/foundation.dart'; // For kIsWeb
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../services_firestore/services/bookings_firestore_service.dart';
@@ -22,15 +23,20 @@ class ReportIssueScreen extends StatefulWidget {
 
 class _ReportIssueScreenState extends State<ReportIssueScreen> {
   final _textController = TextEditingController();
-  File? _selectedImage;
+  XFile? _selectedImage;
   bool _isSubmitting = false;
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
-    final picked = await picker.pickImage(source: ImageSource.gallery);
+    final picked = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+      maxWidth: 800,
+      maxHeight: 800,
+    );
     if (picked != null) {
       setState(() {
-        _selectedImage = File(picked.path);
+        _selectedImage = picked;
       });
     }
   }
@@ -46,7 +52,12 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
         final ref = FirebaseStorage.instance
             .ref()
             .child('reports/${widget.bookingId}_${DateTime.now().millisecondsSinceEpoch}.jpg');
-        await ref.putFile(_selectedImage!);
+        
+        if (kIsWeb) {
+          await ref.putData(await _selectedImage!.readAsBytes());
+        } else {
+          await ref.putFile(File(_selectedImage!.path));
+        }
         imageUrl = await ref.getDownloadURL();
       }
 
@@ -129,7 +140,9 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: Image.file(_selectedImage!, height: 150, width: double.infinity, fit: BoxFit.cover),
+                      child: kIsWeb 
+                          ? Image.network(_selectedImage!.path, height: 150, width: double.infinity, fit: BoxFit.cover)
+                          : Image.file(File(_selectedImage!.path), height: 150, width: double.infinity, fit: BoxFit.cover),
                     ),
                     IconButton(
                       icon: const Icon(Icons.close, color: Colors.white),

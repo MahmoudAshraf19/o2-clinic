@@ -1101,4 +1101,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get submitReport => 'إرسال الشكوى';
+
+  @override
+  String get chooseConsultationType => 'اختر نوع الاستشارة';
+
+  @override
+  String get howConsultWithDoctor => 'كيف تفضل استشارة الطبيب؟';
+
+  @override
+  String get inO2Clinic => 'في العيادة';
 }

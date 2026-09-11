@@ -5,6 +5,7 @@ import '../theme/app_text_styles.dart';
 import '../../features/booking/presentation/pages/booking_page.dart';
 import '../../features/booking/presentation/pages/online_consultation_booking_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:o2_clinic/l10n/app_localizations.dart';
 
 class BookingHelper {
   /// Navigates to the booking page or shows a bottom sheet for online consultation choice.
@@ -67,7 +68,7 @@ class BookingHelper {
           const SizedBox(height: 32),
           
           Text(
-            'Choose Consultation Type', // Need to localize later if needed
+            AppLocalizations.of(context)?.chooseConsultationType ?? 'Choose Consultation Type',
             style: AppTextStyles.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
@@ -76,7 +77,7 @@ class BookingHelper {
           ),
           const SizedBox(height: 8),
           Text(
-            'How would you like to consult with the doctor?',
+            AppLocalizations.of(context)?.howConsultWithDoctor ?? 'How would you like to consult with the doctor?',
             style: AppTextStyles.textTheme.bodyMedium?.copyWith(
               color: AppColors.textSecondary,
             ),
@@ -87,7 +88,7 @@ class BookingHelper {
           // Option 1: In O2 Clinic
           _buildOptionButton(
             context: context,
-            title: 'In O2 Clinic',
+            title: AppLocalizations.of(context)?.inO2Clinic ?? 'In O2 Clinic',
             icon: Icons.local_hospital_outlined,
             onTap: () {
               Navigator.pop(context); // Close bottom sheet
@@ -99,7 +100,7 @@ class BookingHelper {
           // Option 2: Online Consultation
           _buildOptionButton(
             context: context,
-            title: 'Online Consultation', // Or use translation if possible
+            title: AppLocalizations.of(context)?.onlineConsultation ?? 'Online Consultation',
             icon: Icons.video_camera_front_outlined,
             onTap: () {
               Navigator.pop(context); // Close bottom sheet

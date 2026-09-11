@@ -50,30 +50,46 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
 
   List<String> _getAvailableTimeSlots(DateTime date) {
     final dayName = DateFormat('EEEE').format(date).toLowerCase();
-    final daySchedule = widget.doctor.availabilityDayOnline[dayName];
+    final daySchedules = widget.doctor.availabilityDayOnline[dayName];
     
-    if (daySchedule == null) return [];
-
-    final fromStr = daySchedule['from'];
-    final toStr = daySchedule['to'];
-    
-    if (fromStr == null || toStr == null) return [];
-    
-    int? from = int.tryParse(fromStr);
-    int? to = int.tryParse(toStr);
-    
-    if (from == null || to == null) return [];
-    if (to <= from) return []; // Invalid schedule
+    if (daySchedules == null || daySchedules.isEmpty) return [];
 
     List<String> slots = [];
-    for (int i = from; i < to; i++) {
-      final startHour = i > 12 ? i - 12 : (i == 0 ? 12 : i);
-      final endHour = (i + 1) > 12 ? (i + 1) - 12 : ((i + 1) == 0 ? 12 : (i + 1));
+    
+    for (var daySchedule in daySchedules) {
+      final fromStr = daySchedule['from'];
+      final toStr = daySchedule['to'];
       
-      final startAmPm = i >= 12 ? 'PM' : 'AM';
-      final endAmPm = (i + 1) >= 12 && (i + 1) < 24 ? 'PM' : 'AM';
+      if (fromStr == null || toStr == null) continue;
       
-      slots.add("$startHour:00 $startAmPm - $endHour:00 $endAmPm");
+      int? from = int.tryParse(fromStr);
+      int? to = int.tryParse(toStr);
+      
+      if (from == null || to == null) continue;
+      if (to <= from) continue; 
+
+      for (int i = from; i < to; i++) {
+        final now = DateTime.now();
+        final endHour24 = i + 1;
+        
+        // Filter out past slots if the selected date is today
+        if (date.year == now.year && date.month == now.month && date.day == now.day) {
+          // Skip if the slot has already ended (end time is in the past)
+          // If current time is 16:25 (4:25 PM), endHour for 3-4 is 16. 16 <= 16 (true), and 25 > 0, so it skips.
+          // For 4-5, endHour is 17. 17 <= 16 is false, so it shows.
+          if (endHour24 < now.hour || (endHour24 == now.hour && now.minute > 0)) {
+            continue;
+          }
+        }
+
+        final startHour = i > 12 ? i - 12 : (i == 0 ? 12 : i);
+        final endHour = endHour24 > 12 ? endHour24 - 12 : (endHour24 == 0 ? 12 : endHour24);
+        
+        final startAmPm = i >= 12 ? 'PM' : 'AM';
+        final endAmPm = endHour24 >= 12 && endHour24 < 24 ? 'PM' : 'AM';
+        
+        slots.add("$startHour:00 $startAmPm - $endHour:00 $endAmPm");
+      }
     }
     
     return slots;

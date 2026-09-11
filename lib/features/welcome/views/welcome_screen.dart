@@ -7,6 +7,7 @@ import '../widgets/social_auth_buttons.dart';
 import '../widgets/welcome_actions.dart';
 import '../widgets/welcome_background.dart';
 import '../widgets/welcome_hero.dart';
+import '../../profile/view/change_language_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -58,12 +59,29 @@ class WelcomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.help_outline,
-                          color: Color(0xFF6E7977),
-                        ),
+                      Row(
+                        children: [
+                          TextButton.icon(
+                            onPressed: () => Get.to(() => const ChangeLanguageScreen()),
+                            icon: const Icon(
+                              Icons.language,
+                              color: Color(0xFF6E7977),
+                              size: 20,
+                            ),
+                            label: Text(
+                              Localizations.localeOf(context).languageCode.toUpperCase(),
+                              style: const TextStyle(
+                                color: Color(0xFF6E7977),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

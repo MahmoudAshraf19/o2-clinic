@@ -462,8 +462,13 @@ class ChatComposer extends StatelessWidget {
 
 class ChatMessageBubble extends StatelessWidget {
   final ChatMessage message;
+  final String? agentAvatarUrl;
 
-  const ChatMessageBubble({super.key, required this.message});
+  const ChatMessageBubble({
+    super.key,
+    required this.message,
+    this.agentAvatarUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -476,26 +481,31 @@ class ChatMessageBubble extends StatelessWidget {
         message.kind == ChatMessageKind.voice) {
       return message.isUser
           ? _UserMediaBubble(message: message)
-          : _AgentMediaBubble(message: message);
+          : _AgentMediaBubble(message: message, avatarUrl: agentAvatarUrl);
     }
 
-    return message.isUser ? _UserBubble(message: message) : _AgentBubble(message: message);
+    return message.isUser
+        ? _UserBubble(message: message)
+        : _AgentBubble(message: message, avatarUrl: agentAvatarUrl);
   }
 }
 
 class _AgentBubble extends StatelessWidget {
   final ChatMessage message;
+  final String? avatarUrl;
 
-  const _AgentBubble({required this.message});
+  const _AgentBubble({required this.message, this.avatarUrl});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        const CircleAvatar(
+        CircleAvatar(
           radius: 16,
-          backgroundImage: AssetImage('assets/images/logos/logo.png'),
+          backgroundImage: avatarUrl != null && avatarUrl!.isNotEmpty
+              ? NetworkImage(avatarUrl!) as ImageProvider
+              : const AssetImage('assets/images/logos/logo.png'),
         ),
         const SizedBox(width: 8),
         Flexible(
@@ -586,17 +596,20 @@ class _UserBubble extends StatelessWidget {
 
 class _AgentMediaBubble extends StatelessWidget {
   final ChatMessage message;
+  final String? avatarUrl;
 
-  const _AgentMediaBubble({required this.message});
+  const _AgentMediaBubble({required this.message, this.avatarUrl});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        const CircleAvatar(
+        CircleAvatar(
           radius: 16,
-          backgroundImage: AssetImage('assets/images/logos/logo.png'),
+          backgroundImage: avatarUrl != null && avatarUrl!.isNotEmpty
+              ? NetworkImage(avatarUrl!) as ImageProvider
+              : const AssetImage('assets/images/logos/logo.png'),
         ),
         const SizedBox(width: 8),
         Flexible(

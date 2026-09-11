@@ -1,14 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
+
+import '../controllers/doctor_profile_controller.dart';
+import '../../../core/constants/app_firestore.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../services_firestore/models/review_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class DoctorReviewsScreen extends StatefulWidget {
-  final List<ReviewModel> reviews;
-
-  const DoctorReviewsScreen({super.key, required this.reviews});
+  const DoctorReviewsScreen({super.key});
 
   @override
   State<DoctorReviewsScreen> createState() => _DoctorReviewsScreenState();
@@ -21,16 +25,101 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
   
   String _searchQuery = '';
   String _sortType = 'newest'; // newest, oldest, highest, lowest
+  
+  List<ReviewModel> _reviews = [];
+  bool _isLoading = true;
+  String? _highlightReviewId;
+  final Map<String, GlobalKey> _itemKeys = {};
 
   @override
   void initState() {
     super.initState();
+    _highlightReviewId = Get.arguments?['highlightReviewId'];
     _scrollController.addListener(_handleScroll);
     _searchController.addListener(() {
       setState(() {
         _searchQuery = _searchController.text.toLowerCase();
       });
     });
+    
+    _fetchReviews();
+  }
+
+  Future<void> _fetchReviews() async {
+    String? doctorId;
+    if (Get.isRegistered<DoctorProfileController>()) {
+      doctorId = Get.find<DoctorProfileController>().doctor.value?.id;
+    }
+
+    debugPrint('================ FETCHING REVIEWS ================');
+    debugPrint('Found Doctor ID: $doctorId');
+
+    if (doctorId == null) {
+      debugPrint('doctorId from controller is null, fetching manually via auth_uid...');
+      final uid = FirebaseAuth.instance.currentUser?.uid;
+      if (uid != null) {
+        final docSnap = await FirebaseFirestore.instance
+            .collection(AppFirestoreCollections.doctors)
+            .where('auth_uid', isEqualTo: uid)
+            .limit(1)
+            .get();
+        if (docSnap.docs.isNotEmpty) {
+          doctorId = docSnap.docs.first.id;
+          debugPrint('Fetched manually Doctor ID: $doctorId');
+        }
+      }
+    }
+
+    if (doctorId == null) {
+      debugPrint('ERROR: doctorId is still null! Cannot fetch reviews.');
+      debugPrint('================================================');
+      if (mounted) setState(() => _isLoading = false);
+      return;
+    }
+
+    try {
+      final snap = await FirebaseFirestore.instance
+          .collection(AppFirestoreCollections.doctors)
+          .doc(doctorId)
+          .collection('reviews')
+          .get();
+      
+      debugPrint('Successfully fetched ${snap.docs.length} reviews from Doctors/$doctorId/reviews');
+      debugPrint('================================================');
+      
+      final reviews = snap.docs.map((d) => ReviewModel.fromMap(d.id, d.data())).toList();
+      
+      if (mounted) {
+        setState(() {
+          _reviews = reviews;
+          _isLoading = false;
+        });
+
+        if (_highlightReviewId != null) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollToReview(_highlightReviewId!);
+          });
+        }
+      }
+    } catch (e, stackTrace) {
+      debugPrint('================ ERROR FETCHING REVIEWS ================');
+      debugPrint('Error: $e');
+      debugPrint('StackTrace: $stackTrace');
+      debugPrint('========================================================');
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  void _scrollToReview(String id) {
+    final key = _itemKeys[id];
+    if (key != null && key.currentContext != null) {
+      Scrollable.ensureVisible(
+        key.currentContext!,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOut,
+        alignment: 0.2, // Leave some space at the top
+      );
+    }
   }
 
   @override
@@ -49,7 +138,7 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
   }
 
   List<ReviewModel> get _filteredAndSortedReviews {
-    List<ReviewModel> filtered = widget.reviews.where((r) {
+    List<ReviewModel> filtered = _reviews.where((r) {
       if (_searchQuery.isEmpty) return true;
       final textMatch = r.text.toLowerCase().contains(_searchQuery);
       final nameMatch = r.patientName.toLowerCase().contains(_searchQuery);
@@ -81,7 +170,7 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
       'effectiveness': [],
     };
 
-    for (var review in widget.reviews) {
+    for (var review in _reviews) {
       review.categoryRatings.forEach((key, val) {
         if (catScores.containsKey(key)) {
           catScores[key]!.add(val);
@@ -124,108 +213,128 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
     final reviewsTitle = l10n.reviewTitle ?? 'Doctor Reviews';
     
     double overallRating = 5.0;
-    if (widget.reviews.isNotEmpty) {
-      overallRating = widget.reviews.map((e) => e.rating).reduce((a, b) => a + b) / widget.reviews.length;
+    if (_reviews.isNotEmpty) {
+      overallRating = _reviews.map((e) => e.rating).reduce((a, b) => a + b) / _reviews.length;
     }
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: const Color(0xFFF6FAF8),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xFFF6FAF8),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF181D1C)),
           onPressed: () => Navigator.maybePop(context),
         ),
         title: Text(
           reviewsTitle,
           style: const TextStyle(
-            color: AppColors.textPrimary,
+            color: Color(0xFF181D1C),
             fontWeight: FontWeight.w700,
-            fontSize: 24,
+            fontSize: 20,
+            letterSpacing: -0.4,
           ),
         ),
         centerTitle: false,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          padding: const EdgeInsets.only(top: 16, left: 20, right: 20, bottom: 64),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (categories.isNotEmpty)
-                _RatingSummaryCard(categories: categories, overallRating: overallRating, totalReviews: widget.reviews.length),
-              
-              const SizedBox(height: 24),
-              
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 52,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(26),
-                        border: Border.all(color: AppColors.grey.withOpacity(0.2)),
-                      ),
-                      child: TextField(
-                        controller: _searchController,
-                        style: const TextStyle(color: AppColors.textPrimary),
-                        decoration: InputDecoration(
-                          hintText: 'Search...',
-                          hintStyle: const TextStyle(color: AppColors.grey),
-                          prefixIcon: const Icon(Icons.search, color: AppColors.grey, size: 22),
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        child: _isLoading
+            ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
+            : SingleChildScrollView(
+                controller: _scrollController,
+                padding: const EdgeInsets.only(top: 16, left: 20, right: 20, bottom: 64),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (categories.isNotEmpty)
+                      _RatingSummaryCard(categories: categories, overallRating: overallRating, totalReviews: _reviews.length),
+                    
+                    const SizedBox(height: 24),
+                    
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 52,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(26),
+                              border: Border.all(color: AppColors.grey.withOpacity(0.2)),
+                            ),
+                            child: TextField(
+                              controller: _searchController,
+                              style: const TextStyle(color: AppColors.textPrimary),
+                              decoration: InputDecoration(
+                                hintText: 'Search...',
+                                hintStyle: const TextStyle(color: AppColors.grey),
+                                prefixIcon: const Icon(Icons.search, color: AppColors.grey, size: 22),
+                                border: InputBorder.none,
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        const SizedBox(width: 12),
+                        Container(
+                          height: 52,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(26),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: _sortType,
+                              icon: const Icon(Icons.filter_list, color: Colors.white, size: 20),
+                              dropdownColor: AppColors.primary,
+                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                              items: [
+                                DropdownMenuItem(value: 'newest', child: Text(l10n.sortNewest ?? 'Newest')),
+                                DropdownMenuItem(value: 'oldest', child: Text(l10n.sortOldest ?? 'Oldest')),
+                                DropdownMenuItem(value: 'highest', child: Text(l10n.sortHighest ?? 'Highest')),
+                                DropdownMenuItem(value: 'lowest', child: Text(l10n.sortLowest ?? 'Lowest')),
+                              ],
+                              onChanged: (val) {
+                                if (val != null) setState(() => _sortType = val);
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Container(
-                    height: 52,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(26),
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: _sortType,
-                        icon: const Icon(Icons.filter_list, color: Colors.white, size: 20),
-                        dropdownColor: AppColors.primary,
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
-                        items: [
-                          DropdownMenuItem(value: 'newest', child: Text(l10n.sortNewest ?? 'Newest')),
-                          DropdownMenuItem(value: 'oldest', child: Text(l10n.sortOldest ?? 'Oldest')),
-                          DropdownMenuItem(value: 'highest', child: Text(l10n.sortHighest ?? 'Highest')),
-                          DropdownMenuItem(value: 'lowest', child: Text(l10n.sortLowest ?? 'Lowest')),
+                    
+                    const SizedBox(height: 24),
+                    
+                    if (displayedReviews.isEmpty)
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(32.0),
+                          child: Text(
+                            'No reviews found',
+                            style: TextStyle(color: AppColors.grey, fontSize: 16),
+                          ),
+                        ),
+                      )
+                    else
+                      Column(
+                        children: [
+                          for (int i = 0; i < displayedReviews.length; i++) ...[
+                            Container(
+                              key: _itemKeys[displayedReviews[i].id] ??= GlobalKey(),
+                              child: _ReviewCardWidget(
+                                review: displayedReviews[i],
+                                isHighlighted: _highlightReviewId == displayedReviews[i].id,
+                              ),
+                            ),
+                            if (i != displayedReviews.length - 1)
+                              const SizedBox(height: 16),
+                          ],
                         ],
-                        onChanged: (val) {
-                          if (val != null) setState(() => _sortType = val);
-                        },
                       ),
-                    ),
-                  ),
-                ],
-              ),
-              
-              const SizedBox(height: 24),
-              
-              Column(
-                children: [
-                  for (int i = 0; i < displayedReviews.length; i++) ...[
-                    _ReviewCardWidget(review: displayedReviews[i]),
-                    if (i != displayedReviews.length - 1)
-                      const SizedBox(height: 16),
+                    const SizedBox(height: 20),
                   ],
-                ],
+                ),
               ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -425,17 +534,21 @@ class _ReviewCategory {
 
 class _ReviewCardWidget extends StatelessWidget {
   final ReviewModel review;
+  final bool isHighlighted;
 
-  const _ReviewCardWidget({required this.review});
+  const _ReviewCardWidget({required this.review, this.isHighlighted = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isHighlighted ? AppColors.primary.withOpacity(0.05) : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.grey.withOpacity(0.1)),
+        border: Border.all(
+          color: isHighlighted ? AppColors.primary : AppColors.grey.withOpacity(0.1),
+          width: isHighlighted ? 1.5 : 1.0,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

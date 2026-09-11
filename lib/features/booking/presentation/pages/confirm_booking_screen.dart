@@ -272,10 +272,11 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              AppLocalizations.of(context)!.o2ClinicMainBranchnfloor4,
+              widget.isOnline 
+                  ? (AppLocalizations.of(context)!.onlineConsultation ?? 'Online Consultation') 
+                  : AppLocalizations.of(context)!.o2ClinicMainBranchnfloor4,
               style: TextStyle(
                 color: AppColors.grey,
-                
               ),
             ),
           ),

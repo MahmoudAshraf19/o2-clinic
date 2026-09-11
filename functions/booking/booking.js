@@ -1,5 +1,6 @@
 const admin = require("firebase-admin");
 const { onSchedule } = require("firebase-functions/v2/scheduler");
+const { sendFCMPush } = require("../helpers/fcmHelper");
 
 // ✅ مهم جدًا: لو الملف اتقرأ قبل initializeApp، هو هيهيئ نفسه بأمان
 if (!admin.apps.length) {
@@ -23,7 +24,7 @@ function getUserId(booking) {
 
 exports.sendAppointmentReminders = onSchedule(
   {
-    schedule: "every 60 minutes",
+    schedule: "every 90 minutes",
     timeZone: "Asia/Gaza",
     region: "us-central1",
   },
@@ -38,7 +39,7 @@ exports.sendAppointmentReminders = onSchedule(
       new Date(now.getTime() + 12 * 60 * 60 * 1000)
     );
     const windowEnd12 = admin.firestore.Timestamp.fromDate(
-      new Date(now.getTime() + 13 * 60 * 60 * 1000)
+      new Date(now.getTime() + 13.5 * 60 * 60 * 1000) // 1.5 hours window
     );
 
     const snapshot12 = await db
@@ -104,7 +105,7 @@ exports.sendAppointmentReminders = onSchedule(
       new Date(now.getTime() + 24 * 60 * 60 * 1000)
     );
     const windowEnd24 = admin.firestore.Timestamp.fromDate(
-      new Date(now.getTime() + 25 * 60 * 60 * 1000)
+      new Date(now.getTime() + 25.5 * 60 * 60 * 1000) // 1.5 hours window
     );
 
     const snapshot24 = await db
@@ -171,6 +172,104 @@ exports.sendAppointmentReminders = onSchedule(
       });
 
       processed += 1;
+    }
+
+    // --- 30-Minute Window (For Online Consultations) ---
+    // Runs every 90 minutes to catch upcoming online consultations
+    const windowStart30 = admin.firestore.Timestamp.fromDate(
+      new Date(now.getTime() + 15 * 60 * 1000) // 15 mins ahead
+    );
+    const windowEnd30 = admin.firestore.Timestamp.fromDate(
+      new Date(now.getTime() + 105 * 60 * 1000) // 105 mins ahead (1.5 hours window)
+    );
+
+    const snapshot30 = await db
+      .collection("bookings")
+      .where("schedule.timestamp", ">=", windowStart30)
+      .where("schedule.timestamp", "<", windowEnd30)
+      .get();
+
+    for (const doc of snapshot30.docs) {
+      const booking = doc.data();
+      const userId = getUserId(booking);
+      if (!userId) continue;
+
+      const type = booking.type || "unknown";
+      if (type !== "clinical") continue;
+
+      const status = getBookingStatus(booking);
+      if (status !== "upcoming" && status !== "confirmed") continue;
+
+      // Check if it's an online consultation
+      const isOnline = booking.location?.clinic === "Online Consultation" || booking.type === "online";
+      if (!isOnline) continue;
+
+      const reminderInfo = booking?.reminders?.["30m_before"] || {};
+      if (reminderInfo.sent === true) continue;
+
+      const doctorNameEn = booking.doctor?.name_en || "the doctor";
+      const doctorNameAr = booking.doctor?.name_ar || "الطبيب";
+      const doctorId = booking.doctor?.id;
+
+      // 1. Send Notification to Patient
+      const patientNotifId = `${doc.id}_reminder_30m_patient`;
+      batch.set(db.collection("notifications").doc(patientNotifId), {
+        id: patientNotifId,
+        userId: userId,
+        type: "reminder",
+        reminderType: "30m",
+        title: {
+          en: "Online Consultation Starting Soon ⏱️",
+          ar: "موعد استشارة أونلاين قريب ⏱️",
+        },
+        body: {
+          en: `Reminder: Your online consultation with Dr. ${doctorNameEn} starts in approximately 30 minutes.`,
+          ar: `تذكير: موعد الكشف الأونلاين مع د. ${doctorNameAr} يبدأ خلال 30 دقيقة تقريباً.`,
+        },
+        data: {
+          bookingId: doc.id,
+          screen: "booking_details",
+          reminderType: "30m",
+        },
+        priority: "high",
+        status: { read: false, readAt: null, delivered: false, deliveredAt: null },
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+
+      // 2. Send Notification to Doctor (if doctorId exists)
+      if (doctorId) {
+        const doctorNotifId = `${doc.id}_reminder_30m_doctor`;
+        batch.set(db.collection("notifications").doc(doctorNotifId), {
+          id: doctorNotifId,
+          userId: doctorId, // Doctor is also a user in the notifications collection
+          type: "reminder",
+          reminderType: "30m",
+          title: {
+            en: "Upcoming Online Patient ⏱️",
+            ar: "موعد مريض أونلاين ⏱️",
+          },
+          body: {
+            en: `Reminder: You have an online consultation starting in 30 minutes.`,
+            ar: `تذكير: لديك كشف أونلاين يبدأ خلال 30 دقيقة تقريباً.`,
+          },
+          data: {
+            bookingId: doc.id,
+            screen: "doctor_booking_details",
+            reminderType: "30m",
+          },
+          priority: "high",
+          status: { read: false, readAt: null, delivered: false, deliveredAt: null },
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      }
+
+      batch.update(doc.ref, {
+        "reminders.30m_before.sent": true,
+        "reminders.30m_before.sentAt": admin.firestore.FieldValue.serverTimestamp(),
+        "reminders.30m_before.patientNotificationId": patientNotifId,
+      });
+
+      processed += (doctorId ? 2 : 1);
     }
 
     if (processed > 0) {
@@ -257,9 +356,24 @@ exports.onBookingCreated = require("firebase-functions/v2/firestore").onDocument
     };
 
     try {
-      // 1. إرسال إشعار للمريض (موجود مسبقاً)
-      await db.collection("notifications").doc(notificationId).set(notificationData);
+      const docRef = db.collection("notifications").doc(notificationId);
+      
+      const notificationWithFlag = {
+        ...notificationData,
+        fcmSent: true, // Bypass onNotificationCreated to save costs
+      };
+      
+      await docRef.set(notificationWithFlag);
       console.log(`[onBookingCreated] Notification created for booking ${bookingId}`);
+
+      // 1.5 Send FCM push directly
+      const success = await sendFCMPush(notificationWithFlag, notificationId);
+      if (success) {
+        await docRef.update({
+          "status.delivered": true,
+          "status.deliveredAt": admin.firestore.FieldValue.serverTimestamp(),
+        });
+      }
 
       // 2. إرسال إشعار للوحة تحكم الإدارة (Admin Panel)
       // هذا هو الإشعار الذي سيظهر في الـ AppBar ويشغل الصوت

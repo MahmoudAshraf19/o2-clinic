@@ -2187,6 +2187,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Submit Report'**
   String get submitReport;
+
+  /// No description provided for @chooseConsultationType.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Consultation Type'**
+  String get chooseConsultationType;
+
+  /// No description provided for @howConsultWithDoctor.
+  ///
+  /// In en, this message translates to:
+  /// **'How would you like to consult with the doctor?'**
+  String get howConsultWithDoctor;
+
+  /// No description provided for @inO2Clinic.
+  ///
+  /// In en, this message translates to:
+  /// **'In O2 Clinic'**
+  String get inO2Clinic;
 }
 
 class _AppLocalizationsDelegate

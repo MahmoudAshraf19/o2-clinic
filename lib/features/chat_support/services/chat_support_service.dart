@@ -72,7 +72,7 @@ class SupportChatService {
   }
 
   Stream<List<ChatMessage>> watchMessages(String uid) {
-    return _messagesRef(uid).orderBy('createdAt').snapshots().map(
+    return _messagesRef(uid).orderBy('createdAt').snapshots(includeMetadataChanges: true).map(
           (snap) => snap.docs.map((e) => ChatMessage.fromMap(e.data())).toList(),
         );
   }

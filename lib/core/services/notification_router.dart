@@ -3,14 +3,19 @@ import 'package:get/get.dart';
 
 import '../../features/notifications/views/notifications_screen.dart';
 import '../../features/chat_support/screens/chat_room_screen.dart';
-// TODO: import booking details if available
+import '../../features/services_firestore/doctor_firestore_service.dart';
+import '../../features/doctors/models/doctor_model.dart';
+import '../../features/chat_doctors/views/patient_chat_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../features/chat_doctors/models/doctor_chat_model.dart';
+import '../../features/chat_doctors/views/doctor_active_chat_screen.dart';
 
 class NotificationRouter {
-  static void handleNotificationTap(Map<String, dynamic> data) {
+  static Future<void> handleNotificationTap(Map<String, dynamic> data, {bool fromSplash = false}) async {
     debugPrint('🔔 [NotificationRouter] Handling data: $data');
 
     if (data.isEmpty) {
-      _navigateToFallback();
+      if (!fromSplash) _navigateToFallback();
       return;
     }
 
@@ -19,7 +24,6 @@ class NotificationRouter {
     try {
       switch (screen) {
         case 'chat':
-          // The ChatRoomScreen automatically gets the current user's uid in its controller
           debugPrint('🔔 [NotificationRouter] Navigate to chat');
           Get.to(() => const ChatRoomScreen());
           break;
@@ -27,24 +31,41 @@ class NotificationRouter {
         case 'doctor_chat_patient':
           final doctorId = data['doctorId'];
           final chatRoomId = data['chatRoomId'];
-          if (chatRoomId != null) {
-            // Patient taps notification from doctor -> opens chat with doctor
-            // The PatientChatScreen will need the doctor ID and details, but typically we can navigate by chatRoomId or pass it.
-            // Wait, we need to create the PatientChatScreen first. 
-            // We'll navigate to a route that handles it or pass parameters.
-            Get.toNamed('/patient_chat', parameters: {'chatRoomId': chatRoomId, 'doctorId': doctorId ?? ''});
+          if (doctorId != null && chatRoomId != null) {
+            final docData = await DoctorFirestoreService.instance.getDoctor(doctorId);
+            if (docData != null) {
+              final doctor = DoctorModel(
+                id: doctorId,
+                name: docData['name_en'] ?? docData['name_ar'] ?? docData['name'] ?? '',
+                title: docData['title_en'] ?? docData['title_ar'] ?? docData['title'] ?? '',
+                image: docData['image'] ?? '',
+                rating: (docData['rating_average'] ?? 5.0).toDouble(),
+                reviews: docData['reviews_count'] ?? 0,
+                availability: 'Available',
+                booked: 0,
+                total: docData['max_booking'] ?? 0,
+              );
+              Get.to(() => PatientChatScreen(doctor: doctor));
+            } else {
+              if (!fromSplash) _navigateToFallback();
+            }
           } else {
-            _navigateToFallback();
+            if (!fromSplash) _navigateToFallback();
           }
           break;
 
         case 'doctor_chat_doctor':
           final chatRoomId = data['chatRoomId'];
           if (chatRoomId != null) {
-            // Doctor taps notification from patient -> opens chat with patient
-            Get.toNamed('/doctor_active_chat', parameters: {'chatRoomId': chatRoomId});
+            final doc = await FirebaseFirestore.instance.collection('chat_doctors').doc(chatRoomId).get();
+            if (doc.exists && doc.data() != null) {
+              final room = DoctorChatRoom.fromDoc(doc.id, doc.data()!);
+              Get.to(() => DoctorActiveChatScreen(room: room));
+            } else {
+              if (!fromSplash) _navigateToFallback();
+            }
           } else {
-            _navigateToFallback();
+            if (!fromSplash) _navigateToFallback();
           }
           break;
 
@@ -56,16 +77,16 @@ class NotificationRouter {
             debugPrint('🔔 [NotificationRouter] Navigate to booking: $bookingId');
             // _navigateToFallback();
           } else {
-            _navigateToFallback();
+            if (!fromSplash) _navigateToFallback();
           }
           break;
 
         default:
-          _navigateToFallback();
+          if (!fromSplash) _navigateToFallback();
       }
     } catch (e) {
       debugPrint('💥 [NotificationRouter] Error routing: $e');
-      _navigateToFallback();
+      if (!fromSplash) _navigateToFallback();
     }
   }
 

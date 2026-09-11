@@ -135,8 +135,8 @@ class QuickActionsWidget extends StatelessWidget {
                 height: 52,
                 child: OutlinedButton(
                   onPressed: () {
-                    // Navigate to DoctorReviewsScreen with dummy or fetched reviews
-                    Get.to(() => const DoctorReviewsScreen(reviews: []));
+                    // Navigate to DoctorReviewsScreen
+                    Get.to(() => const DoctorReviewsScreen());
                   },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,

@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/routes/app_routes.dart';
+import '../../../core/services/notification_service.dart';
+import '../../../core/services/notification_router.dart';
 
 class SplashController extends GetxController {
   @override
@@ -29,6 +31,13 @@ class SplashController extends GetxController {
         } else {
           print('🚀 SPLASH: Patient is logged in. Navigating to main navigation...');
           Get.offAllNamed(AppRoutes.mainNavigation);
+        }
+
+        if (NotificationService.instance.pendingInitialNotification != null) {
+          Future.delayed(const Duration(milliseconds: 500), () {
+            NotificationRouter.handleNotificationTap(NotificationService.instance.pendingInitialNotification!, fromSplash: true);
+            NotificationService.instance.pendingInitialNotification = null;
+          });
         }
       } else {
         print('🚀 SPLASH: Navigating to onboarding screen...');

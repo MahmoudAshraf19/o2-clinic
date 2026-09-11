@@ -68,9 +68,20 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
     try {
       print("[OurLocationScreen] Checking location services...");
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      
+      String lang = Get.locale?.languageCode ?? 'en';
+      String errorTitle = lang == 'ar' ? 'عفواً' : (lang == 'he' ? 'שגיאה' : 'Error');
+      String servicesDisabledMsg = lang == 'ar' 
+          ? 'يرجى تفعيل خدمات الموقع للاستمرار.' 
+          : (lang == 'he' ? 'אנא הפעל את שירותי המיקום כדי להמשיך.' : 'Please enable Location Services to continue.');
+      String permissionDeniedMsg = lang == 'ar'
+          ? 'لن نتمكن من الاستمرار حتى نحصل على صلاحيات الموقع منك.'
+          : (lang == 'he' ? 'לא נוכל להמשיך עד שנקבל ממך הרשאות מיקום.' : 'We cannot proceed until we get location permissions from you.');
+
       if (!serviceEnabled) {
         print("[OurLocationScreen] Error: Location services are disabled.");
-        Get.snackbar('Error', 'Location services are disabled.');
+        Get.snackbar(errorTitle, servicesDisabledMsg);
+        await Geolocator.openLocationSettings();
         setState(() => _isDrawingRoute = false);
         return;
       }
@@ -82,7 +93,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
           print("[OurLocationScreen] Error: Location permissions are denied.");
-          Get.snackbar('Error', 'Location permissions are denied');
+          Get.snackbar(errorTitle, permissionDeniedMsg);
           setState(() => _isDrawingRoute = false);
           return;
         }
@@ -90,7 +101,8 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
 
       if (permission == LocationPermission.deniedForever) {
         print("[OurLocationScreen] Error: Location permissions are permanently denied.");
-        Get.snackbar('Error', 'Location permissions are permanently denied');
+        Get.snackbar(errorTitle, permissionDeniedMsg);
+        await Geolocator.openAppSettings();
         setState(() => _isDrawingRoute = false);
         return;
       }

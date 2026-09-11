@@ -426,4 +426,4 @@
   "describeTheIssue": "Describe the issue...",
   "attachImage": "Attach Image",
   "submitReport": "Submit Report"
-}
+, "chooseConsultationType": "Choose Consultation Type", "howConsultWithDoctor": "How would you like to consult with the doctor?", "inO2Clinic": "In O2 Clinic" }

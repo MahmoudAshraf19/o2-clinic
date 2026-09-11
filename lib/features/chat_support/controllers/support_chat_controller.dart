@@ -125,43 +125,11 @@ class SupportChatController extends GetxController {
     try {
       isSending.value = true;
 
-      if (draft != null) {
-        final currentText = text;
-        final draftCopy = draft;
-        
-        final dummyMessage = ChatMessage(
-          id: 'uploading_${DateTime.now().microsecondsSinceEpoch}',
-          sender: ChatSender.user,
-          kind: draftCopy.kind,
-          text: currentText,
-          createdAt: DateTime.now(),
-          attachment: ChatAttachment(
-            url: draftCopy.localPath, // Use localPath for optimistic rendering
-            fileName: draftCopy.fileName,
-            durationMs: draftCopy.durationMs,
-          ),
-        );
-        
-        uploadingItems.add(dummyMessage);
-        pendingAttachment.value = null;
-        textController.clear();
-        this.currentText.value = '';
-        _scrollToBottom();
-        
-        // Background upload
-        service.sendUserAttachmentMessage(
-          uid: u.uid,
-          localPath: draftCopy.localPath,
-          kind: draftCopy.kind,
-          fileName: draftCopy.fileName,
-          caption: currentText.isEmpty ? null : currentText,
-          durationMs: draftCopy.durationMs,
-          bytes: draftCopy.bytes,
-        ).whenComplete(() {
-          uploadingItems.remove(dummyMessage);
+      // No pending attachment logic, media sends automatically in background
+      if (text.isNotEmpty) {
+        service.sendUserTextMessage(uid: u.uid, text: text).catchError((e) {
+          debugPrint('Error sending message: $e');
         });
-      } else {
-        await service.sendUserTextMessage(uid: u.uid, text: text);
         textController.clear();
         this.currentText.value = '';
         _scrollToBottom();
@@ -178,19 +146,14 @@ class SupportChatController extends GetxController {
     );
 
     if (file == null) return;
-
-    isCompressing.value = true;
-    final compressedPath = await MediaCompressor.compressImage(file.path) ?? file.path;
     final bytes = kIsWeb ? await file.readAsBytes() : null;
-    isCompressing.value = false;
 
-    pendingAttachment.value = PendingAttachment(
+    _sendAttachmentBackground(PendingAttachment(
       kind: ChatMessageKind.image,
-      localPath: compressedPath,
+      localPath: file.path,
       fileName: file.name,
       bytes: bytes,
-    );
-    focusNode.requestFocus();
+    ));
   }
 
   Future<void> pickVideo() async {
@@ -200,19 +163,14 @@ class SupportChatController extends GetxController {
     );
 
     if (file == null) return;
-
-    isCompressing.value = true;
-    final compressedPath = await MediaCompressor.compressVideo(file.path) ?? file.path;
     final bytes = kIsWeb ? await file.readAsBytes() : null;
-    isCompressing.value = false;
 
-    pendingAttachment.value = PendingAttachment(
+    _sendAttachmentBackground(PendingAttachment(
       kind: ChatMessageKind.video,
-      localPath: compressedPath,
+      localPath: file.path,
       fileName: file.name,
       bytes: bytes,
-    );
-    focusNode.requestFocus();
+    ));
   }
 
   Future<void> startOrStopVoiceRecording() async {
@@ -262,16 +220,60 @@ class SupportChatController extends GetxController {
       bytes = await xFile.readAsBytes();
     }
 
-    pendingAttachment.value = PendingAttachment(
+    _sendAttachmentBackground(PendingAttachment(
       kind: ChatMessageKind.voice,
       localPath: path,
       fileName: 'voice_note.m4a',
       durationMs: recordingSeconds.value * 1000,
       bytes: bytes,
-    );
+    ));
 
     recordingSeconds.value = 0;
     _recordStartedAt = null;
+  }
+
+  Future<void> _sendAttachmentBackground(PendingAttachment draft) async {
+    final u = user;
+    if (u == null) return;
+
+    final dummyMessage = ChatMessage(
+      id: 'uploading_${DateTime.now().microsecondsSinceEpoch}',
+      sender: ChatSender.user,
+      kind: draft.kind,
+      text: '',
+      createdAt: DateTime.now(),
+      attachment: ChatAttachment(
+        url: draft.localPath,
+        fileName: draft.fileName,
+        durationMs: draft.durationMs,
+      ),
+    );
+    
+    uploadingItems.add(dummyMessage);
+    _scrollToBottom();
+    
+    try {
+      String finalPath = draft.localPath;
+      if (draft.kind == ChatMessageKind.image) {
+        finalPath = await MediaCompressor.compressImage(draft.localPath) ?? draft.localPath;
+      } else if (draft.kind == ChatMessageKind.video) {
+        finalPath = await MediaCompressor.compressVideo(draft.localPath) ?? draft.localPath;
+      }
+
+      await service.sendUserAttachmentMessage(
+        uid: u.uid,
+        localPath: finalPath,
+        kind: draft.kind,
+        fileName: draft.fileName,
+        caption: null,
+        durationMs: draft.durationMs,
+        bytes: draft.bytes,
+      );
+    } catch (e) {
+      debugPrint('Error sending attachment: $e');
+    } finally {
+      uploadingItems.remove(dummyMessage);
+    }
   }
 
   Future<void> cancelPendingAttachment() async {

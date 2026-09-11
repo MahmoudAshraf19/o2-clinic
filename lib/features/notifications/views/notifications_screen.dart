@@ -10,6 +10,11 @@ import '../utils/notification_time_helper.dart';
 import '../../services_firestore/models/doctor_model.dart';
 import '../../booking/presentation/pages/booking_success_screen.dart';
 import '../../appointments/presentation/screens/my_appointments_screen.dart';
+import '../../doctor_dashboard/views/doctor_reviews_screen.dart';
+import '../../doctor_dashboard/controllers/doctor_navigation_controller.dart';
+import '../../doctor_dashboard/controllers/doctor_appointments_controller.dart';
+import '../../../core/routes/app_routes.dart';
+import '../../../core/services/notification_router.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -174,7 +179,17 @@ class NotificationsScreen extends StatelessWidget {
         if (!n.isRead) {
           Get.find<NotificationsController>().markAsRead(n.id);
         }
-        if ((n.type == 'booking' || n.type == 'booking_confirmation') && n.data['bookingId'] != null && n.data['bookingId'].toString().isNotEmpty) {
+        if (n.type == 'review' && n.data['reviewId'] != null) {
+          Get.to(() => const DoctorReviewsScreen(), arguments: {'highlightReviewId': n.data['reviewId'].toString()});
+          return;
+        }
+
+        if (n.type == 'message' && n.data.isNotEmpty) {
+          NotificationRouter.handleNotificationTap(n.data);
+          return;
+        }
+        
+        if (n.data.isNotEmpty && n.data['bookingId'] != null && n.data['bookingId'].toString().isNotEmpty) {
           Get.dialog(const Center(child: CircularProgressIndicator(color: Color(0xFF00685F))), barrierDismissible: false, barrierColor: Colors.black12);
           
           try {
@@ -182,7 +197,29 @@ class NotificationsScreen extends StatelessWidget {
             Get.back(); // close loading
             
             if (doc.exists) {
-              Get.to(() => const MyAppointmentsScreen(), arguments: {'showBookingId': doc.id});
+              if (Get.isRegistered<DoctorNavigationController>()) {
+                final navCtrl = Get.find<DoctorNavigationController>();
+                navCtrl.changeIndex(1); // Appts tab
+                Get.until((route) => route.settings.name == AppRoutes.doctorNavigation || route.isFirst);
+                
+                if (Get.isRegistered<DoctorAppointmentsController>()) {
+                  final apptsCtrl = Get.find<DoctorAppointmentsController>();
+                  final bookingData = doc.data() as Map<String, dynamic>?;
+                  if (bookingData != null && bookingData['schedule'] != null) {
+                    final dateStr = bookingData['schedule']['date'] as String?;
+                    if (dateStr != null && dateStr.isNotEmpty) {
+                      try {
+                        final parsedDate = DateTime.parse(dateStr);
+                        apptsCtrl.setSelectedTargetDate(parsedDate);
+                      } catch (e) {
+                        debugPrint('Could not parse booking date: $e');
+                      }
+                    }
+                  }
+                }
+              } else {
+                Get.to(() => const MyAppointmentsScreen(), arguments: {'showBookingId': doc.id});
+              }
             } else {
               Get.snackbar('Error', 'Booking not found');
             }

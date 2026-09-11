@@ -236,6 +236,25 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
             ),
           ],
         ),
+        if (doctor.reviewsCount > 0) ...[
+          const SizedBox(height: 8),
+          // Rating
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.star_rounded, color: Colors.amber, size: 20),
+              const SizedBox(width: 4),
+              Text(
+                '${doctor.ratingAverage.toStringAsFixed(1)} (${doctor.reviewsCount})',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ],
       ],
     );
   }

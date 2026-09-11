@@ -61,13 +61,6 @@ class DoctorLoginScreen extends GetView<DoctorLoginController> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
                       border: Border.all(color: Colors.grey.shade200),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
-                          blurRadius: 25,
-                          offset: const Offset(0, 12),
-                        ),
-                      ],
                     ),
                     child: Column(
                       children: [

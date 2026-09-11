@@ -45,7 +45,7 @@ class DoctorEditProfileController extends GetxController {
   int yearsExperience = 0;
   String regularPrice = '';
   Map<String, String> availabilityDay = {};
-  final RxMap<String, Map<String, String>> onlineSchedule = <String, Map<String, String>>{}.obs;
+  final RxMap<String, List<Map<String, String>>> onlineSchedule = <String, List<Map<String, String>>>{}.obs;
   
   final activeLanguages = <String>['ar', 'en', 'he'].obs;
 
@@ -80,7 +80,9 @@ class DoctorEditProfileController extends GetxController {
       yearsExperience = doctor.yearsExperience;
       regularPrice = doctor.price.toString();
       availabilityDay = doctor.availabilityDay;
-      onlineSchedule.value = Map<String, Map<String, String>>.from(doctor.availabilityDayOnline);
+      onlineSchedule.value = Map<String, List<Map<String, String>>>.from(
+        doctor.availabilityDayOnline.map((k, v) => MapEntry(k, List<Map<String, String>>.from(v)))
+      );
     }
     
     _fetchActiveLanguages();
@@ -101,16 +103,6 @@ class DoctorEditProfileController extends GetxController {
   }
 
   void addOnlineSchedule(String day, String from, String to) {
-    if (onlineSchedule.containsKey(day)) {
-      Get.snackbar(
-        'Conflict',
-        'A schedule for ${day.capitalizeFirst} already exists. Please remove it first to add a new one.',
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
-      );
-      return;
-    }
-    
     final fromTime = int.tryParse(from) ?? 0;
     final toTime = int.tryParse(to) ?? 0;
     
@@ -124,12 +116,51 @@ class DoctorEditProfileController extends GetxController {
       return;
     }
 
-    onlineSchedule[day] = {'from': from, 'to': to};
+    final currentDaySchedules = onlineSchedule[day] ?? [];
+    
+    bool hasOverlap = false;
+    for (var schedule in currentDaySchedules) {
+      final existingFrom = int.tryParse(schedule['from']!) ?? 0;
+      final existingTo = int.tryParse(schedule['to']!) ?? 0;
+      
+      if (fromTime < existingTo && toTime > existingFrom) {
+        hasOverlap = true;
+        break;
+      }
+    }
+    
+    if (hasOverlap) {
+      Get.snackbar(
+        'Conflict',
+        'This time slot overlaps with an existing schedule for ${day.capitalizeFirst}.',
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    currentDaySchedules.add({'from': from, 'to': to});
+    
+    currentDaySchedules.sort((a, b) {
+      final aFrom = int.tryParse(a['from']!) ?? 0;
+      final bFrom = int.tryParse(b['from']!) ?? 0;
+      return aFrom.compareTo(bFrom);
+    });
+    
+    onlineSchedule[day] = currentDaySchedules;
     Get.back();
   }
 
-  void removeOnlineSchedule(String day) {
-    onlineSchedule.remove(day);
+  void removeOnlineScheduleSlot(String day, int index) {
+    if (onlineSchedule.containsKey(day)) {
+      final list = onlineSchedule[day]!;
+      list.removeAt(index);
+      if (list.isEmpty) {
+        onlineSchedule.remove(day);
+      } else {
+        onlineSchedule[day] = list; 
+      }
+    }
   }
 
   Future<void> pickImage() async {

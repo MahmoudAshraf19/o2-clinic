@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import '../../features/services_firestore/user_firestore_service.dart';
 import '../../core/routes/app_routes.dart';
@@ -22,6 +24,8 @@ class GlobalAuthController extends GetxController {
   void _onAuthStateChanged(User? user) {
     _userDocSub?.cancel();
     if (user != null) {
+      _updateFcmToken(user.uid);
+      
       _userDocSub = UserFirestoreService.instance
           .streamUser(user.uid)
           .listen((data) {
@@ -46,6 +50,22 @@ class GlobalAuthController extends GetxController {
   }
 
   // _onUserDocUpdated removed as it's now handled inline
+
+  Future<void> _updateFcmToken(String uid) async {
+    if (kIsWeb) return;
+    try {
+      final token = await FirebaseMessaging.instance.getToken();
+      if (token != null && token.isNotEmpty) {
+        await UserFirestoreService.instance.updateUser(
+          uid: uid,
+          data: {'auth.fcm_token': token},
+        );
+        print('GLOBAL_AUTH: FCM token updated successfully');
+      }
+    } catch (e) {
+      print('GLOBAL_AUTH: Failed to update FCM token: $e');
+    }
+  }
 
   Future<void> _handleBlockedUser() async {
     await FirebaseAuth.instance.signOut();

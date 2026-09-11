@@ -69,12 +69,12 @@ class PastAppointmentsWidget extends StatelessWidget {
   }
 
   void _markAsCompleted(BuildContext context, String bookingId) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
-      // Use controller or service to update status
       await BookingsFirestoreService().updateBookingStatus(bookingId, 'completed');
-      Get.snackbar('Success', AppLocalizations.of(context)!.markAsCompleted ?? 'Complete');
+      Get.snackbar('Success', l10n.markAsCompleted ?? 'Complete');
     } catch (e) {
-      Get.snackbar('Error', AppLocalizations.of(context)!.error);
+      Get.snackbar('Error', l10n.error);
     }
   }
 

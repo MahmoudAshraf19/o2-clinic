@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/auth_error_handler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../services_firestore/user_firestore_service.dart';
 import '../../chat_support/screens/support_chat_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,11 +35,9 @@ class LoginController extends GetxController {
       );
 
       if (userCred.user != null) {
-        final doc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCred.user!.uid)
-            .get();
-        if (!doc.exists) {
+        final userData = await UserFirestoreService.instance.getUser(userCred.user!.uid);
+        
+        if (userData == null) {
           await FirebaseAuth.instance.signOut();
           Get.snackbar(
             'Login Failed',
@@ -50,7 +49,7 @@ class LoginController extends GetxController {
           return;
         }
         
-        if (doc.exists && doc.data()?['isBlocked'] == true) {
+        if (userData != null && userData['isBlocked'] == true) {
           await FirebaseAuth.instance.signOut();
           Get.snackbar(
             'Account Blocked',

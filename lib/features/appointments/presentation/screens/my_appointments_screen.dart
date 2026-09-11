@@ -12,7 +12,7 @@ import '../../../services_firestore/services/bookings_firestore_service.dart';
 import 'report_issue_screen.dart';
 import 'review_doctor_screen.dart';
 
-enum AppointmentFilter { all, upcoming, completed, cancelled }
+enum AppointmentFilter { all, upcoming, completed, cancelled, issues }
 
 class MyAppointmentsScreen extends StatefulWidget {
   const MyAppointmentsScreen({super.key});
@@ -724,6 +724,8 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         return booking.status.current.toLowerCase() == 'completed';
       case AppointmentFilter.cancelled:
         return booking.status.current.toLowerCase() == 'cancelled';
+      case AppointmentFilter.issues:
+        return booking.status.current.toLowerCase() == 'under_investigation';
     }
   }
 
@@ -767,6 +769,8 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         return AppLocalizations.of(context)!.completed;
       case AppointmentFilter.cancelled:
         return AppLocalizations.of(context)!.cancelled;
+      case AppointmentFilter.issues:
+        return Localizations.localeOf(context).languageCode == 'ar' ? 'منازعات' : 'Disputes';
     }
   }
 
@@ -874,6 +878,74 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                       _DetailRow(label: AppLocalizations.of(context)!.bookingId, value: booking.id),
                     ],
                   ),
+                  if (booking.doctorReport != null) ...[
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: AppColors.error.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppColors.error.withOpacity(0.3)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            Localizations.localeOf(context).languageCode == 'ar' ? 'شكوى الطبيب' : 'Doctor Complaint',
+                            style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.error, fontSize: 16),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(booking.doctorReport!.text),
+                          if (booking.doctorReport!.image != null) ...[
+                            const SizedBox(height: 12),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: CachedImageWidget(
+                                imageUrl: booking.doctorReport!.image!,
+                                width: double.infinity,
+                                height: 160,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ],
+                  if (booking.patientReport != null) ...[
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: AppColors.success.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppColors.success.withOpacity(0.3)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            Localizations.localeOf(context).languageCode == 'ar' ? 'ردك على الشكوى' : 'Your Reply',
+                            style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.success, fontSize: 16),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(booking.patientReport!.text),
+                          if (booking.patientReport!.image != null) ...[
+                            const SizedBox(height: 12),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: CachedImageWidget(
+                                imageUrl: booking.patientReport!.image!,
+                                width: double.infinity,
+                                height: 160,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 24),
                   SizedBox(
                     width: double.infinity,
@@ -941,7 +1013,9 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                           ),
                         ),
                         icon: const Icon(Icons.report_problem_rounded),
-                        label: Text(AppLocalizations.of(context)!.reportIssue ?? 'Report Issue'),
+                        label: Text(booking.status.current == 'under_investigation'
+                            ? (Localizations.localeOf(context).languageCode == 'ar' ? 'الرد على الشكوى' : 'Reply to Issue')
+                            : (AppLocalizations.of(context)!.reportIssue ?? 'Report Issue')),
                       ),
                     ),
                   ],
@@ -1373,12 +1447,16 @@ class _ActionButton extends StatelessWidget {
             children: [
               Icon(icon, color: fg, size: 18),
               const SizedBox(width: 8),
-              Text(
-                text,
-                style: TextStyle(
-                  color: fg,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 13,
+              Flexible(
+                child: Text(
+                  text,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: fg,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13,
+                  ),
                 ),
               ),
             ],

@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/routes/app_routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../controllers/doctor_profile_controller.dart';
 import 'doctor_edit_profile_screen.dart';
 
@@ -307,6 +309,29 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                             ],
                           ),
                           showBorder: false,
+                        ),
+                        
+                        const SizedBox(height: 16),
+                        
+                        // Logout Button
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            await FirebaseAuth.instance.signOut();
+                            Get.offAllNamed(AppRoutes.login);
+                          },
+                          icon: const Icon(Icons.logout, color: Colors.white),
+                          label: Text(
+                            isArabic ? 'تسجيل الخروج' : 'Logout',
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red.shade400,
+                            minimumSize: const Size(double.infinity, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            elevation: 0,
+                          ),
                         ),
                       ],
                     ),

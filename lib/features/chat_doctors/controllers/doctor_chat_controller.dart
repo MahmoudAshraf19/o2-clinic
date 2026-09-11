@@ -80,49 +80,9 @@ class DoctorChatController extends GetxController {
       final doctorName = room.doctorName;
       final doctorProfileImage = room.doctorProfileImage;
 
-      if (draft != null) {
-        final dummyMessage = DoctorChatMessage(
-          id: 'uploading_${DateTime.now().microsecondsSinceEpoch}',
-          message: text,
-          kind: draft.kind,
-          receiverId: patientId,
-          senderId: doctorId,
-          createdAt: DateTime.now(),
-          attachment: ChatAttachment(
-            url: draft.localPath,
-            fileName: draft.fileName,
-            durationMs: draft.durationMs,
-          ),
-        );
-        
-        uploadingItems.add(dummyMessage);
-        pendingAttachment.value = null;
-        textController.clear();
-        this.currentText.value = '';
-        _scrollToBottom();
-        
-        service.sendAttachmentMessage(
-          patientId: patientId,
-          patientName: patientName,
-          patientProfileImage: patientProfileImage,
-          doctorId: doctorId,
-          doctorName: doctorName,
-          doctorProfileImage: doctorProfileImage,
-          senderId: doctorId,
-          receiverId: patientId,
-          localPath: draft.localPath,
-          kind: draft.kind,
-          fileName: draft.fileName,
-          caption: text.isEmpty ? null : text,
-          durationMs: draft.durationMs,
-          bytes: draft.bytes,
-          senderNameForNotification: doctorName,
-          screenForNotification: 'doctor_chat_patient',
-        ).whenComplete(() {
-          uploadingItems.remove(dummyMessage);
-        });
-      } else {
-        await service.sendTextMessage(
+      // No pending attachment logic, media sends automatically in background
+      if (text.isNotEmpty) {
+        service.sendTextMessage(
           patientId: patientId,
           patientName: patientName,
           patientProfileImage: patientProfileImage,
@@ -134,7 +94,9 @@ class DoctorChatController extends GetxController {
           text: text,
           senderNameForNotification: doctorName,
           screenForNotification: 'doctor_chat_patient',
-        );
+        ).catchError((e) {
+          debugPrint('Error sending message: $e');
+        });
         textController.clear();
         this.currentText.value = '';
         _scrollToBottom();
@@ -147,37 +109,27 @@ class DoctorChatController extends GetxController {
   Future<void> pickImage() async {
     final file = await _picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
     if (file == null) return;
-
-    isCompressing.value = true;
-    final compressedPath = await MediaCompressor.compressImage(file.path) ?? file.path;
     final bytes = kIsWeb ? await file.readAsBytes() : null;
-    isCompressing.value = false;
 
-    pendingAttachment.value = PendingAttachment(
+    _sendAttachmentBackground(PendingAttachment(
       kind: ChatMessageKind.image,
-      localPath: compressedPath,
+      localPath: file.path,
       fileName: file.name,
       bytes: bytes,
-    );
-    focusNode.requestFocus();
+    ));
   }
 
   Future<void> pickVideo() async {
     final file = await _picker.pickVideo(source: ImageSource.gallery, maxDuration: const Duration(minutes: 2));
     if (file == null) return;
-
-    isCompressing.value = true;
-    final compressedPath = await MediaCompressor.compressVideo(file.path) ?? file.path;
     final bytes = kIsWeb ? await file.readAsBytes() : null;
-    isCompressing.value = false;
 
-    pendingAttachment.value = PendingAttachment(
+    _sendAttachmentBackground(PendingAttachment(
       kind: ChatMessageKind.video,
-      localPath: compressedPath,
+      localPath: file.path,
       fileName: file.name,
       bytes: bytes,
-    );
-    focusNode.requestFocus();
+    ));
   }
 
   Future<void> startOrStopVoiceRecording() async {
@@ -222,16 +174,72 @@ class DoctorChatController extends GetxController {
       bytes = await xFile.readAsBytes();
     }
 
-    pendingAttachment.value = PendingAttachment(
+    _sendAttachmentBackground(PendingAttachment(
       kind: ChatMessageKind.voice,
       localPath: path,
       fileName: 'voice_note.m4a',
       durationMs: recordingSeconds.value * 1000,
       bytes: bytes,
-    );
+    ));
 
     recordingSeconds.value = 0;
     _recordStartedAt = null;
+  }
+
+  Future<void> _sendAttachmentBackground(PendingAttachment draft) async {
+    final patientName = room.customerName;
+    final patientProfileImage = room.customerProfileImage;
+    final doctorName = room.doctorName;
+    final doctorProfileImage = room.doctorProfileImage;
+
+    final dummyMessage = DoctorChatMessage(
+      id: 'uploading_${DateTime.now().microsecondsSinceEpoch}',
+      message: '',
+      kind: draft.kind,
+      receiverId: patientId,
+      senderId: doctorId,
+      createdAt: DateTime.now(),
+      attachment: ChatAttachment(
+        url: draft.localPath,
+        fileName: draft.fileName,
+        durationMs: draft.durationMs,
+      ),
+    );
+    
+    uploadingItems.add(dummyMessage);
+    _scrollToBottom();
+    
+    try {
+      String finalPath = draft.localPath;
+      if (draft.kind == ChatMessageKind.image) {
+        finalPath = await MediaCompressor.compressImage(draft.localPath) ?? draft.localPath;
+      } else if (draft.kind == ChatMessageKind.video) {
+        finalPath = await MediaCompressor.compressVideo(draft.localPath) ?? draft.localPath;
+      }
+
+      await service.sendAttachmentMessage(
+        patientId: patientId,
+        patientName: patientName,
+        patientProfileImage: patientProfileImage,
+        doctorId: doctorId,
+        doctorName: doctorName,
+        doctorProfileImage: doctorProfileImage,
+        senderId: doctorId,
+        receiverId: patientId,
+        localPath: finalPath,
+        kind: draft.kind,
+        fileName: draft.fileName,
+        caption: null,
+        durationMs: draft.durationMs,
+        bytes: draft.bytes,
+        senderNameForNotification: doctorName,
+        screenForNotification: 'doctor_chat_patient',
+      );
+    } catch (e) {
+      debugPrint('Error sending attachment: $e');
+    } finally {
+      uploadingItems.remove(dummyMessage);
+    }
   }
 
   Future<void> cancelPendingAttachment() async {

@@ -47,7 +47,7 @@ class DoctorChatService {
         .doc(roomId)
         .collection('thread')
         .orderBy('createdAt', descending: false)
-        .snapshots()
+        .snapshots(includeMetadataChanges: true)
         .map((snapshot) =>
             snapshot.docs.map((doc) => DoctorChatMessage.fromMap(doc.data())).toList());
   }
@@ -139,6 +139,7 @@ class DoctorChatService {
       chatRoomId: roomId,
       messageId: msgId,
       senderName: senderNameForNotification,
+      doctorId: doctorId,
       screen: screenForNotification,
     );
   }
@@ -219,6 +220,7 @@ class DoctorChatService {
       chatRoomId: roomId,
       messageId: msgId,
       senderName: senderNameForNotification,
+      doctorId: doctorId,
       screen: screenForNotification,
     );
   }

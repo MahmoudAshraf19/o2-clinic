@@ -1091,4 +1091,13 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get submitReport => 'שלח תלונה';
+
+  @override
+  String get chooseConsultationType => 'בחר סוג ייעוץ';
+
+  @override
+  String get howConsultWithDoctor => 'איך תרצה להתייעץ עם הרופא?';
+
+  @override
+  String get inO2Clinic => 'במרפאת O2';
 }

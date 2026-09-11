@@ -5,6 +5,7 @@ if (!admin.apps.length) {
 }
 
 const { onDocumentCreated } = require("firebase-functions/v2/firestore");
+const { sendFCMPush } = require("./helpers/fcmHelper");
 
 /**
  * Triggered when a new user is created.
@@ -42,9 +43,19 @@ exports.sendWelcomeNotification = onDocumentCreated(
         readAt: null,
       },
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      fcmSent: true, // Prevent onNotificationCreated from duplicating FCM
     };
 
-    await admin.firestore().collection("notifications").add(notificationData);
+    const docRef = await admin.firestore().collection("notifications").add(notificationData);
+    
+    // Send FCM immediately
+    const success = await sendFCMPush(notificationData, docRef.id);
+    if (success) {
+      await docRef.update({
+        "status.delivered": true,
+        "status.deliveredAt": admin.firestore.FieldValue.serverTimestamp(),
+      });
+    }
   }
 );
 
@@ -58,6 +69,11 @@ exports.onNotificationCreated = onDocumentCreated(
     const notification = event.data.data();
     const notificationId = event.params.notificationId;
     const userId = notification.userId;
+
+    if (notification.fcmSent === true) {
+      console.log(`[onNotificationCreated] Skipped for ${notificationId} as FCM was sent directly.`);
+      return;
+    }
 
     const stringifiedData = {};
     if (notification.data) {
@@ -178,15 +194,29 @@ exports.onNotificationCreated = onDocumentCreated(
       }
     }
 
+    // Fallback: Check if the user is actually a Doctor
+    if (!userDoc.exists) {
+      console.log(`[onNotificationCreated] Not found in Users, checking Doctors collection...`);
+      userDoc = await admin.firestore().collection("Doctors").doc(userId).get();
+      
+      if (!userDoc.exists) {
+        const doctorsSnapshot = await admin.firestore().collection("Doctors").where("auth_uid", "==", userId).get();
+        if (!doctorsSnapshot.empty) {
+          userDoc = doctorsSnapshot.docs[0];
+        }
+      }
+    }
+
     if (!userDoc || !userDoc.exists) {
-      console.log(`[onNotificationCreated] FAILED: User document not found for ID/uid == ${userId}`);
+      console.log(`[onNotificationCreated] FAILED: User/Doctor document not found for ID/uid == ${userId}`);
       return;
     }
 
     console.log(`[onNotificationCreated] SUCCESS: Found user document with ID: ${userDoc.id}`);
 
     const userData = userDoc.data();
-    const token = userData?.auth?.fcm_token;
+    // Doctor model has fcmToken, User model has auth.fcm_token
+    const token = userData?.auth?.fcm_token || userData?.fcmToken;
     const lang = userData?.settings?.language?.slug || userData?.language?.slug || "en";
 
     if (!token) {
@@ -244,3 +274,63 @@ const { sendAppointmentReminders, onBookingCreated } = require("./booking/bookin
 
 exports.sendAppointmentReminders = sendAppointmentReminders;
 exports.onBookingCreated = onBookingCreated;
+
+/**
+ * Triggered when a new review is added to a doctor.
+ * Sends a notification to the doctor.
+ */
+exports.onReviewCreated = onDocumentCreated(
+  "Doctors/{doctorId}/reviews/{reviewId}",
+  async (event) => {
+    const review = event.data.data();
+    const doctorId = event.params.doctorId;
+    const reviewId = event.params.reviewId;
+
+    if (!review) return;
+
+    // Fetch the doctor document to get the correct auth_uid
+    let targetUserId = doctorId;
+    const doctorDoc = await admin.firestore().collection("Doctors").doc(doctorId).get();
+    if (doctorDoc.exists) {
+      const data = doctorDoc.data();
+      if (data && data.auth_uid) {
+        targetUserId = data.auth_uid;
+      }
+    }
+
+    const notificationData = {
+      userId: targetUserId,
+      type: "review",
+      title: {
+        en: "New Patient Review ⭐",
+        ar: "تقييم جديد من مريض ⭐",
+      },
+      body: {
+        en: `${review.patientName || "A patient"} left a ${review.rating}-star review for you.`,
+        ar: `قام ${review.patientName || "مريض"} بتقييمك بـ ${review.rating} نجوم.`,
+      },
+      data: {
+        reviewId: reviewId,
+        screen: "doctor_reviews",
+      },
+      priority: "high",
+      status: {
+        read: false,
+        readAt: null,
+      },
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      fcmSent: true, // Prevent onNotificationCreated from duplicating FCM
+    };
+
+    const docRef = await admin.firestore().collection("notifications").add(notificationData);
+    
+    // Send FCM immediately
+    const success = await sendFCMPush(notificationData, docRef.id);
+    if (success) {
+      await docRef.update({
+        "status.delivered": true,
+        "status.deliveredAt": admin.firestore.FieldValue.serverTimestamp(),
+      });
+    }
+  }
+);

@@ -20,7 +20,7 @@ class DoctorModel {
   final int maxBooking;
 
   final Map<String, String> availabilityDay;
-  final Map<String, Map<String, String>> availabilityDayOnline;
+  final Map<String, List<Map<String, String>>> availabilityDayOnline;
 
   final bool isTopRateEnable;
   final bool theTop;
@@ -75,14 +75,25 @@ class DoctorModel {
     final rawAvailability = map['availability_day'];
     
     final rawOnline = map['availability_day_online'];
-    Map<String, Map<String, String>> onlineMap = {};
+    Map<String, List<Map<String, String>>> onlineMap = {};
     if (rawOnline is Map) {
       rawOnline.forEach((day, times) {
-        if (times is Map) {
-          onlineMap[day.toString()] = {
+        if (times is List) {
+          final list = <Map<String, String>>[];
+          for (var t in times) {
+            if (t is Map) {
+              list.add({
+                'from': t['from']?.toString() ?? '',
+                'to': t['to']?.toString() ?? '',
+              });
+            }
+          }
+          onlineMap[day.toString()] = list;
+        } else if (times is Map) {
+          onlineMap[day.toString()] = [{
             'from': times['from']?.toString() ?? '',
             'to': times['to']?.toString() ?? '',
-          };
+          }];
         }
       });
     }
@@ -113,7 +124,7 @@ class DoctorModel {
       specialty: map['specialty'] ?? '',
       yearsExperience: (map['years_experience'] ?? 0) as int,
       price: (map['price'] ?? 0) as num,
-      priceForOnline: (map['price_for_online'] ?? 0) as num,
+      priceForOnline: (map['price_for_online'] ?? map['pirce_for_online'] ?? 0) as num,
       scheduleType: map['schedule_type'] ?? 'weekly',
       monthlySchedule: map['monthly_schedule'] as Map<String, dynamic>?,
       reviewsCount: (map['reviews_count'] ?? 0) as int,

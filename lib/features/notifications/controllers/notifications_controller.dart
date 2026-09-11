@@ -10,13 +10,15 @@ class NotificationsController extends GetxController {
   final RxList<NotificationModel> notifications = <NotificationModel>[].obs;
   StreamSubscription? _sub;
 
+  StreamSubscription? _authSub;
+
   @override
   void onInit() {
     super.onInit();
-    final auth = Get.find<GlobalAuthController>();
-    ever(auth.currentUserData, (_) {
-      _listenToNotifications(FirebaseAuth.instance.currentUser?.uid);
+    _authSub = FirebaseAuth.instance.authStateChanges().listen((user) {
+      _listenToNotifications(user?.uid);
     });
+    // Also try immediately just in case
     _listenToNotifications(FirebaseAuth.instance.currentUser?.uid);
   }
 
@@ -41,6 +43,7 @@ class NotificationsController extends GetxController {
 
   @override
   void onClose() {
+    _authSub?.cancel();
     _sub?.cancel();
     super.onClose();
   }

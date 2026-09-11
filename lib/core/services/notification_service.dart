@@ -19,6 +19,8 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin _local =
       FlutterLocalNotificationsPlugin();
 
+  Map<String, dynamic>? pendingInitialNotification;
+
   // ─── Stable ID generation from bookingId ─────────────────────────────────
   // djb2-inspired hash -> positive 31-bit int.
   // 12h reminder = even, 3h reminder = odd (avoids ID collisions).
@@ -246,14 +248,9 @@ class NotificationService {
       }
     }
 
-    // Save to Firestore so it appears in the notifications screen/dropdown
-    if (userId != null && userId.isNotEmpty) {
-      await _saveReminderToFirestore(
-        userId: userId,
-        bookingId: bookingId,
-        appointmentDate: appointmentDate,
-      );
-    }
+    // Note: We no longer save local reminders to Firestore to prevent duplicates.
+    // The Cloud Functions (sendAppointmentReminders) will generate the push 
+    // notifications 12h/24h before the appointment which will appear in the UI.
   }
 
   /// ── Schedule 30-minute reminder for Doctor (Online Consultation) ─────────────
@@ -476,6 +473,7 @@ class NotificationService {
     required String chatRoomId,
     required String messageId,
     String? senderName,
+    String? doctorId,
     String screen = 'chat',
   }) async {
     final sender = senderName ?? 'O2 Clinic';
@@ -496,6 +494,7 @@ class NotificationService {
         'chatRoomId': chatRoomId,
         'messageId': messageId,
         'screen': screen,
+        if (doctorId != null) 'doctorId': doctorId,
       },
       priority: 'normal',
     );
@@ -544,9 +543,7 @@ class NotificationService {
   Future<void> _checkInitialMessage() async {
     final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        NotificationRouter.handleNotificationTap(initialMessage.data);
-      });
+      pendingInitialNotification = initialMessage.data;
     }
   }
 }

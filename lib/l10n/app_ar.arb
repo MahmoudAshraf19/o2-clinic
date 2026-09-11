@@ -394,4 +394,4 @@
   "describeTheIssue": "اشرح المشكلة بالتفصيل...",
   "attachImage": "إرفاق صورة",
   "submitReport": "إرسال الشكوى"
-}
+, "chooseConsultationType": "اختر نوع الاستشارة", "howConsultWithDoctor": "كيف تفضل استشارة الطبيب؟", "inO2Clinic": "في العيادة" }
