@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_fonts.dart';
 
 enum CommonButtonType { primary, secondary, outline, text, gradient }
 
