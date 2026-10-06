@@ -455,6 +455,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
           : 'Soon';
     }
     
+    final now = DateTime.now();
     final diff = date.difference(now).inDays;
     final isAr = Localizations.localeOf(context).languageCode == 'ar';
     if (diff == 0) return isAr ? 'اليوم' : 'Today';
