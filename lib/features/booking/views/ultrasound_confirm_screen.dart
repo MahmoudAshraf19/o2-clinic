@@ -6,7 +6,6 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_fonts.dart';
-import '../../../common/app_constants.dart';
 import '../../../common/controllers/app_constants_controller.dart';
 import '../controllers/booking.dart';
 import '../widgets/Ultrasound/ultrasound_data.dart';
