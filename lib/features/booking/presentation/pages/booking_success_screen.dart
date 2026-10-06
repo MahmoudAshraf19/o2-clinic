@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
 import '../../../services_firestore/models/doctor_model.dart';
 
 class BookingSuccessScreen extends StatelessWidget {
