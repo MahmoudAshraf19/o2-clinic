@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_fonts.dart';
 import '../../../core/utils/booking_helper.dart';
 import '../../../common/controllers/app_constants_controller.dart';
 import '../../services_firestore/models/doctor_model.dart';
-import '../../booking/presentation/pages/booking_page.dart';
 import '../controllers/dashboard_controller.dart';
 
 class DashboardUpcomingAppointment extends StatelessWidget {
