@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
-import '../../../services_firestore/firestore_paths.dart';
 import 'confirm_booking_screen.dart';
 import '../../controllers/booking.dart';
 
