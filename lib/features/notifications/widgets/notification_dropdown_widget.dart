@@ -10,12 +10,9 @@ import '../models/notification_model.dart';
 import '../utils/notification_time_helper.dart';
 import '../../appointments/presentation/screens/my_appointments_screen.dart';
 import '../views/notifications_screen.dart';
-import '../../services_firestore/models/doctor_model.dart';
-import '../../booking/presentation/pages/booking_success_screen.dart';
 import '../../doctor_dashboard/controllers/doctor_navigation_controller.dart';
 import '../../doctor_dashboard/controllers/doctor_appointments_controller.dart';
 import '../../doctor_dashboard/views/doctor_reviews_screen.dart';
-import '../../../core/routes/app_routes.dart';
 import '../../../core/services/notification_router.dart';
 import '../../../core/theme/app_colors.dart';
 
