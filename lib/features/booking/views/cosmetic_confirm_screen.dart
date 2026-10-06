@@ -94,7 +94,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
   // ================= UI =================
 
   Widget _topBar() {
-    final isAr = Get.locale?.languageCode == 'ar';
+    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(
@@ -323,7 +323,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
   }
 
   Widget _locationCard() {
-    final isAr = Get.locale?.languageCode == 'ar';
+    
     return _card(
       child: Row(
         children: [
@@ -581,7 +581,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
   }
 
   Widget _bottomBar(BuildContext context) {
-    final isAr = Get.locale?.languageCode == 'ar';
+    
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -624,7 +624,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
 
   Future<void> _confirmBooking() async {
     final user = FirebaseAuth.instance.currentUser;
-    final isAr = Get.locale?.languageCode == 'ar';
+    
     if (user == null) {
       Get.snackbar(_t('Error'), _t('Please log in first'));
       return;
