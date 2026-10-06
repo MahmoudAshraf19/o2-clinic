@@ -7,7 +7,6 @@ import 'package:intl/date_symbol_data_local.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:o2_clinic/core/localization/locale_controller.dart';
 
