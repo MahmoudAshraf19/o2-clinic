@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
 import '../../../services_firestore/models/xray_data_model.dart';
 
 class XRayCard extends StatelessWidget {
