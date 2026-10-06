@@ -456,7 +456,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
       return Localizations.localeOf(context).languageCode == 'ar'
           ? 'قريباً'
           : 'Soon';
-    final now = DateTime.now();
+    
     final diff = date.difference(now).inDays;
     final isAr = Localizations.localeOf(context).languageCode == 'ar';
     if (diff == 0) return isAr ? 'اليوم' : 'Today';
@@ -769,7 +769,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         booking.timeline.createdAt?.toDate();
     if (date == null) return false;
 
-    final now = DateTime.now();
+    
     final diffDays = now.difference(date).inDays;
 
     switch (filter) {
@@ -1234,7 +1234,7 @@ class _BookingDetailsSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final isAr = Localizations.localeOf(context).languageCode == 'ar';
     final date = booking.schedule.timestamp?.toDate();
-    final now = DateTime.now();
+    
     
     // Can cancel if status is not cancelled/completed/no_show
     final currentStatus = booking.status.current.toLowerCase();
