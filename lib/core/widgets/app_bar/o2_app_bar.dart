@@ -11,7 +11,6 @@ import '../../../features/notifications/controllers/notifications_controller.dar
 import '../../../features/notifications/widgets/notification_dropdown_widget.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../routes/app_routes.dart';
-import '../../theme/app_colors.dart';
 
 class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
   const O2AppBar({super.key, this.onNotificationTap});
