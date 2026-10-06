@@ -3,7 +3,6 @@ import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:get/get.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_fonts.dart';
 import '../../services_firestore/models/specialized_service_model.dart';
 import '../models/service_model.dart';
 
