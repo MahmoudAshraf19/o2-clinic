@@ -24,11 +24,7 @@ class ImagingSuccessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       final currency = Get.find<AppConstantsController>().currencySymbol.value;
-      print(
-        "🖨️ [ImagingSuccessScreen] Screen building. Current Currency: '$currency'",
-      );
     } catch (e) {
-      print("🖨️ [ImagingSuccessScreen] Could not read currency: $e");
     }
 
     return Scaffold(

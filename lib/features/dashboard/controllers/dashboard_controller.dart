@@ -62,7 +62,6 @@ class DashboardController extends GetxController {
       final upcomingDoctorsResult = await _doctorsService.getTheTopDoctors();
       upcomingDoctors.assignAll(upcomingDoctorsResult);
     } catch (e) {
-      print('💥 DashboardController error: $e');
       topDoctors.clear();
       upcomingDoctors.clear();
     } finally {

@@ -8,16 +8,13 @@ class WeekdaysFirestoreService {
   /// 🚀 GET ALL WEEKDAYS
   Future<List<WeekdayModel>> getAllWeekdays() async {
     try {
-      print("🚀 [WeekdaysFirestore] FETCH START");
 
       final snapshot = await _firestore
           .collection("weekdays")
           .get(const GetOptions(source: Source.serverAndCache));
 
-      print("📦 TOTAL WEEKDAYS: ${snapshot.docs.length}");
 
       if (snapshot.docs.isEmpty) {
-        print("❌ No weekdays found");
         return [];
       }
 
@@ -25,7 +22,6 @@ class WeekdaysFirestoreService {
 
       for (final doc in snapshot.docs) {
         try {
-          print("➡️ Reading weekday: ${doc.id}");
 
           final data = doc.data();
 
@@ -33,21 +29,16 @@ class WeekdaysFirestoreService {
 
           weekdays.add(weekday);
 
-          print("✅ Loaded weekday: ${weekday.titleEn}");
         } catch (e) {
-          print("❌ ERROR parsing weekday ${doc.id}: $e");
         }
       }
 
       /// 🔥 SORT BY ORDER
       weekdays.sort((a, b) => a.order.compareTo(b.order));
 
-      print("🎯 TOTAL LOADED: ${weekdays.length}");
 
       return weekdays;
     } catch (e, stack) {
-      print("💥 FIRESTORE ERROR: $e");
-      print(stack);
 
       return [];
     }
@@ -56,14 +47,12 @@ class WeekdaysFirestoreService {
   /// 🚀 GET ACTIVE WEEKDAYS ONLY
   Future<List<WeekdayModel>> getActiveWeekdays() async {
     try {
-      print("🚀 FETCH ACTIVE WEEKDAYS");
 
       final snapshot = await _firestore
           .collection("weekdays")
           .where("isActive", isEqualTo: true)
           .get(const GetOptions(source: Source.serverAndCache));
 
-      print("📦 ACTIVE WEEKDAYS: ${snapshot.docs.length}");
 
       final weekdays = snapshot.docs.map((doc) {
         return WeekdayModel.fromMap(id: doc.id, map: doc.data());
@@ -73,7 +62,6 @@ class WeekdaysFirestoreService {
 
       return weekdays;
     } catch (e) {
-      print("💥 ACTIVE WEEKDAYS ERROR: $e");
 
       return [];
     }
@@ -82,7 +70,6 @@ class WeekdaysFirestoreService {
   /// 🚀 GET SINGLE WEEKDAY
   Future<WeekdayModel?> getWeekdayById(String weekdayId) async {
     try {
-      print("🔍 FETCH WEEKDAY: $weekdayId");
 
       final doc = await _firestore
           .collection("weekdays")
@@ -90,18 +77,15 @@ class WeekdaysFirestoreService {
           .get(const GetOptions(source: Source.serverAndCache));
 
       if (!doc.exists || doc.data() == null) {
-        print("❌ Weekday not found");
 
         return null;
       }
 
       final weekday = WeekdayModel.fromMap(id: doc.id, map: doc.data()!);
 
-      print("✅ Loaded weekday: ${weekday.titleEn}");
 
       return weekday;
     } catch (e) {
-      print("💥 GET WEEKDAY ERROR: $e");
 
       return null;
     }

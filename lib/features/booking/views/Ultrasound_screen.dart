@@ -30,11 +30,7 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
     super.initState();
     try {
       final currency = Get.find<AppConstantsController>().currencySymbol.value;
-      print(
-        "🖨️ [UltrasoundScreen] Screen initialized. Current Currency: '$currency'",
-      );
     } catch (e) {
-      print("🖨️ [UltrasoundScreen] Could not read currency: $e");
     }
     _loadData();
   }

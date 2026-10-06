@@ -33,7 +33,6 @@ class DoctorsFirestoreService {
           .map((doc) => DoctorModel.fromMap(id: doc.id, map: doc.data()))
           .toList();
     } catch (e) {
-      print('💥 DoctorsFirestore error on $fieldName: $e');
       return [];
     }
   }
@@ -61,7 +60,6 @@ class DoctorsFirestoreService {
           .map((doc) => DoctorModel.fromMap(id: doc.id, map: doc.data()))
           .toList();
     } catch (e) {
-      print('💥 getAllDoctors error: $e');
       return [];
     }
   }

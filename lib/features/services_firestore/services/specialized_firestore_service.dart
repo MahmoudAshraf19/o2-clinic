@@ -12,16 +12,13 @@ class SpecializedFirestoreService {
 
   Future<List<SpecializedServiceModel>> getAllSpecialized() async {
     try {
-      print("⚡ [Specialized] FETCH START (/specialized)");
 
       final snapshot = await _firestore
           .collection("specialized")
           .get(const GetOptions(source: Source.serverAndCache));
 
-      print("📦 [Specialized] TOTAL DOCS: ${snapshot.docs.length}");
 
       if (snapshot.docs.isEmpty) {
-        print("❌ [Specialized] No documents found in /specialized");
         return [];
       }
 
@@ -35,17 +32,12 @@ class SpecializedFirestoreService {
 
         try {
           result.add(SpecializedServiceModel.fromMap(map: fixedMap));
-          print("✅ Loaded: ${doc.id}");
         } catch (e) {
-          print("❌ ERROR parsing ${doc.id}: $e");
         }
       }
 
-      print("🎯 TOTAL SPECIALIZED: ${result.length}");
       return result;
     } catch (e, stack) {
-      print("💥 [Specialized] FIRESTORE ERROR: $e");
-      print(stack);
       return [];
     }
   }

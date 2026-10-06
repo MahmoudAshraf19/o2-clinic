@@ -37,30 +37,20 @@ class DoctorAppointmentsController extends GetxController {
         final doctorId = snapshot.docs.first.id;
         _listenToBookings(doctorId);
       } else {
-        print(
-          '[DoctorAppointmentsController] No doctor profile found for auth_uid: $authUid',
-        );
         isLoading.value = false;
       }
     } catch (e) {
-      print('[DoctorAppointmentsController] Error resolving doctorId: $e');
       isLoading.value = false;
     }
   }
 
   void _listenToBookings(String doctorId) {
-    print(
-      '[DoctorAppointmentsController] Fetching bookings for doctor: $doctorId',
-    );
     _bookingsSub = _firestore
         .collection('bookings')
         .where('doctor.doctorId', isEqualTo: doctorId)
         .snapshots()
         .listen(
           (snapshot) {
-            print(
-              '[DoctorAppointmentsController] Received ${snapshot.docs.length} bookings',
-            );
 
             final sortedDocs = snapshot.docs.toList();
             sortedDocs.sort((a, b) {
@@ -75,7 +65,6 @@ class DoctorAppointmentsController extends GetxController {
             isLoading.value = false;
           },
           onError: (e) {
-            print('[DoctorAppointmentsController] ERROR fetching bookings: $e');
             isLoading.value = false;
           },
         );

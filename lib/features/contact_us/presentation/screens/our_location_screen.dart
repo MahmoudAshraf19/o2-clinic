@@ -33,7 +33,6 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
   @override
   void initState() {
     super.initState();
-    print("[OurLocationScreen] Initialized");
   }
 
   void _onMapCreated(
@@ -42,7 +41,6 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
     String name,
     String city,
   ) {
-    print("[OurLocationScreen] Map created. Clinic location: $clinicLocation");
     mapController = c;
     setState(() {
       _markers.add(
@@ -62,16 +60,12 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
   }
 
   Future<void> _drawRoute(LatLng clinicLocation) async {
-    print(
-      "[OurLocationScreen] 'Take Me There' clicked. Starting route drawing process...",
-    );
 
     setState(() {
       _isDrawingRoute = true;
     });
 
     try {
-      print("[OurLocationScreen] Checking location services...");
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
       String lang = Get.locale?.languageCode ?? 'en';
@@ -90,22 +84,16 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                 : 'We cannot proceed until we get location permissions from you.');
 
       if (!serviceEnabled) {
-        print("[OurLocationScreen] Error: Location services are disabled.");
         Get.snackbar(errorTitle, servicesDisabledMsg);
         await Geolocator.openLocationSettings();
         setState(() => _isDrawingRoute = false);
         return;
       }
 
-      print("[OurLocationScreen] Checking location permissions...");
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
-        print(
-          "[OurLocationScreen] Permissions denied, requesting permissions...",
-        );
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          print("[OurLocationScreen] Error: Location permissions are denied.");
           Get.snackbar(errorTitle, permissionDeniedMsg);
           setState(() => _isDrawingRoute = false);
           return;
@@ -113,21 +101,14 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
       }
 
       if (permission == LocationPermission.deniedForever) {
-        print(
-          "[OurLocationScreen] Error: Location permissions are permanently denied.",
-        );
         Get.snackbar(errorTitle, permissionDeniedMsg);
         await Geolocator.openAppSettings();
         setState(() => _isDrawingRoute = false);
         return;
       }
 
-      print("[OurLocationScreen] Fetching current user location...");
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
-      );
-      print(
-        "[OurLocationScreen] User location found: ${position.latitude}, ${position.longitude}",
       );
 
       LatLng userLocation = LatLng(position.latitude, position.longitude);
@@ -146,28 +127,18 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
         );
       });
 
-      print(
-        "[OurLocationScreen] Requesting route from Google Maps Directions API via HTTP...",
-      );
       final String urlStr =
           'https://maps.googleapis.com/maps/api/directions/json?origin=${position.latitude},${position.longitude}&destination=${clinicLocation.latitude},${clinicLocation.longitude}&mode=driving&key=$_googleMapsApiKey';
 
       final response = await http.get(Uri.parse(urlStr));
-      print(
-        "[OurLocationScreen] Directions API response status: ${response.statusCode}",
-      );
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final status = data['status'];
-        print("[OurLocationScreen] Directions API status: $status");
 
         if (status == 'OK') {
           final points = data['routes'][0]['overview_polyline']['points'];
           List<LatLng> polylineCoordinates = _decodePolyline(points);
-          print(
-            "[OurLocationScreen] Route found! Decoding ${polylineCoordinates.length} points...",
-          );
 
           Polyline polyline = Polyline(
             polylineId: const PolylineId("route"),
@@ -180,9 +151,6 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
             _polylines.add(polyline);
           });
 
-          print(
-            "[OurLocationScreen] Route drawn successfully. Adjusting camera bounds...",
-          );
           LatLngBounds bounds;
           if (position.latitude > clinicLocation.latitude &&
               position.longitude > clinicLocation.longitude) {
@@ -210,13 +178,9 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
           mapController?.animateCamera(
             CameraUpdate.newLatLngBounds(bounds, 100),
           );
-          print("[OurLocationScreen] Route drawing process complete.");
         } else {
           final errorMessage = data['error_message'] ?? 'Unknown API Error';
           if (status == 'ZERO_RESULTS') {
-            print(
-              "[OurLocationScreen] No driving route found. Drawing direct straight line...",
-            );
             List<LatLng> polylineCoordinates = [userLocation, clinicLocation];
             Polyline polyline = Polyline(
               polylineId: const PolylineId("route"),
@@ -261,26 +225,16 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
             );
           } else if (status == 'REQUEST_DENIED' ||
               status == 'OVER_QUERY_LIMIT') {
-            print(
-              "[OurLocationScreen] Billing/API Key issue detected. Opening native map fallback...",
-            );
             _launchMapsUrl(clinicLocation.latitude, clinicLocation.longitude);
           } else {
             Get.snackbar('API Error', 'Directions API: $status. $errorMessage');
           }
         }
       } else {
-        print(
-          "[OurLocationScreen] HTTP Request failed with status ${response.statusCode}",
-        );
         Get.snackbar('Error', 'Failed to fetch directions.');
       }
     } catch (e) {
-      print("[OurLocationScreen] Exception caught during route drawing: $e");
       if (kIsWeb) {
-        print(
-          "[OurLocationScreen] Web CORS detected. Falling back to native Google Maps URL...",
-        );
         _launchMapsUrl(clinicLocation.latitude, clinicLocation.longitude);
       } else {
         Get.snackbar('Error', 'An error occurred while drawing the route.');

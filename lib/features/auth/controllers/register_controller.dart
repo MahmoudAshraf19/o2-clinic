@@ -480,7 +480,6 @@ class RegisterController extends GetxController {
         _log('REGISTER: FCM token received -> ${fcmToken ?? "null"}');
       } else {
         _log('🌐 Web platform detected. FCM token generation skipped.');
-        print('🌐 FCM token generation skipped for web platform.');
       }
 
       String uid;

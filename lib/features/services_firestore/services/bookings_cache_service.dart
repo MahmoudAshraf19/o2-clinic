@@ -10,18 +10,15 @@ class BookingsCacheService {
   static Future<List<BookingModel>> getBookings() async {
     try {
       if (_cache != null) {
-        print("⚡ RETURNING BOOKINGS FROM CACHE");
 
         return _cache!;
       }
 
-      print("🌐 FETCHING BOOKINGS FROM FIRESTORE");
 
       _cache = await _service.getAllBookings();
 
       return _cache!;
     } catch (e) {
-      print("💥 BOOKINGS CACHE ERROR: $e");
 
       return [];
     }
@@ -29,7 +26,6 @@ class BookingsCacheService {
 
   /// 🧹 CLEAR CACHE
   static void clearCache() {
-    print("🧹 BOOKINGS CACHE CLEARED");
 
     _cache = null;
   }

@@ -16,7 +16,6 @@ class SplashController extends GetxController {
   }
 
   void _navigateToNextScreen() {
-    print('🚀 SPLASH: Starting 2-second timer...');
     Timer(const Duration(seconds: 2), () async {
       if (isClosed) return; // Prevent navigation if hot-restarted or disposed
 
@@ -26,14 +25,8 @@ class SplashController extends GetxController {
         final role = prefs.getString('user_role');
 
         if (role == 'doctor') {
-          print(
-            '🚀 SPLASH: Doctor is logged in. Navigating to doctor dashboard...',
-          );
           Get.offAllNamed(AppRoutes.doctorNavigation);
         } else {
-          print(
-            '🚀 SPLASH: Patient is logged in. Navigating to main navigation...',
-          );
           Get.offAllNamed(AppRoutes.mainNavigation);
         }
 
@@ -47,7 +40,6 @@ class SplashController extends GetxController {
           });
         }
       } else {
-        print('🚀 SPLASH: Navigating to onboarding screen...');
         Get.offAllNamed(AppRoutes.onboarding);
       }
     });

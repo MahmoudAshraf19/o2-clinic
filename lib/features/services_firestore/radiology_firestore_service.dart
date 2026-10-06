@@ -25,7 +25,6 @@ class RadiologyFirestoreService {
         );
       }).toList();
     } catch (e) {
-      print("❌ Error fetching radiology: $e");
       return [];
     }
   }

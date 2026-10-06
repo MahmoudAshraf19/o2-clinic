@@ -682,7 +682,6 @@ class BookingFirestoreService {
           'createdAt': FieldValue.serverTimestamp(),
         });
 
-        print("✅ [Cosmetic Booking] Created: $bookingId");
 
         return BookingResult(
           success: true,
@@ -693,7 +692,6 @@ class BookingFirestoreService {
         );
       });
     } catch (e) {
-      print("❌ [Cosmetic Booking] Failed: $e");
       return BookingResult(
         success: false,
         message: "Booking failed: $e",
@@ -835,7 +833,6 @@ class BookingFirestoreService {
 
         tx.set(bookingRef, bookingData);
 
-        print("✅ [Direct Booking] Created: $bookingId");
 
         return BookingResult(
           success: true,
@@ -846,7 +843,6 @@ class BookingFirestoreService {
         );
       });
     } catch (e) {
-      print("❌ [Direct Booking] Failed: $e");
       return BookingResult(
         success: false,
         message: "Booking failed: $e",

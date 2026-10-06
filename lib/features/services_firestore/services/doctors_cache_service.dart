@@ -10,24 +10,20 @@ class DoctorsCacheService {
   static Future<List<DoctorModel>> getDoctors() async {
     try {
       if (_cache != null) {
-        print("⚡ RETURNING FROM CACHE");
         return _cache!;
       }
 
-      print("🌐 FETCHING FROM FIRESTORE");
 
       _cache = await _service.getAllDoctors();
 
       return _cache!;
     } catch (e) {
-      print("💥 CACHE ERROR: $e");
       return [];
     }
   }
 
   /// 🧹 CLEAR CACHE
   static void clearCache() {
-    print("🧹 CACHE CLEARED");
     _cache = null;
   }
 }

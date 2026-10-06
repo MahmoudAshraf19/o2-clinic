@@ -140,10 +140,8 @@ class FirestoreService {
   Stream<List<RadiologyServiceModel>> watchRadiologyServices() {
     const collectionName = "radiology_category";
 
-    print("📡 [Firestore] Listening to: /$collectionName");
 
     return _db.collection(collectionName).snapshots().map((snapshot) {
-      print("📦 [Firestore] Radiology docs received: ${snapshot.docs.length}");
 
       final List<RadiologyServiceModel> items = snapshot.docs.map((doc) {
         final id = doc.id; // ct / x_ray / ultrasound
@@ -176,7 +174,6 @@ class FirestoreService {
         (a, b) => _radiologyOrder(a.title).compareTo(_radiologyOrder(b.title)),
       );
 
-      print("✅ [Firestore] Radiology services mapped: ${items.length}");
       return items;
     });
   }

@@ -27,12 +27,10 @@ class ServicesFirestoreService {
       // 1. Return memory cache if valid and not forcing refresh
       if (!forceRefresh && _cachedServices != null && _lastFetchTime != null) {
         if (now.difference(_lastFetchTime!) < _cacheTtl) {
-          print("⚡ [Firestore] Returning from Memory Cache (TTL active)");
           return _cachedServices!;
         }
       }
 
-      print("📡 [Firestore] Fetching Services (Source: Cache then Server)");
 
       // 2. Try to get from local persistent cache first (instant response)
       // This doesn't count as a billable read if data is already in local SQLite
@@ -45,9 +43,6 @@ class ServicesFirestoreService {
         if (cacheSnapshot.docs.isNotEmpty && !forceRefresh) {
           _cachedServices = _parseSnapshot(cacheSnapshot);
           _lastFetchTime = now;
-          print(
-            "📦 [Firestore] Loaded ${cacheSnapshot.docs.length} docs from Local Persistence",
-          );
 
           // Optionally: Trigger a background fetch to update the cache without waiting
           _backgroundSync();
@@ -56,7 +51,6 @@ class ServicesFirestoreService {
         }
       } catch (e) {
         // Cache might be empty or unavailable, proceed to server
-        print("ℹ️ [Firestore] Local cache empty or unavailable: $e");
       }
 
       // 3. Fetch from Server if cache is empty, expired, or refresh requested
@@ -68,13 +62,8 @@ class ServicesFirestoreService {
       _cachedServices = _parseSnapshot(serverSnapshot);
       _lastFetchTime = now;
 
-      print(
-        "🌐 [Firestore] Fetched ${serverSnapshot.docs.length} docs from Server (Read Count++)",
-      );
       return _cachedServices!;
     } catch (e, stack) {
-      print("💥 [Firestore] ERROR: $e");
-      print(stack);
       // Return last known cache if available even if expired, rather than empty list
       return _cachedServices ?? [];
     }
@@ -90,9 +79,7 @@ class ServicesFirestoreService {
 
       _cachedServices = _parseSnapshot(snapshot);
       _lastFetchTime = DateTime.now();
-      print("🔄 [Firestore] Background sync completed");
     } catch (e) {
-      print("⚠️ [Firestore] Background sync failed: $e");
     }
   }
 

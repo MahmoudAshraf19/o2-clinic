@@ -26,7 +26,6 @@ class ContactUsController extends GetxController {
       onError: (err) {
         isLoading.value = false;
         error.value = 'Failed to load contact info';
-        print('Error in ContactUsController: $err');
       },
     );
   }

@@ -28,16 +28,13 @@ Future<void> main() async {
       usePathUrlStrategy();
     }
 
-    print('🚀 Starting Initialization...');
 
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    print('✅ Firebase initialized successfully');
 
     await NotificationService.instance.init();
 
-    print('✅ Notification Service initialized');
 
     final prefs = await SharedPreferences.getInstance();
     final String savedLanguageCode = prefs.getString('language_code') ?? 'en';
@@ -46,7 +43,6 @@ Future<void> main() async {
     Get.put(AppConstantsController(), permanent: true);
     Get.put(GlobalAuthController(), permanent: true);
     Get.put(NotificationsController(), permanent: true);
-    print('✅ AppConstantsController initialized');
 
     runApp(
       DevicePreview(
@@ -55,8 +51,6 @@ Future<void> main() async {
       ),
     );
   } catch (e, stack) {
-    print('❌ CRITICAL ERROR DURING INIT: $e');
-    print(stack);
     runApp(
       MaterialApp(
         home: Scaffold(body: Center(child: Text('Error: $e'))),

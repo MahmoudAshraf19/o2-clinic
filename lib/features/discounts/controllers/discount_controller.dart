@@ -28,7 +28,6 @@ class DiscountController extends GetxController {
       final types = await _discountService.getDiscountTypes();
       discountTypes.assignAll(types);
     } catch (e) {
-      print('Error fetching discount types: $e');
     } finally {
       isLoadingTypes(false);
     }
@@ -40,7 +39,6 @@ class DiscountController extends GetxController {
       final codes = await _discountService.getDiscountCodes();
       discountCodes.assignAll(codes);
     } catch (e) {
-      print('Error fetching discount codes: $e');
     } finally {
       isLoadingCodes(false);
     }
@@ -113,7 +111,6 @@ class DiscountController extends GetxController {
       currentValidCode.value = code;
     } catch (e) {
       verificationError(_getErrorMessage('error'));
-      print('Error verifying discount code: $e');
     } finally {
       isVerifyingCode(false);
     }

@@ -60,20 +60,13 @@ class CosmeticCategoryModel {
 
       availabilityDay: (() {
         final dynamic rawMap = map['availability_day'];
-        print(
-          "🔍 [CosmeticModel] parsing availability_day for id $id: $rawMap",
-        );
         if (rawMap == null) return <String, String>{};
         if (rawMap is Map) {
           final parsed = rawMap.map(
             (key, value) => MapEntry(key.toString(), value.toString()),
           );
-          print("✅ [CosmeticModel] Parsed availabilityDay: $parsed");
           return parsed;
         }
-        print(
-          "❌ [CosmeticModel] availability_day is not a Map! Type: ${rawMap.runtimeType}",
-        );
         return <String, String>{};
       })(),
     );

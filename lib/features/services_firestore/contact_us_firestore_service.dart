@@ -17,7 +17,6 @@ class ContactUsFirestoreService {
       }
       return null;
     } catch (e) {
-      print('Error fetching ContactUs data: $e');
       return null;
     }
   }

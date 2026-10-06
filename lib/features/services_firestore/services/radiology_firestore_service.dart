@@ -22,13 +22,11 @@ class RadiologyFirestoreService {
         .get(const GetOptions(source: Source.serverAndCache));
 
     if (!doc.exists) {
-      print("❌ [RadiologyFirestoreService] Doc not found: $_collection/$docId");
       return null;
     }
 
     final data = doc.data();
     if (data == null) {
-      print("❌ [RadiologyFirestoreService] Data is null: $_collection/$docId");
       return null;
     }
 
@@ -41,7 +39,6 @@ class RadiologyFirestoreService {
 
   Future<List<RadiologyCtModel>> getCtCategories() async {
     try {
-      print("🚀 [Radiology] FETCH CT FROM FIRESTORE");
 
       final data = await _getDocData("ct");
       if (data == null) return [];
@@ -54,15 +51,12 @@ class RadiologyFirestoreService {
           try {
             list.add(RadiologyCtModel.fromMap(id: key, map: value));
           } catch (e) {
-            print("💥 [Radiology] CT PARSE ERROR [$key]: $e");
           }
         }
       });
 
-      print("✅ [Radiology] CT TOTAL: ${list.length}");
       return list;
     } catch (e) {
-      print("💥 [Radiology] CT FETCH ERROR: $e");
       return [];
     }
   }
@@ -73,14 +67,12 @@ class RadiologyFirestoreService {
 
   Future<List<CtIconModel>> getCtIcons() async {
     try {
-      print("🚀 [Radiology] FETCH CT ICONS FROM /icons");
 
       final snapshot = await _firestore
           .collection("icons") // ✅ collection مستقلة
           .get(const GetOptions(source: Source.serverAndCache));
 
       if (snapshot.docs.isEmpty) {
-        print("❌ [Radiology] NO ICONS FOUND IN /icons");
         return [];
       }
 
@@ -91,14 +83,11 @@ class RadiologyFirestoreService {
           final data = doc.data();
           icons.add(CtIconModel.fromMap(id: doc.id, map: data));
         } catch (e) {
-          print("💥 [Radiology] ICON PARSE ERROR [${doc.id}]: $e");
         }
       }
 
-      print("✅ [Radiology] CT ICONS TOTAL: ${icons.length}");
       return icons;
     } catch (e) {
-      print("💥 [Radiology] CT ICONS FETCH ERROR: $e");
       return [];
     }
   }
@@ -109,7 +98,6 @@ class RadiologyFirestoreService {
 
   Future<List<RadiologyXrayModel>> getXrayCategories() async {
     try {
-      print("🚀 [Radiology] FETCH X-RAY FROM FIRESTORE");
 
       final data = await _getDocData("x_ray");
       if (data == null) return [];
@@ -121,15 +109,12 @@ class RadiologyFirestoreService {
           try {
             list.add(RadiologyXrayModel.fromMap(id: key, map: value));
           } catch (e) {
-            print("💥 [Radiology] X-RAY PARSE ERROR [$key]: $e");
           }
         }
       });
 
-      print("✅ [Radiology] X-RAY TOTAL: ${list.length}");
       return list;
     } catch (e) {
-      print("💥 [Radiology] X-RAY FETCH ERROR: $e");
       return [];
     }
   }
@@ -140,7 +125,6 @@ class RadiologyFirestoreService {
 
   Future<List<RadiologyUltrasoundModel>> getUltrasoundCategories() async {
     try {
-      print("🚀 [Radiology] FETCH ULTRASOUND FROM FIRESTORE");
 
       final data = await _getDocData("ultrasound");
       if (data == null) return [];
@@ -152,17 +136,14 @@ class RadiologyFirestoreService {
           try {
             list.add(RadiologyUltrasoundModel.fromMap(id: key, map: value));
           } catch (e) {
-            print("💥 [Radiology] ULTRASOUND PARSE ERROR [$key]: $e");
           }
         }
       });
 
       list.removeWhere((e) => (e.isActive == false));
 
-      print("✅ [Radiology] ULTRASOUND TOTAL: ${list.length}");
       return list;
     } catch (e) {
-      print("💥 [Radiology] ULTRASOUND FETCH ERROR: $e");
       return [];
     }
   }
@@ -173,7 +154,6 @@ class RadiologyFirestoreService {
 
   Future<List<RadiologyItemModel>> getAllRadiology() async {
     try {
-      print("🚀 [Radiology] FETCH ALL (ct + x_ray + ultrasound)");
 
       final ct = await _getDocData("ct");
       final xray = await _getDocData("x_ray");
@@ -194,9 +174,6 @@ class RadiologyFirestoreService {
                 ),
               );
             } catch (e) {
-              print(
-                "💥 [Radiology] ITEM PARSE ERROR [$categoryKey/$itemKey]: $e",
-              );
             }
           }
         });
@@ -206,10 +183,8 @@ class RadiologyFirestoreService {
       addCategory("x_ray", xray);
       addCategory("ultrasound", us);
 
-      print("✅ [Radiology] ALL TOTAL: ${result.length}");
       return result;
     } catch (e) {
-      print("💥 [Radiology] ALL FETCH ERROR: $e");
       return [];
     }
   }

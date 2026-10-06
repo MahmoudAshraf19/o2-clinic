@@ -33,7 +33,6 @@ class BookingController extends GetxController {
       final data = await BookingService.getServices(forceRefresh: forceRefresh);
       services.assignAll(data);
     } catch (e) {
-      print("💥 Controller ERROR: $e");
     } finally {
       isLoading.value = false;
     }
@@ -94,7 +93,6 @@ class BookingController extends GetxController {
           }
         });
       } catch (e) {
-        print("💥 Error fetching direct service days: $e");
       }
       isLoading.value = false;
 

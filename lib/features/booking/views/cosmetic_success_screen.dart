@@ -71,11 +71,7 @@ class CosmeticSuccessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       final currency = Get.find<AppConstantsController>().currencySymbol.value;
-      print(
-        "🖨️ [CosmeticSuccessScreen] Screen building. Current Currency: '$currency'",
-      );
     } catch (e) {
-      print("🖨️ [CosmeticSuccessScreen] Could not read currency: $e");
     }
 
     return Scaffold(

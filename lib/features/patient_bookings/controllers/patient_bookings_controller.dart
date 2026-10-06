@@ -43,7 +43,6 @@ class PatientBookingsController extends GetxController {
             isLoading.value = false;
           },
           onError: (e) {
-            print('[PatientBookingsController] Error fetching bookings: $e');
             isLoading.value = false;
           },
         );

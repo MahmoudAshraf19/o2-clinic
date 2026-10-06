@@ -419,9 +419,6 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
           }
         }
 
-        print(
-          "✅ Showing booking ${data['id']} with status $currentStatus for date $_selectedDate",
-        );
         return true;
       }).toList();
 

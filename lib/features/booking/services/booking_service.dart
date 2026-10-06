@@ -12,15 +12,12 @@ class BookingService {
     bool forceRefresh = false,
   }) async {
     try {
-      print("🚀 [BookingService] REQUEST SERVICES");
 
       /// ⚡ لو موجود في الكاش → رجعه فورًا
       if (!forceRefresh && _cache != null) {
-        print("⚡ RETURNING FROM CACHE (${_cache!.length})");
         return _cache!;
       }
 
-      print("🌐 FETCHING FROM FIREBASE...");
 
       final firestoreServices = await _service.getAllServices(
         forceRefresh: forceRefresh,
@@ -44,18 +41,15 @@ class BookingService {
       /// 💾 خزّن في الكاش
       _cache = result;
 
-      print("💾 CACHE SAVED (${result.length})");
 
       return result;
     } catch (e) {
-      print("💥 ERROR: $e");
       return _cache ?? [];
     }
   }
 
   /// 🧹 لو عايز تعمل refresh
   static void clearCache() {
-    print("🧹 CACHE CLEARED");
     _cache = null;
   }
 

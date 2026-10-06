@@ -263,22 +263,17 @@ class XrayDataFirestoreService {
   }
 
   void _logDivider() {
-    print('\n==================================================');
   }
 
   void _logInfo(String message) {
-    print('ℹ️  [X-RAY] $message');
   }
 
   void _logSuccess(String message) {
-    print('✅ [X-RAY] $message');
   }
 
   void _logWarn(String message) {
-    print('⚠️  [X-RAY] $message');
   }
 
   void _logError(String message) {
-    print('❌ [X-RAY] $message');
   }
 }

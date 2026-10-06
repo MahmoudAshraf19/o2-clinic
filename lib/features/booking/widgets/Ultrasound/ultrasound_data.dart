@@ -96,9 +96,6 @@ class UltrasoundData {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static Future<List<UltrasoundModel>> loadFromFirestore() async {
-    print('==================================================');
-    print('🚀 [ULTRASOUND] Starting direct Firestore fetch...');
-    print('📂 [ULTRASOUND] Path: $_collection/$_documentId');
 
     try {
       final doc = await _firestore
@@ -106,33 +103,23 @@ class UltrasoundData {
           .doc(_documentId)
           .get(const GetOptions(source: Source.server));
 
-      print('✅ [ULTRASOUND] Document fetched.');
-      print('ℹ️  [ULTRASOUND] Exists: ${doc.exists}');
-      print('ℹ️  [ULTRASOUND] Doc ID: ${doc.id}');
 
       if (!doc.exists) {
-        print('❌ [ULTRASOUND] Document not found.');
         return <UltrasoundModel>[];
       }
 
       final data = doc.data();
       if (data == null || data.isEmpty) {
-        print('❌ [ULTRASOUND] Document data is empty.');
         return <UltrasoundModel>[];
       }
 
-      print('ℹ️  [ULTRASOUND] Top-level keys: ${data.keys.join(', ')}');
 
       final rawUltrasound = _extractUltrasoundMap(data);
 
       if (rawUltrasound.isEmpty) {
-        print(
-          '❌ [ULTRASOUND] No ultrasound map found. Expected key "ultrasound".',
-        );
         return <UltrasoundModel>[];
       }
 
-      print('✅ [ULTRASOUND] Found items: ${rawUltrasound.length}');
 
       final items = <UltrasoundModel>[];
 
@@ -141,7 +128,6 @@ class UltrasoundData {
         final rawValue = entry.value;
 
         if (rawValue is! Map) {
-          print('⚠️  [ULTRASOUND] Skipped "$key" because it is not a map.');
           continue;
         }
         final value = Map<String, dynamic>.from(rawValue);
@@ -153,7 +139,6 @@ class UltrasoundData {
           ], fallback: true);
 
           if (!isActive) {
-            print('⚠️  [ULTRASOUND] Skipped "$key" because isActive=false.');
             continue;
           }
 
@@ -168,14 +153,7 @@ class UltrasoundData {
 
           items.add(model);
 
-          print(
-            '🧾 [ULTRASOUND] Item => id=${model.id}, '
-            'title=${model.title}, '
-            'price=${model.price}, '
-            'image=${model.image}',
-          );
         } catch (e) {
-          print('💥 [ULTRASOUND] Parse error for "$key": $e');
         }
       }
 
@@ -185,14 +163,9 @@ class UltrasoundData {
         return a.title.toLowerCase().compareTo(b.title.toLowerCase());
       });
 
-      print('✅ [ULTRASOUND] Final items count: ${items.length}');
-      print('==================================================');
 
       return items;
     } catch (e, stack) {
-      print('💥 [ULTRASOUND] Firestore fetch error: $e');
-      print('💥 [ULTRASOUND] Stack: $stack');
-      print('==================================================');
       return <UltrasoundModel>[];
     }
   }

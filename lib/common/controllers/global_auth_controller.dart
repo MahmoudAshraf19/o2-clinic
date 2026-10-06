@@ -31,7 +31,6 @@ class GlobalAuthController extends GetxController {
         data,
       ) {
         if (data != null) {
-          print('GLOBAL_AUTH: Document found for uid -> ${user.uid}');
           currentUserData.value = data;
 
           final isBlocked = data['isBlocked'] == true;
@@ -39,12 +38,10 @@ class GlobalAuthController extends GetxController {
             _handleBlockedUser();
           }
         } else {
-          print('GLOBAL_AUTH: Document NOT found yet for uid -> ${user.uid}');
           currentUserData.value = null;
         }
       });
     } else {
-      print('GLOBAL_AUTH: User is null');
       UserFirestoreService.instance.clearCache();
       currentUserData.value = null;
     }
@@ -61,10 +58,8 @@ class GlobalAuthController extends GetxController {
           uid: uid,
           data: {'auth.fcm_token': token},
         );
-        print('GLOBAL_AUTH: FCM token updated successfully');
       }
     } catch (e) {
-      print('GLOBAL_AUTH: Failed to update FCM token: $e');
     }
   }
 

@@ -12,22 +12,18 @@ class RadiologyCache {
   }) async {
     try {
       if (!forceRefresh && _cache != null && _cache!.isNotEmpty) {
-        print("⚡ [RadiologyCache] HIT (${_cache!.length})");
         return _cache!;
       }
 
-      print("🌐 [RadiologyCache] FETCHING FROM FIRESTORE");
       _cache = await _service.getAllRadiology();
 
       return _cache ?? [];
     } catch (e) {
-      print("💥 [RadiologyCache] ERROR: $e");
       return _cache ?? [];
     }
   }
 
   static void clear() {
-    print("🧹 [RadiologyCache] CLEARED");
     _cache = null;
   }
 }

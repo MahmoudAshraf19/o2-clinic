@@ -46,9 +46,7 @@ class ServicesController extends GetxController {
         }).toList(),
       );
 
-      print("✅ SERVICES LOADED: ${services.length}");
     } catch (e) {
-      print("💥 ServicesController ERROR: $e");
     } finally {
       isLoading.value = false;
     }
