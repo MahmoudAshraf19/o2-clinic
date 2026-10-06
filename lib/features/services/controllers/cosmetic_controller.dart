@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 
 import '../../services_firestore/services/cosmetic_cache_service.dart';
 import '../models/cosmetic_model.dart';
