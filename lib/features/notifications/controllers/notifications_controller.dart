@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import '../../../common/controllers/global_auth_controller.dart';
 import '../models/notification_model.dart';
 import '../services/notifications_firestore_service.dart';
 
