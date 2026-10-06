@@ -330,51 +330,7 @@ class NotificationService {
     }
   }
 
-  /// Saves a reminder document to Firestore (idempotent — one per booking).
-  /// All 3 language titles/bodies are stored so the UI shows the correct text.
-  Future<void> _saveReminderToFirestore({
-    required String userId,
-    required String bookingId,
-    required DateTime appointmentDate,
-  }) async {
-    try {
-      final docId = 'reminder_$bookingId';
-      // Skip if already exists (idempotent)
-      final existing = await _firestore
-          .collection('notifications')
-          .doc(docId)
-          .get();
-      if (existing.exists) return;
 
-      await _firestore.collection('notifications').doc(docId).set({
-        'id': docId,
-        'userId': userId,
-        'type': 'reminder',
-        'title': {
-          'en': 'Appointment Reminder \ud83d\udcc5',
-          'ar':
-              '\u062a\u0630\u0643\u064a\u0631 \u0628\u0627\u0644\u0645\u0648\u0639\u062f \ud83d\udcc5',
-          'he':
-              '\u05ea\u05d6\u05db\u05d5\u05e8\u05ea \u05ea\u05d5\u05e8 \ud83d\udcc5',
-        },
-        'body': {
-          'en':
-              'You have an upcoming appointment. Local reminders are set on your device.',
-          'ar':
-              '\u0644\u062f\u064a\u0643 \u0645\u0648\u0639\u062f \u0642\u0627\u062f\u0645. \u062a\u0645 \u062a\u0639\u064a\u064a\u0646 \u0627\u0644\u062a\u0630\u0643\u064a\u0631\u0627\u062a \u0639\u0644\u0649 \u062c\u0647\u0627\u0632\u0643.',
-          'he':
-              '\u05d9\u05e9 \u05dc\u05da \u05ea\u05d5\u05e8 \u05e7\u05e8\u05d5\u05d1. \u05d4\u05ea\u05d6\u05db\u05d5\u05e8\u05d5\u05ea \u05d4\u05de\u05e7\u05d5\u05de\u05d9\u05d5\u05ea \u05d4\u05d5\u05d2\u05d3\u05e8\u05d5 \u05d1\u05de\u05db\u05e9\u05d9\u05e8 \u05e9\u05dc\u05da.',
-        },
-        'data': {'bookingId': bookingId, 'screen': 'booking_details'},
-        'priority': 'high',
-        'status': {'read': false, 'readAt': null},
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-      debugPrint('Reminder saved to Firestore: $docId');
-    } catch (e) {
-      debugPrint('Could not save reminder to Firestore: $e');
-    }
-  }
 
   /// ── Legacy single-reminder helper (kept for backward compatibility) ───────
   Future<void> scheduleLocalReminder({
