@@ -179,40 +179,7 @@ class CommonButton extends StatelessWidget {
     }
   }
 
-  ButtonStyle _getButtonStyle() {
-    switch (type) {
-      case CommonButtonType.primary:
-        return ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor ?? AppColors.primary,
-          foregroundColor: foregroundColor ?? AppColors.white,
-          elevation: elevation ?? 0,
-          shadowColor: shadow?.color,
-        );
-      case CommonButtonType.secondary:
-        return ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor ?? AppColors.secondary,
-          foregroundColor: foregroundColor ?? AppColors.white,
-          elevation: elevation ?? 0,
-          shadowColor: shadow?.color,
-        );
-      case CommonButtonType.outline:
-        return OutlinedButton.styleFrom(
-          foregroundColor: foregroundColor ?? AppColors.primary,
-          side: BorderSide(color: borderColor ?? AppColors.primary),
-        );
-      case CommonButtonType.text:
-        return TextButton.styleFrom(
-          foregroundColor: foregroundColor ?? AppColors.primary,
-        );
-      case CommonButtonType.gradient:
-        return ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          foregroundColor: foregroundColor ?? AppColors.white,
-          elevation: elevation ?? 0,
-          shadowColor: shadow?.color,
-        );
-    }
-  }
+
 
   Color _getDefaultBackgroundColor() {
     switch (type) {
