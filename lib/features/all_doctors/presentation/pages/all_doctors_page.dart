@@ -201,15 +201,7 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
         .join(' ');
   }
 
-  String _beautifyId(String value) {
-    final raw = value.replaceAll('-', ' ').replaceAll('_', ' ').trim();
-    if (raw.isEmpty) return value;
-    return raw
-        .split(RegExp(r'\s+'))
-        .where((e) => e.isNotEmpty)
-        .map((e) => e[0].toUpperCase() + e.substring(1).toLowerCase())
-        .join(' ');
-  }
+
 
   Widget _buildTopSection() {
     return Padding(
