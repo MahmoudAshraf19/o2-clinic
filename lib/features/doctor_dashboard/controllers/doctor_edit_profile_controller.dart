@@ -8,10 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:http/http.dart' as http;
 
 import '../../../../l10n/app_localizations.dart';
-import '../../services_firestore/models/doctor_model.dart';
 import 'doctor_profile_controller.dart';
 
 class DoctorEditProfileController extends GetxController {
