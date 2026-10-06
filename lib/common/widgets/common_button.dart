@@ -52,7 +52,7 @@ class CommonButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final buttonStyle = _getButtonStyle();
+    
     final buttonPadding = padding ?? _getDefaultPadding();
     final buttonTextStyle = textStyle ?? _getDefaultTextStyle();
 
