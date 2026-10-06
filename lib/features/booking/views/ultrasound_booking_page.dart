@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
-import '../../../core/theme/app_fonts.dart';
 
-import '../../../common/widgets/O2CalendarWidget.dart';
 import '../../../core/theme/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../chat_support/widgets/support_chat_widgets.dart';
