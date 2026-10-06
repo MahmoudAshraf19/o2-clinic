@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:o2_clinic/l10n/app_localizations.dart';
 
-import '../../../core/theme/app_colors.dart';
 import '../widgets/doctor_home_top_cover.dart';
 import '../widgets/quick_actions_widget.dart';
 import '../widgets/next_patient_widget.dart';
