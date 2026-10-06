@@ -154,10 +154,11 @@ class DoctorStatisticsController extends GetxController {
           'pending';
       if (status == 'completed') {
         tempCompleted++;
-      } else if (status == 'cancelled')
+      } else if (status == 'cancelled') {
         tempCancelled++;
-      else
+      } else {
         tempPending++;
+      }
 
       // Earnings
       if (status == 'completed') {

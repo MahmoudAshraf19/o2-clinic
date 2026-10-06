@@ -1280,6 +1280,7 @@ class AppointmentBookingController extends GetxController {
     _capacitySub = _firestoreService
         .watchBookedCount(doctorId: doctor.id, date: date)
         .listen(
+          // ignore: avoid_types_as_parameter_names
           (count) {
             bookedCountRx.value = count;
           },

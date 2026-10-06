@@ -258,6 +258,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
           dragStartBehavior: widget.dragStartBehavior,
           mouseCursor: widget.mouseCursor,
           restorationId: widget.restorationId,
+          // ignore: deprecated_member_use
           scribbleEnabled: widget.scribbleEnabled,
           enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
           canRequestFocus: widget.canRequestFocus,
