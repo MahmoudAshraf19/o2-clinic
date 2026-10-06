@@ -41,7 +41,7 @@ class SearchBarWidget extends StatelessWidget {
           suffixIcon: Container(
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA).withOpacity(0.15) : AppColors.primary.withOpacity(0.10),
+              color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA).withValues(alpha: 0.15) : AppColors.primary.withValues(alpha: 0.10),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(Icons.tune, color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary, size: 20),
@@ -55,7 +55,7 @@ class SearchBarWidget extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             borderSide: BorderSide(
-              color: AppColors.primary.withOpacity(0.22),
+              color: AppColors.primary.withValues(alpha: 0.22),
               width: 1.2,
             ),
           ),
@@ -66,7 +66,7 @@ class SearchBarWidget extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             borderSide: BorderSide(
-              color: AppColors.primary.withOpacity(0.22),
+              color: AppColors.primary.withValues(alpha: 0.22),
               width: 1.2,
             ),
           ),

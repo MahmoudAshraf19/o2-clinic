@@ -23,7 +23,7 @@ class NotificationDropdownWidget extends StatelessWidget {
   Color _surfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white12 : const Color(0xFFDFE3E1);
   Color _outlineVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white24 : const Color(0xFFBDC9C6);
   Color _primary(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.brandBlue;
-  Color _tertiaryContainer(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? AppColors.vibrantCyan.withOpacity(0.5) : AppColors.vibrantCyan;
+  Color _tertiaryContainer(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? AppColors.vibrantCyan.withValues(alpha: 0.5) : AppColors.vibrantCyan;
   Color _onSurface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181D1C);
   Color _onTertiaryContainer(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFFF4FFFC);
 

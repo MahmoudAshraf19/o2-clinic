@@ -59,7 +59,7 @@ class DoctorLoginController extends GetxController {
                 ? AppLocalizations.of(context)!.doctorEmailNotFound
                 : 'This email is not found. Please contact administration.',
             snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red.withOpacity(0.9),
+            backgroundColor: Colors.red.withValues(alpha: 0.9),
             colorText: Colors.white,
             duration: const Duration(seconds: 4),
           );

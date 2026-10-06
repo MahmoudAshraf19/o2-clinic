@@ -292,7 +292,7 @@ class _ServiceImage extends StatelessWidget {
           ? CachedImageWidget(
               imageUrl: urlOrAsset,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const _ImageFallback(
+              errorBuilder: (_, _, ___) => const _ImageFallback(
                 icon: Icons.image_not_supported_outlined,
               ),
               loadingBuilder: (context, child, progress) => progress == null
@@ -302,7 +302,7 @@ class _ServiceImage extends StatelessWidget {
           : Image.asset(
               urlOrAsset,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const _ImageFallback(
+              errorBuilder: (_, _, ___) => const _ImageFallback(
                 icon: Icons.image_not_supported_outlined,
               ),
             ),

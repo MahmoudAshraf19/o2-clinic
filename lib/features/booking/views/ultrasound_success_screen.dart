@@ -51,7 +51,7 @@ class UltrasoundSuccessScreen extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 18),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 18),
         ],
       ),
       child: Column(

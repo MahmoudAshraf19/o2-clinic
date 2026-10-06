@@ -54,7 +54,7 @@ class RegisterScreen extends GetView<RegisterController> {
                 child: Text(
                   l10n.editing,
                   style: GoogleFonts.cairo(
-                    color: isDarkMode ? Colors.white70 : AppColors.brandBlue.withOpacity(0.6),
+                    color: isDarkMode ? Colors.white70 : AppColors.brandBlue.withValues(alpha: 0.6),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -86,10 +86,10 @@ class RegisterScreen extends GetView<RegisterController> {
                           margin: const EdgeInsets.only(bottom: 16),
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: isDarkMode ? Colors.green.withOpacity(0.1) : const Color(0xFFEAF8F6),
+                            color: isDarkMode ? Colors.green.withValues(alpha: 0.1) : const Color(0xFFEAF8F6),
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: isDarkMode ? Colors.green.withOpacity(0.3) : AppColors.vibrantCyan.withOpacity(0.3),
+                              color: isDarkMode ? Colors.green.withValues(alpha: 0.3) : AppColors.vibrantCyan.withValues(alpha: 0.3),
                             ),
                           ),
                           child: Row(
@@ -124,10 +124,10 @@ class RegisterScreen extends GetView<RegisterController> {
                           margin: const EdgeInsets.only(bottom: 16),
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: Colors.red.withOpacity(0.08),
+                            color: Colors.red.withValues(alpha: 0.08),
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: Colors.red.withOpacity(0.2),
+                              color: Colors.red.withValues(alpha: 0.2),
                             ),
                           ),
                           child: Row(
@@ -164,7 +164,7 @@ class RegisterScreen extends GetView<RegisterController> {
             if (!controller.isLoading.value) return const SizedBox.shrink();
 
             return Container(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               child: const Center(
                 child: CircularProgressIndicator(color: AppColors.vibrantCyan),
               ),
@@ -193,7 +193,7 @@ class RegisterScreen extends GetView<RegisterController> {
               ? l10n.updateProfileSafely
               : l10n.joinUsJourney,
           style: GoogleFonts.cairo(
-            color: isDarkMode ? Colors.white60 : AppColors.brandBlue.withOpacity(0.6),
+            color: isDarkMode ? Colors.white60 : AppColors.brandBlue.withValues(alpha: 0.6),
             fontSize: 15,
           ),
         ),
@@ -282,9 +282,9 @@ class RegisterScreen extends GetView<RegisterController> {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: isDarkMode ? AppColors.vibrantCyan.withOpacity(0.1) : AppColors.softCyan.withOpacity(0.15),
+        color: isDarkMode ? AppColors.vibrantCyan.withValues(alpha: 0.1) : AppColors.softCyan.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.vibrantCyan.withOpacity(0.3)),
+        border: Border.all(color: AppColors.vibrantCyan.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -296,7 +296,7 @@ class RegisterScreen extends GetView<RegisterController> {
               style: GoogleFonts.cairo(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: isDarkMode ? Colors.white70 : AppColors.brandBlue.withOpacity(0.8),
+                color: isDarkMode ? Colors.white70 : AppColors.brandBlue.withValues(alpha: 0.8),
               ),
             ),
           ),
@@ -357,7 +357,7 @@ class RegisterScreen extends GetView<RegisterController> {
       return Image.file(
         io.File(value),
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _avatarFallback(isDarkMode),
+        errorBuilder: (_, _, ___) => _avatarFallback(isDarkMode),
       );
     }
 
@@ -386,7 +386,7 @@ class RegisterScreen extends GetView<RegisterController> {
         height: 40,
         fit: BoxFit.contain,
         color: isDarkMode ? Colors.white24 : Colors.grey.shade400,
-        errorBuilder: (_, __, ___) {
+        errorBuilder: (_, _, ___) {
           return Icon(Icons.person, size: 40, color: isDarkMode ? Colors.white24 : Colors.grey.shade400);
         },
       ),
@@ -405,7 +405,7 @@ class RegisterScreen extends GetView<RegisterController> {
   }) {
     final borderColor = isDarkMode ? Colors.white24 : Colors.grey.shade300;
     final fillColor = isDarkMode ? const Color(0xFF1A2625) : Colors.white;
-    final iconColor = isDarkMode ? Colors.white54 : AppColors.brandBlue.withOpacity(0.5);
+    final iconColor = isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5);
 
     return TextField(
       controller: controller,
@@ -430,7 +430,7 @@ class RegisterScreen extends GetView<RegisterController> {
         suffixIcon: suffix,
         hintText: hint,
         hintStyle: GoogleFonts.cairo(
-          color: isDarkMode ? Colors.white38 : AppColors.brandBlue.withOpacity(0.4),
+          color: isDarkMode ? Colors.white38 : AppColors.brandBlue.withValues(alpha: 0.4),
           fontWeight: FontWeight.w500,
         ),
         filled: true,
@@ -461,7 +461,7 @@ class RegisterScreen extends GetView<RegisterController> {
     String? errorText,
   }) {
     final borderColor = isDarkMode ? Colors.white24 : Colors.grey.shade300;
-    final iconColor = isDarkMode ? Colors.white54 : AppColors.brandBlue.withOpacity(0.5);
+    final iconColor = isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5);
 
     return TextField(
       controller: controller,
@@ -479,7 +479,7 @@ class RegisterScreen extends GetView<RegisterController> {
         ),
         hintText: label,
         hintStyle: GoogleFonts.cairo(
-          color: isDarkMode ? Colors.white38 : AppColors.brandBlue.withOpacity(0.4),
+          color: isDarkMode ? Colors.white38 : AppColors.brandBlue.withValues(alpha: 0.4),
           fontWeight: FontWeight.w500,
         ),
         errorText: errorText,
@@ -522,7 +522,7 @@ class RegisterScreen extends GetView<RegisterController> {
               controller.showPassword.value ? 'assets/icons/eye.png' : 'assets/icons/hidden.png',
               width: 22,
               height: 22,
-              color: isDarkMode ? Colors.white54 : AppColors.brandBlue.withOpacity(0.5),
+              color: isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5),
             ),
           ),
         ),
@@ -554,7 +554,7 @@ class RegisterScreen extends GetView<RegisterController> {
                   controller.showConfirm.value ? 'assets/icons/eye.png' : 'assets/icons/hidden.png',
                   width: 22,
                   height: 22,
-                  color: isDarkMode ? Colors.white54 : AppColors.brandBlue.withOpacity(0.5),
+                  color: isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5),
                 ),
               ),
             ),
@@ -638,7 +638,7 @@ class RegisterScreen extends GetView<RegisterController> {
                     ),
                   ),
                   const SizedBox(width: 4),
-                  Icon(Icons.keyboard_arrow_down_rounded, color: textColor.withOpacity(0.7)),
+                  Icon(Icons.keyboard_arrow_down_rounded, color: textColor.withValues(alpha: 0.7)),
                 ],
               ),
             ),

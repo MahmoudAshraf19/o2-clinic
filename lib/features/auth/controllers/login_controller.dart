@@ -44,7 +44,7 @@ class LoginController extends GetxController {
             'Login Failed',
             'Email does not exist in our records.',
             snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red.withOpacity(0.9),
+            backgroundColor: Colors.red.withValues(alpha: 0.9),
             colorText: Colors.white,
           );
           return;
@@ -56,7 +56,7 @@ class LoginController extends GetxController {
             'Account Blocked',
             'Your account is currently blocked. Please contact the administration.',
             snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red.withOpacity(0.9),
+            backgroundColor: Colors.red.withValues(alpha: 0.9),
             colorText: Colors.white,
             duration: const Duration(seconds: 8),
             mainButton: TextButton(

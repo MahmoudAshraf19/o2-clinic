@@ -247,7 +247,7 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
                   AppLocalizations.of(context)!.chooseYourSpecialist,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withOpacity(0.75),
+                    color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withValues(alpha: 0.75),
                     fontWeight: FontWeight.w500,
                     fontFamily: AppFonts.inter,
                   ),

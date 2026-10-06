@@ -64,7 +64,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.withOpacity(0.2)),
+        border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
       ),
       child: Obx(() {
         return DropdownButtonHideUnderline(
@@ -216,7 +216,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withOpacity(0.3),
+                  color: AppColors.primary.withValues(alpha: 0.3),
                   blurRadius: 10,
                   offset: const Offset(0, 5),
                 ),
@@ -227,7 +227,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
@@ -315,10 +315,10 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.withOpacity(0.1)),
+        border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -330,7 +330,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, color: color, size: 20),
@@ -372,7 +372,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.grey.withOpacity(0.1)),
+            border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
           ),
           child: Obx(() {
             final total = _controller.totalAppointments.value;
@@ -406,7 +406,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.grey.withOpacity(0.1)),
+            border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
           ),
           child: Obx(() {
             final services = _controller.topServices;
@@ -466,7 +466,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
         const SizedBox(height: 8),
         LinearProgressIndicator(
           value: percent,
-          backgroundColor: color.withOpacity(0.1),
+          backgroundColor: color.withValues(alpha: 0.1),
           valueColor: AlwaysStoppedAnimation<Color>(color),
           borderRadius: BorderRadius.circular(4),
           minHeight: 8,

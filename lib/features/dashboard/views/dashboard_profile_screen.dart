@@ -123,7 +123,7 @@ class DashboardProfileScreen extends StatelessWidget {
                                           (controller.isGuest
                                                   ? AppColors.primary
                                                   : AppColors.error)
-                                              .withOpacity(0.08),
+                                              .withValues(alpha: 0.08),
                                       foregroundColor: controller.isGuest
                                           ? AppColors.primary
                                           : AppColors.error,
@@ -180,13 +180,13 @@ class DashboardProfileScreen extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLowest.withOpacity(0.80),
+        color: AppColors.surfaceLowest.withValues(alpha: 0.80),
         border: Border(
-          bottom: BorderSide(color: AppColors.outlineVariant.withOpacity(0.30)),
+          bottom: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.30)),
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xff21897E).withOpacity(0.05),
+            color: const Color(0xff21897E).withValues(alpha: 0.05),
             blurRadius: 15,
             offset: const Offset(0, 2),
           ),
@@ -218,7 +218,7 @@ class DashboardProfileScreen extends StatelessWidget {
                   vertical: 10,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryContainer.withOpacity(0.10),
+                  color: AppColors.primaryContainer.withValues(alpha: 0.10),
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
@@ -297,7 +297,7 @@ class _TopAvatar extends StatelessWidget {
                 url,
                 key: ValueKey(url),
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(
+                errorBuilder: (_, _, ___) => Container(
                   color: Colors.white,
                   alignment: Alignment.center,
                   child: const Icon(
@@ -323,9 +323,9 @@ class _ErrorBanner extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.red.withOpacity(0.08),
+        color: Colors.red.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.red.withOpacity(0.16)),
+        border: Border.all(color: Colors.red.withValues(alpha: 0.16)),
       ),
       child: Row(
         children: [

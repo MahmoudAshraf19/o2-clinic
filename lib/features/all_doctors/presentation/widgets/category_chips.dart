@@ -28,7 +28,7 @@ class CategoryChips extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
         itemCount: categories.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 10),
+        separatorBuilder: (_, _) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
           final categoryKey = categories.keys.elementAt(index);
           final categoryValue = categories.values.elementAt(index);
@@ -49,7 +49,7 @@ class CategoryChips extends StatelessWidget {
                 border: Border.all(
                   color: isActive
                       ? Colors.transparent
-                      : AppColors.border.withOpacity(0.18),
+                      : AppColors.border.withValues(alpha: 0.18),
                 ),
               ),
               child: Center(

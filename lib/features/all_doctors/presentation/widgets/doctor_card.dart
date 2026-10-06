@@ -72,7 +72,7 @@ class DoctorCard extends StatelessWidget {
                 child: CachedImageWidget(
                   imageUrl: doctor.image,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) =>
+                  errorBuilder: (_, _, ___) =>
                       const Icon(Icons.person, size: 44, color: AppColors.grey),
                 ),
               ),
@@ -127,7 +127,7 @@ class DoctorCard extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF2A3A39) : AppColors.surfaceContainer.withOpacity(0.45),
+                      color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF2A3A39) : AppColors.surfaceContainer.withValues(alpha: 0.45),
                       borderRadius: BorderRadius.circular(999),
                     ),
                     child: Text(

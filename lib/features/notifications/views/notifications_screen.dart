@@ -399,11 +399,11 @@ class _O2Colors {
   Color get surfaceContainerLowest => isDark ? Theme.of(context).cardColor : const Color(0xFFFFFFFF);
   Color get surfaceContainerHigh => isDark ? Colors.white24 : const Color(0xFFE5E9E7);
   Color get primary => isDark ? const Color(0xFF60A5FA) : AppColors.brandBlue;
-  Color get primaryContainer => isDark ? AppColors.brandBlue.withOpacity(0.5) : AppColors.brandBlue;
+  Color get primaryContainer => isDark ? AppColors.brandBlue.withValues(alpha: 0.5) : AppColors.brandBlue;
   Color get onPrimaryContainer => AppColors.pureWhite;
   Color get secondaryContainer => AppColors.softCyan;
   Color get onSecondaryContainer => isDark ? Colors.white : AppColors.brandBlue;
-  Color get tertiaryContainer => isDark ? AppColors.vibrantCyan.withOpacity(0.5) : AppColors.vibrantCyan;
+  Color get tertiaryContainer => isDark ? AppColors.vibrantCyan.withValues(alpha: 0.5) : AppColors.vibrantCyan;
   Color get onTertiaryContainer => AppColors.pureWhite;
   Color get errorContainer => isDark ? const Color(0xFF93000A) : const Color(0xFFFFDAD6);
   Color get onErrorContainer => isDark ? const Color(0xFFFFDAD6) : const Color(0xFF93000A);

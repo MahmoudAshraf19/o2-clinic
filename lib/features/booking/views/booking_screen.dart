@@ -126,7 +126,7 @@ class BookingScreen extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.only(bottom: 20, top: 6),
                     itemCount: controller.services.length + 1,
-                    separatorBuilder: (_, __) => const SizedBox(height: 16),
+                    separatorBuilder: (_, _) => const SizedBox(height: 16),
                     itemBuilder: (_, i) {
                       if (i == 0) {
                         return Padding(
@@ -135,7 +135,7 @@ class BookingScreen extends StatelessWidget {
                             AppLocalizations.of(context)!.chooseTheMedicalServiceYou,
                             style: TextStyle(
                               fontSize: 14,
-                              color: AppColors.textSecondary.withOpacity(0.8),
+                              color: AppColors.textSecondary.withValues(alpha: 0.8),
                               fontWeight: FontWeight.w500,
                             ),
                           ),

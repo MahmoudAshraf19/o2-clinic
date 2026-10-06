@@ -146,7 +146,7 @@ class NextPatientWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.primary.withOpacity(0.1)),
+                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
                 ),
                 child: Center(
                   child: Column(
@@ -154,7 +154,7 @@ class NextPatientWidget extends StatelessWidget {
                       Icon(
                         Icons.event_available_rounded,
                         size: 40,
-                        color: AppColors.grey.withOpacity(0.5),
+                        color: AppColors.grey.withValues(alpha: 0.5),
                       ),
                       const SizedBox(height: 12),
                       Text(
@@ -243,10 +243,10 @@ class NextPatientWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.primary.withOpacity(0.1)),
+                border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.05),
+                    color: AppColors.primary.withValues(alpha: 0.05),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -257,7 +257,7 @@ class NextPatientWidget extends StatelessWidget {
                   if (customerImage.trim().isNotEmpty)
                     CircleAvatar(
                       radius: 30,
-                      backgroundColor: AppColors.primary.withOpacity(0.1),
+                      backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                       backgroundImage: NetworkImage(customerImage.trim()),
                     )
                   else if (userId.trim().isNotEmpty)
@@ -279,7 +279,7 @@ class NextPatientWidget extends StatelessWidget {
                         }
                         return CircleAvatar(
                           radius: 30,
-                          backgroundColor: AppColors.primary.withOpacity(0.1),
+                          backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                           backgroundImage: fetchedImage.trim().isNotEmpty
                               ? NetworkImage(fetchedImage.trim())
                               : null,
@@ -295,7 +295,7 @@ class NextPatientWidget extends StatelessWidget {
                   else
                     CircleAvatar(
                       radius: 30,
-                      backgroundColor: AppColors.primary.withOpacity(0.1),
+                      backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                       child: const Icon(Icons.person, color: AppColors.primary),
                     ),
                   const SizedBox(width: 16),
@@ -323,7 +323,7 @@ class NextPatientWidget extends StatelessWidget {
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: AppColors.primary.withOpacity(0.1),
+                                color: AppColors.primary.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: const Text(

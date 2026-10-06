@@ -99,13 +99,13 @@ class ProfileHeaderSection extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.12),
+                    color: AppColors.primary.withValues(alpha: 0.12),
                     blurRadius: 24,
                     offset: const Offset(0, 10),
                   ),
                 ],
                 border: Border.all(
-                  color: AppColors.primary.withOpacity(0.18),
+                  color: AppColors.primary.withValues(alpha: 0.18),
                   width: 3,
                 ),
               ),

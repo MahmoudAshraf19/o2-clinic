@@ -141,7 +141,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
-                      color: AppColors.grey.withOpacity(0.3),
+                      color: AppColors.grey.withValues(alpha: 0.3),
                     ),
                   ),
                   filled: true,

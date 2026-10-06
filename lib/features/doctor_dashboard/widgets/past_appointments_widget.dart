@@ -170,10 +170,10 @@ class PastAppointmentsWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.grey.withOpacity(0.2)),
+        border: Border.all(color: AppColors.grey.withValues(alpha: 0.2)),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.05),
+            color: AppColors.primary.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -187,7 +187,7 @@ class PastAppointmentsWidget extends StatelessWidget {
               if (customerImage.trim().isNotEmpty)
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: AppColors.primary.withOpacity(0.1),
+                  backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                   backgroundImage: NetworkImage(customerImage.trim()),
                 )
               else if (userId.trim().isNotEmpty)
@@ -209,7 +209,7 @@ class PastAppointmentsWidget extends StatelessWidget {
                     }
                     return CircleAvatar(
                       radius: 20,
-                      backgroundColor: AppColors.primary.withOpacity(0.1),
+                      backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                       backgroundImage: fetchedImage.trim().isNotEmpty
                           ? NetworkImage(fetchedImage.trim())
                           : null,
@@ -226,7 +226,7 @@ class PastAppointmentsWidget extends StatelessWidget {
               else
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: AppColors.primary.withOpacity(0.1),
+                  backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                   child: const Icon(
                     Icons.person,
                     color: AppColors.primary,

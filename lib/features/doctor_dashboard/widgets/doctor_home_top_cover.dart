@@ -268,10 +268,10 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                               width: 40,
                               height: 40,
                               decoration: BoxDecoration(
-                                color: surface.withOpacity(0.2),
+                                color: surface.withValues(alpha: 0.2),
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: surface.withOpacity(0.5),
+                                  color: surface.withValues(alpha: 0.5),
                                   width: 1,
                                 ),
                               ),

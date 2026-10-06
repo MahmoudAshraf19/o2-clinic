@@ -96,7 +96,7 @@ class ExternalLinkBannersSection extends StatelessWidget {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: banners.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 12),
+                separatorBuilder: (_, _) => const SizedBox(width: 12),
                 itemBuilder: (context, index) {
                   final banner = banners[index];
                   return SizedBox(
@@ -165,7 +165,7 @@ class _BannerCard extends StatelessWidget {
                   ? CachedImageWidget(imageUrl: 
                       banner.imageUrl,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) {
+                      errorBuilder: (_, _, ___) {
                         debugPrint(
                           '[Banners] Failed to load network image for banner id: ${banner.id}. '
                           'Using local asset fallback.',
@@ -195,7 +195,7 @@ class _BannerCard extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.18),
+                        color: Colors.white.withValues(alpha: 0.18),
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Text(

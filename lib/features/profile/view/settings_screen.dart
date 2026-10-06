@@ -66,7 +66,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 fontSize: 14,
                 height: 1.5,
                 fontWeight: FontWeight.w400,
-                color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? AppColors.textSecondary,
+                color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ?? AppColors.textSecondary,
               ),
             ),
             const SizedBox(height: 20),
@@ -234,7 +234,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
-                      color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? AppColors.textSecondary,
+                      color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ?? AppColors.textSecondary,
                     ),
                   );
                 },
@@ -318,7 +318,7 @@ class _AssistanceBanner extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withOpacity(0.16),
+                color: AppColors.primary.withValues(alpha: 0.16),
                 blurRadius: 18,
                 offset: const Offset(0, 8),
               ),
@@ -346,7 +346,7 @@ class _AssistanceBanner extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.white.withOpacity(0.78),
+                        color: AppColors.white.withValues(alpha: 0.78),
                       ),
                     ),
                   ],
@@ -360,7 +360,7 @@ class _AssistanceBanner extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.white.withOpacity(0.25),
+                      color: AppColors.white.withValues(alpha: 0.25),
                       blurRadius: 14,
                     ),
                   ],
@@ -409,7 +409,7 @@ class _ToggleTile extends StatelessWidget {
             width: 42,
             height: 42,
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor.withOpacity(0.15),
+              color: Theme.of(context).primaryColor.withValues(alpha: 0.15),
               shape: BoxShape.circle,
             ),
             child: Icon(icon, size: 22, color: AppColors.primary),
@@ -433,7 +433,7 @@ class _ToggleTile extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? AppColors.textSecondary,
+                    color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ?? AppColors.textSecondary,
                   ),
                 ),
               ],
@@ -508,7 +508,7 @@ class _PrimaryActionButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(18),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withOpacity(0.22),
+                color: AppColors.primary.withValues(alpha: 0.22),
                 blurRadius: 18,
                 offset: const Offset(0, 8),
               ),
@@ -568,7 +568,7 @@ class _QuickOptionCard extends StatelessWidget {
                 width: 38,
                 height: 38,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.15),
+                  color: Theme.of(context).primaryColor.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, size: 20, color: AppColors.primary),
@@ -584,7 +584,7 @@ class _QuickOptionCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? AppColors.textSecondary,
+                        color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ?? AppColors.textSecondary,
                       ),
                     ),
                     const SizedBox(height: 4),

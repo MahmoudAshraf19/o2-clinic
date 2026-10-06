@@ -1,6 +1,5 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -137,7 +136,7 @@ class RadiologyBookingPage extends StatelessWidget {
               width: 56,
               height: 56,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Image.asset(
+              errorBuilder: (_, _, ___) => Image.asset(
                 'assets/images/common/Doctor_avatar.jpg',
                 width: 56,
                 height: 56,

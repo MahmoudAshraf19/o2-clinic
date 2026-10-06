@@ -218,9 +218,9 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border.withOpacity(0.4)),
+        border: Border.all(color: AppColors.border.withValues(alpha: 0.4)),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10),
         ],
       ),
       child: Obx(() {
@@ -386,7 +386,7 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(0.05)),
+          BoxShadow(blurRadius: 20, color: Colors.black.withValues(alpha: 0.05)),
         ],
       ),
       child: SafeArea(
@@ -513,10 +513,10 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.border.withOpacity(0.5)),
+        border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),

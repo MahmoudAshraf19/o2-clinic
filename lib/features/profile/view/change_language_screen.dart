@@ -145,7 +145,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                           child: Container(
                             decoration: BoxDecoration(
                               color: isSelected
-                                  ? AppColors.primary.withOpacity(0.08)
+                                  ? AppColors.primary.withValues(alpha: 0.08)
                                   : AppColors.surface,
                               borderRadius: BorderRadius.circular(18),
                               border: Border.all(

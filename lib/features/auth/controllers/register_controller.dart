@@ -386,7 +386,7 @@ class RegisterController extends GetxController {
       'Oops',
       msg,
       snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.red.withOpacity(0.15),
+      backgroundColor: Colors.red.withValues(alpha: 0.15),
       barBlur: 15,
       colorText: const Color(0xFFB71C1C),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -398,7 +398,7 @@ class RegisterController extends GetxController {
       ),
       duration: const Duration(seconds: 4),
       borderWidth: 1,
-      borderColor: Colors.red.withOpacity(0.2),
+      borderColor: Colors.red.withValues(alpha: 0.2),
     );
     return false;
   }

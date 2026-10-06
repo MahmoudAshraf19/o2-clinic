@@ -24,7 +24,7 @@ class ContactUsIntro extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceLowest,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.outlineVariant.withOpacity(.25)),
+        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: .25)),
       ),
       child: Row(
         children: [
@@ -78,7 +78,7 @@ class SupportChatTile extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
-              color: AppColors.outlineVariant.withOpacity(.25),
+              color: AppColors.outlineVariant.withValues(alpha: .25),
             ),
           ),
           child: Row(
@@ -184,7 +184,7 @@ class SupportAuthPrompt extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.outlineVariant.withOpacity(.25)),
+        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: .25)),
       ),
       child: Column(
         children: [
@@ -192,7 +192,7 @@ class SupportAuthPrompt extends StatelessWidget {
             width: 68,
             height: 68,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(.08),
+              color: AppColors.primary.withValues(alpha: .08),
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -349,7 +349,7 @@ class ChatComposer extends StatelessWidget {
                     color: AppColors.surfaceLowest,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: AppColors.primary.withOpacity(.2),
+                      color: AppColors.primary.withValues(alpha: .2),
                     ),
                   ),
                   child: Row(
@@ -808,7 +808,7 @@ class _ImagePreview extends StatelessWidget {
         return CachedImageWidget(
           imageUrl: url,
           fit: fit,
-          errorBuilder: (_, __, ___) {
+          errorBuilder: (_, _, ___) {
             return Container(
               color: Colors.black12,
               alignment: Alignment.center,
@@ -828,7 +828,7 @@ class _ImagePreview extends StatelessWidget {
         return Image.file(
           File(url),
           fit: fit,
-          errorBuilder: (_, __, ___) {
+          errorBuilder: (_, _, ___) {
             return Container(
               color: Colors.black12,
               alignment: Alignment.center,
@@ -895,7 +895,7 @@ class _VideoPreview extends StatelessWidget {
               child: Text(
                 AppLocalizations.of(context)!.video,
                 style: TextStyle(
-                  color: Colors.white.withOpacity(.9),
+                  color: Colors.white.withValues(alpha: .9),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -1050,7 +1050,7 @@ class _VoicePlayerState extends State<_VoicePlayer> {
         return Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(.12),
+            color: Colors.white.withValues(alpha: .12),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(
@@ -1134,7 +1134,7 @@ class _AttachmentAction extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.surfaceLowest,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: AppColors.outlineVariant.withOpacity(.2)),
+            border: Border.all(color: AppColors.outlineVariant.withValues(alpha: .2)),
           ),
           child: Row(
             children: [
@@ -1142,7 +1142,7 @@ class _AttachmentAction extends StatelessWidget {
                 width: 46,
                 height: 46,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(.08),
+                  color: AppColors.primary.withValues(alpha: .08),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(icon, color: AppColors.primary),
@@ -1195,7 +1195,7 @@ class _AttachmentPreview extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceLowest,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: AppColors.outlineVariant.withOpacity(.2)),
+        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: .2)),
       ),
       child: Row(
         children: [
@@ -1284,9 +1284,9 @@ class _RecordingBar extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.red.withOpacity(.08),
+        color: Colors.red.withValues(alpha: .08),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Colors.red.withOpacity(.2)),
+        border: Border.all(color: Colors.red.withValues(alpha: .2)),
       ),
       child: Row(
         children: [

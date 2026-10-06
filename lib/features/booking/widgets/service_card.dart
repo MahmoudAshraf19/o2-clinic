@@ -1,6 +1,5 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 

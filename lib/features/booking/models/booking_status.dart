@@ -105,17 +105,17 @@ enum BookingStatus {
   Color get backgroundColor {
     switch (this) {
       case BookingStatus.pending:
-        return Colors.orange.withOpacity(0.1);
+        return Colors.orange.withValues(alpha: 0.1);
       case BookingStatus.upcoming:
-        return Colors.blue.withOpacity(0.1);
+        return Colors.blue.withValues(alpha: 0.1);
       case BookingStatus.inProgress:
-        return Colors.purple.withOpacity(0.1);
+        return Colors.purple.withValues(alpha: 0.1);
       case BookingStatus.completed:
-        return Colors.green.withOpacity(0.1);
+        return Colors.green.withValues(alpha: 0.1);
       case BookingStatus.cancelled:
-        return Colors.red.withOpacity(0.1);
+        return Colors.red.withValues(alpha: 0.1);
       case BookingStatus.noShow:
-        return Colors.grey.withOpacity(0.1);
+        return Colors.grey.withValues(alpha: 0.1);
     }
   }
 

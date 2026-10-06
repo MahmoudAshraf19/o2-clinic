@@ -1,6 +1,5 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -181,7 +180,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               height: 140,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.primary.withOpacity(0.08),
+                color: AppColors.primary.withValues(alpha: 0.08),
               ),
             ),
             // Avatar
@@ -192,7 +191,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 child: CachedImageWidget(
                   imageUrl: doctor.image,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Image.asset(
+                  errorBuilder: (_, _, ___) => Image.asset(
                     'assets/images/common/Doctor_avatar.jpg',
                     fit: BoxFit.cover,
                   ),
@@ -237,7 +236,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,
-            color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withOpacity(0.8)),
+            color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withValues(alpha: 0.8)),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -277,7 +276,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -360,7 +359,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -396,7 +395,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                   vertical: 16,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.04), // Very light tint
+                  color: AppColors.primary.withValues(alpha: 0.04), // Very light tint
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(
@@ -424,7 +423,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                             e.value.toString(),
                             style: TextStyle(
                               fontSize: 13,
-                              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white60 : AppColors.textSecondary.withOpacity(0.7)),
+                              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white60 : AppColors.textSecondary.withValues(alpha: 0.7)),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -433,7 +432,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                     ),
                     Icon(
                       Icons.arrow_forward_ios,
-                      color: (Theme.of(context).brightness == Brightness.dark ? Colors.white54 : AppColors.textSecondary.withOpacity(0.5)),
+                      color: (Theme.of(context).brightness == Brightness.dark ? Colors.white54 : AppColors.textSecondary.withValues(alpha: 0.5)),
                       size: 16,
                     ),
                   ],
@@ -526,7 +525,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   TextStyle _bodyStyle() => TextStyle(
     fontSize: 14,
     height: 1.6,
-    color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withOpacity(0.9)),
+    color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withValues(alpha: 0.9)),
     fontWeight: FontWeight.w500,
   );
 }

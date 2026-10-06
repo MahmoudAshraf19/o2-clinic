@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:ui';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
@@ -271,7 +270,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                 ),
                 onPressed: () => Get.back(),
               ),
-              backgroundColor: Colors.white.withOpacity(0.55),
+              backgroundColor: Colors.white.withValues(alpha: 0.55),
               elevation: 0,
               centerTitle: true,
             ),

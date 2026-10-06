@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 
 import 'package:flutter/material.dart';
@@ -201,7 +200,7 @@ class CosmeticBookingPage extends StatelessWidget {
                     width: 56,
                     height: 56,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => _fallbackAvatar(),
+                    errorBuilder: (_, _, ___) => _fallbackAvatar(),
                   )
                 : _fallbackAvatar(),
           ),

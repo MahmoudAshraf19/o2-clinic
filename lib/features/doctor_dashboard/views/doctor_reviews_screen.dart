@@ -285,7 +285,7 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(26),
                               border: Border.all(
-                                color: AppColors.grey.withOpacity(0.2),
+                                color: AppColors.grey.withValues(alpha: 0.2),
                               ),
                             ),
                             child: TextField(
@@ -424,7 +424,7 @@ class _RatingSummaryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.3),
+            color: AppColors.primary.withValues(alpha: 0.3),
             blurRadius: 24,
             offset: const Offset(0, 8),
           ),
@@ -461,7 +461,7 @@ class _RatingSummaryCard extends StatelessWidget {
                           child: Text(
                             '/5',
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.7),
+                              color: Colors.white.withValues(alpha: 0.7),
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
                             ),
@@ -500,7 +500,7 @@ class _RatingSummaryCard extends StatelessWidget {
                         context,
                       )!.totalReviewsCount(totalReviews),
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha: 0.8),
                         fontSize: 14,
                       ),
                     ),
@@ -512,14 +512,14 @@ class _RatingSummaryCard extends StatelessWidget {
                   width: 1,
                   height: 180,
                   margin: const EdgeInsets.symmetric(horizontal: 24),
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
               ] else ...[
                 Container(
                   width: double.infinity,
                   height: 1,
                   margin: const EdgeInsets.symmetric(vertical: 24),
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
               ],
               if (isWide)
@@ -568,7 +568,7 @@ class _RatingRow extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.9),
+              color: Colors.white.withValues(alpha: 0.9),
               fontSize: 14,
             ),
           ),
@@ -579,7 +579,7 @@ class _RatingRow extends StatelessWidget {
             borderRadius: BorderRadius.circular(999),
             child: Container(
               height: 8,
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: FractionallySizedBox(
@@ -637,13 +637,13 @@ class _ReviewCardWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isHighlighted
-            ? AppColors.primary.withOpacity(0.05)
+            ? AppColors.primary.withValues(alpha: 0.05)
             : Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isHighlighted
               ? AppColors.primary
-              : AppColors.grey.withOpacity(0.1),
+              : AppColors.grey.withValues(alpha: 0.1),
           width: isHighlighted ? 1.5 : 1.0,
         ),
       ),
@@ -654,7 +654,7 @@ class _ReviewCardWidget extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 20,
-                backgroundColor: AppColors.primary.withOpacity(0.1),
+                backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                 backgroundImage: review.patientImage.isNotEmpty
                     ? NetworkImage(review.patientImage)
                     : null,

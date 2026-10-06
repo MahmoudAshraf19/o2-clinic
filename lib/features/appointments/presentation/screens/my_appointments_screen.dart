@@ -13,7 +13,6 @@ import '../../../dashboard/controllers/dashboard_pending_actions_controller.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../services/models/radiology_category_model.dart';
 import '../../../booking/presentation/pages/radiology_confirm_booking_screen.dart';
-import 'dart:ui';
 
 enum AppointmentStatusFilter {
   all,
@@ -220,7 +219,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
+                  color: Colors.black.withValues(alpha: 0.04),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -288,7 +287,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF1E877B).withOpacity(0.3),
+            color: const Color(0xFF1E877B).withValues(alpha: 0.3),
             blurRadius: 24,
             offset: const Offset(0, 10),
           ),
@@ -305,7 +304,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                 width: 150,
                 height: 150,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 0.05),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -317,7 +316,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                 width: 100,
                 height: 100,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 0.05),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -355,7 +354,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                               subtitle,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.white.withOpacity(0.85),
+                                color: Colors.white.withValues(alpha: 0.85),
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -369,10 +368,10 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.1),
+                            color: Colors.white.withValues(alpha: 0.1),
                           ),
                         ),
                         child: Text(
@@ -390,7 +389,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                   Container(
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.12),
+                      color: Colors.black.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Row(
@@ -472,7 +471,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -675,7 +674,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.1),
+            color: AppColors.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
@@ -823,7 +822,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.05),
+              color: AppColors.primary.withValues(alpha: 0.05),
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -862,7 +861,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 20),
+              BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 20),
             ],
           ),
           child: Column(
@@ -1004,7 +1003,7 @@ class _AppointmentCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 15,
               offset: const Offset(0, 5),
             ),
@@ -1119,7 +1118,7 @@ class _StatusBadge extends StatelessWidget {
       fg = Colors.orange.shade700;
       label = isAr ? 'معلق' : 'Pending';
     } else {
-      bg = AppColors.primary.withOpacity(0.1);
+      bg = AppColors.primary.withValues(alpha: 0.1);
       fg = AppColors.primary;
       label = isAr ? 'قادم' : 'Upcoming';
     }
@@ -1157,8 +1156,8 @@ class _DoctorAvatar extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color: isHero
-            ? Colors.white.withOpacity(0.15)
-            : AppColors.primary.withOpacity(0.08),
+            ? Colors.white.withValues(alpha: 0.15)
+            : AppColors.primary.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(16),
       ),
       clipBehavior: Clip.antiAlias,
@@ -1166,7 +1165,7 @@ class _DoctorAvatar extends StatelessWidget {
           ? CachedImageWidget(
               imageUrl: imageUrl!,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Icon(
+              errorBuilder: (_, _, ___) => Icon(
                 fallbackIcon,
                 color: isHero ? Colors.white : AppColors.primary,
               ),
@@ -1194,7 +1193,7 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = filled ? Colors.white : Colors.white.withOpacity(0.15);
+    final bg = filled ? Colors.white : Colors.white.withValues(alpha: 0.15);
     final fg = filled ? AppColors.primary : Colors.white;
 
     return Material(
@@ -1543,7 +1542,7 @@ class _BookingDetailsSheet extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.08),
+            color: AppColors.primary.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(icon, size: 20, color: AppColors.primary),
