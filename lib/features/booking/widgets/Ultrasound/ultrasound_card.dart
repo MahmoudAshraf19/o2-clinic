@@ -5,7 +5,6 @@ import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:o2_clinic/features/booking/widgets/Ultrasound/ultrasound_data.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
 
 class UltrasoundCard extends StatelessWidget {
   const UltrasoundCard({
