@@ -99,7 +99,7 @@ class _XRayScreenState extends State<XRayScreen> {
     
     final headerTitle = selectedCategoryId == null
         ? 'X-Ray'
-        : (_selectedCategory?.titleForLanguage(localeCode) ?? 'X-Ray');
+        : (_selectedCategory?.titleForLanguage(Get.locale?.languageCode ?? 'en') ?? 'X-Ray');
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
