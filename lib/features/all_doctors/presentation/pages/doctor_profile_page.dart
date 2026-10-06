@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
 import '../../../../core/utils/booking_helper.dart';
 import '../../../chat_doctors/views/patient_chat_screen.dart'; // NEW
 import '../../../services_firestore/models/doctor_model.dart';
