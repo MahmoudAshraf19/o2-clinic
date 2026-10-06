@@ -182,21 +182,5 @@ class BookingSuccessScreen extends StatelessWidget {
     ).format(date);
   }
 
-  String _formatSpecialty(String specialty) {
-    if (specialty.isEmpty) return specialty;
-    if (specialty == 'general_bariatric_surgery') {
-      return 'General & Bariatric Surgery';
-    }
 
-    // Fallback formatter: replace underscores with spaces and capitalize
-    return specialty
-        .replaceAll('_', ' ')
-        .split(' ')
-        .map((word) {
-          if (word.isEmpty) return '';
-          if (word == 'and') return '&';
-          return word[0].toUpperCase() + word.substring(1).toLowerCase();
-        })
-        .join(' ');
-  }
 }
