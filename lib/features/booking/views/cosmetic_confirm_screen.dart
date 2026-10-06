@@ -242,17 +242,13 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
   }
 
   Widget _serviceCard() {
-    
-    
     return _card(
-      child: Row(
-        children: [
-          Builder(builder: (context) {
-          final langCode = Get.locale?.languageCode ?? 'en';
-          return Row(
-            children: [
-              CircleAvatar(
-            radius: 26,
+      child: Builder(builder: (context) {
+        final langCode = Get.locale?.languageCode ?? 'en';
+        return Row(
+          children: [
+            CircleAvatar(
+              radius: 26,
             backgroundImage: widget.model.image.isNotEmpty
                 ? CachedNetworkImageProvider(widget.model.image)
                 : null,
