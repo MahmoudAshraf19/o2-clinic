@@ -6,7 +6,6 @@ import '../../../features/booking/views/booking_screen.dart';
 import '../../../features/chat_support/screens/contact_us_screen.dart';
 import '../../../features/dashboard/views/dashboard_home_screen.dart';
 import '../../../features/dashboard/views/dashboard_profile_screen.dart';
-import '../../theme/app_colors.dart';
 import '../../widgets/app_bar/o2_app_bar.dart';
 import '../controllers/navigation_controller.dart';
 import '../widgets/app_bottom_navigation_bar.dart';
