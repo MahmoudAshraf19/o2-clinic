@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
 import '../../../services/models/radiology_category_model.dart';
 
 class RadiologyBookingSuccessScreen extends StatelessWidget {
