@@ -321,7 +321,7 @@ class _NotificationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) { final _colors = _O2Colors(context);
-    final colors = _O2Colors(context);
+    
 
     return InkWell(
       onTap: onTap,
