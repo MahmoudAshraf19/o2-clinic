@@ -9,7 +9,6 @@ import '../../../core/constants/app_firestore.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../services_firestore/models/review_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class DoctorReviewsScreen extends StatefulWidget {
   const DoctorReviewsScreen({super.key});
