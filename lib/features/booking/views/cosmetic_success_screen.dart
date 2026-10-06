@@ -70,8 +70,7 @@ class CosmeticSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     try {
-      final currency = Get.find<AppConstantsController>().currencySymbol.value;
-    } catch (e) {
+} catch (e) {
     }
 
     return Scaffold(

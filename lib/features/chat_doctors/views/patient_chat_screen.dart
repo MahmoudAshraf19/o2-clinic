@@ -178,7 +178,7 @@ class PatientChatScreen extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 18, top: 18),
                       child: ChatDateDivider(
-                        label: AppLocalizations.of(context)!.today ?? "Today",
+                        label: AppLocalizations.of(context)!.today,
                       ),
                     );
                   },

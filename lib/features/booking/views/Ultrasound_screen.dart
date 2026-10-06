@@ -29,8 +29,7 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
   void initState() {
     super.initState();
     try {
-      final currency = Get.find<AppConstantsController>().currencySymbol.value;
-    } catch (e) {
+} catch (e) {
     }
     _loadData();
   }

@@ -95,7 +95,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
 
       Get.back();
       Get.snackbar(
-        AppLocalizations.of(context)!.reportIssue ?? 'Report Issue',
+        AppLocalizations.of(context)!.reportIssue,
         'Submitted successfully',
         backgroundColor: AppColors.success,
         colorText: Colors.white,

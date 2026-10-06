@@ -98,7 +98,7 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
 
       Get.back();
       Get.snackbar(
-        AppLocalizations.of(context)!.submitReview ?? 'Submit Review',
+        AppLocalizations.of(context)!.submitReview,
         'Review submitted successfully',
         backgroundColor: AppColors.success,
         colorText: Colors.white,

@@ -278,8 +278,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
           Expanded(
             child: Text(
               widget.isOnline
-                  ? (AppLocalizations.of(context)!.onlineConsultation ??
-                        'Online Consultation')
+                  ? (AppLocalizations.of(context)!.onlineConsultation)
                   : AppLocalizations.of(context)!.o2ClinicMainBranchnfloor4,
               style: TextStyle(color: AppColors.grey),
             ),

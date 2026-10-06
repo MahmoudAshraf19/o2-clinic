@@ -136,7 +136,6 @@ class DoctorStatisticsController extends GetxController {
           }
           break;
         case StatFilter.allTime:
-        default:
           include = true;
           break;
       }
