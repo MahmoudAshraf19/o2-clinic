@@ -50,7 +50,7 @@ Future<void> main() async {
         builder: (context) => const O2ClinicApp(),
       ),
     );
-  } catch (e, stack) {
+  } catch (e) {
     runApp(
       MaterialApp(
         home: Scaffold(body: Center(child: Text('Error: $e'))),

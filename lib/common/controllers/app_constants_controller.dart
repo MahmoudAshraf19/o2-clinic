@@ -33,7 +33,7 @@ class AppConstantsController extends GetxController {
             .toInt();
       }
 
-    } catch (e, stack) {
+    } catch (e) {
     }
   }
 }

@@ -45,7 +45,7 @@ class RadiologyFirestoreService {
 
 
       return result;
-    } catch (e, stack) {
+    } catch (e) {
       return [];
     }
   }

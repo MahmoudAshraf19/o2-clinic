@@ -63,7 +63,7 @@ class ServicesFirestoreService {
       _lastFetchTime = now;
 
       return _cachedServices!;
-    } catch (e, stack) {
+    } catch (e) {
       // Return last known cache if available even if expired, rather than empty list
       return _cachedServices ?? [];
     }

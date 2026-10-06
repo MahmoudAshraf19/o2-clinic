@@ -32,8 +32,8 @@ class PatientBookingsController extends GetxController {
           (snapshot) {
             final sortedDocs = snapshot.docs.toList();
             sortedDocs.sort((a, b) {
-              final dataA = a.data() as Map<String, dynamic>;
-              final dataB = b.data() as Map<String, dynamic>;
+              final dataA = a.data();
+              final dataB = b.data();
               final dateA = (dataA['schedule']?['date'] as String?) ?? '';
               final dateB = (dataB['schedule']?['date'] as String?) ?? '';
               return dateA.compareTo(dateB); // Ascending order

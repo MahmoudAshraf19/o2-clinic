@@ -37,7 +37,7 @@ class SpecializedFirestoreService {
       }
 
       return result;
-    } catch (e, stack) {
+    } catch (e) {
       return [];
     }
   }

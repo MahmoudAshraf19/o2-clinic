@@ -30,7 +30,7 @@ class CosmeticFirestoreService {
 
 
       return list;
-    } catch (e, stack) {
+    } catch (e) {
 
       return [];
     }

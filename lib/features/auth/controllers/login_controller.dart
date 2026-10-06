@@ -50,7 +50,7 @@ class LoginController extends GetxController {
           return;
         }
 
-        if (userData != null && userData['isBlocked'] == true) {
+        if (userData['isBlocked'] == true) {
           await FirebaseAuth.instance.signOut();
           Get.snackbar(
             'Account Blocked',

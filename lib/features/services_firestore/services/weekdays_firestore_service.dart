@@ -38,7 +38,7 @@ class WeekdaysFirestoreService {
 
 
       return weekdays;
-    } catch (e, stack) {
+    } catch (e) {
 
       return [];
     }

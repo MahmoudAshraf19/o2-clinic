@@ -37,7 +37,7 @@ class CtScanTypeFirestoreService {
 
 
       return types;
-    } catch (e, stack) {
+    } catch (e) {
 
       return [];
     }

@@ -234,7 +234,7 @@ class NotificationsScreen extends StatelessWidget {
 
                 if (Get.isRegistered<DoctorAppointmentsController>()) {
                   final apptsCtrl = Get.find<DoctorAppointmentsController>();
-                  final bookingData = doc.data() as Map<String, dynamic>?;
+                  final bookingData = doc.data();
                   if (bookingData != null && bookingData['schedule'] != null) {
                     final dateStr = bookingData['schedule']['date'] as String?;
                     if (dateStr != null && dateStr.isNotEmpty) {

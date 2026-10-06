@@ -125,11 +125,9 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                     backgroundColor: Colors.white,
                     onRefresh: () async {
                       setState(() {
-                        if (user != null) {
-                          _bookingsStream = _service.streamBookingsByUserId(
-                            user.uid,
-                          );
-                        }
+                        _bookingsStream = _service.streamBookingsByUserId(
+                          user.uid,
+                        );
                       });
                     },
                     child: CustomScrollView(

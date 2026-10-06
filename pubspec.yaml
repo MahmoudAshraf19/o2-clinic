@@ -71,6 +71,9 @@ dependencies:
   flutter_html: ^3.0.0
   flutter_svg: ^2.3.0
   
+  path: any
+  uuid: any
+  flutter_web_plugins: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

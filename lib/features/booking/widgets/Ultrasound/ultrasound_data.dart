@@ -165,7 +165,7 @@ class UltrasoundData {
 
 
       return items;
-    } catch (e, stack) {
+    } catch (e) {
       return <UltrasoundModel>[];
     }
   }
