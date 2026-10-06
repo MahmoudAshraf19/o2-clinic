@@ -246,16 +246,7 @@ class FirestoreService {
   }
 
 
-  IconData _mapBadgeIcon(String? iconName) {
-    switch (iconName) {
-      case 'biotech':
-        return Icons.biotech;
-      case 'health_and_safety':
-        return Icons.health_and_safety;
-      default:
-        return Icons.medical_services;
-    }
-  }
+
 
   /// Streams cosmetic services.
   Stream<List<CosmeticModel>> watchCosmeticServices() {
