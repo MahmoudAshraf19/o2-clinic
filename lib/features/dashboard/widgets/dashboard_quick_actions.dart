@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_fonts.dart';
 import '../controllers/dashboard_controller.dart';
 import '../models/dashboard_quick_action_model.dart';
 
