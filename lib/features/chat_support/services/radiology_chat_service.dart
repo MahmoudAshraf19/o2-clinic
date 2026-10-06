@@ -3,8 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:get/get.dart';
-import 'package:o2_clinic/l10n/app_localizations.dart';
 import '../models/chat_support_model.dart';
 
 class RadiologyChatService {
