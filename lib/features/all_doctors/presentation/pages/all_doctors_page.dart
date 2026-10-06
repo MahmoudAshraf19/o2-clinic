@@ -177,15 +177,6 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
     }).toList();
   }
 
-  void _addCategory(Map<String, String> categoryMap, String? rawValue) {
-    final value = rawValue?.trim() ?? '';
-    if (value.isEmpty) return;
-
-    final key = _normalizeCategory(value);
-    if (key.isEmpty) return;
-
-    categoryMap.putIfAbsent(key, () => _beautifyCategory(value));
-  }
 
   String _normalizeCategory(String value) {
     return value
@@ -198,37 +189,6 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
         .replaceAll(RegExp(r'\s+'), ' ');
   }
 
-  String _readSpecialtyLabel(dynamic item) {
-    try {
-      final nameEn = item.nameEn;
-      if (nameEn is String && nameEn.trim().isNotEmpty) return nameEn.trim();
-    } catch (_) {}
-    try {
-      final titleEn = item.titleEn;
-      if (titleEn is String && titleEn.trim().isNotEmpty) return titleEn.trim();
-    } catch (_) {}
-    try {
-      final name = item.name;
-      if (name is String && name.trim().isNotEmpty) return name.trim();
-    } catch (_) {}
-    try {
-      final title = item.title;
-      if (title is String && title.trim().isNotEmpty) return title.trim();
-    } catch (_) {}
-    try {
-      final specialty = item.specialty;
-      if (specialty is String && specialty.trim().isNotEmpty) {
-        return specialty.trim();
-      }
-    } catch (_) {}
-    try {
-      final id = item.id;
-      if (id is String && id.trim().isNotEmpty) {
-        return _beautifyId(id);
-      }
-    } catch (_) {}
-    return '';
-  }
 
   String _beautifyCategory(String value) {
     final raw = value.replaceAll('-', ' ').replaceAll('_', ' ').trim();
