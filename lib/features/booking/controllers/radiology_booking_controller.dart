@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../core/services/notification_service.dart';
 import '../../../common/app_constants.dart';
 import '../../../../common/controllers/app_constants_controller.dart';
 import '../../services/models/radiology_category_model.dart';
