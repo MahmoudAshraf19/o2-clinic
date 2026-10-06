@@ -143,8 +143,8 @@ class GlobalSearchController extends GetxController {
     filteredSpecialties.value = _allSpecialties
         .where(
           (s) =>
-              (s.nameEn ?? '').toLowerCase().contains(q) ||
-              (s.nameAr ?? '').toLowerCase().contains(q),
+              s.nameEn.toLowerCase().contains(q) ||
+              s.nameAr.toLowerCase().contains(q),
         )
         .toList();
 

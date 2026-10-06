@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_fonts.dart';
-import '../../../common/controllers/app_constants_controller.dart';
 import '../widgets/Ultrasound/ultrasound_background.dart';
 import '../widgets/Ultrasound/ultrasound_bottom_bar.dart';
 import '../widgets/Ultrasound/ultrasound_card.dart';

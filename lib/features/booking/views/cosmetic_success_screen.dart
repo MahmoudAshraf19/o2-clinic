@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../../../common/controllers/app_constants_controller.dart';
 import '../../services/models/cosmetic_category_model.dart';
 
 class CosmeticSuccessScreen extends StatelessWidget {

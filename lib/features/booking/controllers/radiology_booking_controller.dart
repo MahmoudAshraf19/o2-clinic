@@ -234,7 +234,7 @@ class RadiologyAppointmentBookingController extends GetxController {
           nameAr: service.getName('ar'),
           selectedDate: selectedDate.value!,
           selectedTime: selectedTime.value,
-          amount: finalAmount ?? (num.tryParse(service.price.toString() ?? '0') ?? 0),
+          amount: finalAmount ?? (num.tryParse(service.price.toString()) ?? 0),
           currency: AppConstants.currencyName,
           discountData: discountData,
         );

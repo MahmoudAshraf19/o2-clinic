@@ -138,18 +138,14 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 ],
                               ),
                               const SizedBox(height: 2),
-                              Text(
-                                isGuest
-                                    ? AppLocalizations.of(context)!.tapToSignIn
-                                    : DateFormat(
-                                        'd MMMM, yyyy',
-                                      ).format(DateTime.now()),
-                                style: GoogleFonts.inter(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                  color: isGuest
-                                      ? primary
-                                      : const Color(0xFF64748B),
+                                Text(
+                                  DateFormat(
+                                    'd MMMM, yyyy',
+                                  ).format(DateTime.now()),
+                                  style: GoogleFonts.inter(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF64748B),
                                   letterSpacing: 1.1,
                                   height: 1.1,
                                 ),
