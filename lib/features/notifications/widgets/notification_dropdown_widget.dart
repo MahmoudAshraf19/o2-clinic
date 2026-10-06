@@ -541,7 +541,7 @@ class _ReadNotificationItem extends StatelessWidget {
   final String time;
   final String body;
   final bool showTopDivider;
-  final String? avatarUrl;
+  
 
   Color _surfaceContainerLowest(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).cardColor : const Color(0xFFFFFFFF);
   Color _surfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white12 : const Color(0xFFDFE3E1);
