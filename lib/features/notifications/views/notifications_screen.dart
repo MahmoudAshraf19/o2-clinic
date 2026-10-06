@@ -7,8 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../controllers/notifications_controller.dart';
 import '../models/notification_model.dart';
 import '../utils/notification_time_helper.dart';
-import '../../services_firestore/models/doctor_model.dart';
-import '../../booking/presentation/pages/booking_success_screen.dart';
 import '../../appointments/presentation/screens/my_appointments_screen.dart';
 import '../../doctor_dashboard/views/doctor_reviews_screen.dart';
 import '../../doctor_dashboard/controllers/doctor_navigation_controller.dart';
