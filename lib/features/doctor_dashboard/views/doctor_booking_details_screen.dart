@@ -652,7 +652,7 @@ class _InfoItem {
   final Color? valueColor;
 
   _InfoItem({
-    required this.icon,
+    required 
     required this.title,
     required this.value,
     this.valueColor,
@@ -671,7 +671,7 @@ class _CustomButton extends StatelessWidget {
     required this.textColor,
     required this.bgColor,
     required this.onTap,
-    this.icon,
+    
   });
 
   @override
