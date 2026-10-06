@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../controllers/contact_us_controller.dart';
-import '../controllers/support_chat_controller.dart';
 import '../services/chat_support_service.dart';
 import '../widgets/support_chat_widgets.dart';
 import 'chat_room_screen.dart';
