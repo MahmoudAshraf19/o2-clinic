@@ -1177,30 +1177,7 @@ class _AttachmentAction extends StatelessWidget {
   }
 }
 
-class _ActionCircle extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-  final Color? color;
 
-  const _ActionCircle({required this.icon, required this.onTap, this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(100),
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: (color ?? AppColors.surfaceContainerHigh).withOpacity(.95),
-        ),
-        child: Icon(icon, size: 22, color: color == null ? null : Colors.white),
-      ),
-    );
-  }
-}
 
 class _AttachmentPreview extends StatelessWidget {
   final PendingAttachment attachment;
