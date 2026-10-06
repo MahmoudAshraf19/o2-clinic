@@ -34,7 +34,7 @@ class NotificationsScreen extends StatelessWidget {
         backgroundColor: colors.surface,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: __colors.onSurface),
+          icon: Icon(Icons.arrow_back, color: colors.onSurface),
           onPressed: () => Get.back(),
         ),
         title: Text(
@@ -42,7 +42,7 @@ class NotificationsScreen extends StatelessWidget {
           style: textTheme.headlineMedium?.copyWith(
             fontSize: 24,
             fontWeight: FontWeight.w700,
-            color: __colors.onSurface,
+            color: colors.onSurface,
             letterSpacing: -0.4,
           ),
         ),
@@ -81,7 +81,7 @@ class NotificationsScreen extends StatelessWidget {
                     AppLocalizations.of(context)!.noNotificationsYet,
                     style: GoogleFonts.manrope(
                       fontSize: 16,
-                      color: __colors.onSurfaceVariant,
+                      color: colors.onSurfaceVariant,
                     ),
                   ),
                 );
@@ -134,7 +134,7 @@ class NotificationsScreen extends StatelessWidget {
   Widget _buildTile(NotificationModel n, BuildContext context) { final colors = _O2Colors(context);
     IconData icon;
     Color iconBg = colors.surfaceContainerHigh;
-    Color iconFg = __colors.onSurface;
+    Color iconFg = colors.onSurface;
 
     switch (n.type) {
       case 'booking':
@@ -185,7 +185,7 @@ class NotificationsScreen extends StatelessWidget {
         n.createdAt,
         context: context,
       ),
-      timeColor: !n.isRead ? colors.primary : __colors.onSurfaceVariant,
+      timeColor: !n.isRead ? colors.primary : colors.onSurfaceVariant,
       bodyOpacity: !n.isRead ? 1.0 : 0.8,
       onTap: () async {
         if (!n.isRead) {
@@ -351,7 +351,7 @@ class _NotificationTile extends StatelessWidget {
                           fontSize: 14,
                           height: 1.25,
                           fontWeight: FontWeight.w500,
-                          color: _colors.onSurface,
+                          color: colors.onSurface,
                         ),
                       ),
                     ),

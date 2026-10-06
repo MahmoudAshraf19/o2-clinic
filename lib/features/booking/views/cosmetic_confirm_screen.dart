@@ -285,7 +285,8 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           ),
           Icon(Icons.verified, color: AppColors.primary),
         ],
-      ),
+      );
+    }),
     );
   }
 
