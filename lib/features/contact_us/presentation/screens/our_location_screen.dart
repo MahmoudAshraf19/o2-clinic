@@ -6,12 +6,10 @@ import 'dart:ui';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../common/controllers/contact_us_controller.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class OurLocationScreen extends StatefulWidget {
