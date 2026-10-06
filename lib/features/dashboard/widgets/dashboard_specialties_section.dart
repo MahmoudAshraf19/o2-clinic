@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../../common/widgets/common_button.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_fonts.dart';
 import '../controllers/dashboard_controller.dart';
 import '../models/dashboard_specialty_model.dart';
 
