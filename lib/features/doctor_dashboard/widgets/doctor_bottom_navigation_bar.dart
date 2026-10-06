@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../core/navigation/widgets/navigation_tab_item.dart';
