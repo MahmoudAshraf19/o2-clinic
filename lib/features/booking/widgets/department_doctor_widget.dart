@@ -20,7 +20,6 @@ import '../../services_firestore/models/specialized_service_model.dart';
 import '../../services_firestore/services/doctors_cache_service.dart';
 import '../../services_firestore/services/specialized_cache.dart';
 
-import '../presentation/pages/booking_page.dart';
 import '../views/ct_scan_screen.dart';
 
 class DepartmentDoctorScreen extends StatefulWidget {
