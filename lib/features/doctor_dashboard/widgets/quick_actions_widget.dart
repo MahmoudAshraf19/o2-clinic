@@ -180,7 +180,7 @@ class QuickActionsWidget extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    l10n.reviewTitle ?? 'Doctor Reviews',
+                    l10n.reviewTitle,
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,

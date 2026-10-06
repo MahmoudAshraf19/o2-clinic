@@ -188,13 +188,13 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
     String localizeCat(String key) {
       switch (key) {
         case 'waiting_time':
-          return l10n.catWaitingTime ?? 'Waiting Time';
+          return l10n.catWaitingTime;
         case 'communication':
-          return l10n.catCommunication ?? 'Communication';
+          return l10n.catCommunication;
         case 'clinic_cleanliness':
-          return l10n.catClinicCleanliness ?? 'Clinic Cleanliness';
+          return l10n.catClinicCleanliness;
         case 'effectiveness':
-          return l10n.catEffectiveness ?? 'Effectiveness';
+          return l10n.catEffectiveness;
         default:
           return key;
       }
@@ -222,7 +222,7 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
     final categories = _calculateCategories();
     final displayedReviews = _filteredAndSortedReviews;
     final l10n = AppLocalizations.of(context)!;
-    final reviewsTitle = l10n.reviewTitle ?? 'Doctor Reviews';
+    final reviewsTitle = l10n.reviewTitle;
 
     double overallRating = 5.0;
     if (_reviews.isNotEmpty) {
@@ -336,19 +336,19 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
                               items: [
                                 DropdownMenuItem(
                                   value: 'newest',
-                                  child: Text(l10n.sortNewest ?? 'Newest'),
+                                  child: Text(l10n.sortNewest),
                                 ),
                                 DropdownMenuItem(
                                   value: 'oldest',
-                                  child: Text(l10n.sortOldest ?? 'Oldest'),
+                                  child: Text(l10n.sortOldest),
                                 ),
                                 DropdownMenuItem(
                                   value: 'highest',
-                                  child: Text(l10n.sortHighest ?? 'Highest'),
+                                  child: Text(l10n.sortHighest),
                                 ),
                                 DropdownMenuItem(
                                   value: 'lowest',
-                                  child: Text(l10n.sortLowest ?? 'Lowest'),
+                                  child: Text(l10n.sortLowest),
                                 ),
                               ],
                               onChanged: (val) {

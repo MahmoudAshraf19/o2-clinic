@@ -105,7 +105,7 @@ class NextPatientWidget extends StatelessWidget {
       customerName: customerName,
       customerProfileImage: customerImage,
       doctorId: doctor.id,
-      doctorName: doctor.nameEn ?? '',
+      doctorName: doctor.nameEn,
       doctorProfileImage: doctor.image,
       lastMessage: '',
       lastMessageKind: 'text',

@@ -40,7 +40,7 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
 
       final image = user?['image'];
 
-      final isGuest = false; // Doctors must be logged in on this screen
+      final isGuest = false;
 
       return Container(
         width: double.infinity,
@@ -75,7 +75,7 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                           ),
                           clipBehavior: Clip.antiAlias,
                           child:
-                              isGuest ||
+                              
                                   image == null ||
                                   image.toString().trim().isEmpty
                               ? const Icon(Icons.person, color: primary)
@@ -134,14 +134,7 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                  if (isGuest) ...[
-                                    const SizedBox(width: 4),
-                                    const Icon(
-                                      Icons.login,
-                                      size: 14,
-                                      color: primary,
-                                    ),
-                                  ],
+                                  
                                 ],
                               ),
                               const SizedBox(height: 2),

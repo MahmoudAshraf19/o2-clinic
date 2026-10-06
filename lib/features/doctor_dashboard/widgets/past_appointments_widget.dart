@@ -87,7 +87,7 @@ class PastAppointmentsWidget extends StatelessWidget {
         bookingId,
         'completed',
       );
-      Get.snackbar('Success', l10n.markAsCompleted ?? 'Complete');
+      Get.snackbar('Success', l10n.markAsCompleted);
     } catch (e) {
       Get.snackbar('Error', l10n.error);
     }
@@ -110,7 +110,7 @@ class PastAppointmentsWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Text(
-                l10n.pastAppointments ?? 'Past Appointments',
+                l10n.pastAppointments,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -280,7 +280,7 @@ class PastAppointmentsWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   child: Text(
-                    l10n.reportIssue ?? 'Report',
+                    l10n.reportIssue,
                     style: const TextStyle(fontSize: 12),
                   ),
                 ),
@@ -296,7 +296,7 @@ class PastAppointmentsWidget extends StatelessWidget {
                     elevation: 0,
                   ),
                   child: Text(
-                    l10n.markAsCompleted ?? 'Complete',
+                    l10n.markAsCompleted,
                     style: const TextStyle(fontSize: 12),
                   ),
                 ),

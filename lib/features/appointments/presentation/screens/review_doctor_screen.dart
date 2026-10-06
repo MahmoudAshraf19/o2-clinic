@@ -169,7 +169,7 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          l10n.rateYourExperience ?? 'Rate Experience',
+          l10n.rateYourExperience,
           style: const TextStyle(color: AppColors.textPrimary),
         ),
         iconTheme: const IconThemeData(color: AppColors.textPrimary),
@@ -193,26 +193,26 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
               const SizedBox(height: 24),
               _buildCategoryRating(
                 'waiting_time',
-                l10n.catWaitingTime ?? 'Waiting Time',
+                l10n.catWaitingTime,
               ),
               _buildCategoryRating(
                 'communication',
-                l10n.catCommunication ?? 'Communication',
+                l10n.catCommunication,
               ),
               _buildCategoryRating(
                 'clinic_cleanliness',
-                l10n.catClinicCleanliness ?? 'Clinic Cleanliness',
+                l10n.catClinicCleanliness,
               ),
               _buildCategoryRating(
                 'effectiveness',
-                l10n.catEffectiveness ?? 'Effectiveness',
+                l10n.catEffectiveness,
               ),
               const SizedBox(height: 32),
               TextField(
                 controller: _textController,
                 maxLines: 5,
                 decoration: InputDecoration(
-                  hintText: l10n.writeYourReview ?? 'Write your review...',
+                  hintText: l10n.writeYourReview,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
@@ -244,7 +244,7 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
                         ),
                       )
                     : Text(
-                        l10n.submitReview ?? 'Submit Review',
+                        l10n.submitReview,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

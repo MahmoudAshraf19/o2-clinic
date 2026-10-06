@@ -121,7 +121,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          l10n.reportIssue ?? 'Report Issue',
+          l10n.reportIssue,
           style: const TextStyle(color: AppColors.textPrimary),
         ),
         iconTheme: const IconThemeData(color: AppColors.textPrimary),
@@ -137,7 +137,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                 controller: _textController,
                 maxLines: 5,
                 decoration: InputDecoration(
-                  hintText: l10n.describeTheIssue ?? 'Describe the issue...',
+                  hintText: l10n.describeTheIssue,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
@@ -182,7 +182,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                 OutlinedButton.icon(
                   onPressed: _pickImage,
                   icon: const Icon(Icons.image),
-                  label: Text(l10n.attachImage ?? 'Attach Image'),
+                  label: Text(l10n.attachImage),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -211,7 +211,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                         ),
                       )
                     : Text(
-                        l10n.submitReport ?? 'Submit Report',
+                        l10n.submitReport,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
