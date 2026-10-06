@@ -8,17 +8,14 @@ import 'package:intl/intl.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../../common/controllers/global_auth_controller.dart';
-import '../../../../common/controllers/app_constants_controller.dart';
 import '../../../../common/app_constants.dart';
 import '../../../services/models/radiology_category_model.dart';
-import '../../controllers/booking.dart';
 import '../../controllers/radiology_booking_controller.dart';
 import '../../../discounts/controllers/discount_controller.dart';
 import '../../../discounts/widgets/discount_input_widget.dart';
 import 'radiology_booking_success_screen.dart';
 import '../../../chat_support/services/radiology_chat_service.dart';
 import '../../../chat_support/screens/radiology_chat_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 
 class RadiologyConfirmBookingScreen extends StatefulWidget {
