@@ -7,7 +7,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../controllers/doctor_edit_profile_controller.dart';
-import '../controllers/doctor_profile_controller.dart';
 
 class DoctorEditProfileScreen extends StatelessWidget {
   const DoctorEditProfileScreen({super.key});
