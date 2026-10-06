@@ -13,9 +13,6 @@ import '../../../dashboard/controllers/dashboard_pending_actions_controller.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../services/models/radiology_category_model.dart';
 import '../../../booking/presentation/pages/radiology_confirm_booking_screen.dart';
-import '../../../booking/controllers/radiology_booking_controller.dart';
-import 'report_issue_screen.dart';
-import 'review_doctor_screen.dart';
 import 'dart:ui';
 
 enum AppointmentStatusFilter {
