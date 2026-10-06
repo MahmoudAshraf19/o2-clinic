@@ -17,7 +17,7 @@ class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final VoidCallback? onNotificationTap;
 
-  static const _subtitle = 'Your health comes first';
+  
 
   @override
   Size get preferredSize => const Size.fromHeight(72);
