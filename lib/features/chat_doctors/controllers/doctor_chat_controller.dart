@@ -2,14 +2,12 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:record/record.dart';
 
-import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/media_compressor.dart';
 import '../../chat_support/controllers/support_chat_controller.dart'
     show PendingAttachment;
