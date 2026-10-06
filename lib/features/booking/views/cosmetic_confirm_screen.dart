@@ -243,7 +243,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
 
   Widget _serviceCard() {
     final langCode = Get.locale?.languageCode ?? 'en';
-    final isAr = langCode == 'ar';
+    
     return _card(
       child: Row(
         children: [
