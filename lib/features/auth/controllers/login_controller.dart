@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/auth_error_handler.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../services_firestore/user_firestore_service.dart';
 import '../../chat_support/screens/support_chat_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
