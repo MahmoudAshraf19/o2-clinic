@@ -2,7 +2,6 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
 
 class XRayBottomActionBar extends StatelessWidget {
   const XRayBottomActionBar({
