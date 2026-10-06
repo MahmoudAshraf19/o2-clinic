@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 
 import '../../services_firestore/services/services_firestore_service.dart';
 import '../models/booking_service_model.dart';
