@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/gestures.dart'; // Added import for DragStartBehavior
 
 import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_fonts.dart';
 
 enum CommonTextFieldType {
   text,
