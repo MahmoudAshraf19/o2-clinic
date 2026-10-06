@@ -790,47 +790,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTimeField(String label, String value) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
-      ),
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 11,
-              color: Color(0xFF6B7280),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF13364A),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const Icon(
-                Icons.access_time_rounded,
-                size: 16,
-                color: Color(0xFF6B7280),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildLockedRow({
     required BuildContext context,
