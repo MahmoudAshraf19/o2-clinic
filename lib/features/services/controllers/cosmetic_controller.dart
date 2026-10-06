@@ -37,7 +37,7 @@ class CosmeticController extends ChangeNotifier {
     try {
       final categories = await CosmeticCacheService.getCategories();
 
-      final localeCode = Localizations.localeOf(Get.context!).languageCode;
+      
 
       _cosmetics = categories.map((cat) {
         return CosmeticModel(
