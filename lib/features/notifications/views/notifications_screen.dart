@@ -279,7 +279,7 @@ class _SectionTitle extends StatelessWidget {
   final String title;
 
   @override
-  Widget build(BuildContext context) { final _colors = _O2Colors(context);
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
       child: Text(
@@ -320,7 +320,7 @@ class _NotificationTile extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) { final _colors = _O2Colors(context);
+  Widget build(BuildContext context) {
     
 
     return InkWell(
