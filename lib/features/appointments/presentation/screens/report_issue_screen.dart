@@ -7,7 +7,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart'; // For kIsWeb
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../services_firestore/services/bookings_firestore_service.dart';
 import '../../../services_firestore/models/booking_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
