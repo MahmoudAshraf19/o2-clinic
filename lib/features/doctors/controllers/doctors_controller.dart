@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:o2_clinic/l10n/app_localizations.dart';
 import '../models/doctor_model.dart' as ui_model;
 import '../../services_firestore/services/doctors_cache_service.dart';
 
