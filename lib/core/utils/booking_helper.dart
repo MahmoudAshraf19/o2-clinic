@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../theme/app_colors.dart';
@@ -36,7 +37,7 @@ class BookingHelper {
     } catch (e) {
       try {
         isOnline = doctor.isOnlineConsultationAvailable == true;
-      } catch (_) {}
+      } catch (e) { /* ignore */ }
     }
 
     Get.back(); // Close loading dialog

@@ -153,8 +153,7 @@ class UltrasoundData {
 
           items.add(model);
 
-        } catch (e) {
-        }
+        } catch (e) { /* ignore */ }
       }
 
       items.sort((a, b) {

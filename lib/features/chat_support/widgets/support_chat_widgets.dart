@@ -1045,7 +1045,7 @@ class _VoicePlayerState extends State<_VoicePlayer> {
         bool playing = false;
         try {
           playing = (snapshot.data as dynamic)?.playing ?? false;
-        } catch (_) {}
+        } catch (e) { /* ignore */ }
 
         return Container(
           padding: const EdgeInsets.all(12),

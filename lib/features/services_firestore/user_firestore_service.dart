@@ -37,7 +37,7 @@ class UserFirestoreService {
         _cachedDocId = q.docs.first.id;
         return _cachedDocId;
       }
-    } catch (_) {}
+    } catch (e) { /* ignore */ }
 
     final q2 = await _firestore
         .collection(FirestorePaths.users)

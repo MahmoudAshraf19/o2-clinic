@@ -59,8 +59,7 @@ class GlobalAuthController extends GetxController {
           data: {'auth.fcm_token': token},
         );
       }
-    } catch (e) {
-    }
+    } catch (e) { /* ignore */ }
   }
 
   Future<void> _handleBlockedUser() async {

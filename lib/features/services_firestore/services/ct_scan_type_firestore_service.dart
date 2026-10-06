@@ -31,8 +31,7 @@ class CtScanTypeFirestoreService {
 
           types.add(type);
 
-        } catch (e) {
-        }
+        } catch (e) { /* ignore */ }
       }
 
 

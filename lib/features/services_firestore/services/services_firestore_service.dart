@@ -79,8 +79,7 @@ class ServicesFirestoreService {
 
       _cachedServices = _parseSnapshot(snapshot);
       _lastFetchTime = DateTime.now();
-    } catch (e) {
-    }
+    } catch (e) { /* ignore */ }
   }
 
   List<ServiceModel> _parseSnapshot(QuerySnapshot snapshot) {

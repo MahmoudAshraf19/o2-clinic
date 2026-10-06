@@ -52,7 +52,7 @@ class NextPatientWidget extends StatelessWidget {
             } catch (_) {
               try {
                 parsedTime = DateFormat("HH:mm").parse(startTimeStr);
-              } catch (_) {}
+              } catch (e) { /* ignore */ }
             }
 
             if (parsedTime != null) {
@@ -74,7 +74,7 @@ class NextPatientWidget extends StatelessWidget {
               closest ??= data;
             }
           }
-        } catch (_) {}
+        } catch (e) { /* ignore */ }
       }
     }
     return closest;

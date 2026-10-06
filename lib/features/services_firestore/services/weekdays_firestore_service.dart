@@ -29,8 +29,7 @@ class WeekdaysFirestoreService {
 
           weekdays.add(weekday);
 
-        } catch (e) {
-        }
+        } catch (e) { /* ignore */ }
       }
 
       /// 🔥 SORT BY ORDER

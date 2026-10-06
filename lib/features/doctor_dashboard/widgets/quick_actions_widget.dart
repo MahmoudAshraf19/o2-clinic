@@ -25,7 +25,7 @@ class QuickActionsWidget extends StatelessWidget {
                 dt.day == now.day) {
               count++;
             }
-          } catch (_) {}
+          } catch (e) { /* ignore */ }
         }
       }
     }

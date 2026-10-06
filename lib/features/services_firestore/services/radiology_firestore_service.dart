@@ -50,8 +50,7 @@ class RadiologyFirestoreService {
         if (value is Map<String, dynamic>) {
           try {
             list.add(RadiologyCtModel.fromMap(id: key, map: value));
-          } catch (e) {
-          }
+          } catch (e) { /* ignore */ }
         }
       });
 
@@ -82,8 +81,7 @@ class RadiologyFirestoreService {
         try {
           final data = doc.data();
           icons.add(CtIconModel.fromMap(id: doc.id, map: data));
-        } catch (e) {
-        }
+        } catch (e) { /* ignore */ }
       }
 
       return icons;
@@ -108,8 +106,7 @@ class RadiologyFirestoreService {
         if (value is Map<String, dynamic>) {
           try {
             list.add(RadiologyXrayModel.fromMap(id: key, map: value));
-          } catch (e) {
-          }
+          } catch (e) { /* ignore */ }
         }
       });
 
@@ -135,8 +132,7 @@ class RadiologyFirestoreService {
         if (value is Map<String, dynamic>) {
           try {
             list.add(RadiologyUltrasoundModel.fromMap(id: key, map: value));
-          } catch (e) {
-          }
+          } catch (e) { /* ignore */ }
         }
       });
 
@@ -173,8 +169,7 @@ class RadiologyFirestoreService {
                   category: categoryKey,
                 ),
               );
-            } catch (e) {
-            }
+            } catch (e) { /* ignore */ }
           }
         });
       }

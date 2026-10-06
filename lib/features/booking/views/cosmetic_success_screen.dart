@@ -69,8 +69,7 @@ class CosmeticSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     try {
-} catch (e) {
-    }
+} catch (e) { /* ignore */ }
 
     return Scaffold(
       backgroundColor: const Color(0xFFF6FAF8),

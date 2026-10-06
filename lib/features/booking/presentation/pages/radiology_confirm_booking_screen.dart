@@ -603,9 +603,9 @@ class _RadiologyConfirmBookingScreenState
       return _card(
         child: Column(
           children: [
-            _infoRow(_t("Name"), name),
+            _InfoRow(_t("Name"), name),
             SizedBox(height: 10),
-            _infoRow(_t("Phone"), phone),
+            _InfoRow(_t("Phone"), phone),
           ],
         ),
       );
@@ -784,11 +784,11 @@ class _RadiologyConfirmBookingScreenState
   }
 }
 
-class _infoRow extends StatelessWidget {
+class _InfoRow extends StatelessWidget {
   final String title;
   final String value;
 
-  const _infoRow(this.title, this.value);
+  const _InfoRow(this.title, this.value);
 
   @override
   Widget build(BuildContext context) {

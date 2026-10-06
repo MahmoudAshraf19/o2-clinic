@@ -24,8 +24,7 @@ class CosmeticFirestoreService {
           final data = doc.data();
           final item = CosmeticCategoryModel.fromMap(id: doc.id, map: data);
           list.add(item);
-        } catch (e) {
-        }
+        } catch (e) { /* ignore */ }
       }
 
 

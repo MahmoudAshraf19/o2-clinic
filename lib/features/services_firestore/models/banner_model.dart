@@ -166,7 +166,7 @@ class BannerModel {
         final dynamic result = toDate();
         if (result is DateTime) return result;
       }
-    } catch (_) {}
+    } catch (e) { /* ignore */ }
 
     return null;
   }

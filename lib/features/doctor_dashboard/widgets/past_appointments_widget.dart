@@ -51,7 +51,7 @@ class PastAppointmentsWidget extends StatelessWidget {
           } catch (_) {
             try {
               parsedTime = DateFormat("HH:mm").parse(endTimeStr);
-            } catch (_) {}
+            } catch (e) { /* ignore */ }
           }
 
           if (parsedTime != null) {
@@ -68,7 +68,7 @@ class PastAppointmentsWidget extends StatelessWidget {
               pastList.add(data);
             }
           }
-        } catch (_) {}
+        } catch (e) { /* ignore */ }
       }
     }
 

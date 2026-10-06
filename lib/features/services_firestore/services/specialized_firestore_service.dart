@@ -32,8 +32,7 @@ class SpecializedFirestoreService {
 
         try {
           result.add(SpecializedServiceModel.fromMap(map: fixedMap));
-        } catch (e) {
-        }
+        } catch (e) { /* ignore */ }
       }
 
       return result;

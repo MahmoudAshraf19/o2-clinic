@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
@@ -504,9 +505,9 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
       return _card(
         child: Column(
           children: [
-            _infoRow(AppLocalizations.of(context)!.name, name),
+            _InfoRow(AppLocalizations.of(context)!.name, name),
             SizedBox(height: 10),
-            _infoRow(AppLocalizations.of(context)!.phone, phone),
+            _InfoRow(AppLocalizations.of(context)!.phone, phone),
           ],
         ),
       );
@@ -773,11 +774,11 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
   }
 }
 
-class _infoRow extends StatelessWidget {
+class _InfoRow extends StatelessWidget {
   final String title;
   final String value;
 
-  const _infoRow(this.title, this.value);
+  const _InfoRow(this.title, this.value);
 
   @override
   Widget build(BuildContext context) {

@@ -73,7 +73,7 @@ class DoctorStatisticsController extends GetxController {
       if (data['schedule'] != null && data['schedule']['date'] != null) {
         try {
           appointmentDate = DateTime.parse(data['schedule']['date']);
-        } catch (_) {}
+        } catch (e) { /* ignore */ }
       }
 
       // Default to created at if schedule date is missing
