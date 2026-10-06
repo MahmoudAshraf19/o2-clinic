@@ -9,7 +9,6 @@ import '../../booking/views/cosmetic_booking_page.dart';
 
 import '../../../common/widgets/common_button.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../doctors/views/doctors_screen.dart';
 import '../controllers/cosmetic_controller.dart';
 import '../models/cosmetic_model.dart';
 import '../models/cosmetic_category_model.dart';
