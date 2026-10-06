@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // The controller is registered through SplashBinding.
     Get.find<SplashController>();
-    final l10n = AppLocalizations.of(context)!;
+    
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
