@@ -7,7 +7,6 @@ import '../../services_firestore/models/banner_model.dart';
 import '../../services_firestore/services/banner_service.dart';
 import '../../booking/views/lab_tests_screen.dart';
 import '../../booking/views/radiology_profile_screen.dart';
-import '../../booking/views/cosmetic_services_screen.dart';
 import '../../booking/views/cosmetic_booking_page.dart';
 import '../../booking/controllers/cosmetic_booking_controller.dart';
 import '../../booking/controllers/radiology_booking_controller.dart';
