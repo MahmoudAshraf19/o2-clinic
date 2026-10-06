@@ -242,7 +242,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
   }
 
   Widget _serviceCard() {
-    final langCode = Get.locale?.languageCode ?? 'en';
+    
     
     return _card(
       child: Row(
@@ -633,7 +633,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
     setState(() => _isBooking = true);
 
     try {
-      final langCode = Get.locale?.languageCode ?? 'en';
+      
 
       Map<String, dynamic>? discountData;
       final code = discountController.currentValidCode.value;
