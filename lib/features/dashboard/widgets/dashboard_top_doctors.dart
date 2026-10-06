@@ -5,11 +5,8 @@ import 'package:get/get.dart';
 
 import '../../../core/utils/booking_helper.dart';
 import '../../../common/widgets/common_button.dart';
-import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_fonts.dart';
 import '../../services_firestore/models/doctor_model.dart';
-import '../../booking/presentation/pages/booking_page.dart';
 import '../controllers/dashboard_controller.dart';
 
 class DashboardTopDoctors extends StatelessWidget {
