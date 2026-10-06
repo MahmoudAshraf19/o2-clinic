@@ -26,7 +26,7 @@ class NotificationsController extends GetxController {
     _sub?.cancel();
     if (uid != null && uid.isNotEmpty) {
       _sub = _service.watchUserNotifications(uid).listen((data) {
-        final seenBookingIds = <String>{};
+        
         final deduplicated = <NotificationModel>[];
 
         for (final n in data) {
