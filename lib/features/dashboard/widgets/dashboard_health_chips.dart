@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/theme/app_fonts.dart';
 import '../controllers/dashboard_controller.dart';
 import '../models/dashboard_health_chip_model.dart';
 
