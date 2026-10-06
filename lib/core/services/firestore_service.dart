@@ -245,19 +245,6 @@ class FirestoreService {
     }
   }
 
-  RadiologyServiceModel _mapRadiologyService(Map<String, dynamic> data) {
-    return RadiologyServiceModel(
-      title: data['title'] ?? '',
-      desc: data['desc'] ?? '',
-      image: data['image'] ?? '',
-      specialists: data['specialists'] ?? '',
-      buttonText: data['buttonText'] ?? 'Book Now',
-      badge: data['badge'] ?? '',
-      badgeIcon: _mapBadgeIcon(data['badgeIcon']),
-      isSecondary: data['isSecondary'] ?? false,
-      price: (data['price'] ?? 0.0).toDouble(),
-    );
-  }
 
   IconData _mapBadgeIcon(String? iconName) {
     switch (iconName) {
