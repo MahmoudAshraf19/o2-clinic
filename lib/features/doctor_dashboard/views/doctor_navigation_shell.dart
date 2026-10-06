@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../widgets/doctor_app_bar.dart';
 import '../controllers/doctor_navigation_controller.dart';
 import 'doctor_appointments_screen.dart';
 import 'doctor_chats_screen.dart';
