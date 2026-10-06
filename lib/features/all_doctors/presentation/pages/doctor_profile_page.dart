@@ -106,10 +106,12 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   String _getDoctorDescription(BuildContext context) {
     final doctor = widget.doctor;
     final lang = Localizations.localeOf(context).languageCode;
-    if (lang == 'ar' && doctor.descriptionAr.isNotEmpty)
+    if (lang == 'ar' && doctor.descriptionAr.isNotEmpty) {
       return doctor.descriptionAr;
-    if (lang == 'he' && doctor.descriptionHe.isNotEmpty)
+    }
+    if (lang == 'he' && doctor.descriptionHe.isNotEmpty) {
       return doctor.descriptionHe;
+    }
     return doctor.descriptionEn;
   }
 
@@ -191,7 +193,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 child: CachedImageWidget(
                   imageUrl: doctor.image,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, _, ___) => Image.asset(
+                  errorBuilder: (_, _, _) => Image.asset(
                     'assets/images/common/Doctor_avatar.jpg',
                     fit: BoxFit.cover,
                   ),

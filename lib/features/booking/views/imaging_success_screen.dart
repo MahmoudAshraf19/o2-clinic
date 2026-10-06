@@ -61,7 +61,7 @@ class ImagingSuccessScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Icon(Icons.check_circle, size: 70, color: const Color(0xFF03458F)),
+          const Icon(Icons.check_circle, size: 70, color: Color(0xFF03458F)),
           const SizedBox(height: 16),
           Text(
             AppLocalizations.of(context)!.imagingConfirmed,

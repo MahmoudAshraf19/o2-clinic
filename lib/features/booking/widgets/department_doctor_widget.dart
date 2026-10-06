@@ -414,7 +414,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                   width: 40,
                   height: 40,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, _, ___) {
+                  errorBuilder: (_, _, _) {
                     return Image.asset(
                       'assets/images/common/Doctor_avatar.jpg',
                       width: 40,
@@ -504,7 +504,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                   width: 40,
                   height: 40,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, _, ___) {
+                  errorBuilder: (_, _, _) {
                     return Image.asset(
                       'assets/images/common/Doctor_avatar.jpg',
                       width: 40,
@@ -585,7 +585,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
               width: 40,
               height: 40,
               fit: BoxFit.cover,
-              errorBuilder: (_, _, ___) {
+              errorBuilder: (_, _, _) {
                 return Image.asset(
                   'assets/images/common/Doctor_avatar.jpg',
                   width: 40,
@@ -636,7 +636,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                   width: 56,
                   height: 56,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, _, ___) {
+                  errorBuilder: (_, _, _) {
                     return Image.asset(
                       'assets/images/common/Doctor_avatar.jpg',
                       width: 56,

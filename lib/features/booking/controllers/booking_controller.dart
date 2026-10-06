@@ -32,7 +32,6 @@ class BookingController extends GetxController {
       isLoading.value = true;
       final data = await BookingService.getServices(forceRefresh: forceRefresh);
       services.assignAll(data);
-    } catch (e) {
     } finally {
       isLoading.value = false;
     }

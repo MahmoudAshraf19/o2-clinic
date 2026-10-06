@@ -150,8 +150,9 @@ class BookingReportModel {
     DateTime parseDate(dynamic dateVal) {
       if (dateVal == null) return DateTime.now();
       if (dateVal is Timestamp) return dateVal.toDate();
-      if (dateVal is String)
+      if (dateVal is String) {
         return DateTime.tryParse(dateVal) ?? DateTime.now();
+      }
       return DateTime.now();
     }
 

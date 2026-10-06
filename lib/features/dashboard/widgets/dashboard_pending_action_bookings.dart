@@ -157,7 +157,7 @@ class DashboardPendingActionBookings extends StatelessWidget {
               onPressed: () => _handleContinue(booking),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
-                foregroundcolor: Theme.of(context).cardColor,
+                foregroundColor: Theme.of(context).cardColor,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),

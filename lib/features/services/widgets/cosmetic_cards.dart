@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 
 import 'package:flutter/material.dart';
@@ -183,7 +184,7 @@ class _CosmeticCardState extends State<CosmeticCard> {
                           ],
                         ),
                       );
-                    }).toList(),
+                    }),
                     const SizedBox(height: 24),
                     CommonButton(
                       text: "Book Now",

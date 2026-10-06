@@ -500,7 +500,7 @@ class NotificationService {
         'chatRoomId': chatRoomId,
         'messageId': messageId,
         'screen': screen,
-        if (doctorId != null) 'doctorId': doctorId,
+        'doctorId': ?doctorId,
       },
       priority: 'normal',
     );

@@ -388,8 +388,9 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
         final currentStatus = statusMap['current'] as String? ?? 'pending';
 
         if (_selectedStatus == 'upcoming') {
-          if (currentStatus != 'upcoming' && currentStatus != 'confirmed')
+          if (currentStatus != 'upcoming' && currentStatus != 'confirmed') {
             return false;
+          }
         } else {
           if (currentStatus != _selectedStatus) return false;
         }

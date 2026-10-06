@@ -378,7 +378,7 @@ class _ServiceImage extends StatelessWidget {
           ? CachedImageWidget(
               imageUrl: urlOrAsset,
               fit: BoxFit.cover,
-              errorBuilder: (_, _, ___) => _ImageFallback(icon: fallbackIcon),
+              errorBuilder: (_, _, _) => _ImageFallback(icon: fallbackIcon),
               loadingBuilder: (context, child, progress) => progress == null
                   ? child
                   : const _ImageFallback(icon: Icons.hourglass_bottom_rounded),
@@ -386,7 +386,7 @@ class _ServiceImage extends StatelessWidget {
           : Image.asset(
               urlOrAsset,
               fit: BoxFit.cover,
-              errorBuilder: (_, _, ___) => _ImageFallback(icon: fallbackIcon),
+              errorBuilder: (_, _, _) => _ImageFallback(icon: fallbackIcon),
             ),
     );
   }

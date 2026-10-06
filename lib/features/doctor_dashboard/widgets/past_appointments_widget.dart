@@ -26,8 +26,9 @@ class PastAppointmentsWidget extends StatelessWidget {
           (data['status'] as Map<String, dynamic>?)?['current'] as String? ??
           '';
       // We only care about pending, upcoming, or confirmed that have PASSED their time.
-      if (status != 'upcoming' && status != 'pending' && status != 'confirmed')
+      if (status != 'upcoming' && status != 'pending' && status != 'confirmed') {
         continue;
+      }
 
       final type = data['type'] as String? ?? '';
       if (type != 'online') continue;

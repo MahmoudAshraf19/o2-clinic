@@ -357,7 +357,7 @@ class RegisterScreen extends GetView<RegisterController> {
       return Image.file(
         io.File(value),
         fit: BoxFit.cover,
-        errorBuilder: (_, _, ___) => _avatarFallback(isDarkMode),
+        errorBuilder: (_, _, _) => _avatarFallback(isDarkMode),
       );
     }
 
@@ -386,7 +386,7 @@ class RegisterScreen extends GetView<RegisterController> {
         height: 40,
         fit: BoxFit.contain,
         color: isDarkMode ? Colors.white24 : Colors.grey.shade400,
-        errorBuilder: (_, _, ___) {
+        errorBuilder: (_, _, _) {
           return Icon(Icons.person, size: 40, color: isDarkMode ? Colors.white24 : Colors.grey.shade400);
         },
       ),

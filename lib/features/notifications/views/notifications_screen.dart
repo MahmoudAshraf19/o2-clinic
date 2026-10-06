@@ -21,7 +21,7 @@ class NotificationsScreen extends StatelessWidget {
   
 
   @override
-  Widget build(BuildContext context) { final _colors = _O2Colors(context);
+  Widget build(BuildContext context) { final colors = _O2Colors(context);
     final textTheme = Theme.of(context).textTheme;
     final NotificationsController controller =
         Get.isRegistered<NotificationsController>()
@@ -29,12 +29,12 @@ class NotificationsScreen extends StatelessWidget {
         : Get.put(NotificationsController(), permanent: true);
 
     return Scaffold(
-      backgroundColor: _colors.surface,
+      backgroundColor: colors.surface,
       appBar: AppBar(
-        backgroundColor: _colors.surface,
+        backgroundColor: colors.surface,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: _colors.onSurface),
+          icon: Icon(Icons.arrow_back, color: __colors.onSurface),
           onPressed: () => Get.back(),
         ),
         title: Text(
@@ -42,7 +42,7 @@ class NotificationsScreen extends StatelessWidget {
           style: textTheme.headlineMedium?.copyWith(
             fontSize: 24,
             fontWeight: FontWeight.w700,
-            color: _colors.onSurface,
+            color: __colors.onSurface,
             letterSpacing: -0.4,
           ),
         ),
@@ -52,7 +52,7 @@ class NotificationsScreen extends StatelessWidget {
               return TextButton(
                 onPressed: () => controller.markAllAsRead(),
                 style: TextButton.styleFrom(
-                  foregroundColor: _colors.primary,
+                  foregroundColor: colors.primary,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
                 child: Text(
@@ -61,7 +61,7 @@ class NotificationsScreen extends StatelessWidget {
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.6,
-                    color: _colors.primary,
+                    color: colors.primary,
                   ),
                 ),
               );
@@ -81,7 +81,7 @@ class NotificationsScreen extends StatelessWidget {
                     AppLocalizations.of(context)!.noNotificationsYet,
                     style: GoogleFonts.manrope(
                       fontSize: 16,
-                      color: _colors.onSurfaceVariant,
+                      color: __colors.onSurfaceVariant,
                     ),
                   ),
                 );
@@ -131,32 +131,32 @@ class NotificationsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTile(NotificationModel n, BuildContext context) { final _colors = _O2Colors(context);
+  Widget _buildTile(NotificationModel n, BuildContext context) { final colors = _O2Colors(context);
     IconData icon;
-    Color iconBg = _colors.surfaceContainerHigh;
-    Color iconFg = _colors.onSurface;
+    Color iconBg = colors.surfaceContainerHigh;
+    Color iconFg = __colors.onSurface;
 
     switch (n.type) {
       case 'booking':
       case 'booking_confirmation':
         icon = Icons.event_available;
-        iconBg = _colors.primaryContainer;
-        iconFg = _colors.onPrimaryContainer;
+        iconBg = colors.primaryContainer;
+        iconFg = colors.onPrimaryContainer;
         break;
       case 'message':
         icon = Icons.message_rounded;
-        iconBg = _colors.tertiaryContainer;
-        iconFg = _colors.onTertiaryContainer;
+        iconBg = colors.tertiaryContainer;
+        iconFg = colors.onTertiaryContainer;
         break;
       case 'payment':
         icon = Icons.receipt_long_rounded;
-        iconBg = _colors.secondaryContainer;
-        iconFg = _colors.onSecondaryContainer;
+        iconBg = colors.secondaryContainer;
+        iconFg = colors.onSecondaryContainer;
         break;
       case 'reminder':
         icon = Icons.schedule;
-        iconBg = _colors.errorContainer;
-        iconFg = _colors.onErrorContainer;
+        iconBg = colors.errorContainer;
+        iconFg = colors.onErrorContainer;
         break;
       default:
         icon = Icons.notifications;
@@ -172,8 +172,8 @@ class NotificationsScreen extends StatelessWidget {
       iconFg: iconFg,
       unread: !n.isRead,
       bgColor: !n.isRead
-          ? _colors.surfaceContainerLow
-          : _colors.surfaceContainerLowest,
+          ? colors.surfaceContainerLow
+          : colors.surfaceContainerLowest,
       message: TextSpan(
         style: const TextStyle(height: 1.25),
         children: [
@@ -185,7 +185,7 @@ class NotificationsScreen extends StatelessWidget {
         n.createdAt,
         context: context,
       ),
-      timeColor: !n.isRead ? _colors.primary : _colors.onSurfaceVariant,
+      timeColor: !n.isRead ? colors.primary : __colors.onSurfaceVariant,
       bodyOpacity: !n.isRead ? 1.0 : 0.8,
       onTap: () async {
         if (!n.isRead) {
@@ -351,7 +351,7 @@ class _NotificationTile extends StatelessWidget {
                           fontSize: 14,
                           height: 1.25,
                           fontWeight: FontWeight.w500,
-                          color: colors.onSurface,
+                          color: _colors.onSurface,
                         ),
                       ),
                     ),

@@ -358,8 +358,9 @@ class RegisterController extends GetxController {
     }
 
     if (generatedId.value.isEmpty) return _error('ID is not ready yet');
-    if (username.text.trim().isEmpty)
+    if (username.text.trim().isEmpty) {
       return _error('Username is not ready yet');
+    }
     if (name.text.trim().isEmpty) return _error('Enter name');
     if (phone.text.trim().isEmpty) return _error('Enter phone');
 

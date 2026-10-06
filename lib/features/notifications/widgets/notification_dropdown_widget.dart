@@ -526,7 +526,7 @@ class _ReadNotificationItem extends StatelessWidget {
     required this.time,
     required this.body,
     required this.showTopDivider,
-  });
+  }) : avatarUrl = null;
 
   final IconData icon;
   final Color iconBg;
@@ -535,7 +535,7 @@ class _ReadNotificationItem extends StatelessWidget {
   final String time;
   final String body;
   final bool showTopDivider;
-  
+  final String? avatarUrl;
 
   Color _surfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white12 : const Color(0xFFDFE3E1);
   Color _outline(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white54 : const Color(0xFF6E7977);

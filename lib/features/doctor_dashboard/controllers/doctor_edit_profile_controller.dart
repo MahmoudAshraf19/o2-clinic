@@ -1,8 +1,8 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -213,9 +213,7 @@ class DoctorEditProfileController extends GetxController {
           // Image compression via flutter_image_compress is not supported on web natively
           // We bypass it on Web and upload bytes directly
           try {
-            if (webImageBytes == null) {
-              webImageBytes = await selectedImage.value!.readAsBytes();
-            }
+            webImageBytes ??= await selectedImage.value!.readAsBytes();
             await ref.putData(webImageBytes!);
           } catch (e) {
             debugPrint('Image upload failed on web: $e');

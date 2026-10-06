@@ -27,7 +27,6 @@ class DiscountController extends GetxController {
       isLoadingTypes(true);
       final types = await _discountService.getDiscountTypes();
       discountTypes.assignAll(types);
-    } catch (e) {
     } finally {
       isLoadingTypes(false);
     }
@@ -38,7 +37,6 @@ class DiscountController extends GetxController {
       isLoadingCodes(true);
       final codes = await _discountService.getDiscountCodes();
       discountCodes.assignAll(codes);
-    } catch (e) {
     } finally {
       isLoadingCodes(false);
     }

@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -22,8 +23,8 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
   final ContactUsController controller = Get.put(ContactUsController());
   GoogleMapController? mapController;
 
-  Set<Marker> _markers = {};
-  Set<Polyline> _polylines = {};
+  final Set<Marker> _markers = {};
+  final Set<Polyline> _polylines = {};
 
   bool _isDrawingRoute = false;
 

@@ -130,7 +130,7 @@ class SupportChatController extends GetxController {
           debugPrint('Error sending message: $e');
         });
         textController.clear();
-        this.currentText.value = '';
+        currentText.value = '';
         _scrollToBottom();
       }
     } finally {

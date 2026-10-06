@@ -136,7 +136,7 @@ class RadiologyBookingPage extends StatelessWidget {
               width: 56,
               height: 56,
               fit: BoxFit.cover,
-              errorBuilder: (_, _, ___) => Image.asset(
+              errorBuilder: (_, _, _) => Image.asset(
                 'assets/images/common/Doctor_avatar.jpg',
                 width: 56,
                 height: 56,

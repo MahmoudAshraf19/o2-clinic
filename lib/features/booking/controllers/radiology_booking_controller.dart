@@ -194,7 +194,7 @@ class RadiologyAppointmentBookingController extends GetxController {
             }
           ]),
           'payment.amount': amount,
-          if (discountData != null) 'payment.discount': discountData,
+          'payment.discount': ?discountData,
           'timeline.confirmedAt': FieldValue.serverTimestamp(),
         });
 

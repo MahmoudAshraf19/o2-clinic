@@ -314,8 +314,9 @@ class _DoctorBookingDetailsScreenState
     Map<String, dynamic> doctorMap,
   ) {
     String subtitle = '';
-    if (_patientAge.isNotEmpty)
+    if (_patientAge.isNotEmpty) {
       subtitle += '$_patientAge ${isAr ? 'سنة' : 'yrs'}';
+    }
     if (_patientAge.isNotEmpty && _patientGender.isNotEmpty) subtitle += ' • ';
     if (_patientGender.isNotEmpty) subtitle += _patientGender;
 
@@ -652,7 +653,7 @@ class _InfoItem {
   final Color? valueColor;
 
   _InfoItem({
-    required 
+    required this.icon,
     required this.title,
     required this.value,
     this.valueColor,
@@ -671,8 +672,7 @@ class _CustomButton extends StatelessWidget {
     required this.textColor,
     required this.bgColor,
     required this.onTap,
-    
-  });
+  }) : icon = null;
 
   @override
   Widget build(BuildContext context) {

@@ -803,12 +803,12 @@ class _ImagePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _buildImage(BoxFit fit) {
+    Widget buildImage(BoxFit fit) {
       if (_isNetwork) {
         return CachedImageWidget(
           imageUrl: url,
           fit: fit,
-          errorBuilder: (_, _, ___) {
+          errorBuilder: (_, _, _) {
             return Container(
               color: Colors.black12,
               alignment: Alignment.center,
@@ -828,7 +828,7 @@ class _ImagePreview extends StatelessWidget {
         return Image.file(
           File(url),
           fit: fit,
-          errorBuilder: (_, _, ___) {
+          errorBuilder: (_, _, _) {
             return Container(
               color: Colors.black12,
               alignment: Alignment.center,
@@ -847,10 +847,10 @@ class _ImagePreview extends StatelessWidget {
           onTap: () => Get.dialog(
             Dialog(
               insetPadding: const EdgeInsets.all(16),
-              child: InteractiveViewer(child: _buildImage(BoxFit.contain)),
+              child: InteractiveViewer(child: buildImage(BoxFit.contain)),
             ),
           ),
-          child: _buildImage(BoxFit.cover),
+          child: buildImage(BoxFit.cover),
         ),
       ),
     );

@@ -168,16 +168,20 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
   Widget _doctorCard() {
     final lang = Get.locale?.languageCode ?? 'en';
     String doctorName = widget.doctor.nameEn;
-    if (lang == 'ar' && widget.doctor.nameAr.isNotEmpty)
+    if (lang == 'ar' && widget.doctor.nameAr.isNotEmpty) {
       doctorName = widget.doctor.nameAr;
-    if (lang == 'he' && widget.doctor.nameHe.isNotEmpty)
+    }
+    if (lang == 'he' && widget.doctor.nameHe.isNotEmpty) {
       doctorName = widget.doctor.nameHe;
+    }
 
     String doctorTitle = widget.doctor.titleEn;
-    if (lang == 'ar' && widget.doctor.titleAr.isNotEmpty)
+    if (lang == 'ar' && widget.doctor.titleAr.isNotEmpty) {
       doctorTitle = widget.doctor.titleAr;
-    if (lang == 'he' && widget.doctor.titleHe.isNotEmpty)
+    }
+    if (lang == 'he' && widget.doctor.titleHe.isNotEmpty) {
       doctorTitle = widget.doctor.titleHe;
+    }
 
     return _card(
       child: Row(

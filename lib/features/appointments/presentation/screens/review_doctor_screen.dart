@@ -30,7 +30,7 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
   bool _isSubmitting = false;
 
   double _overallRating = 5.0;
-  Map<String, double> _categoryRatings = {
+  final Map<String, double> _categoryRatings = {
     'waiting_time': 5.0,
     'communication': 5.0,
     'clinic_cleanliness': 5.0,

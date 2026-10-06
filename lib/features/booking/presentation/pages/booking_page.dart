@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:intl/intl.dart';
@@ -130,7 +131,7 @@ class BookingPage extends StatelessWidget {
         width: 56,
         height: 56,
         fit: BoxFit.cover,
-        errorBuilder: (_, _, ___) => fallback,
+        errorBuilder: (_, _, _) => fallback,
       ),
     );
   }

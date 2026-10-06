@@ -62,7 +62,7 @@ class DoctorChatRoom {
       );
     }
 
-    DateTime _parseTime(dynamic value) {
+    DateTime parseTime(dynamic value) {
       if (value is Timestamp) return value.toDate();
       if (value is String) return DateTime.tryParse(value) ?? DateTime.now();
       return DateTime.now();
@@ -79,8 +79,8 @@ class DoctorChatRoom {
       lastMessage: (data['lastMessage'] ?? '').toString(),
       lastMessageKind: (data['lastMessageKind'] ?? 'text').toString(),
       lastSenderId: (data['lastSenderId'] ?? '').toString(),
-      createdAt: _parseTime(data['createdAt']),
-      updatedAt: _parseTime(data['updatedAt']),
+      createdAt: parseTime(data['createdAt']),
+      updatedAt: parseTime(data['updatedAt']),
     );
   }
 }

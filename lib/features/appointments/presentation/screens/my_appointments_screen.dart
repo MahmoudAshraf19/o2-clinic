@@ -449,10 +449,11 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
   }
 
   String _daysLeftText(BuildContext context, DateTime? date) {
-    if (date == null)
+    if (date == null) {
       return Localizations.localeOf(context).languageCode == 'ar'
           ? 'قريباً'
           : 'Soon';
+    }
     
     final diff = date.difference(now).inDays;
     final isAr = Localizations.localeOf(context).languageCode == 'ar';
@@ -767,6 +768,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     if (date == null) return false;
 
     
+    final now = DateTime.now();
     final diffDays = now.difference(date).inDays;
 
     switch (filter) {
@@ -1163,7 +1165,7 @@ class _DoctorAvatar extends StatelessWidget {
           ? CachedImageWidget(
               imageUrl: imageUrl!,
               fit: BoxFit.cover,
-              errorBuilder: (_, _, ___) => Icon(
+              errorBuilder: (_, _, _) => Icon(
                 fallbackIcon,
                 color: isHero ? Colors.white : AppColors.primary,
               ),
@@ -1573,22 +1575,27 @@ class _BookingDetailsSheet extends StatelessWidget {
 class _BookingHelper {
   static String title(BuildContext context, BookingModel booking) {
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
-    if (booking.doctor != null)
+    if (booking.doctor != null) {
       return isArabic ? booking.doctor!.nameAr : booking.doctor!.nameEn;
-    if (booking.service != null)
+    }
+    if (booking.service != null) {
       return isArabic
           ? booking.service!.serviceNameAr
           : booking.service!.serviceNameEn;
-    if (booking.imaging != null)
+    }
+    if (booking.imaging != null) {
       return isArabic ? booking.imaging!.nameAr : booking.imaging!.nameEn;
-    if (booking.cosmetic != null && booking.cosmetic!.serviceName.isNotEmpty)
+    }
+    if (booking.cosmetic != null && booking.cosmetic!.serviceName.isNotEmpty) {
       return booking.cosmetic!.serviceName;
+    }
     return AppLocalizations.of(context)!.appointmentOnly;
   }
 
   static String subtitle(BuildContext context, BookingModel booking) {
-    if (booking.doctor?.specialty.isNotEmpty == true)
+    if (booking.doctor?.specialty.isNotEmpty == true) {
       return booking.doctor!.specialty;
+    }
     if (booking.location.clinic.isNotEmpty) return booking.location.clinic;
     return typeFriendly(context, booking.type);
   }

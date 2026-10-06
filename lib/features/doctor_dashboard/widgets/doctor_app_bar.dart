@@ -90,8 +90,9 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                                   },
                                   loadingBuilder:
                                       (context, child, loadingProgress) {
-                                        if (loadingProgress == null)
+                                        if (loadingProgress == null) {
                                           return child;
+                                        }
                                         return Center(
                                           child: CircularProgressIndicator(
                                             strokeWidth: 2,

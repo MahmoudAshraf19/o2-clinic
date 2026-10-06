@@ -200,7 +200,7 @@ class CosmeticBookingPage extends StatelessWidget {
                     width: 56,
                     height: 56,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, _, ___) => _fallbackAvatar(),
+                    errorBuilder: (_, _, _) => _fallbackAvatar(),
                   )
                 : _fallbackAvatar(),
           ),

@@ -165,7 +165,7 @@ class _BannerCard extends StatelessWidget {
                   ? CachedImageWidget(imageUrl: 
                       banner.imageUrl,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, _, ___) {
+                      errorBuilder: (_, _, _) {
                         debugPrint(
                           '[Banners] Failed to load network image for banner id: ${banner.id}. '
                           'Using local asset fallback.',

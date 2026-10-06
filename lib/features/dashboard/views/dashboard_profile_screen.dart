@@ -1,7 +1,6 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -297,7 +296,7 @@ class _TopAvatar extends StatelessWidget {
                 url,
                 key: ValueKey(url),
                 fit: BoxFit.cover,
-                errorBuilder: (_, _, ___) => Container(
+                errorBuilder: (_, _, _) => Container(
                   color: Colors.white,
                   alignment: Alignment.center,
                   child: const Icon(

@@ -27,8 +27,9 @@ class NextPatientWidget extends StatelessWidget {
       final status =
           (data['status'] as Map<String, dynamic>?)?['current'] as String? ??
           '';
-      if (status != 'upcoming' && status != 'pending' && status != 'confirmed')
+      if (status != 'upcoming' && status != 'pending' && status != 'confirmed') {
         continue;
+      }
 
       if (data['schedule'] != null &&
           data['schedule']['date'] != null &&

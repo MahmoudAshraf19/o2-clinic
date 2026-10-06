@@ -172,7 +172,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                       Switch(
                         value: controller.isOnlineAvailable.value,
                         onChanged: controller.toggleOnline,
-                        activeColor: Colors.white,
+                        activeThumbColor: Colors.white,
                         activeTrackColor: AppColors.primary,
                         inactiveThumbColor: Colors.white,
                         inactiveTrackColor: const Color(0xFFD1D5DB),
@@ -185,8 +185,9 @@ class DoctorEditProfileScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               Obx(() {
-                if (!controller.isOnlineAvailable.value)
+                if (!controller.isOnlineAvailable.value) {
                   return const SizedBox.shrink();
+                }
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -918,7 +919,7 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<String>(
-              value: selectedDay,
+              initialValue: selectedDay,
               decoration: InputDecoration(
                 labelText: 'Day',
                 border: OutlineInputBorder(

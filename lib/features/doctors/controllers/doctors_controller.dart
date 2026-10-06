@@ -26,22 +26,28 @@ class DoctorsController extends GetxController {
         }
 
         String name = fsDoctor.nameEn;
-        if (locale == 'ar' && fsDoctor.nameAr.isNotEmpty)
+        if (locale == 'ar' && fsDoctor.nameAr.isNotEmpty) {
           name = fsDoctor.nameAr;
-        if (locale == 'he' && fsDoctor.nameHe.isNotEmpty)
+        }
+        if (locale == 'he' && fsDoctor.nameHe.isNotEmpty) {
           name = fsDoctor.nameHe;
+        }
 
         String title = fsDoctor.titleEn;
-        if (locale == 'ar' && fsDoctor.titleAr.isNotEmpty)
+        if (locale == 'ar' && fsDoctor.titleAr.isNotEmpty) {
           title = fsDoctor.titleAr;
-        if (locale == 'he' && fsDoctor.titleHe.isNotEmpty)
+        }
+        if (locale == 'he' && fsDoctor.titleHe.isNotEmpty) {
           title = fsDoctor.titleHe;
+        }
 
         String description = fsDoctor.descriptionEn;
-        if (locale == 'ar' && fsDoctor.descriptionAr.isNotEmpty)
+        if (locale == 'ar' && fsDoctor.descriptionAr.isNotEmpty) {
           description = fsDoctor.descriptionAr;
-        if (locale == 'he' && fsDoctor.descriptionHe.isNotEmpty)
+        }
+        if (locale == 'he' && fsDoctor.descriptionHe.isNotEmpty) {
           description = fsDoctor.descriptionHe;
+        }
 
         return ui_model.DoctorModel(
           id: fsDoctor.id,

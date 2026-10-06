@@ -287,7 +287,7 @@ class BookingFirestoreService {
             "method": paymentMethod,
             "amount": amountOverride ?? doctor.price,
             "currency": currency,
-            if (discountData != null) "discount": discountData,
+            "discount": ?discountData,
           },
 
           "status": {
@@ -471,7 +471,7 @@ class BookingFirestoreService {
             "method": paymentMethod,
             "amount": amount,
             "currency": currency,
-            if (discountData != null) "discount": discountData,
+            "discount": ?discountData,
           },
           "status": {"current": "upcoming", "label": "Upcoming"},
           "timeline": {
@@ -643,7 +643,7 @@ class BookingFirestoreService {
             "method": paymentMethod,
             "amount": amount,
             "currency": currency,
-            if (discountData != null) "discount": discountData,
+            "discount": ?discountData,
           },
           "status": {"current": "upcoming", "label": "Upcoming"},
           "timeline": {
@@ -815,7 +815,7 @@ class BookingFirestoreService {
             "method": paymentMethod,
             "amount": amount,
             "currency": currency,
-            if (discountData != null) "discount": discountData,
+            "discount": ?discountData,
           },
           "status": {"current": "upcoming", "label": "Upcoming"},
           "timeline": {

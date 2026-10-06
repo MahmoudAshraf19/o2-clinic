@@ -286,8 +286,9 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                                 final unreadCount =
                                     Get.find<NotificationsController>()
                                         .unreadCount;
-                                if (unreadCount == 0)
+                                if (unreadCount == 0) {
                                   return const SizedBox.shrink();
+                                }
                                 return Positioned(
                                   top: 0,
                                   right: 0,

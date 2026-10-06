@@ -23,7 +23,7 @@ class CachedImageWidget extends StatelessWidget {
   loadingBuilder;
 
   const CachedImageWidget({
-    Key? key,
+    super.key,
     required this.imageUrl,
     this.width,
     this.height,
@@ -32,7 +32,7 @@ class CachedImageWidget extends StatelessWidget {
     this.errorWidget,
     this.errorBuilder,
     this.loadingBuilder,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

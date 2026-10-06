@@ -352,8 +352,9 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
                                 ),
                               ],
                               onChanged: (val) {
-                                if (val != null)
+                                if (val != null) {
                                   setState(() => _sortType = val);
+                                }
                               },
                             ),
                           ),

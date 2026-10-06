@@ -152,9 +152,9 @@ class DoctorStatisticsController extends GetxController {
       final status =
           (data['status'] as Map<String, dynamic>?)?['current'] as String? ??
           'pending';
-      if (status == 'completed')
+      if (status == 'completed') {
         tempCompleted++;
-      else if (status == 'cancelled')
+      } else if (status == 'cancelled')
         tempCancelled++;
       else
         tempPending++;
