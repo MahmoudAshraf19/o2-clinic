@@ -20,8 +20,6 @@ class NotificationDropdownWidget extends StatelessWidget {
   const NotificationDropdownWidget({super.key});
 
   Color _surface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).cardColor : const Color(0xFFFFFFFF);
-  Color _surfaceContainerLowest(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).cardColor : const Color(0xFFFFFFFF);
-  Color _surfaceContainerLow(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).scaffoldBackgroundColor : const Color(0xFFF0F4F2);
   Color _surfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white12 : const Color(0xFFDFE3E1);
   Color _outlineVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white24 : const Color(0xFFBDC9C6);
   Color _primary(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.brandBlue;
@@ -57,7 +55,6 @@ class NotificationDropdownWidget extends StatelessWidget {
                 constraints: const BoxConstraints(maxWidth: 380),
                 margin: const EdgeInsets.only(top: 72, right: 16, left: 16),
                 decoration: BoxDecoration(
-                  color: _surfaceContainerLowest(context),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: _outlineVariant(context).withValues(alpha: 0.30),
@@ -424,7 +421,6 @@ class _UnreadNotificationItem extends StatelessWidget {
   final bool showTopDivider;
   final bool showUnreadDot;
 
-  Color _surfaceContainerLow(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).scaffoldBackgroundColor : const Color(0xFFF0F4F2);
   Color _primary(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.brandBlue;
   Color _onSurface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181D1C);
   Color _onSurfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF3E4947);
@@ -433,7 +429,6 @@ class _UnreadNotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: _surfaceContainerLow(context).withValues(alpha: 0.20),
         border: Border(
           left: BorderSide(color: _primary(context), width: 4),
           top: BorderSide(
@@ -531,7 +526,6 @@ class _ReadNotificationItem extends StatelessWidget {
     required this.time,
     required this.body,
     required this.showTopDivider,
-    this.avatarUrl,
   });
 
   final IconData icon;
@@ -543,7 +537,6 @@ class _ReadNotificationItem extends StatelessWidget {
   final bool showTopDivider;
   
 
-  Color _surfaceContainerLowest(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).cardColor : const Color(0xFFFFFFFF);
   Color _surfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white12 : const Color(0xFFDFE3E1);
   Color _outline(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white54 : const Color(0xFF6E7977);
   Color _onSurface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181D1C);
@@ -552,7 +545,6 @@ class _ReadNotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: _surfaceContainerLowest(context),
         border: Border(
           left: BorderSide(color: Colors.transparent, width: 4),
           top: BorderSide(
