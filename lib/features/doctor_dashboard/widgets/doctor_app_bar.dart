@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -11,9 +10,6 @@ import '../controllers/doctor_navigation_controller.dart';
 import '../../../features/notifications/controllers/notifications_controller.dart';
 import '../../../features/notifications/widgets/notification_dropdown_widget.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../../core/routes/app_routes.dart';
-import '../../../core/theme/app_colors.dart';
-import '../views/doctor_chats_screen.dart';
 
 class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DoctorAppBar({super.key, this.onNotificationTap});
