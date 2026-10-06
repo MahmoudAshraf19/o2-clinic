@@ -181,7 +181,7 @@ class RadiologyAppointmentBookingController extends GetxController {
     try {
       if (existingBookingId != null && existingBookingId.isNotEmpty) {
         // Update the existing pending booking
-        final amount = finalAmount ?? (num.tryParse(service.price.toString() ?? '0') ?? 0);
+        final amount = finalAmount ?? (num.tryParse(service.price.toString()) ?? 0);
         
         await FirebaseFirestore.instance.collection('bookings').doc(existingBookingId).update({
           'status.current': 'confirmed',
@@ -297,7 +297,7 @@ class RadiologyAppointmentBookingController extends GetxController {
         nameAr: service.getName('ar'),
         selectedDate: selectedDate.value!,
         selectedTime: selectedTime.value,
-        amount: num.tryParse(service.price.toString() ?? '0') ?? 0,
+        amount: num.tryParse(service.price.toString()) ?? 0,
         currency: AppConstants.currencyName,
         discountData: null,
       );

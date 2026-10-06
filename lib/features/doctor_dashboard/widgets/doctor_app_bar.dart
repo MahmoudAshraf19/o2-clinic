@@ -40,7 +40,6 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
 
       final image = user?['image'];
 
-      final isGuest = false;
 
       return Container(
         width: double.infinity,
