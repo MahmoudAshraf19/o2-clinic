@@ -8,7 +8,6 @@ import '../../../core/theme/app_colors.dart';
 import '../controllers/doctor_appointments_controller.dart';
 import '../../services_firestore/services/bookings_firestore_service.dart';
 import '../../appointments/presentation/screens/report_issue_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class PastAppointmentsWidget extends StatelessWidget {
   const PastAppointmentsWidget({super.key});
