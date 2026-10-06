@@ -61,7 +61,7 @@ class _XRayScreenState extends State<XRayScreen> {
   }
 
   Future<void> _continue() async {
-    final localeCode = Localizations.localeOf(context).languageCode;
+    
 
     if (selectedCategoryId == null) {
       Get.snackbar(
@@ -96,7 +96,7 @@ class _XRayScreenState extends State<XRayScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final isNarrow = size.width < 360;
-    final localeCode = Localizations.localeOf(context).languageCode;
+    
     final headerTitle = selectedCategoryId == null
         ? 'X-Ray'
         : (_selectedCategory?.titleForLanguage(localeCode) ?? 'X-Ray');
