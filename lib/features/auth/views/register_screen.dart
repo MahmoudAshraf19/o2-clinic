@@ -670,7 +670,7 @@ class RegisterScreen extends GetView<RegisterController> {
   }
 
   Widget _genderBtn(String value, String icon, bool isDarkMode) {
-    final selected = controller.gender.value == value; // Note: controller.gender is comparing localized value now? Actually controller sets 'Male'/'Female'.
+     // Note: controller.gender is comparing localized value now? Actually controller sets 'Male'/'Female'.
     // Better to check if value matches what controller sets. Controller expects English values internally or localized? Let's assume it checks english, wait, the old code used 'Male' and 'Female'.
     // Let's keep the internal value english but display localized.
     final internalValue = value.contains('ذكر') || value.toLowerCase() == 'male' ? 'Male' : 'Female';
