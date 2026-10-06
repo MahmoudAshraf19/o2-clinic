@@ -6,7 +6,6 @@ import '../../../core/theme/app_colors.dart';
 import '../controllers/radiology_chat_controller.dart';
 import '../services/radiology_chat_service.dart';
 import '../widgets/support_chat_widgets.dart';
-import '../models/chat_support_model.dart';
 
 class RadiologyChatScreen extends StatefulWidget {
   final String bookingId;
