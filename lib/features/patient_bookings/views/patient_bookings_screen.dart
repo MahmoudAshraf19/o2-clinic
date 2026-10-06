@@ -12,21 +12,27 @@ class PatientBookingsScreen extends StatefulWidget {
 }
 
 class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
-  final PatientBookingsController _controller = Get.put(PatientBookingsController());
-  
+  final PatientBookingsController _controller = Get.put(
+    PatientBookingsController(),
+  );
+
   String _selectedType = 'online'; // 'online' or 'clinical'
-  String _selectedStatus = 'pending'; // 'pending', 'upcoming', 'completed', 'cancelled'
+  String _selectedStatus =
+      'pending'; // 'pending', 'upcoming', 'completed', 'cancelled'
 
   @override
   Widget build(BuildContext context) {
     final isAr = Get.locale?.languageCode == 'ar';
-    
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
           isAr ? 'حجوزاتي' : 'My Bookings',
-          style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: AppColors.primary,
+          ),
         ),
         centerTitle: false,
         backgroundColor: Colors.white,
@@ -59,7 +65,7 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
               ],
             ),
           ),
-          
+
           // 2. Status Tabs (only show Pending for Online if requested, but better to show all)
           Container(
             height: 60,
@@ -86,16 +92,19 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
 
               final filteredBookings = _controller.bookings.where((doc) {
                 final data = doc.data() as Map<String, dynamic>;
-                
+
                 final type = data['type'] as String? ?? 'clinical';
                 if (type != _selectedType) return false;
 
                 final statusMap = data['status'] as Map<String, dynamic>? ?? {};
-                final currentStatus = statusMap['current'] as String? ?? 'pending';
-                
+                final currentStatus =
+                    statusMap['current'] as String? ?? 'pending';
+
                 // upcoming/confirmed mapping
-                String normalizedStatus = currentStatus == 'confirmed' ? 'upcoming' : currentStatus;
-                
+                String normalizedStatus = currentStatus == 'confirmed'
+                    ? 'upcoming'
+                    : currentStatus;
+
                 if (normalizedStatus != _selectedStatus) return false;
 
                 return true;
@@ -106,7 +115,11 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.calendar_month_outlined, size: 64, color: AppColors.grey.withValues(alpha: 0.3)),
+                      Icon(
+                        Icons.calendar_month_outlined,
+                        size: 64,
+                        color: AppColors.grey.withValues(alpha: 0.3),
+                      ),
                       const SizedBox(height: 16),
                       Text(
                         isAr ? 'لا توجد حجوزات' : 'No bookings found',
@@ -126,7 +139,9 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
                 padding: const EdgeInsets.only(bottom: 24),
                 itemBuilder: (context, index) {
                   final doc = filteredBookings[index];
-                  return PatientAppointmentCard(bookingData: doc.data() as Map<String, dynamic>);
+                  return PatientAppointmentCard(
+                    bookingData: doc.data() as Map<String, dynamic>,
+                  );
                 },
               );
             }),
@@ -136,14 +151,19 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
     );
   }
 
-  Widget _buildTypeTab({required String title, required String value, required IconData icon}) {
+  Widget _buildTypeTab({
+    required String title,
+    required String value,
+    required IconData icon,
+  }) {
     final isSelected = _selectedType == value;
     return GestureDetector(
       onTap: () {
         setState(() {
           _selectedType = value;
           if (value == 'clinical' && _selectedStatus == 'pending') {
-            _selectedStatus = 'upcoming'; // Clinical doesn't usually have pending
+            _selectedStatus =
+                'upcoming'; // Clinical doesn't usually have pending
           }
         });
       },
@@ -153,13 +173,19 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
           color: isSelected ? AppColors.primary : Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.grey.withValues(alpha: 0.2),
+            color: isSelected
+                ? AppColors.primary
+                : AppColors.grey.withValues(alpha: 0.2),
           ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 20, color: isSelected ? Colors.white : AppColors.grey),
+            Icon(
+              icon,
+              size: 20,
+              color: isSelected ? Colors.white : AppColors.grey,
+            ),
             const SizedBox(width: 8),
             Text(
               title,
@@ -187,7 +213,9 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
           color: isSelected ? AppColors.primary : Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.grey.withValues(alpha: 0.2),
+            color: isSelected
+                ? AppColors.primary
+                : AppColors.grey.withValues(alpha: 0.2),
           ),
         ),
         alignment: Alignment.center,
@@ -203,3 +231,4 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
     );
   }
 }
+

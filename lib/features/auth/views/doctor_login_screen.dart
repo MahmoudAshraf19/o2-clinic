@@ -144,7 +144,10 @@ class DoctorLoginScreen extends GetView<DoctorLoginController> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        const Icon(Icons.login_rounded, size: 20),
+                                        const Icon(
+                                          Icons.login_rounded,
+                                          size: 20,
+                                        ),
                                         const SizedBox(width: 10),
                                         Text(
                                           AppLocalizations.of(context)!.login,

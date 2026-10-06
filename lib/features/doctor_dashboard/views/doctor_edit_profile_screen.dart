@@ -15,7 +15,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DoctorEditProfileController());
-    
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -31,7 +31,10 @@ class DoctorEditProfileScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF13364A)),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Color(0xFF13364A),
+          ),
           onPressed: () => Get.back(),
         ),
         actions: [
@@ -130,53 +133,62 @@ class DoctorEditProfileScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Online Consultation Toggle
-              Obx(() => Container(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  children: [
-                    const Icon(Icons.videocam_outlined, color: AppColors.primary, size: 24),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Online Consultation',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Color(0xFF6B7280),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            controller.isOnlineAvailable.value ? 'Online Consultation Available' : 'Online Consultation Unavailable',
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
+              Obx(
+                () => Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.videocam_outlined,
+                        color: AppColors.primary,
+                        size: 24,
                       ),
-                    ),
-                    Switch(
-                      value: controller.isOnlineAvailable.value,
-                      onChanged: controller.toggleOnline,
-                      activeColor: Colors.white,
-                      activeTrackColor: AppColors.primary,
-                      inactiveThumbColor: Colors.white,
-                      inactiveTrackColor: const Color(0xFFD1D5DB),
-                    ),
-                  ],
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Online Consultation',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFF6B7280),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              controller.isOnlineAvailable.value
+                                  ? 'Online Consultation Available'
+                                  : 'Online Consultation Unavailable',
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Switch(
+                        value: controller.isOnlineAvailable.value,
+                        onChanged: controller.toggleOnline,
+                        activeColor: Colors.white,
+                        activeTrackColor: AppColors.primary,
+                        inactiveThumbColor: Colors.white,
+                        inactiveTrackColor: const Color(0xFFD1D5DB),
+                      ),
+                    ],
+                  ),
                 ),
-              )),
-              
+              ),
+
               const SizedBox(height: 16),
 
               Obx(() {
-                if (!controller.isOnlineAvailable.value) return const SizedBox.shrink();
-                
+                if (!controller.isOnlineAvailable.value)
+                  return const SizedBox.shrink();
+
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -195,9 +207,13 @@ class DoctorEditProfileScreen extends StatelessWidget {
                       children: [
                         _buildSectionTitle('Online Consultation Schedule'),
                         InkWell(
-                          onTap: () => _showAddOnlineScheduleDialog(context, controller),
+                          onTap: () =>
+                              _showAddOnlineScheduleDialog(context, controller),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.primary.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(12),
@@ -205,7 +221,11 @@ class DoctorEditProfileScreen extends StatelessWidget {
                             child: const Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.add, size: 16, color: AppColors.primary),
+                                Icon(
+                                  Icons.add,
+                                  size: 16,
+                                  color: AppColors.primary,
+                                ),
                                 SizedBox(width: 4),
                                 Text(
                                   'Add',
@@ -234,14 +254,19 @@ class DoctorEditProfileScreen extends StatelessWidget {
                           child: const Center(
                             child: Text(
                               'No online schedule added',
-                              style: TextStyle(color: Color(0xFF6B7280), fontSize: 14),
+                              style: TextStyle(
+                                color: Color(0xFF6B7280),
+                                fontSize: 14,
+                              ),
                             ),
                           ),
                         );
                       }
-                      
+
                       return Column(
-                        children: controller.onlineSchedule.entries.expand((entry) {
+                        children: controller.onlineSchedule.entries.expand((
+                          entry,
+                        ) {
                           final day = entry.key;
                           final schedules = entry.value;
                           List<Widget> rows = [];
@@ -249,16 +274,22 @@ class DoctorEditProfileScreen extends StatelessWidget {
                             rows.add(
                               Container(
                                 margin: const EdgeInsets.only(bottom: 8),
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: const Color(0xFFE5E7EB)),
+                                  border: Border.all(
+                                    color: const Color(0xFFE5E7EB),
+                                  ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Row(
                                   children: [
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             day.capitalizeFirst ?? day,
@@ -280,12 +311,16 @@ class DoctorEditProfileScreen extends StatelessWidget {
                                       ),
                                     ),
                                     IconButton(
-                                      icon: const Icon(Icons.delete_outline, color: Colors.red),
-                                      onPressed: () => controller.removeOnlineScheduleSlot(day, i),
+                                      icon: const Icon(
+                                        Icons.delete_outline,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () => controller
+                                          .removeOnlineScheduleSlot(day, i),
                                     ),
                                   ],
                                 ),
-                              )
+                              ),
                             );
                           }
                           return rows;
@@ -309,7 +344,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                 subtitle: 'Friday • 9:00 AM - 9:00 PM',
               ),
               const SizedBox(height: 20),
-              
+
               _buildLockedRow(
                 context: context,
                 controller: controller,
@@ -327,7 +362,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                 subtitle: '(4.8)',
               ),
               const SizedBox(height: 20),
-              
+
               _buildLockedRow(
                 context: context,
                 controller: controller,
@@ -360,41 +395,57 @@ class DoctorEditProfileScreen extends StatelessWidget {
         Stack(
           alignment: Alignment.bottomRight,
           children: [
-            Obx(() => Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFFF3F4F6),
-                border: Border.all(color: Colors.white, width: 3),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                  ),
-                ],
+            Obx(
+              () => Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0xFFF3F4F6),
+                  border: Border.all(color: Colors.white, width: 3),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: controller.selectedImage.value != null
+                      ? (kIsWeb
+                            ? Image.network(
+                                controller.selectedImage.value!.path,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.file(
+                                File(controller.selectedImage.value!.path),
+                                fit: BoxFit.cover,
+                              ))
+                      : (controller.existingImageUrl.isNotEmpty
+                            ? CachedNetworkImage(
+                                imageUrl: controller.existingImageUrl,
+                                fit: BoxFit.cover,
+                              )
+                            : const Icon(
+                                Icons.person,
+                                size: 40,
+                                color: AppColors.grey,
+                              )),
+                ),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(40),
-                child: controller.selectedImage.value != null
-                    ? (kIsWeb 
-                        ? Image.network(controller.selectedImage.value!.path, fit: BoxFit.cover)
-                        : Image.file(File(controller.selectedImage.value!.path), fit: BoxFit.cover))
-                    : (controller.existingImageUrl.isNotEmpty
-                        ? CachedNetworkImage(
-                            imageUrl: controller.existingImageUrl,
-                            fit: BoxFit.cover,
-                          )
-                        : const Icon(Icons.person, size: 40, color: AppColors.grey)),
-              ),
-            )),
+            ),
             Container(
               padding: const EdgeInsets.all(4),
               decoration: const BoxDecoration(
                 color: AppColors.primary,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.camera_alt, color: Colors.white, size: 14),
+              child: const Icon(
+                Icons.camera_alt,
+                color: Colors.white,
+                size: 14,
+              ),
             ),
           ],
         ),
@@ -410,7 +461,11 @@ class DoctorEditProfileScreen extends StatelessWidget {
             ),
             child: const Row(
               children: [
-                Icon(Icons.camera_alt_outlined, size: 16, color: AppColors.primary),
+                Icon(
+                  Icons.camera_alt_outlined,
+                  size: 16,
+                  color: AppColors.primary,
+                ),
                 SizedBox(width: 8),
                 Text(
                   'Change Photo',
@@ -456,15 +511,23 @@ class DoctorEditProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(
           children: [
-            const Icon(Icons.language_rounded, color: AppColors.primary, size: 20),
+            const Icon(
+              Icons.language_rounded,
+              color: AppColors.primary,
+              size: 20,
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: AnimatedBuilder(
-                animation: Listenable.merge([arController, enController, heController]),
+                animation: Listenable.merge([
+                  arController,
+                  enController,
+                  heController,
+                ]),
                 builder: (context, _) {
                   final langCode = Localizations.localeOf(context).languageCode;
                   String text = '';
-                  
+
                   if (langCode == 'ar' && arController.text.isNotEmpty) {
                     text = arController.text;
                   } else if (langCode == 'he' && heController.text.isNotEmpty) {
@@ -485,7 +548,9 @@ class DoctorEditProfileScreen extends StatelessWidget {
                     text,
                     style: TextStyle(
                       fontSize: 14,
-                      color: text == 'Not set' ? const Color(0xFF9CA3AF) : const Color(0xFF13364A),
+                      color: text == 'Not set'
+                          ? const Color(0xFF9CA3AF)
+                          : const Color(0xFF13364A),
                       fontWeight: FontWeight.w600,
                     ),
                     maxLines: 1,
@@ -526,7 +591,9 @@ class DoctorEditProfileScreen extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
-          constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.85),
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.85,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -536,7 +603,11 @@ class DoctorEditProfileScreen extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Color(0xFF13364A)),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF13364A),
+                    ),
                   ),
                   IconButton(
                     icon: const Icon(Icons.close, color: Color(0xFF6B7280)),
@@ -550,24 +621,30 @@ class DoctorEditProfileScreen extends StatelessWidget {
                   child: Obx(() {
                     final active = controller.activeLanguages;
                     final List<Widget> fields = [];
-                    
+
                     if (active.contains('ar')) {
-                      fields.add(_buildLangField('Arabic', arController, maxLines));
+                      fields.add(
+                        _buildLangField('Arabic', arController, maxLines),
+                      );
                       fields.add(const SizedBox(height: 12));
                     }
                     if (active.contains('en')) {
-                      fields.add(_buildLangField('English', enController, maxLines));
+                      fields.add(
+                        _buildLangField('English', enController, maxLines),
+                      );
                       fields.add(const SizedBox(height: 12));
                     }
                     if (active.contains('he')) {
-                      fields.add(_buildLangField('Hebrew', heController, maxLines));
+                      fields.add(
+                        _buildLangField('Hebrew', heController, maxLines),
+                      );
                       fields.add(const SizedBox(height: 12));
                     }
-                    
+
                     if (fields.isNotEmpty) {
                       fields.removeLast();
                     }
-                    
+
                     return Column(children: fields);
                   }),
                 ),
@@ -580,9 +657,18 @@ class DoctorEditProfileScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                  child: const Text('Done', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                  child: const Text(
+                    'Done',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -592,7 +678,11 @@ class DoctorEditProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLangField(String lang, TextEditingController controller, int maxLines) {
+  Widget _buildLangField(
+    String lang,
+    TextEditingController controller,
+    int maxLines,
+  ) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -651,7 +741,10 @@ class DoctorEditProfileScreen extends StatelessWidget {
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: const Color(0xFF6B7280), size: 20),
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 14,
+          ),
         ),
       ),
     );
@@ -688,7 +781,10 @@ class DoctorEditProfileScreen extends StatelessWidget {
               ),
             ),
             if (isDropdown)
-              const Icon(Icons.keyboard_arrow_down_rounded, color: Color(0xFF6B7280)),
+              const Icon(
+                Icons.keyboard_arrow_down_rounded,
+                color: Color(0xFF6B7280),
+              ),
           ],
         ),
       ),
@@ -725,7 +821,11 @@ class DoctorEditProfileScreen extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const Icon(Icons.access_time_rounded, size: 16, color: Color(0xFF6B7280)),
+              const Icon(
+                Icons.access_time_rounded,
+                size: 16,
+                color: Color(0xFF6B7280),
+              ),
             ],
           ),
         ],
@@ -771,7 +871,11 @@ class DoctorEditProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    const Icon(Icons.lock_outline, size: 14, color: Color(0xFF9CA3AF)),
+                    const Icon(
+                      Icons.lock_outline,
+                      size: 14,
+                      color: Color(0xFF9CA3AF),
+                    ),
                   ],
                 ),
               ],
@@ -797,7 +901,10 @@ class DoctorEditProfileScreen extends StatelessWidget {
     );
   }
 
-  void _showAddOnlineScheduleDialog(BuildContext context, DoctorEditProfileController controller) {
+  void _showAddOnlineScheduleDialog(
+    BuildContext context,
+    DoctorEditProfileController controller,
+  ) {
     Get.dialog(_AddOnlineScheduleDialog(controller: controller));
   }
 }
@@ -807,7 +914,8 @@ class _AddOnlineScheduleDialog extends StatefulWidget {
   const _AddOnlineScheduleDialog({required this.controller});
 
   @override
-  State<_AddOnlineScheduleDialog> createState() => _AddOnlineScheduleDialogState();
+  State<_AddOnlineScheduleDialog> createState() =>
+      _AddOnlineScheduleDialogState();
 }
 
 class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
@@ -843,18 +951,38 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
           children: [
             const Text(
               'Add Online Schedule',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Color(0xFF13364A)),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF13364A),
+              ),
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<String>(
               value: selectedDay,
               decoration: InputDecoration(
                 labelText: 'Day',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-              items: ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday']
-                  .map((day) => DropdownMenuItem(value: day, child: Text(day.capitalizeFirst ?? day)))
-                  .toList(),
+              items:
+                  [
+                        'saturday',
+                        'sunday',
+                        'monday',
+                        'tuesday',
+                        'wednesday',
+                        'thursday',
+                        'friday',
+                      ]
+                      .map(
+                        (day) => DropdownMenuItem(
+                          value: day,
+                          child: Text(day.capitalizeFirst ?? day),
+                        ),
+                      )
+                      .toList(),
               onChanged: (val) {
                 if (val != null) {
                   setState(() {
@@ -870,7 +998,10 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
                   child: InkWell(
                     onTap: () => _pickTime(context, true),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
+                      ),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey.shade400),
                         borderRadius: BorderRadius.circular(12),
@@ -878,7 +1009,9 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
                       child: Text(
                         fromHour != null ? '$fromHour:00' : 'From',
                         style: TextStyle(
-                          color: fromHour != null ? const Color(0xFF13364A) : Colors.grey.shade600,
+                          color: fromHour != null
+                              ? const Color(0xFF13364A)
+                              : Colors.grey.shade600,
                           fontSize: 16,
                         ),
                       ),
@@ -890,7 +1023,10 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
                   child: InkWell(
                     onTap: () => _pickTime(context, false),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
+                      ),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey.shade400),
                         borderRadius: BorderRadius.circular(12),
@@ -898,7 +1034,9 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
                       child: Text(
                         toHour != null ? '$toHour:00' : 'To',
                         style: TextStyle(
-                          color: toHour != null ? const Color(0xFF13364A) : Colors.grey.shade600,
+                          color: toHour != null
+                              ? const Color(0xFF13364A)
+                              : Colors.grey.shade600,
                           fontSize: 16,
                         ),
                       ),
@@ -930,9 +1068,18 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
-                child: const Text('Add Schedule', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                child: const Text(
+                  'Add Schedule',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
           ],

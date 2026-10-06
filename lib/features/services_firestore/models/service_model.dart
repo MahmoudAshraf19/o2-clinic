@@ -45,7 +45,7 @@ class ServiceModel {
       'description_ar': descriptionAr,
       'description_he': descriptionHe,
       'image': image,
-      'price': price
+      'price': price,
     };
   }
 }

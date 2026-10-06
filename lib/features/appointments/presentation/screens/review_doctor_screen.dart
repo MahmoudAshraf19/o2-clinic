@@ -28,7 +28,7 @@ class ReviewDoctorScreen extends StatefulWidget {
 class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
   final _textController = TextEditingController();
   bool _isSubmitting = false;
-  
+
   double _overallRating = 5.0;
   Map<String, double> _categoryRatings = {
     'waiting_time': 5.0,
@@ -42,9 +42,13 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
 
     try {
       final patientId = FirebaseAuth.instance.currentUser?.uid ?? '';
-      
-      final docRef = FirebaseFirestore.instance.collection('Doctors').doc(widget.doctorId).collection('reviews').doc();
-      
+
+      final docRef = FirebaseFirestore.instance
+          .collection('Doctors')
+          .doc(widget.doctorId)
+          .collection('reviews')
+          .doc();
+
       final review = ReviewModel(
         id: docRef.id,
         bookingId: widget.bookingId,
@@ -60,26 +64,30 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
 
       await FirebaseFirestore.instance.runTransaction((transaction) async {
         // 1. Fetch Doctor (GET must come before any writes)
-        final doctorRef = FirebaseFirestore.instance.collection('Doctors').doc(widget.doctorId);
+        final doctorRef = FirebaseFirestore.instance
+            .collection('Doctors')
+            .doc(widget.doctorId);
         final doctorSnapshot = await transaction.get(doctorRef);
-        
+
         // 2. Add review (WRITE)
         transaction.set(docRef, review.toMap());
-        
+
         // 3. Update Booking (WRITE)
-        final bookingRef = FirebaseFirestore.instance.collection('bookings').doc(widget.bookingId);
+        final bookingRef = FirebaseFirestore.instance
+            .collection('bookings')
+            .doc(widget.bookingId);
         transaction.update(bookingRef, {'reviewId': review.id});
-        
+
         // 4. Update Doctor Rating Average (WRITE)
         if (doctorSnapshot.exists) {
           final data = doctorSnapshot.data()!;
           int reviewsCount = (data['reviews_count'] ?? 0) as int;
           num totalScore = (data['total_rating_score'] ?? 0) as num;
-          
+
           reviewsCount += 1;
           totalScore += _overallRating;
           num newAverage = totalScore / reviewsCount;
-          
+
           transaction.update(doctorRef, {
             'reviews_count': reviewsCount,
             'total_rating_score': totalScore,
@@ -95,9 +103,13 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
         backgroundColor: AppColors.success,
         colorText: Colors.white,
       );
-
     } catch (e) {
-      Get.snackbar('Error', 'Failed to submit review', backgroundColor: AppColors.error, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Failed to submit review',
+        backgroundColor: AppColors.error,
+        colorText: Colors.white,
+      );
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
     }
@@ -109,7 +121,14 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: AppColors.textPrimary,
+            ),
+          ),
           Row(
             children: List.generate(5, (index) {
               final val = index + 1;
@@ -118,13 +137,17 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
                   setState(() {
                     _categoryRatings[key] = val.toDouble();
                     // Update overall rating as average of categories
-                    _overallRating = _categoryRatings.values.reduce((a, b) => a + b) / _categoryRatings.length;
+                    _overallRating =
+                        _categoryRatings.values.reduce((a, b) => a + b) /
+                        _categoryRatings.length;
                   });
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 4.0),
                   child: Icon(
-                    val <= (_categoryRatings[key] ?? 0) ? Icons.star : Icons.star_border,
+                    val <= (_categoryRatings[key] ?? 0)
+                        ? Icons.star
+                        : Icons.star_border,
                     color: Colors.orangeAccent,
                     size: 28,
                   ),
@@ -140,12 +163,15 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(l10n.rateYourExperience ?? 'Rate Experience', style: const TextStyle(color: AppColors.textPrimary)),
+        title: Text(
+          l10n.rateYourExperience ?? 'Rate Experience',
+          style: const TextStyle(color: AppColors.textPrimary),
+        ),
         iconTheme: const IconThemeData(color: AppColors.textPrimary),
         elevation: 0,
       ),
@@ -157,14 +183,30 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
             children: [
               Text(
                 'Overall Rating: ${_overallRating.toStringAsFixed(1)}',
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              _buildCategoryRating('waiting_time', l10n.catWaitingTime ?? 'Waiting Time'),
-              _buildCategoryRating('communication', l10n.catCommunication ?? 'Communication'),
-              _buildCategoryRating('clinic_cleanliness', l10n.catClinicCleanliness ?? 'Clinic Cleanliness'),
-              _buildCategoryRating('effectiveness', l10n.catEffectiveness ?? 'Effectiveness'),
+              _buildCategoryRating(
+                'waiting_time',
+                l10n.catWaitingTime ?? 'Waiting Time',
+              ),
+              _buildCategoryRating(
+                'communication',
+                l10n.catCommunication ?? 'Communication',
+              ),
+              _buildCategoryRating(
+                'clinic_cleanliness',
+                l10n.catClinicCleanliness ?? 'Clinic Cleanliness',
+              ),
+              _buildCategoryRating(
+                'effectiveness',
+                l10n.catEffectiveness ?? 'Effectiveness',
+              ),
               const SizedBox(height: 32),
               TextField(
                 controller: _textController,
@@ -173,7 +215,9 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
                   hintText: l10n.writeYourReview ?? 'Write your review...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
+                    borderSide: BorderSide(
+                      color: AppColors.grey.withOpacity(0.3),
+                    ),
                   ),
                   filled: true,
                   fillColor: Colors.white,
@@ -186,11 +230,26 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 child: _isSubmitting
-                    ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                    : Text(l10n.submitReview ?? 'Submit Review', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        l10n.submitReview ?? 'Submit Review',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
             ],
           ),
@@ -199,3 +258,4 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
     );
   }
 }
+

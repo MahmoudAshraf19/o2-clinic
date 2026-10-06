@@ -32,7 +32,11 @@ class BookingSuccessScreen extends StatelessWidget {
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
-              children: [_card(context), const SizedBox(height: 18), _actions(context)],
+              children: [
+                _card(context),
+                const SizedBox(height: 18),
+                _actions(context),
+              ],
             ),
           ),
         ),
@@ -52,9 +56,13 @@ class BookingSuccessScreen extends StatelessWidget {
 
     String translatedTime = selectedTime;
     if (lang == 'ar') {
-      translatedTime = translatedTime.replaceAll('AM', 'ص').replaceAll('PM', 'م');
+      translatedTime = translatedTime
+          .replaceAll('AM', 'ص')
+          .replaceAll('PM', 'م');
     } else if (lang == 'he') {
-      translatedTime = translatedTime.replaceAll('AM', 'לפנה״צ').replaceAll('PM', 'אחה״צ');
+      translatedTime = translatedTime
+          .replaceAll('AM', 'לפנה״צ')
+          .replaceAll('PM', 'אחה״צ');
     }
     String displayTime = translatedTime;
 
@@ -75,13 +83,15 @@ class BookingSuccessScreen extends StatelessWidget {
       child: Column(
         children: [
           Icon(
-            isOnline ? Icons.access_time_filled : Icons.check_circle, 
-            size: 70, 
-            color: isOnline ? Colors.orange.shade700 : Colors.teal
+            isOnline ? Icons.access_time_filled : Icons.check_circle,
+            size: 70,
+            color: isOnline ? Colors.orange.shade700 : const Color(0xFF03458F),
           ),
           const SizedBox(height: 16),
           Text(
-            isOnline ? AppLocalizations.of(context)!.pending : AppLocalizations.of(context)!.bookingConfirmed,
+            isOnline
+                ? AppLocalizations.of(context)!.pending
+                : AppLocalizations.of(context)!.bookingConfirmed,
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -90,21 +100,26 @@ class BookingSuccessScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            isOnline ? AppLocalizations.of(context)!.mustContactDoctorWarning : AppLocalizations.of(context)!.yourAppointmentHasBeenScheduled,
+            isOnline
+                ? AppLocalizations.of(context)!.mustContactDoctorWarning
+                : AppLocalizations.of(context)!.yourAppointmentHasBeenScheduled,
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.grey.shade600),
           ),
           const SizedBox(height: 18),
           _info(AppLocalizations.of(context)!.doctor, doctorName),
           _info(AppLocalizations.of(context)!.specialty, doctorTitle),
-          _info(AppLocalizations.of(context)!.date, _formatDate(selectedDate, context)),
+          _info(
+            AppLocalizations.of(context)!.date,
+            _formatDate(selectedDate, context),
+          ),
           _info(AppLocalizations.of(context)!.time, displayTime),
           const SizedBox(height: 18),
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: isOnline ? Colors.orange.shade700 : Colors.teal,
+              color: isOnline ? Colors.orange.shade700 : const Color(0xFF03458F),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -162,7 +177,10 @@ class BookingSuccessScreen extends StatelessWidget {
   }
 
   String _formatDate(DateTime date, BuildContext context) {
-    return DateFormat('d MMM yyyy', Get.locale?.languageCode ?? 'en').format(date);
+    return DateFormat(
+      'd MMM yyyy',
+      Get.locale?.languageCode ?? 'en',
+    ).format(date);
   }
 
   String _formatSpecialty(String specialty) {
@@ -170,13 +188,16 @@ class BookingSuccessScreen extends StatelessWidget {
     if (specialty == 'general_bariatric_surgery') {
       return 'General & Bariatric Surgery';
     }
-    
+
     // Fallback formatter: replace underscores with spaces and capitalize
-    return specialty.replaceAll('_', ' ').split(' ').map((word) {
-      if (word.isEmpty) return '';
-      if (word == 'and') return '&';
-      return word[0].toUpperCase() + word.substring(1).toLowerCase();
-    }).join(' ');
+    return specialty
+        .replaceAll('_', ' ')
+        .split(' ')
+        .map((word) {
+          if (word.isEmpty) return '';
+          if (word == 'and') return '&';
+          return word[0].toUpperCase() + word.substring(1).toLowerCase();
+        })
+        .join(' ');
   }
 }
-

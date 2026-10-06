@@ -4,11 +4,19 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'doctor_appointments_controller.dart';
 
-enum StatFilter { allTime, thisYear, thisMonth, thisWeek, today, customDay, customRange }
+enum StatFilter {
+  allTime,
+  thisYear,
+  thisMonth,
+  thisWeek,
+  today,
+  customDay,
+  customRange,
+}
 
 class DoctorStatisticsController extends GetxController {
   final Rx<StatFilter> selectedFilter = StatFilter.allTime.obs;
-  
+
   final Rx<DateTime?> customSelectedDate = Rx<DateTime?>(null);
   final Rx<DateTimeRange?> customSelectedDateRange = Rx<DateTimeRange?>(null);
 
@@ -16,7 +24,7 @@ class DoctorStatisticsController extends GetxController {
   final RxInt totalAppointments = 0.obs;
   final RxInt uniquePatients = 0.obs;
   final RxDouble averageEarnings = 0.0.obs;
-  
+
   // Status Breakdown
   final RxInt completedCount = 0.obs;
   final RxInt pendingCount = 0.obs;
@@ -47,11 +55,11 @@ class DoctorStatisticsController extends GetxController {
     double tempEarnings = 0.0;
     int tempAppts = 0;
     Set<String> patientIds = {};
-    
+
     int tempCompleted = 0;
     int tempPending = 0;
     int tempCancelled = 0;
-    
+
     Map<String, int> servicesCount = {};
 
     for (var doc in allDocs) {
@@ -70,7 +78,9 @@ class DoctorStatisticsController extends GetxController {
       }
 
       // Default to created at if schedule date is missing
-      if (appointmentDate == null && data['timeline'] != null && data['timeline']['createdAt'] != null) {
+      if (appointmentDate == null &&
+          data['timeline'] != null &&
+          data['timeline']['createdAt'] != null) {
         appointmentDate = (data['timeline']['createdAt'] as Timestamp).toDate();
       }
 
@@ -80,14 +90,21 @@ class DoctorStatisticsController extends GetxController {
       bool include = true;
       switch (selectedFilter.value) {
         case StatFilter.today:
-          include = appointmentDate.year == now.year && appointmentDate.month == now.month && appointmentDate.day == now.day;
+          include =
+              appointmentDate.year == now.year &&
+              appointmentDate.month == now.month &&
+              appointmentDate.day == now.day;
           break;
         case StatFilter.thisWeek:
           final weekAgo = now.subtract(const Duration(days: 7));
-          include = appointmentDate.isAfter(weekAgo) && appointmentDate.isBefore(now.add(const Duration(days: 1)));
+          include =
+              appointmentDate.isAfter(weekAgo) &&
+              appointmentDate.isBefore(now.add(const Duration(days: 1)));
           break;
         case StatFilter.thisMonth:
-          include = appointmentDate.year == now.year && appointmentDate.month == now.month;
+          include =
+              appointmentDate.year == now.year &&
+              appointmentDate.month == now.month;
           break;
         case StatFilter.thisYear:
           include = appointmentDate.year == now.year;
@@ -95,7 +112,10 @@ class DoctorStatisticsController extends GetxController {
         case StatFilter.customDay:
           if (customSelectedDate.value != null) {
             final custom = customSelectedDate.value!;
-            include = appointmentDate.year == custom.year && appointmentDate.month == custom.month && appointmentDate.day == custom.day;
+            include =
+                appointmentDate.year == custom.year &&
+                appointmentDate.month == custom.month &&
+                appointmentDate.day == custom.day;
           } else {
             include = false;
           }
@@ -104,8 +124,14 @@ class DoctorStatisticsController extends GetxController {
           if (customSelectedDateRange.value != null) {
             final start = customSelectedDateRange.value!.start;
             // add 1 day to end to include the entire end day
-            final end = customSelectedDateRange.value!.end.add(const Duration(days: 1));
-            include = appointmentDate.isAfter(start.subtract(const Duration(seconds: 1))) && appointmentDate.isBefore(end);
+            final end = customSelectedDateRange.value!.end.add(
+              const Duration(days: 1),
+            );
+            include =
+                appointmentDate.isAfter(
+                  start.subtract(const Duration(seconds: 1)),
+                ) &&
+                appointmentDate.isBefore(end);
           } else {
             include = false;
           }
@@ -120,31 +146,43 @@ class DoctorStatisticsController extends GetxController {
 
       // Aggregate Stats
       tempAppts++;
-      
-      final userId = (data['user'] as Map<String, dynamic>?)?['userId'] as String?;
+
+      final userId =
+          (data['user'] as Map<String, dynamic>?)?['userId'] as String?;
       if (userId != null && userId.isNotEmpty) patientIds.add(userId);
 
-      final status = (data['status'] as Map<String, dynamic>?)?['current'] as String? ?? 'pending';
-      if (status == 'completed') tempCompleted++;
-      else if (status == 'cancelled') tempCancelled++;
-      else tempPending++;
+      final status =
+          (data['status'] as Map<String, dynamic>?)?['current'] as String? ??
+          'pending';
+      if (status == 'completed')
+        tempCompleted++;
+      else if (status == 'cancelled')
+        tempCancelled++;
+      else
+        tempPending++;
 
       // Earnings
       if (status == 'completed') {
-        final paymentAmount = (data['payment'] as Map<String, dynamic>?)?['amount']?.toString() ?? '0';
+        final paymentAmount =
+            (data['payment'] as Map<String, dynamic>?)?['amount']?.toString() ??
+            '0';
         tempEarnings += double.tryParse(paymentAmount) ?? 0.0;
       }
 
       // Services
-      final serviceName = (data['service'] as Map<String, dynamic>?)?['nameEn'] as String? ?? 'General Consultation';
+      final serviceName =
+          (data['service'] as Map<String, dynamic>?)?['nameEn'] as String? ??
+          'General Consultation';
       servicesCount[serviceName] = (servicesCount[serviceName] ?? 0) + 1;
     }
 
     totalEarnings.value = tempEarnings;
     totalAppointments.value = tempAppts;
     uniquePatients.value = patientIds.length;
-    averageEarnings.value = tempCompleted > 0 ? (tempEarnings / tempCompleted) : 0.0;
-    
+    averageEarnings.value = tempCompleted > 0
+        ? (tempEarnings / tempCompleted)
+        : 0.0;
+
     completedCount.value = tempCompleted;
     pendingCount.value = tempPending;
     cancelledCount.value = tempCancelled;

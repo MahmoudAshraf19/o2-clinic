@@ -52,7 +52,10 @@ class DiscountCodeModel {
 
   bool get isInfiniteUse => usageLimit == -1;
 
-  factory DiscountCodeModel.fromMap(Map<String, dynamic> data, String documentId) {
+  factory DiscountCodeModel.fromMap(
+    Map<String, dynamic> data,
+    String documentId,
+  ) {
     return DiscountCodeModel(
       id: documentId,
       code: data['code'] ?? '',
@@ -75,7 +78,10 @@ class DiscountCodeModel {
   }
 
   factory DiscountCodeModel.fromSnapshot(DocumentSnapshot snapshot) {
-    return DiscountCodeModel.fromMap(snapshot.data() as Map<String, dynamic>, snapshot.id);
+    return DiscountCodeModel.fromMap(
+      snapshot.data() as Map<String, dynamic>,
+      snapshot.id,
+    );
   }
 
   static DateTime? _parseDate(dynamic dateData) {

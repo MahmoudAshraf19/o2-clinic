@@ -22,7 +22,7 @@ class ProfileDetailCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
           color: AppColors.primary.withOpacity(0.28),
@@ -62,7 +62,7 @@ class ProfileDetailCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.grey500,
+                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? AppColors.grey500,
                     letterSpacing: 1.0,
                     height: 1.0,
                   ),
@@ -75,7 +75,7 @@ class ProfileDetailCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.textPrimary,
                     height: 1.0,
                   ),
                 ),
@@ -87,7 +87,7 @@ class ProfileDetailCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 11.5,
-                      color: AppColors.grey500,
+                      color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? AppColors.grey500,
                       height: 1.0,
                     ),
                   ),
@@ -100,3 +100,4 @@ class ProfileDetailCard extends StatelessWidget {
     );
   }
 }
+

@@ -28,10 +28,10 @@ class ContactUsFirestoreService {
         .doc('ContactUs')
         .snapshots()
         .map((snapshot) {
-      if (snapshot.exists && snapshot.data() != null) {
-        return ContactUsModel.fromMap(snapshot.data()!);
-      }
-      return null;
-    });
+          if (snapshot.exists && snapshot.data() != null) {
+            return ContactUsModel.fromMap(snapshot.data()!);
+          }
+          return null;
+        });
   }
 }

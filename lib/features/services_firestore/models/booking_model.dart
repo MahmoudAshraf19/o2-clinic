@@ -144,20 +144,17 @@ class BookingReportModel {
   final String? image;
   final DateTime createdAt;
 
-  BookingReportModel({
-    required this.text,
-    this.image,
-    required this.createdAt,
-  });
+  BookingReportModel({required this.text, this.image, required this.createdAt});
 
   factory BookingReportModel.fromMap({required Map<String, dynamic> map}) {
     DateTime parseDate(dynamic dateVal) {
       if (dateVal == null) return DateTime.now();
       if (dateVal is Timestamp) return dateVal.toDate();
-      if (dateVal is String) return DateTime.tryParse(dateVal) ?? DateTime.now();
+      if (dateVal is String)
+        return DateTime.tryParse(dateVal) ?? DateTime.now();
       return DateTime.now();
     }
-    
+
     return BookingReportModel(
       text: map['text'] ?? '',
       image: map['image'],

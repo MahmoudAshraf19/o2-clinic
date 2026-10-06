@@ -19,12 +19,12 @@ import '../../features/services_firestore/models/specialized_service_model.dart'
 import '../../features/services/views/department_doctor_screen.dart';
 import '../../features/splash/bindings/splash_binding.dart';
 import '../../features/splash/views/splash_screen.dart';
-import '../../features/welcome/bindings/welcome_binding.dart';
-import '../../features/welcome/views/welcome_screen.dart';
+
 import '../../features/auth/bindings/doctor_login_binding.dart';
 import '../../features/auth/views/doctor_login_screen.dart';
 import '../../features/doctor_dashboard/bindings/doctor_navigation_binding.dart';
 import '../../features/doctor_dashboard/views/doctor_navigation_shell.dart';
+import '../../features/chat_support/screens/radiology_chat_screen.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -46,11 +46,7 @@ class AppPages {
       page: () => const OnboardingScreen(),
       binding: OnboardingBinding(),
     ),
-    GetPage(
-      name: AppRoutes.welcome,
-      page: () => const WelcomeScreen(),
-      binding: WelcomeBinding(),
-    ),
+
     GetPage(
       name: AppRoutes.login,
       page: () => const LoginScreen(),
@@ -123,6 +119,13 @@ class AppPages {
       name: AppRoutes.doctorNavigation,
       page: () => const DoctorNavigationShell(),
       binding: DoctorNavigationBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.radiologyChat,
+      page: () => RadiologyChatScreen(
+        bookingId: Get.arguments?['bookingId'] ?? '',
+        serviceName: Get.arguments?['serviceName'] ?? '',
+      ),
     ),
   ];
 }

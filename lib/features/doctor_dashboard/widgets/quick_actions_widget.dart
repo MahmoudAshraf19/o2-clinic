@@ -20,7 +20,9 @@ class QuickActionsWidget extends StatelessWidget {
         if (dateStr != null && dateStr.isNotEmpty) {
           try {
             final dt = DateTime.parse(dateStr);
-            if (dt.year == now.year && dt.month == now.month && dt.day == now.day) {
+            if (dt.year == now.year &&
+                dt.month == now.month &&
+                dt.day == now.day) {
               count++;
             }
           } catch (_) {}
@@ -42,7 +44,11 @@ class QuickActionsWidget extends StatelessWidget {
         children: [
           Text(
             l10n.quickActions,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
+            ),
           ),
           const SizedBox(height: 16),
           Column(
@@ -61,7 +67,10 @@ class QuickActionsWidget extends StatelessWidget {
                   height: 52,
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [AppColors.primary, Color(0xFF1E877B)], // Slight gradient for premium feel
+                      colors: [
+                        AppColors.primary,
+                        Color(0xFF1E877B),
+                      ], // Slight gradient for premium feel
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
@@ -73,16 +82,22 @@ class QuickActionsWidget extends StatelessWidget {
                       navCtrl.changeIndex(1); // Go to APPTS tab
                       final apptCtrl = Get.put(DoctorAppointmentsController());
                       apptCtrl.setSelectedTargetDate(DateTime.now());
-                      apptCtrl.targetStatus.value = 'upcoming'; 
+                      apptCtrl.targetStatus.value = 'upcoming';
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
                     child: Text(
                       title,
-                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 );
@@ -98,12 +113,20 @@ class QuickActionsWidget extends StatelessWidget {
                   },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
-                    side: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    side: BorderSide(
+                      color: AppColors.primary.withOpacity(0.5),
+                      width: 1.5,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                   child: Text(
                     l10n.statistics,
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -119,12 +142,20 @@ class QuickActionsWidget extends StatelessWidget {
                   },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
-                    side: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    side: BorderSide(
+                      color: AppColors.primary.withOpacity(0.5),
+                      width: 1.5,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                   child: Text(
                     l10n.messages,
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -140,12 +171,20 @@ class QuickActionsWidget extends StatelessWidget {
                   },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
-                    side: BorderSide(color: AppColors.primary.withOpacity(0.5), width: 1.5),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    side: BorderSide(
+                      color: AppColors.primary.withOpacity(0.5),
+                      width: 1.5,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                   child: Text(
                     l10n.reviewTitle ?? 'Doctor Reviews',
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

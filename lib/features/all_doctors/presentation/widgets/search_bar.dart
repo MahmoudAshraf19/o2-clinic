@@ -19,42 +19,35 @@ class SearchBarWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withOpacity(0.06),
-            blurRadius: 18,
-            offset: const Offset(0, 8),
-          ),
-        ],
       ),
       child: TextField(
         controller: controller,
         onChanged: onChanged,
         textInputAction: TextInputAction.search,
         cursorColor: AppColors.primary,
-        style: const TextStyle(fontFamily: AppFonts.inter, fontSize: 14),
+        style: TextStyle(fontFamily: AppFonts.inter, fontSize: 14),
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.searchDoctorSpecialty,
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
             fontFamily: AppFonts.inter,
-            color: AppColors.grey,
+            color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.grey,
             fontSize: 14,
           ),
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.search,
             size: 22,
-            color: AppColors.primary,
+            color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary,
           ),
           suffixIcon: Container(
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.10),
+              color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA).withOpacity(0.15) : AppColors.primary.withOpacity(0.10),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.tune, color: AppColors.primary, size: 20),
+            child: Icon(Icons.tune, color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary, size: 20),
           ),
           filled: true,
-          fillColor: AppColors.white,
+          fillColor: Theme.of(context).cardColor,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 16,

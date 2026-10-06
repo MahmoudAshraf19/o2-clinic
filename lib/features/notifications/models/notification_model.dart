@@ -30,12 +30,18 @@ class NotificationModel {
       id: id,
       userId: map['userId'] ?? '',
       type: map['type'] ?? '',
-      title: map['title'] is Map 
-          ? Map<String, String>.from(map['title']) 
-          : {'en': map['title']?.toString() ?? '', 'ar': map['title']?.toString() ?? ''},
-      body: map['body'] is Map 
-          ? Map<String, String>.from(map['body']) 
-          : {'en': map['body']?.toString() ?? '', 'ar': map['body']?.toString() ?? ''},
+      title: map['title'] is Map
+          ? Map<String, String>.from(map['title'])
+          : {
+              'en': map['title']?.toString() ?? '',
+              'ar': map['title']?.toString() ?? '',
+            },
+      body: map['body'] is Map
+          ? Map<String, String>.from(map['body'])
+          : {
+              'en': map['body']?.toString() ?? '',
+              'ar': map['body']?.toString() ?? '',
+            },
       data: Map<String, dynamic>.from(map['data'] ?? {}),
       priority: map['priority'] ?? 'normal',
       isRead: map['status']?['read'] ?? false,

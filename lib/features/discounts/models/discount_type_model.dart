@@ -28,7 +28,10 @@ class DiscountTypeModel {
     return description[langCode] ?? description['ar'] ?? '';
   }
 
-  factory DiscountTypeModel.fromMap(Map<String, dynamic> data, String documentId) {
+  factory DiscountTypeModel.fromMap(
+    Map<String, dynamic> data,
+    String documentId,
+  ) {
     return DiscountTypeModel(
       id: documentId,
       name: Map<String, String>.from(data['name'] ?? {}),
@@ -40,6 +43,9 @@ class DiscountTypeModel {
   }
 
   factory DiscountTypeModel.fromSnapshot(DocumentSnapshot snapshot) {
-    return DiscountTypeModel.fromMap(snapshot.data() as Map<String, dynamic>, snapshot.id);
+    return DiscountTypeModel.fromMap(
+      snapshot.data() as Map<String, dynamic>,
+      snapshot.id,
+    );
   }
 }

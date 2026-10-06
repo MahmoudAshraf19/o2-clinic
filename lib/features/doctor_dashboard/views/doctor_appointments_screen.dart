@@ -11,7 +11,8 @@ class DoctorAppointmentsScreen extends StatefulWidget {
   const DoctorAppointmentsScreen({super.key});
 
   @override
-  State<DoctorAppointmentsScreen> createState() => _DoctorAppointmentsScreenState();
+  State<DoctorAppointmentsScreen> createState() =>
+      _DoctorAppointmentsScreenState();
 }
 
 class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
@@ -19,7 +20,9 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
   late DateTime _displayedMonth;
   late ScrollController _scrollController;
   String _selectedStatus = 'pending';
-  final DoctorAppointmentsController _controller = Get.put(DoctorAppointmentsController());
+  final DoctorAppointmentsController _controller = Get.put(
+    DoctorAppointmentsController(),
+  );
   Worker? _targetDateWorker;
   Worker? _targetStatusWorker;
 
@@ -29,9 +32,10 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
     final now = DateTime.now();
     _selectedDate = null;
     _displayedMonth = DateTime(now.year, now.month, 1);
-    
+
     double initialOffset = 0.0;
-    if (now.year == _displayedMonth.year && now.month == _displayedMonth.month) {
+    if (now.year == _displayedMonth.year &&
+        now.month == _displayedMonth.month) {
       final index = now.day - 1;
       initialOffset = (index * 60.0) - (Get.width / 2) + 30 + 12;
       if (initialOffset < 0) initialOffset = 0;
@@ -39,13 +43,17 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
 
     _scrollController = ScrollController(initialScrollOffset: initialOffset);
 
-    _targetDateWorker = ever(_controller.selectedTargetDate, (DateTime? newDate) {
+    _targetDateWorker = ever(_controller.selectedTargetDate, (
+      DateTime? newDate,
+    ) {
       if (newDate != null && mounted) {
         setState(() {
           _selectedDate = newDate;
           _displayedMonth = DateTime(newDate.year, newDate.month, 1);
         });
-        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToSelectedDate());
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) => _scrollToSelectedDate(),
+        );
       }
     });
 
@@ -74,14 +82,18 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
 
   void _scrollToSelectedDate() {
     if (_scrollController.hasClients && _selectedDate != null) {
-      if (_selectedDate!.year == _displayedMonth.year && _selectedDate!.month == _displayedMonth.month) {
+      if (_selectedDate!.year == _displayedMonth.year &&
+          _selectedDate!.month == _displayedMonth.month) {
         final index = _selectedDate!.day - 1;
-        
+
         final screenWidth = MediaQuery.of(context).size.width;
         final double offset = (index * 60.0) - (screenWidth / 2) + 30 + 12;
-        
-        final targetOffset = offset.clamp(0.0, _scrollController.position.maxScrollExtent);
-        
+
+        final targetOffset = offset.clamp(
+          0.0,
+          _scrollController.position.maxScrollExtent,
+        );
+
         _scrollController.jumpTo(targetOffset);
       }
     }
@@ -97,9 +109,17 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
 
   void _nextMonth() {
     setState(() {
-      _displayedMonth = DateTime(_displayedMonth.year, _displayedMonth.month + 1, 1);
-      if (_selectedDate != null && _selectedDate!.year == _displayedMonth.year && _selectedDate!.month == _displayedMonth.month) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToSelectedDate());
+      _displayedMonth = DateTime(
+        _displayedMonth.year,
+        _displayedMonth.month + 1,
+        1,
+      );
+      if (_selectedDate != null &&
+          _selectedDate!.year == _displayedMonth.year &&
+          _selectedDate!.month == _displayedMonth.month) {
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) => _scrollToSelectedDate(),
+        );
       } else {
         _scrollController.jumpTo(0);
       }
@@ -108,9 +128,17 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
 
   void _previousMonth() {
     setState(() {
-      _displayedMonth = DateTime(_displayedMonth.year, _displayedMonth.month - 1, 1);
-      if (_selectedDate != null && _selectedDate!.year == _displayedMonth.year && _selectedDate!.month == _displayedMonth.month) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToSelectedDate());
+      _displayedMonth = DateTime(
+        _displayedMonth.year,
+        _displayedMonth.month - 1,
+        1,
+      );
+      if (_selectedDate != null &&
+          _selectedDate!.year == _displayedMonth.year &&
+          _selectedDate!.month == _displayedMonth.month) {
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) => _scrollToSelectedDate(),
+        );
       } else {
         _scrollController.jumpTo(0);
       }
@@ -128,10 +156,10 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Colors.transparent,
         title: Text(
           AppLocalizations.of(context)!.doctorAppointments,
@@ -148,9 +176,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
             const SizedBox(height: 16),
             _buildStatusFilter(),
             const SizedBox(height: 16),
-            Expanded(
-              child: _buildAppointmentsPlaceholder(),
-            ),
+            Expanded(child: _buildAppointmentsPlaceholder()),
           ],
         ),
       ),
@@ -177,8 +203,15 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  DateFormat('MMMM yyyy', Get.locale?.languageCode ?? 'en').format(_displayedMonth),
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                  DateFormat(
+                    'MMMM yyyy',
+                    Get.locale?.languageCode ?? 'en',
+                  ).format(_displayedMonth),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
                 Row(
                   children: [
@@ -187,7 +220,11 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                       borderRadius: BorderRadius.circular(20),
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.arrow_back_ios_new_rounded, size: 18, color: AppColors.primary),
+                        child: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: 18,
+                          color: AppColors.primary,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 8),
@@ -196,7 +233,11 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                       borderRadius: BorderRadius.circular(20),
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.arrow_forward_ios_rounded, size: 18, color: AppColors.primary),
+                        child: Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 18,
+                          color: AppColors.primary,
+                        ),
                       ),
                     ),
                   ],
@@ -215,7 +256,8 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
               itemCount: days.length,
               itemBuilder: (context, index) {
                 final date = days[index];
-                final isSelected = _selectedDate != null &&
+                final isSelected =
+                    _selectedDate != null &&
                     date.year == _selectedDate!.year &&
                     date.month == _selectedDate!.month &&
                     date.day == _selectedDate!.day;
@@ -235,14 +277,18 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                     width: 52,
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     decoration: BoxDecoration(
-                      color: isSelected ? AppColors.primary : Colors.transparent,
+                      color: isSelected
+                          ? AppColors.primary
+                          : Colors.transparent,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          DateFormat.E(Get.locale?.languageCode ?? 'en').format(date).substring(0, 3),
+                          DateFormat.E(
+                            Get.locale?.languageCode ?? 'en',
+                          ).format(date).substring(0, 3),
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
@@ -255,7 +301,9 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
-                            color: isSelected ? Colors.white : AppColors.textPrimary,
+                            color: isSelected
+                                ? Colors.white
+                                : AppColors.textPrimary,
                           ),
                         ),
                       ],
@@ -276,7 +324,10 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
       {'key': 'upcoming', 'label': AppLocalizations.of(context)!.upcoming},
       {'key': 'completed', 'label': AppLocalizations.of(context)!.completed},
       {'key': 'cancelled', 'label': AppLocalizations.of(context)!.cancelled},
-      {'key': 'under_investigation', 'label': AppLocalizations.of(context)!.underInvestigation},
+      {
+        'key': 'under_investigation',
+        'label': AppLocalizations.of(context)!.underInvestigation,
+      },
     ];
 
     return Container(
@@ -296,7 +347,10 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                 setState(() => _selectedStatus = status['key']!);
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 16,
+                ),
                 margin: const EdgeInsets.only(right: 4),
                 decoration: BoxDecoration(
                   color: isSelected ? AppColors.primary : Colors.transparent,
@@ -328,43 +382,46 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
       // Filter bookings
       final filteredBookings = _controller.bookings.where((doc) {
         final data = doc.data() as Map<String, dynamic>;
-        
+
         // Filter by Status
         final statusMap = data['status'] as Map<String, dynamic>? ?? {};
         final currentStatus = statusMap['current'] as String? ?? 'pending';
-        
+
         if (_selectedStatus == 'upcoming') {
-          if (currentStatus != 'upcoming' && currentStatus != 'confirmed') return false;
+          if (currentStatus != 'upcoming' && currentStatus != 'confirmed')
+            return false;
         } else {
           if (currentStatus != _selectedStatus) return false;
         }
 
-          if (_selectedDate != null) {
-            final schedule = data['schedule'] as Map<String, dynamic>? ?? {};
-            final dateStr = schedule['date'] as String?; // format: "2026-09-09"
-            if (dateStr != null && dateStr.isNotEmpty) {
+        if (_selectedDate != null) {
+          final schedule = data['schedule'] as Map<String, dynamic>? ?? {};
+          final dateStr = schedule['date'] as String?; // format: "2026-09-09"
+          if (dateStr != null && dateStr.isNotEmpty) {
+            try {
+              DateTime bookingDate;
               try {
-                DateTime bookingDate;
-                try {
-                  bookingDate = DateTime.parse(dateStr);
-                } catch (e) {
-                  bookingDate = DateFormat('dd MMM yyyy').parse(dateStr);
-                }
-                
-                if (bookingDate.year != _selectedDate!.year ||
-                    bookingDate.month != _selectedDate!.month ||
-                    bookingDate.day != _selectedDate!.day) {
-                  return false;
-                }
+                bookingDate = DateTime.parse(dateStr);
               } catch (e) {
+                bookingDate = DateFormat('dd MMM yyyy').parse(dateStr);
+              }
+
+              if (bookingDate.year != _selectedDate!.year ||
+                  bookingDate.month != _selectedDate!.month ||
+                  bookingDate.day != _selectedDate!.day) {
                 return false;
               }
-            } else {
-              return false; // No date string, hide it
+            } catch (e) {
+              return false;
             }
+          } else {
+            return false; // No date string, hide it
           }
-        
-        print("✅ Showing booking ${data['id']} with status $currentStatus for date $_selectedDate");
+        }
+
+        print(
+          "✅ Showing booking ${data['id']} with status $currentStatus for date $_selectedDate",
+        );
         return true;
       }).toList();
 
@@ -373,7 +430,11 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.calendar_month_outlined, size: 64, color: AppColors.grey.withValues(alpha: 0.3)),
+              Icon(
+                Icons.calendar_month_outlined,
+                size: 64,
+                color: AppColors.grey.withValues(alpha: 0.3),
+              ),
               const SizedBox(height: 16),
               Text(
                 AppLocalizations.of(context)!.noAppointmentsFound,
@@ -393,9 +454,12 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
         padding: const EdgeInsets.only(bottom: 24),
         itemBuilder: (context, index) {
           final doc = filteredBookings[index];
-          return DoctorAppointmentCard(bookingData: doc.data() as Map<String, dynamic>);
+          return DoctorAppointmentCard(
+            bookingData: doc.data() as Map<String, dynamic>,
+          );
         },
       );
     });
   }
 }
+

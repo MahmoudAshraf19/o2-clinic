@@ -4,10 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 
 class XRaySectionHeader extends StatelessWidget {
-  const XRaySectionHeader({
-    super.key,
-    required this.title,
-  });
+  const XRaySectionHeader({super.key, required this.title});
 
   final String title;
 

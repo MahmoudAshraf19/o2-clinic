@@ -48,7 +48,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       bottomNavigationBar: _bottomBar(context),
       body: SafeArea(
         child: Column(
@@ -62,25 +62,25 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _sectionTitle("Service Details"),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _serviceCard(),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18),
                     _sectionTitle("Appointment Schedule"),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _scheduleCard(),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18),
                     _sectionTitle("Clinic Location"),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _locationCard(),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18),
                     _sectionTitle("Payment Summary"),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _paymentCard(),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     _discountSection(),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18),
                     _sectionTitle("Patient Info"),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _patientCard(),
                   ],
                 ),
@@ -111,14 +111,14 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: AppColors.border),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back_ios_new_rounded,
                 size: 18,
                 color: AppColors.primary,
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -134,14 +134,13 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                   height: 1,
                 ),
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Text(
                 _t("Review Appointment Details"),
                 style: TextStyle(
                   fontSize: 13,
-                  color: AppColors.textSecondary.withValues(alpha: 0.75),
+                  color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7).withValues(alpha: 0.75),
                   fontWeight: FontWeight.w500,
-                  
                 ),
               ),
             ],
@@ -155,43 +154,77 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
     final lang = Get.locale?.languageCode ?? 'en';
     if (lang == 'ar') {
       switch (text) {
-        case "Confirmation": return "التأكيد";
-        case "Review Appointment Details": return "مراجعة تفاصيل الموعد";
-        case "Service Details": return "تفاصيل الخدمة";
-        case "Appointment Schedule": return "موعد الحجز";
-        case "Clinic Location": return "موقع العيادة";
-        case "Payment Summary": return "ملخص الدفع";
-        case "Patient Info": return "معلومات المريض";
-        case "Cosmetic Department": return "قسم التجميل";
-        case "Direct Services": return "خدمات مباشرة";
-        case "Total Payment": return "إجمالي الدفع";
-        case "Confirm Booking": return "تأكيد الحجز";
-        case "Booking Failed": return "فشل الحجز";
-        case "Error": return "خطأ";
-        case "Please log in first": return "يجب تسجيل الدخول";
-        case "O2 Clinic Headquarters": return "مقر o2 clinic";
-        case "Guest Patient": return "مريض زائر";
-        case "Unknown Email": return "بريد غير معروف";
+        case "Confirmation":
+          return "التأكيد";
+        case "Review Appointment Details":
+          return "مراجعة تفاصيل الموعد";
+        case "Service Details":
+          return "تفاصيل الخدمة";
+        case "Appointment Schedule":
+          return "موعد الحجز";
+        case "Clinic Location":
+          return "موقع العيادة";
+        case "Payment Summary":
+          return "ملخص الدفع";
+        case "Patient Info":
+          return "معلومات المريض";
+        case "Cosmetic Department":
+          return "قسم التجميل";
+        case "Direct Services":
+          return "خدمات مباشرة";
+        case "Total Payment":
+          return "إجمالي الدفع";
+        case "Confirm Booking":
+          return "تأكيد الحجز";
+        case "Booking Failed":
+          return "فشل الحجز";
+        case "Error":
+          return "خطأ";
+        case "Please log in first":
+          return "يجب تسجيل الدخول";
+        case "O2 Clinic Headquarters":
+          return "مقر o2 clinic";
+        case "Guest Patient":
+          return "مريض زائر";
+        case "Unknown Email":
+          return "بريد غير معروف";
       }
     } else if (lang == 'he') {
       switch (text) {
-        case "Confirmation": return "אישור";
-        case "Review Appointment Details": return "סקירת פרטי תור";
-        case "Service Details": return "פרטי שירות";
-        case "Appointment Schedule": return "מועד התור";
-        case "Clinic Location": return "מיקום המרפאה";
-        case "Payment Summary": return "סיכום תשלום";
-        case "Patient Info": return "פרטי מטופל";
-        case "Cosmetic Department": return "מחלקת קוסמטיקה";
-        case "Direct Services": return "שירותים ישירים";
-        case "Total Payment": return "תשלום כולל";
-        case "Confirm Booking": return "אישור הזמנה";
-        case "Booking Failed": return "הזמנה נכשלה";
-        case "Error": return "שגיאה";
-        case "Please log in first": return "נא להתחבר תחילה";
-        case "O2 Clinic Headquarters": return "מטה o2 clinic";
-        case "Guest Patient": return "מטופל אורח";
-        case "Unknown Email": return "דוא\"ל לא ידוע";
+        case "Confirmation":
+          return "אישור";
+        case "Review Appointment Details":
+          return "סקירת פרטי תור";
+        case "Service Details":
+          return "פרטי שירות";
+        case "Appointment Schedule":
+          return "מועד התור";
+        case "Clinic Location":
+          return "מיקום המרפאה";
+        case "Payment Summary":
+          return "סיכום תשלום";
+        case "Patient Info":
+          return "פרטי מטופל";
+        case "Cosmetic Department":
+          return "מחלקת קוסמטיקה";
+        case "Direct Services":
+          return "שירותים ישירים";
+        case "Total Payment":
+          return "תשלום כולל";
+        case "Confirm Booking":
+          return "אישור הזמנה";
+        case "Booking Failed":
+          return "הזמנה נכשלה";
+        case "Error":
+          return "שגיאה";
+        case "Please log in first":
+          return "נא להתחבר תחילה";
+        case "O2 Clinic Headquarters":
+          return "מטה o2 clinic";
+        case "Guest Patient":
+          return "מטופל אורח";
+        case "Unknown Email":
+          return "דוא\"ל לא ידוע";
       }
     }
     return text;
@@ -224,34 +257,30 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                 ? Icon(widget.model.getBadgeIcon(), color: Colors.white)
                 : null,
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.model.getName(langCode),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
-                  (widget.model.id == 'Sleep_study' || widget.model.id == 'pulmonary_function') 
-                      ? _t("Direct Services") 
+                  (widget.model.id == 'Sleep_study' ||
+                          widget.model.id == 'pulmonary_function')
+                      ? _t("Direct Services")
                       : _t("Cosmetic Department"),
-                  style: TextStyle(
-                    color: AppColors.grey,
-                    fontSize: 13,
-                    
-                  ),
+                  style: TextStyle(color: AppColors.grey, fontSize: 13),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.verified, color: AppColors.primary),
+          Icon(Icons.verified, color: AppColors.primary),
         ],
       ),
     );
@@ -266,18 +295,15 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
         children: [
           Row(
             children: [
-              const Icon(Icons.calendar_month, color: AppColors.primary),
-              const SizedBox(width: 8),
+              Icon(Icons.calendar_month, color: AppColors.primary),
+              SizedBox(width: 8),
               Text(
                 dateKey,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  
-                ),
+                style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
@@ -286,10 +312,9 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
             ),
             child: Text(
               widget.selectedTime,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w700,
-                
               ),
             ),
           ),
@@ -303,15 +328,12 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
     return _card(
       child: Row(
         children: [
-          const Icon(Icons.location_on, color: AppColors.primary),
-          const SizedBox(width: 10),
+          Icon(Icons.location_on, color: AppColors.primary),
+          SizedBox(width: 10),
           Expanded(
             child: Text(
               _t("O2 Clinic Headquarters"),
-              style: TextStyle(
-                color: AppColors.grey,
-                
-              ),
+              style: TextStyle(color: AppColors.grey),
             ),
           ),
         ],
@@ -326,7 +348,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.4)),
         boxShadow: [
@@ -338,15 +360,18 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
       ),
       child: Obx(() {
         final code = discountController.currentValidCode.value;
-        final type = discountController.discountTypes.firstWhereOrNull((t) => t.id == code?.discountTypeId);
-        
+        final type = discountController.discountTypes.firstWhereOrNull(
+          (t) => t.id == code?.discountTypeId,
+        );
+
         num finalAmount = originalAmount;
         num discountAmount = 0;
-        
+
         if (code != null && type != null) {
           if (type.calculationMethod == 'percentage') {
             discountAmount = (originalAmount * (code.value / 100));
-            if (code.maximumDiscountAmount != null && discountAmount > code.maximumDiscountAmount!) {
+            if (code.maximumDiscountAmount != null &&
+                discountAmount > code.maximumDiscountAmount!) {
               discountAmount = code.maximumDiscountAmount!;
             }
             finalAmount = originalAmount - discountAmount;
@@ -370,8 +395,8 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                     _t("Payment Summary"),
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      
-                      color: AppColors.textPrimary,
+
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                   ),
                   Text(
@@ -380,12 +405,11 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                       fontSize: 14,
                       decoration: TextDecoration.lineThrough,
                       color: AppColors.grey,
-                      
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -393,17 +417,13 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                     code.localizedTitle,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      
+
                       color: Colors.green,
                     ),
                   ),
                   Text(
                     "-$discountAmount ${AppConstants.currencySymbol}",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.green,
-                      
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.green),
                   ),
                 ],
               ),
@@ -416,18 +436,17 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                   _t("Total Payment"),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    
-                    color: AppColors.textPrimary,
+
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                     fontSize: 16,
                   ),
                 ),
                 Text(
                   "$finalAmount ${AppConstants.currencySymbol}",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
                     color: AppColors.primary,
-                    
                   ),
                 ),
               ],
@@ -451,21 +470,20 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           children: [
             Row(
               children: [
-                const Icon(Icons.check_circle, color: Colors.green, size: 20),
-                const SizedBox(width: 8),
+                Icon(Icons.check_circle, color: Colors.green, size: 20),
+                SizedBox(width: 8),
                 Text(
                   discountController.currentValidCode.value!.code,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
-                    
                   ),
                 ),
               ],
             ),
             TextButton(
               onPressed: () => discountController.removeDiscountCode(),
-              child: const Icon(Icons.close, color: Colors.red, size: 20),
+              child: Icon(Icons.close, color: Colors.red, size: 20),
             ),
           ],
         );
@@ -474,14 +492,18 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
         onTap: () => DiscountInputWidget.show(context),
         child: Row(
           children: [
-            const Icon(Icons.local_offer_outlined, color: AppColors.primary, size: 20),
-            const SizedBox(width: 8),
+            Icon(
+              Icons.local_offer_outlined,
+              color: AppColors.primary,
+              size: 20,
+            ),
+            SizedBox(width: 8),
             Text(
               askText,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w600,
-                
+
                 decoration: TextDecoration.underline,
               ),
             ),
@@ -493,7 +515,9 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
 
   Widget _patientCard() {
     return Obx(() {
-      final globalAuth = Get.isRegistered<GlobalAuthController>() ? Get.find<GlobalAuthController>() : null;
+      final globalAuth = Get.isRegistered<GlobalAuthController>()
+          ? Get.find<GlobalAuthController>()
+          : null;
       final userData = globalAuth?.currentUserData.value;
       final currentUser = FirebaseAuth.instance.currentUser;
 
@@ -501,7 +525,11 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
       String email = _t("Unknown Email");
 
       if (userData != null) {
-        userName = userData['name'] ?? userData['first_name'] ?? currentUser?.displayName ?? _t("Guest Patient");
+        userName =
+            userData['name'] ??
+            userData['first_name'] ??
+            currentUser?.displayName ??
+            _t("Guest Patient");
         final contactMap = userData['contact'] as Map<String, dynamic>?;
         final phoneMap = userData['phone'] as Map<String, dynamic>?;
         final phone = contactMap?['phone'] ?? phoneMap?['full_phone'];
@@ -518,25 +546,18 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
               backgroundColor: AppColors.surface,
               child: Icon(Icons.person, color: AppColors.primary),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     userName,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w700),
                   ),
                   Text(
                     email,
-                    style: const TextStyle(
-                      color: AppColors.grey,
-                      fontSize: 12,
-                      
-                    ),
+                    style: TextStyle(color: AppColors.grey, fontSize: 12),
                   ),
                 ],
               ),
@@ -552,7 +573,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.4)),
       ),
@@ -565,8 +586,10 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        border: Border(top: BorderSide(color: AppColors.border.withValues(alpha: 0.4))),
+        color: Theme.of(context).cardColor,
+        border: Border(
+          top: BorderSide(color: AppColors.border.withValues(alpha: 0.4)),
+        ),
       ),
       child: ElevatedButton(
         onPressed: _isBooking ? null : _confirmBooking,
@@ -578,11 +601,11 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           ),
         ),
         child: _isBooking
-            ? const SizedBox(
+            ? SizedBox(
                 width: 24,
                 height: 24,
                 child: CircularProgressIndicator(
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   strokeWidth: 2.5,
                 ),
               )
@@ -591,8 +614,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                  
+                  color: Theme.of(context).cardColor,
                 ),
               ),
       ),
@@ -613,17 +635,20 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
 
     try {
       final langCode = Get.locale?.languageCode ?? 'en';
-      
+
       Map<String, dynamic>? discountData;
       final code = discountController.currentValidCode.value;
-      final type = discountController.discountTypes.firstWhereOrNull((t) => t.id == code?.discountTypeId);
+      final type = discountController.discountTypes.firstWhereOrNull(
+        (t) => t.id == code?.discountTypeId,
+      );
       num finalAmount = widget.totalPrice;
       num discountAmount = 0;
-      
+
       if (code != null && type != null) {
         if (type.calculationMethod == 'percentage') {
           discountAmount = (widget.totalPrice * (code.value / 100));
-          if (code.maximumDiscountAmount != null && discountAmount > code.maximumDiscountAmount!) {
+          if (code.maximumDiscountAmount != null &&
+              discountAmount > code.maximumDiscountAmount!) {
             discountAmount = code.maximumDiscountAmount!;
           }
           finalAmount = widget.totalPrice - discountAmount;
@@ -635,7 +660,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           finalAmount = 0;
         }
         if (finalAmount < 0) finalAmount = 0;
-        
+
         discountData = {
           "code_id": code.id,
           "code": code.code,
@@ -644,8 +669,10 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           "original_amount": widget.totalPrice,
         };
       }
-      final isDirect = widget.model.id == 'Sleep_study' || widget.model.id == 'pulmonary_function';
-      
+      final isDirect =
+          widget.model.id == 'Sleep_study' ||
+          widget.model.id == 'pulmonary_function';
+
       BookingResult bookingRes;
       if (isDirect) {
         bookingRes = await BookingFirestoreService().createDirectBooking(
@@ -682,16 +709,22 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
       }
 
       if (bookingRes.success) {
-        if (Get.isRegistered<CosmeticAppointmentBookingController>(tag: widget.controllerTag)) {
-          Get.delete<CosmeticAppointmentBookingController>(tag: widget.controllerTag);
+        if (Get.isRegistered<CosmeticAppointmentBookingController>(
+          tag: widget.controllerTag,
+        )) {
+          Get.delete<CosmeticAppointmentBookingController>(
+            tag: widget.controllerTag,
+          );
         }
 
-        Get.off(() => CosmeticSuccessScreen(
-          model: widget.model,
-          selectedDate: widget.selectedDate,
-          selectedTime: widget.selectedTime,
-          bookingId: bookingRes.bookingId ?? 'Unknown',
-        ));
+        Get.off(
+          () => CosmeticSuccessScreen(
+            model: widget.model,
+            selectedDate: widget.selectedDate,
+            selectedTime: widget.selectedTime,
+            bookingId: bookingRes.bookingId ?? 'Unknown',
+          ),
+        );
       } else {
         Get.snackbar(
           _t('Booking Failed'),
@@ -714,3 +747,9 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
     }
   }
 }
+
+
+
+
+
+

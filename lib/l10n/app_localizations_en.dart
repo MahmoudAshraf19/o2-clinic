@@ -140,7 +140,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get name => 'Name';
 
   @override
-  String get phone => 'Phone';
+  String get phone => 'Phone Number';
 
   @override
   String get location => 'Location';
@@ -1112,4 +1112,122 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inO2Clinic => 'In O2 Clinic';
+
+  @override
+  String get radiologyPricingInquiryPrompt =>
+      'Please attach the radiology image for management to review and determine the price';
+
+  @override
+  String get radiologyChatWelcome =>
+      'Welcome. Please attach the radiology scan or details to determine the price';
+
+  @override
+  String get requiresYourAction => 'Requires Your Action';
+
+  @override
+  String get requiresActionFilter => 'Requires Action';
+
+  @override
+  String get continueBookingOrChat => 'Continue Booking / Chat';
+
+  @override
+  String get betterHealth => 'Better Health';
+
+  @override
+  String get brighterTomorrow => 'Brighter Tomorrow';
+
+  @override
+  String get getStarted => 'Get Started';
+
+  @override
+  String get onboarding1Title => 'Easy Access\nto Healthcare';
+
+  @override
+  String get onboarding1Desc =>
+      'Quality medical services\nwhenever you need them.';
+
+  @override
+  String get onboarding2TitlePart1 => 'Experienced Doctors\n';
+
+  @override
+  String get onboarding2TitlePart2 => '& Trusted Care';
+
+  @override
+  String get onboarding2Desc =>
+      'Our team is here to provide\nyou with the best care.';
+
+  @override
+  String get onboarding3TitlePart1 => 'Book Appointments\n';
+
+  @override
+  String get onboarding3TitlePart2 => 'with Ease';
+
+  @override
+  String get onboarding3Desc => 'Quick booking, smooth visits,\nfull support.';
+
+  @override
+  String get emailOrPhone => 'Email or Phone Number';
+
+  @override
+  String get emailHint => 'your@email.com';
+
+  @override
+  String get passwordHint => 'Enter your password';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get or => 'or';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
+  String get continueWithApple => 'Continue with Apple';
+
+  @override
+  String get signUp => 'Sign Up';
+
+  @override
+  String get editAccount => 'Edit Account';
+
+  @override
+  String get editYourAccount => 'Edit Your Account';
+
+  @override
+  String get createYourAccount => 'Create Your Account';
+
+  @override
+  String get updateProfileSafely => 'Update your profile details safely.';
+
+  @override
+  String get joinUsJourney => 'Join us and start your journey 👋';
+
+  @override
+  String get fullName => 'Full Name';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get bio => 'Bio (Optional)';
+
+  @override
+  String get male => 'Male';
+
+  @override
+  String get female => 'Female';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get createAccountBtn => 'Create Account';
+
+  @override
+  String get passwordsMatch => 'Passwords match perfectly 🎉';
+
+  @override
+  String get passwordsNotMatch => 'Passwords do not match';
 }

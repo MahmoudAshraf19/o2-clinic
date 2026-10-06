@@ -24,14 +24,16 @@ class RadiologyServicesController extends GetxController {
       _error.value = '';
       _loading.value = true;
 
-      final data = await RadiologyCategoryService.instance.fetchRadiologyCategories(
-        forceRefresh: forceRefresh,
-      );
+      final data = await RadiologyCategoryService.instance
+          .fetchRadiologyCategories(forceRefresh: forceRefresh);
 
       _services.assignAll(data);
     } catch (e, st) {
-      debugPrint("❌ [RadiologyServicesController] Error fetching services: $e\n$st");
-      _error.value = "Failed to load radiology services. Please try again later.";
+      debugPrint(
+        "❌ [RadiologyServicesController] Error fetching services: $e\n$st",
+      );
+      _error.value =
+          "Failed to load radiology services. Please try again later.";
     } finally {
       _loading.value = false;
     }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,7 +16,10 @@ class SplashLogo extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.10),
             shape: BoxShape.circle,
-            border: Border.all(color: Colors.white.withValues(alpha: 0.20), width: 1),
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.20),
+              width: 1,
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.10),
@@ -74,4 +76,3 @@ class SplashLogo extends StatelessWidget {
     );
   }
 }
-

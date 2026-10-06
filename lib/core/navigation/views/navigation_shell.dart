@@ -20,7 +20,7 @@ class NavigationShell extends StatelessWidget {
 
     return Obx(() {
       return Scaffold(
-        backgroundColor: AppColors.homeBackground,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar:
             (controller.currentIndex.value == 1 ||
                 controller.currentIndex.value == 2 ||
@@ -65,3 +65,4 @@ class _PlaceholderPage extends StatelessWidget {
     );
   }
 }
+

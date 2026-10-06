@@ -355,7 +355,7 @@ abstract class AppLocalizations {
   /// No description provided for @phone.
   ///
   /// In en, this message translates to:
-  /// **'Phone'**
+  /// **'Phone Number'**
   String get phone;
 
   /// No description provided for @location.
@@ -2205,6 +2205,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'In O2 Clinic'**
   String get inO2Clinic;
+
+  /// No description provided for @radiologyPricingInquiryPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Please attach the radiology image for management to review and determine the price'**
+  String get radiologyPricingInquiryPrompt;
+
+  /// No description provided for @radiologyChatWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome. Please attach the radiology scan or details to determine the price'**
+  String get radiologyChatWelcome;
+
+  /// No description provided for @requiresYourAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Requires Your Action'**
+  String get requiresYourAction;
+
+  /// No description provided for @requiresActionFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Requires Action'**
+  String get requiresActionFilter;
+
+  /// No description provided for @continueBookingOrChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Booking / Chat'**
+  String get continueBookingOrChat;
+
+  /// No description provided for @betterHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Better Health'**
+  String get betterHealth;
+
+  /// No description provided for @brighterTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Brighter Tomorrow'**
+  String get brighterTomorrow;
+
+  /// No description provided for @getStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get getStarted;
+
+  /// No description provided for @onboarding1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy Access\nto Healthcare'**
+  String get onboarding1Title;
+
+  /// No description provided for @onboarding1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Quality medical services\nwhenever you need them.'**
+  String get onboarding1Desc;
+
+  /// No description provided for @onboarding2TitlePart1.
+  ///
+  /// In en, this message translates to:
+  /// **'Experienced Doctors\n'**
+  String get onboarding2TitlePart1;
+
+  /// No description provided for @onboarding2TitlePart2.
+  ///
+  /// In en, this message translates to:
+  /// **'& Trusted Care'**
+  String get onboarding2TitlePart2;
+
+  /// No description provided for @onboarding2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Our team is here to provide\nyou with the best care.'**
+  String get onboarding2Desc;
+
+  /// No description provided for @onboarding3TitlePart1.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Appointments\n'**
+  String get onboarding3TitlePart1;
+
+  /// No description provided for @onboarding3TitlePart2.
+  ///
+  /// In en, this message translates to:
+  /// **'with Ease'**
+  String get onboarding3TitlePart2;
+
+  /// No description provided for @onboarding3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick booking, smooth visits,\nfull support.'**
+  String get onboarding3Desc;
+
+  /// No description provided for @emailOrPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Email or Phone Number'**
+  String get emailOrPhone;
+
+  /// No description provided for @emailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'your@email.com'**
+  String get emailHint;
+
+  /// No description provided for @passwordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get passwordHint;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @or.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get or;
+
+  /// No description provided for @continueWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get continueWithGoogle;
+
+  /// No description provided for @continueWithApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get continueWithApple;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// No description provided for @editAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Account'**
+  String get editAccount;
+
+  /// No description provided for @editYourAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Your Account'**
+  String get editYourAccount;
+
+  /// No description provided for @createYourAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Your Account'**
+  String get createYourAccount;
+
+  /// No description provided for @updateProfileSafely.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your profile details safely.'**
+  String get updateProfileSafely;
+
+  /// No description provided for @joinUsJourney.
+  ///
+  /// In en, this message translates to:
+  /// **'Join us and start your journey 👋'**
+  String get joinUsJourney;
+
+  /// No description provided for @fullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get fullName;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @bio.
+  ///
+  /// In en, this message translates to:
+  /// **'Bio (Optional)'**
+  String get bio;
+
+  /// No description provided for @male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get male;
+
+  /// No description provided for @female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get female;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// No description provided for @createAccountBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccountBtn;
+
+  /// No description provided for @passwordsMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords match perfectly 🎉'**
+  String get passwordsMatch;
+
+  /// No description provided for @passwordsNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsNotMatch;
 }
 
 class _AppLocalizationsDelegate

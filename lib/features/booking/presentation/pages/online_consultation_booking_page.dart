@@ -19,10 +19,12 @@ class OnlineConsultationBookingPage extends StatefulWidget {
   const OnlineConsultationBookingPage({super.key, required this.doctor});
 
   @override
-  State<OnlineConsultationBookingPage> createState() => _OnlineConsultationBookingPageState();
+  State<OnlineConsultationBookingPage> createState() =>
+      _OnlineConsultationBookingPageState();
 }
 
-class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookingPage> {
+class _OnlineConsultationBookingPageState
+    extends State<OnlineConsultationBookingPage> {
   DateTime? selectedDate;
   String? selectedTime;
   List<DateTime> availableDates = [];
@@ -36,8 +38,10 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
   void _calculateAvailableDates() {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    
-    final allowedDays = widget.doctor.availabilityDayOnline.keys.map((d) => d.toLowerCase()).toList();
+
+    final allowedDays = widget.doctor.availabilityDayOnline.keys
+        .map((d) => d.toLowerCase())
+        .toList();
 
     for (int i = 0; i < 30; i++) {
       final date = today.add(Duration(days: i));
@@ -51,64 +55,77 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
   List<String> _getAvailableTimeSlots(DateTime date) {
     final dayName = DateFormat('EEEE').format(date).toLowerCase();
     final daySchedules = widget.doctor.availabilityDayOnline[dayName];
-    
+
     if (daySchedules == null || daySchedules.isEmpty) return [];
 
     List<String> slots = [];
-    
+
     for (var daySchedule in daySchedules) {
       final fromStr = daySchedule['from'];
       final toStr = daySchedule['to'];
-      
+
       if (fromStr == null || toStr == null) continue;
-      
+
       int? from = int.tryParse(fromStr);
       int? to = int.tryParse(toStr);
-      
+
       if (from == null || to == null) continue;
-      if (to <= from) continue; 
+      if (to <= from) continue;
 
       for (int i = from; i < to; i++) {
         final now = DateTime.now();
         final endHour24 = i + 1;
-        
+
         // Filter out past slots if the selected date is today
-        if (date.year == now.year && date.month == now.month && date.day == now.day) {
+        if (date.year == now.year &&
+            date.month == now.month &&
+            date.day == now.day) {
           // Skip if the slot has already ended (end time is in the past)
           // If current time is 16:25 (4:25 PM), endHour for 3-4 is 16. 16 <= 16 (true), and 25 > 0, so it skips.
           // For 4-5, endHour is 17. 17 <= 16 is false, so it shows.
-          if (endHour24 < now.hour || (endHour24 == now.hour && now.minute > 0)) {
+          if (endHour24 < now.hour ||
+              (endHour24 == now.hour && now.minute > 0)) {
             continue;
           }
         }
 
         final startHour = i > 12 ? i - 12 : (i == 0 ? 12 : i);
-        final endHour = endHour24 > 12 ? endHour24 - 12 : (endHour24 == 0 ? 12 : endHour24);
-        
+        final endHour = endHour24 > 12
+            ? endHour24 - 12
+            : (endHour24 == 0 ? 12 : endHour24);
+
         final startAmPm = i >= 12 ? 'PM' : 'AM';
         final endAmPm = endHour24 >= 12 && endHour24 < 24 ? 'PM' : 'AM';
-        
+
         slots.add("$startHour:00 $startAmPm - $endHour:00 $endAmPm");
       }
     }
-    
+
     return slots;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.primary, size: 20),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.primary,
+            size: 20,
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text(
           AppLocalizations.of(context)!.onlineConsultation,
-          style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 18),
+          style: const TextStyle(
+            color: AppColors.primary,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
         ),
         centerTitle: true,
       ),
@@ -142,17 +159,21 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
   Widget _buildDoctorCard() {
     final lang = Get.locale?.languageCode ?? 'en';
     String doctorName = widget.doctor.nameEn;
-    if (lang == 'ar' && widget.doctor.nameAr.isNotEmpty) doctorName = widget.doctor.nameAr;
-    if (lang == 'he' && widget.doctor.nameHe.isNotEmpty) doctorName = widget.doctor.nameHe;
+    if (lang == 'ar' && widget.doctor.nameAr.isNotEmpty)
+      doctorName = widget.doctor.nameAr;
+    if (lang == 'he' && widget.doctor.nameHe.isNotEmpty)
+      doctorName = widget.doctor.nameHe;
 
     String doctorTitle = widget.doctor.titleEn;
-    if (lang == 'ar' && widget.doctor.titleAr.isNotEmpty) doctorTitle = widget.doctor.titleAr;
-    if (lang == 'he' && widget.doctor.titleHe.isNotEmpty) doctorTitle = widget.doctor.titleHe;
+    if (lang == 'ar' && widget.doctor.titleAr.isNotEmpty)
+      doctorTitle = widget.doctor.titleAr;
+    if (lang == 'he' && widget.doctor.titleHe.isNotEmpty)
+      doctorTitle = widget.doctor.titleHe;
 
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppColors.border),
         boxShadow: [
@@ -173,7 +194,12 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
                     height: 56,
                     fit: BoxFit.cover,
                   )
-                : Image.asset('assets/images/common/Doctor_avatar.jpg', width: 56, height: 56, fit: BoxFit.cover),
+                : Image.asset(
+                    'assets/images/common/Doctor_avatar.jpg',
+                    width: 56,
+                    height: 56,
+                    fit: BoxFit.cover,
+                  ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -182,7 +208,11 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
               children: [
                 Text(
                   doctorName,
-                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16, color: AppColors.textPrimary),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 16,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -207,12 +237,20 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
       ),
       child: Row(
         children: [
-          const Icon(Icons.warning_amber_rounded, color: Colors.amber, size: 28),
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: Colors.amber,
+            size: 28,
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
               AppLocalizations.of(context)!.mustContactDoctorWarning,
-              style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 13),
+              style: const TextStyle(
+                color: Colors.amber,
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
             ),
           ),
         ],
@@ -258,17 +296,24 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
                     margin: const EdgeInsets.only(right: 10),
                     width: 72,
                     decoration: BoxDecoration(
-                      color: isSelected ? AppColors.primary : AppColors.cardBackground,
+                      color: isSelected
+                          ? AppColors.primary
+                          : AppColors.cardBackground,
                       borderRadius: BorderRadius.circular(18),
                       border: Border.all(
-                        color: isSelected ? AppColors.primary : AppColors.border,
+                        color: isSelected
+                            ? AppColors.primary
+                            : AppColors.border,
                       ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          DateFormat('E', Get.locale?.languageCode ?? 'en').format(date).toUpperCase(),
+                          DateFormat(
+                            'E',
+                            Get.locale?.languageCode ?? 'en',
+                          ).format(date).toUpperCase(),
                           style: TextStyle(
                             fontSize: 11,
                             letterSpacing: 1.5,
@@ -281,7 +326,9 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w800,
-                            color: isSelected ? Colors.white : AppColors.textPrimary,
+                            color: isSelected
+                                ? Colors.white
+                                : AppColors.textPrimary,
                           ),
                         ),
                       ],
@@ -327,7 +374,10 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
                 });
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 decoration: BoxDecoration(
                   color: isSelected ? AppColors.primary : Colors.transparent,
                   borderRadius: BorderRadius.circular(12),
@@ -352,15 +402,23 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: ElevatedButton(
-        onPressed: (selectedDate != null && selectedTime != null) ? _processBooking : null,
+        onPressed: (selectedDate != null && selectedTime != null)
+            ? _processBooking
+            : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
           minimumSize: const Size(double.infinity, 55),
         ),
         child: Text(
           AppLocalizations.of(context)!.bookAppointment,
-          style: const TextStyle(fontWeight: FontWeight.w800, color: Colors.white, fontSize: 16),
+          style: const TextStyle(
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+            fontSize: 16,
+          ),
         ),
       ),
     );
@@ -378,7 +436,7 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
     if (!Get.isRegistered<AppointmentBookingController>(tag: tag)) {
       Get.put(AppointmentBookingController(widget.doctor), tag: tag);
     }
-    
+
     Get.to(
       () => ConfirmBookingScreen(
         doctor: widget.doctor,
@@ -392,3 +450,5 @@ class _OnlineConsultationBookingPageState extends State<OnlineConsultationBookin
     );
   }
 }
+
+

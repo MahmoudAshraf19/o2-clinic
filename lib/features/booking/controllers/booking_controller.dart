@@ -77,8 +77,12 @@ class BookingController extends GetxController {
       Map<String, dynamic> formattedAvailMap = {};
       try {
         // As requested by the user, both use Sleep_study_services document
-        final doc = await FirebaseFirestore.instance.collection('service_day').doc('Sleep_study_services').get();
-        final availMap = doc.data()?['availability_day'] as Map<String, dynamic>? ?? {};
+        final doc = await FirebaseFirestore.instance
+            .collection('service_day')
+            .doc('Sleep_study_services')
+            .get();
+        final availMap =
+            doc.data()?['availability_day'] as Map<String, dynamic>? ?? {};
 
         availMap.forEach((day, value) {
           if (value is Map) {
@@ -138,7 +142,8 @@ class BookingController extends GetxController {
       return 'radiology';
     } else if (title.contains('cosmetic') || category.contains('aesthetics')) {
       return 'cosmetic';
-    } else if (service.id == 'Sleep_study' || service.id == 'pulmonary_function') {
+    } else if (service.id == 'Sleep_study' ||
+        service.id == 'pulmonary_function') {
       return 'direct';
     } else {
       return 'specialized';

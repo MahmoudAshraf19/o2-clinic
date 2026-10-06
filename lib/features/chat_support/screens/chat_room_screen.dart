@@ -18,11 +18,11 @@ class ChatRoomScreen extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Colors.transparent,
         titleSpacing: 0,
         title: Row(
@@ -47,7 +47,9 @@ class ChatRoomScreen extends StatelessWidget {
                   final online = controller.isAuthenticated;
 
                   return Text(
-                    online ? AppLocalizations.of(context)!.onlineSupport : AppLocalizations.of(context)!.loginRequired,
+                    online
+                        ? AppLocalizations.of(context)!.onlineSupport
+                        : AppLocalizations.of(context)!.loginRequired,
                     style: TextStyle(
                       color: Colors.grey.shade600,
                       fontSize: 11,
@@ -90,13 +92,17 @@ class ChatRoomScreen extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
                   reverse: true,
-                  itemCount: controller.messages.length + 1 + controller.uploadingItems.length,
+                  itemCount:
+                      controller.messages.length +
+                      1 +
+                      controller.uploadingItems.length,
                   itemBuilder: (_, index) {
                     final uploadingCount = controller.uploadingItems.length;
                     final messagesCount = controller.messages.length;
 
                     if (index < uploadingCount) {
-                      final message = controller.uploadingItems[uploadingCount - 1 - index];
+                      final message =
+                          controller.uploadingItems[uploadingCount - 1 - index];
                       return Padding(
                         padding: const EdgeInsets.only(top: 14),
                         child: Opacity(
@@ -125,7 +131,8 @@ class ChatRoomScreen extends StatelessWidget {
 
                     final msgIndex = index - uploadingCount;
                     if (msgIndex < messagesCount) {
-                      final message = controller.messages[messagesCount - 1 - msgIndex];
+                      final message =
+                          controller.messages[messagesCount - 1 - msgIndex];
                       return Padding(
                         padding: const EdgeInsets.only(top: 14),
                         child: ChatMessageBubble(message: message),
@@ -134,7 +141,9 @@ class ChatRoomScreen extends StatelessWidget {
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 18, top: 18),
-                      child: ChatDateDivider(label: AppLocalizations.of(context)!.today),
+                      child: ChatDateDivider(
+                        label: AppLocalizations.of(context)!.today,
+                      ),
                     );
                   },
                 );
@@ -153,3 +162,4 @@ class ChatRoomScreen extends StatelessWidget {
     );
   }
 }
+

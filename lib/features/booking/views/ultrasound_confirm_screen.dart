@@ -27,7 +27,8 @@ class UltrasoundConfirmScreen extends StatefulWidget {
   });
 
   @override
-  State<UltrasoundConfirmScreen> createState() => _UltrasoundConfirmScreenState();
+  State<UltrasoundConfirmScreen> createState() =>
+      _UltrasoundConfirmScreenState();
 }
 
 class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
@@ -45,7 +46,7 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
     final lang = Get.locale?.languageCode ?? 'en';
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       bottomNavigationBar: _bottomBar(context),
       body: SafeArea(
         child: Column(
@@ -61,7 +62,9 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
                     const SizedBox(height: 10),
                     _imagingCard(lang),
                     const SizedBox(height: 18),
-                    _sectionTitle(AppLocalizations.of(context)!.appointmentSchedule),
+                    _sectionTitle(
+                      AppLocalizations.of(context)!.appointmentSchedule,
+                    ),
                     const SizedBox(height: 10),
                     _scheduleCard(lang),
                     const SizedBox(height: 18),
@@ -218,24 +221,25 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.border.withOpacity(0.4)),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 10,
-          ),
+          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10),
         ],
       ),
       child: Obx(() {
-        final currency = Get.find<AppConstantsController>().currencySymbol.value;
+        final currency =
+            Get.find<AppConstantsController>().currencySymbol.value;
         final code = discountController.currentValidCode.value;
-        final type = discountController.discountTypes.firstWhereOrNull((t) => t.id == code?.discountTypeId);
-        
+        final type = discountController.discountTypes.firstWhereOrNull(
+          (t) => t.id == code?.discountTypeId,
+        );
+
         num finalAmount = originalAmount;
         num discountAmount = 0;
-        
+
         if (code != null && type != null) {
           if (type.calculationMethod == 'percentage') {
             discountAmount = (originalAmount * (code.value / 100));
-            if (code.maximumDiscountAmount != null && discountAmount > code.maximumDiscountAmount!) {
+            if (code.maximumDiscountAmount != null &&
+                discountAmount > code.maximumDiscountAmount!) {
               discountAmount = code.maximumDiscountAmount!;
             }
             finalAmount = originalAmount - discountAmount;
@@ -259,7 +263,7 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
                     AppLocalizations.of(context)!.paymentSummary,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      
+
                       color: AppColors.textPrimary,
                     ),
                   ),
@@ -269,7 +273,6 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
                       fontSize: 14,
                       decoration: TextDecoration.lineThrough,
                       color: AppColors.grey,
-                      
                     ),
                   ),
                 ],
@@ -282,17 +285,13 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
                     code.localizedTitle,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      
+
                       color: Colors.green,
                     ),
                   ),
                   Text(
                     "-$discountAmount $currency",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.green,
-                      
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.green),
                   ),
                 ],
               ),
@@ -305,7 +304,7 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
                   AppLocalizations.of(context)!.totalPayment,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    
+
                     color: AppColors.textPrimary,
                     fontSize: 16,
                   ),
@@ -316,7 +315,6 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
                     color: AppColors.primary,
-                    
                   ),
                 ),
               ],
@@ -347,7 +345,6 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
                   style: const TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
-                    
                   ),
                 ),
               ],
@@ -363,14 +360,18 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
         onTap: () => DiscountInputWidget.show(context),
         child: Row(
           children: [
-            const Icon(Icons.local_offer_outlined, color: AppColors.primary, size: 20),
+            const Icon(
+              Icons.local_offer_outlined,
+              color: AppColors.primary,
+              size: 20,
+            ),
             const SizedBox(width: 8),
             Text(
               askText,
               style: const TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w600,
-                
+
                 decoration: TextDecoration.underline,
               ),
             ),
@@ -386,10 +387,7 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(
-            blurRadius: 20,
-            color: Colors.black.withOpacity(0.05),
-          ),
+          BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(0.05)),
         ],
       ),
       child: SafeArea(
@@ -402,91 +400,107 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
                 borderRadius: BorderRadius.circular(14),
               ),
             ),
-            onPressed: _isBooking ? null : () async {
-              setState(() => _isBooking = true);
-              try {
-                Map<String, dynamic>? discountData;
-                final code = discountController.currentValidCode.value;
-                final type = discountController.discountTypes.firstWhereOrNull((t) => t.id == code?.discountTypeId);
-                num finalAmount = widget.model.price;
-                num discountAmount = 0;
-                
-                if (code != null && type != null) {
-                  if (type.calculationMethod == 'percentage') {
-                    discountAmount = (widget.model.price * (code.value / 100));
-                    if (code.maximumDiscountAmount != null && discountAmount > code.maximumDiscountAmount!) {
-                      discountAmount = code.maximumDiscountAmount!;
+            onPressed: _isBooking
+                ? null
+                : () async {
+                    setState(() => _isBooking = true);
+                    try {
+                      Map<String, dynamic>? discountData;
+                      final code = discountController.currentValidCode.value;
+                      final type = discountController.discountTypes
+                          .firstWhereOrNull(
+                            (t) => t.id == code?.discountTypeId,
+                          );
+                      num finalAmount = widget.model.price;
+                      num discountAmount = 0;
+
+                      if (code != null && type != null) {
+                        if (type.calculationMethod == 'percentage') {
+                          discountAmount =
+                              (widget.model.price * (code.value / 100));
+                          if (code.maximumDiscountAmount != null &&
+                              discountAmount > code.maximumDiscountAmount!) {
+                            discountAmount = code.maximumDiscountAmount!;
+                          }
+                          finalAmount = widget.model.price - discountAmount;
+                        } else if (type.calculationMethod == 'fixed') {
+                          discountAmount = code.value;
+                          finalAmount = widget.model.price - discountAmount;
+                        } else if (type.calculationMethod == 'free') {
+                          discountAmount = widget.model.price;
+                          finalAmount = 0;
+                        }
+                        if (finalAmount < 0) finalAmount = 0;
+
+                        discountData = {
+                          "code_id": code.id,
+                          "code": code.code,
+                          "type": type.calculationMethod,
+                          "discount_value": discountAmount,
+                          "original_amount": widget.model.price,
+                        };
+                      }
+
+                      final currentUser = FirebaseAuth.instance.currentUser;
+                      final bookingRes = await BookingFirestoreService()
+                          .createImagingBooking(
+                            user: BookingUserInfo(
+                              userId: currentUser?.uid ?? 'guest',
+                              name: currentUser?.displayName ?? 'Guest Patient',
+                              countryCode: '',
+                              number: currentUser?.phoneNumber ?? '',
+                            ),
+                            categoryId: widget.model.title,
+                            subcategoryId: '',
+                            nameEn: widget.model.title,
+                            nameAr: widget.model.title,
+                            selectedDate: widget.date,
+                            selectedTime: widget.time,
+                            amount: finalAmount,
+                            discountData: discountData,
+                          );
+
+                      if (bookingRes.success) {
+                        Get.offAll(
+                          () => UltrasoundSuccessScreen(
+                            model: widget.model,
+                            date: widget.date,
+                            time: widget.time,
+                            bookingId:
+                                bookingRes.bookingId ??
+                                "ULS_${DateTime.now().millisecondsSinceEpoch % 10000}",
+                          ),
+                        );
+                      } else {
+                        Get.snackbar(
+                          AppLocalizations.of(context)!.error,
+                          bookingRes.message,
+                          snackPosition: SnackPosition.TOP,
+                        );
+                      }
+                    } catch (e) {
+                      Get.snackbar(
+                        AppLocalizations.of(context)!.error,
+                        'Booking failed: $e',
+                        snackPosition: SnackPosition.TOP,
+                      );
+                    } finally {
+                      if (mounted) setState(() => _isBooking = false);
                     }
-                    finalAmount = widget.model.price - discountAmount;
-                  } else if (type.calculationMethod == 'fixed') {
-                    discountAmount = code.value;
-                    finalAmount = widget.model.price - discountAmount;
-                  } else if (type.calculationMethod == 'free') {
-                    discountAmount = widget.model.price;
-                    finalAmount = 0;
-                  }
-                  if (finalAmount < 0) finalAmount = 0;
-                  
-                  discountData = {
-                    "code_id": code.id,
-                    "code": code.code,
-                    "type": type.calculationMethod,
-                    "discount_value": discountAmount,
-                    "original_amount": widget.model.price,
-                  };
-                }
-
-                final currentUser = FirebaseAuth.instance.currentUser;
-                final bookingRes = await BookingFirestoreService().createImagingBooking(
-                  user: BookingUserInfo(
-                    userId: currentUser?.uid ?? 'guest',
-                    name: currentUser?.displayName ?? 'Guest Patient',
-                    countryCode: '',
-                    number: currentUser?.phoneNumber ?? '',
-                  ),
-                  categoryId: widget.model.title,
-                  subcategoryId: '',
-                  nameEn: widget.model.title,
-                  nameAr: widget.model.title,
-                  selectedDate: widget.date,
-                  selectedTime: widget.time,
-                  amount: finalAmount,
-                  discountData: discountData,
-                );
-
-                if (bookingRes.success) {
-                  Get.offAll(
-                    () => UltrasoundSuccessScreen(
-                      model: widget.model,
-                      date: widget.date,
-                      time: widget.time,
-                      bookingId: bookingRes.bookingId ?? "ULS_${DateTime.now().millisecondsSinceEpoch % 10000}",
-                    ),
-                  );
-                } else {
-                  Get.snackbar(
-                    AppLocalizations.of(context)!.error,
-                    bookingRes.message,
-                    snackPosition: SnackPosition.TOP,
-                  );
-                }
-              } catch (e) {
-                 Get.snackbar(
-                   AppLocalizations.of(context)!.error,
-                   'Booking failed: $e',
-                   snackPosition: SnackPosition.TOP,
-                 );
-              } finally {
-                if (mounted) setState(() => _isBooking = false);
-              }
-            },
+                  },
             child: _isBooking
                 ? const SizedBox(
                     width: 24,
                     height: 24,
-                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
                   )
-                : Text(AppLocalizations.of(context)!.confirm, style: TextStyle(color: Colors.white)),
+                : Text(
+                    AppLocalizations.of(context)!.confirm,
+                    style: TextStyle(color: Colors.white),
+                  ),
           ),
         ),
       ),
@@ -518,3 +532,4 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
     return formatter.format(date);
   }
 }
+

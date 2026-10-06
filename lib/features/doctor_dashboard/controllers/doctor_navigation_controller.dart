@@ -22,10 +22,10 @@ class DoctorNavigationController extends GetxController {
           .limit(1)
           .snapshots()
           .listen((snapshot) {
-        if (snapshot.docs.isNotEmpty) {
-          doctorData.value = snapshot.docs.first.data();
-        }
-      });
+            if (snapshot.docs.isNotEmpty) {
+              doctorData.value = snapshot.docs.first.data();
+            }
+          });
     }
   }
 

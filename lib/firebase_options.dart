@@ -70,8 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '640506659754',
     projectId: 'o2-clinic-a5631',
     storageBucket: 'o2-clinic-a5631.firebasestorage.app',
-    iosClientId: '640506659754-ui3uhepeiq52hfva7gn3g8sj4c9ukncg.apps.googleusercontent.com',
+    iosClientId:
+        '640506659754-ui3uhepeiq52hfva7gn3g8sj4c9ukncg.apps.googleusercontent.com',
     iosBundleId: 'com.example.o2Clinic',
   );
-
 }

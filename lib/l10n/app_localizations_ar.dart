@@ -139,7 +139,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get name => 'اسم';
 
   @override
-  String get phone => 'هاتف';
+  String get phone => 'رقم الهاتف';
 
   @override
   String get location => 'موقع';
@@ -293,7 +293,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'تم حجز موعد الأشعة الخاص بك بنجاح.';
 
   @override
-  String get continueBooking => 'متابعة';
+  String get continueBooking => 'متابعة الحجز';
 
   @override
   String get confirmImaging => 'تأكيد حجز الأشعة';
@@ -579,7 +579,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get orContinueWith => 'أو الاستمرار مع';
 
   @override
-  String get continueAsGuest => 'الاستمرار كضيف';
+  String get continueAsGuest => 'الدخول كضيف';
 
   @override
   String get createAccount => 'إنشاء حساب';
@@ -1110,4 +1110,120 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get inO2Clinic => 'في العيادة';
+
+  @override
+  String get radiologyPricingInquiryPrompt =>
+      'من فضلك ارفق صورة الاشعة للادارة لمراجعتها وتحديد السعر';
+
+  @override
+  String get radiologyChatWelcome =>
+      'اهلا بيك  قم بارفاق صورة روشتة الاشعة\nاو تفاصيل اشعة لتحديد السعر';
+
+  @override
+  String get requiresYourAction => 'حجوزات تحتاج لتأكيدك';
+
+  @override
+  String get requiresActionFilter => 'يتطلب إجراء';
+
+  @override
+  String get continueBookingOrChat => 'متابعة الدفع أو المحادثة';
+
+  @override
+  String get betterHealth => 'صحة أفضل';
+
+  @override
+  String get brighterTomorrow => 'لمستقبل مشرق';
+
+  @override
+  String get getStarted => 'ابدأ الآن';
+
+  @override
+  String get onboarding1Title => 'وصول سهل\nللرعاية الصحية';
+
+  @override
+  String get onboarding1Desc => 'خدمات طبية عالية الجودة\nفي أي وقت تحتاجها.';
+
+  @override
+  String get onboarding2TitlePart1 => 'أطباء ذوي خبرة\n';
+
+  @override
+  String get onboarding2TitlePart2 => 'ورعاية موثوقة';
+
+  @override
+  String get onboarding2Desc => 'فريقنا هنا ليقدم لك\nأفضل رعاية ممكنة.';
+
+  @override
+  String get onboarding3TitlePart1 => 'حجز المواعيد\n';
+
+  @override
+  String get onboarding3TitlePart2 => 'بكل سهولة';
+
+  @override
+  String get onboarding3Desc => 'حجز سريع، زيارات سلسة،\nودعم كامل.';
+
+  @override
+  String get emailOrPhone => 'البريد الإلكتروني أو رقم الهاتف';
+
+  @override
+  String get emailHint => 'your@email.com';
+
+  @override
+  String get passwordHint => 'أدخل كلمة المرور';
+
+  @override
+  String get password => 'كلمة المرور';
+
+  @override
+  String get or => 'أو';
+
+  @override
+  String get continueWithGoogle => 'المتابعة باستخدام جوجل';
+
+  @override
+  String get continueWithApple => 'المتابعة باستخدام آبل';
+
+  @override
+  String get signUp => 'إنشاء حساب';
+
+  @override
+  String get editAccount => 'تعديل الحساب';
+
+  @override
+  String get editYourAccount => 'تعديل حسابك';
+
+  @override
+  String get createYourAccount => 'إنشاء حسابك';
+
+  @override
+  String get updateProfileSafely => 'قم بتحديث بياناتك بأمان.';
+
+  @override
+  String get joinUsJourney => 'انضم إلينا وابدأ رحلتك 👋';
+
+  @override
+  String get fullName => 'الاسم الكامل';
+
+  @override
+  String get confirmPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get bio => 'نبذة (اختياري)';
+
+  @override
+  String get male => 'ذكر';
+
+  @override
+  String get female => 'أنثى';
+
+  @override
+  String get saveChanges => 'حفظ التغييرات';
+
+  @override
+  String get createAccountBtn => 'إنشاء حساب';
+
+  @override
+  String get passwordsMatch => 'كلمات المرور متطابقة 🎉';
+
+  @override
+  String get passwordsNotMatch => 'كلمات المرور غير متطابقة';
 }

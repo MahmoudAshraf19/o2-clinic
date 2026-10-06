@@ -21,7 +21,10 @@ class CosmeticCategoryModel {
     required this.price,
   });
 
-  factory CosmeticCategoryModel.fromMap(String docId, Map<String, dynamic> map) {
+  factory CosmeticCategoryModel.fromMap(
+    String docId,
+    Map<String, dynamic> map,
+  ) {
     return CosmeticCategoryModel(
       id: docId,
       image: map['image'] ?? '',
@@ -30,7 +33,7 @@ class CosmeticCategoryModel {
       nameMap: Map<String, dynamic>.from(map['name'] ?? {}),
       descMap: Map<String, dynamic>.from(map['description'] ?? {}),
       availabilityDay: Map<String, dynamic>.from(
-        map['availability_day'] ?? map['availabilityDay'] ?? {}
+        map['availability_day'] ?? map['availabilityDay'] ?? {},
       ),
       price: map['price']?.toString() ?? '0',
     );

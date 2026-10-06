@@ -14,5 +14,4 @@ class AppFonts {
   static const String broetownSignature = 'BroetownSignature';
   static const String greatVibes = 'GreatVibes';
   static const String dancingScript = 'DancingScript';
-
 }

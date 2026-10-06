@@ -8,7 +8,10 @@ class DoctorPatientsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(AppLocalizations.of(context)!.doctorPatients, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+      child: Text(
+        AppLocalizations.of(context)!.doctorPatients,
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }

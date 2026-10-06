@@ -17,7 +17,8 @@ class RadiologyController extends GetxController {
   Future<void> _fetchRadiologyData() async {
     try {
       isLoading.value = true;
-      final data = await RadiologyCategoryService.instance.fetchRadiologyCategories();
+      final data = await RadiologyCategoryService.instance
+          .fetchRadiologyCategories();
       services.assignAll(data);
     } catch (e, st) {
       debugPrint("❌ [RadiologyController] Error fetching data: $e\n$st");

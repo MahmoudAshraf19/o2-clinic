@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/theme/app_colors.dart';
 
 class OnboardingDots extends StatelessWidget {
   const OnboardingDots({
@@ -14,17 +15,20 @@ class OnboardingDots extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(itemCount, (index) {
         final bool isActive = index == currentIndex;
 
         return AnimatedContainer(
           duration: const Duration(milliseconds: 250),
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          width: isActive ? 24 : 8,
+          margin: const EdgeInsets.symmetric(horizontal: 6),
+          width: 8,
           height: 8,
           decoration: BoxDecoration(
-            color: isActive ? const Color(0xFF21897E) : const Color(0xFFBDC9C6),
-            borderRadius: BorderRadius.circular(999),
+            color: isActive 
+                ? AppColors.vibrantCyan 
+                : AppColors.vibrantCyan.withAlpha(80),
+            shape: BoxShape.circle,
           ),
         );
       }),

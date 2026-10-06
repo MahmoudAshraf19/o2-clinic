@@ -9,9 +9,13 @@ import '../../features/chat_doctors/views/patient_chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../features/chat_doctors/models/doctor_chat_model.dart';
 import '../../features/chat_doctors/views/doctor_active_chat_screen.dart';
+import '../../features/appointments/presentation/screens/my_appointments_screen.dart';
 
 class NotificationRouter {
-  static Future<void> handleNotificationTap(Map<String, dynamic> data, {bool fromSplash = false}) async {
+  static Future<void> handleNotificationTap(
+    Map<String, dynamic> data, {
+    bool fromSplash = false,
+  }) async {
     debugPrint('🔔 [NotificationRouter] Handling data: $data');
 
     if (data.isEmpty) {
@@ -32,12 +36,22 @@ class NotificationRouter {
           final doctorId = data['doctorId'];
           final chatRoomId = data['chatRoomId'];
           if (doctorId != null && chatRoomId != null) {
-            final docData = await DoctorFirestoreService.instance.getDoctor(doctorId);
+            final docData = await DoctorFirestoreService.instance.getDoctor(
+              doctorId,
+            );
             if (docData != null) {
               final doctor = DoctorModel(
                 id: doctorId,
-                name: docData['name_en'] ?? docData['name_ar'] ?? docData['name'] ?? '',
-                title: docData['title_en'] ?? docData['title_ar'] ?? docData['title'] ?? '',
+                name:
+                    docData['name_en'] ??
+                    docData['name_ar'] ??
+                    docData['name'] ??
+                    '',
+                title:
+                    docData['title_en'] ??
+                    docData['title_ar'] ??
+                    docData['title'] ??
+                    '',
                 image: docData['image'] ?? '',
                 rating: (docData['rating_average'] ?? 5.0).toDouble(),
                 reviews: docData['reviews_count'] ?? 0,
@@ -57,7 +71,10 @@ class NotificationRouter {
         case 'doctor_chat_doctor':
           final chatRoomId = data['chatRoomId'];
           if (chatRoomId != null) {
-            final doc = await FirebaseFirestore.instance.collection('chat_doctors').doc(chatRoomId).get();
+            final doc = await FirebaseFirestore.instance
+                .collection('chat_doctors')
+                .doc(chatRoomId)
+                .get();
             if (doc.exists && doc.data() != null) {
               final room = DoctorChatRoom.fromDoc(doc.id, doc.data()!);
               Get.to(() => DoctorActiveChatScreen(room: room));
@@ -71,11 +88,16 @@ class NotificationRouter {
 
         case 'booking_details':
         case 'receipt':
+        case 'radiology_chat':
           final bookingId = data['bookingId'];
           if (bookingId != null) {
-            // Get.to(() => BookingDetailsScreen(bookingId: bookingId));
-            debugPrint('🔔 [NotificationRouter] Navigate to booking: $bookingId');
-            // _navigateToFallback();
+            debugPrint(
+              '🔔 [NotificationRouter] Navigate to booking: $bookingId',
+            );
+            Get.to(
+              () => MyAppointmentsScreen(),
+              arguments: {'showBookingId': bookingId},
+            );
           } else {
             if (!fromSplash) _navigateToFallback();
           }

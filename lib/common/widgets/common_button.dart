@@ -3,13 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_fonts.dart';
 
-enum CommonButtonType {
-  primary,
-  secondary,
-  outline,
-  text,
-  gradient,
-}
+enum CommonButtonType { primary, secondary, outline, text, gradient }
 
 class CommonButton extends StatelessWidget {
   const CommonButton({
@@ -74,9 +68,7 @@ class CommonButton extends StatelessWidget {
             height: 16,
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                _getLoadingColor(),
-              ),
+              valueColor: AlwaysStoppedAnimation<Color>(_getLoadingColor()),
             ),
           ),
           if (text.isNotEmpty) ...[
@@ -295,16 +287,11 @@ class CommonButton extends StatelessWidget {
   TextStyle _getDefaultTextStyle() {
     final fontSize = _getDefaultFontSize();
     final fontWeight = _getDefaultFontWeight();
-    final color = isDisabled 
-        ? AppColors.grey 
+    final color = isDisabled
+        ? AppColors.grey
         : (foregroundColor ?? _getDefaultForegroundColor());
 
-    return TextStyle(
-      fontSize: fontSize,
-      fontWeight: fontWeight,
-      
-      color: color,
-    );
+    return TextStyle(fontSize: fontSize, fontWeight: fontWeight, color: color);
   }
 
   double _getDefaultFontSize() {
@@ -342,16 +329,6 @@ class CommonButton extends StatelessWidget {
   }
 }
 
-enum CommonButtonSize {
-  small,
-  medium,
-  large,
-  extraLarge,
-}
+enum CommonButtonSize { small, medium, large, extraLarge }
 
-enum IconPosition {
-  left,
-  right,
-  top,
-  bottom,
-}
+enum IconPosition { left, right, top, bottom }

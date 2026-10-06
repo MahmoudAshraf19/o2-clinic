@@ -18,13 +18,17 @@ class PatientProfileScreen extends StatelessWidget {
     final isDesktop = size.width >= 900;
 
     return Scaffold(
-      backgroundColor: AppColors.surface,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.primary, size: 20),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.primary,
+            size: 20,
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text(
@@ -50,21 +54,17 @@ class PatientProfileScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ProfileHeaderSection(
-                      user: patient,
-                      isDesktop: isDesktop,
-                    ),
+                    ProfileHeaderSection(user: patient, isDesktop: isDesktop),
                     const SizedBox(height: 32),
                     GridView(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: isDesktop ? 2 : 1,
-                            crossAxisSpacing: isDesktop ? 24 : 16,
-                            mainAxisSpacing: isDesktop ? 24 : 16,
-                            mainAxisExtent: isDesktop ? 92 : 78,
-                          ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: isDesktop ? 2 : 1,
+                        crossAxisSpacing: isDesktop ? 24 : 16,
+                        mainAxisSpacing: isDesktop ? 24 : 16,
+                        mainAxisExtent: isDesktop ? 92 : 78,
+                      ),
                       children: [
                         ProfileDetailCard(
                           icon: Icons.call_outlined,
@@ -100,3 +100,4 @@ class PatientProfileScreen extends StatelessWidget {
     );
   }
 }
+

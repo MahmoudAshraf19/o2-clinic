@@ -51,7 +51,9 @@ class ChatContactUsController extends GetxController {
       isLoading.value = false;
     });
 
-    _doctorSub = doctorChatService.watchPatientChatRooms(user.uid).listen((rooms) {
+    _doctorSub = doctorChatService.watchPatientChatRooms(user.uid).listen((
+      rooms,
+    ) {
       doctorChatRooms.assignAll(rooms);
     });
   }

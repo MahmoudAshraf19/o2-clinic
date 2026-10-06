@@ -120,7 +120,7 @@ class SocialAuthController extends GetxController {
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('user_role', 'patient');
-      
+
       Get.offAllNamed(AppRoutes.mainNavigation);
       return;
     }
@@ -167,7 +167,7 @@ class SocialAuthController extends GetxController {
       _log("📦 Uploading data to: users/$uid 🚀");
       await UserFirestoreService.instance.createUser(
         docId: o2Id,
-        uid: uid, 
+        uid: uid,
         data: clean,
       );
 
@@ -176,7 +176,7 @@ class SocialAuthController extends GetxController {
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('user_role', 'patient');
-      
+
       Get.offAllNamed(AppRoutes.mainNavigation);
     } on FirebaseAuthException catch (e) {
       _logError("❌ FirebaseAuthException during Firestore save", e);

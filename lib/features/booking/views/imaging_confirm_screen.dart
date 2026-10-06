@@ -47,7 +47,7 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       bottomNavigationBar: _bottomBar(context),
       body: SafeArea(
         child: Column(
@@ -63,7 +63,9 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
                     const SizedBox(height: 10),
                     _imagingCard(),
                     const SizedBox(height: 18),
-                    _sectionTitle(AppLocalizations.of(context)!.appointmentSchedule),
+                    _sectionTitle(
+                      AppLocalizations.of(context)!.appointmentSchedule,
+                    ),
                     const SizedBox(height: 10),
                     _scheduleCard(),
                     const SizedBox(height: 18),
@@ -227,17 +229,21 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
         ],
       ),
       child: Obx(() {
-        final currency = Get.find<AppConstantsController>().currencySymbol.value;
+        final currency =
+            Get.find<AppConstantsController>().currencySymbol.value;
         final code = discountController.currentValidCode.value;
-        final type = discountController.discountTypes.firstWhereOrNull((t) => t.id == code?.discountTypeId);
-        
+        final type = discountController.discountTypes.firstWhereOrNull(
+          (t) => t.id == code?.discountTypeId,
+        );
+
         num finalAmount = originalAmount;
         num discountAmount = 0;
-        
+
         if (code != null && type != null) {
           if (type.calculationMethod == 'percentage') {
             discountAmount = (originalAmount * (code.value / 100));
-            if (code.maximumDiscountAmount != null && discountAmount > code.maximumDiscountAmount!) {
+            if (code.maximumDiscountAmount != null &&
+                discountAmount > code.maximumDiscountAmount!) {
               discountAmount = code.maximumDiscountAmount!;
             }
             finalAmount = originalAmount - discountAmount;
@@ -261,7 +267,7 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
                     AppLocalizations.of(context)!.paymentSummary,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      
+
                       color: AppColors.textPrimary,
                     ),
                   ),
@@ -271,7 +277,6 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
                       fontSize: 14,
                       decoration: TextDecoration.lineThrough,
                       color: AppColors.grey,
-                      
                     ),
                   ),
                 ],
@@ -284,17 +289,13 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
                     code.localizedTitle,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      
+
                       color: Colors.green,
                     ),
                   ),
                   Text(
                     "-$discountAmount $currency",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.green,
-                      
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.green),
                   ),
                 ],
               ),
@@ -307,7 +308,7 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
                   AppLocalizations.of(context)!.totalPayment,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    
+
                     color: AppColors.textPrimary,
                     fontSize: 16,
                   ),
@@ -318,7 +319,6 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
                     color: AppColors.primary,
-                    
                   ),
                 ),
               ],
@@ -349,7 +349,6 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
                   style: const TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
-                    
                   ),
                 ),
               ],
@@ -365,14 +364,18 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
         onTap: () => DiscountInputWidget.show(context),
         child: Row(
           children: [
-            const Icon(Icons.local_offer_outlined, color: AppColors.primary, size: 20),
+            const Icon(
+              Icons.local_offer_outlined,
+              color: AppColors.primary,
+              size: 20,
+            ),
             const SizedBox(width: 8),
             Text(
               askText,
               style: const TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w600,
-                
+
                 decoration: TextDecoration.underline,
               ),
             ),
@@ -404,106 +407,121 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
                 borderRadius: BorderRadius.circular(14),
               ),
             ),
-            onPressed: _isBooking ? null : () async {
-              setState(() => _isBooking = true);
-              try {
-                final controller = Get.find<ImagingBookingController>(
-                  tag: widget.controllerTag,
-                );
+            onPressed: _isBooking
+                ? null
+                : () async {
+                    setState(() => _isBooking = true);
+                    try {
+                      final controller = Get.find<ImagingBookingController>(
+                        tag: widget.controllerTag,
+                      );
 
-                final result = controller.handleBooking();
-                if (!result.success) {
-                  Get.snackbar(
-                    'Error',
-                    result.message,
-                    snackPosition: SnackPosition.TOP,
-                  );
-                  setState(() => _isBooking = false);
-                  return;
-                }
+                      final result = controller.handleBooking();
+                      if (!result.success) {
+                        Get.snackbar(
+                          'Error',
+                          result.message,
+                          snackPosition: SnackPosition.TOP,
+                        );
+                        setState(() => _isBooking = false);
+                        return;
+                      }
 
-                Map<String, dynamic>? discountData;
-                final code = discountController.currentValidCode.value;
-                final type = discountController.discountTypes.firstWhereOrNull((t) => t.id == code?.discountTypeId);
-                num finalAmount = widget.totalPrice;
-                num discountAmount = 0;
-                
-                if (code != null && type != null) {
-                  if (type.calculationMethod == 'percentage') {
-                    discountAmount = (widget.totalPrice * (code.value / 100));
-                    if (code.maximumDiscountAmount != null && discountAmount > code.maximumDiscountAmount!) {
-                      discountAmount = code.maximumDiscountAmount!;
+                      Map<String, dynamic>? discountData;
+                      final code = discountController.currentValidCode.value;
+                      final type = discountController.discountTypes
+                          .firstWhereOrNull(
+                            (t) => t.id == code?.discountTypeId,
+                          );
+                      num finalAmount = widget.totalPrice;
+                      num discountAmount = 0;
+
+                      if (code != null && type != null) {
+                        if (type.calculationMethod == 'percentage') {
+                          discountAmount =
+                              (widget.totalPrice * (code.value / 100));
+                          if (code.maximumDiscountAmount != null &&
+                              discountAmount > code.maximumDiscountAmount!) {
+                            discountAmount = code.maximumDiscountAmount!;
+                          }
+                          finalAmount = widget.totalPrice - discountAmount;
+                        } else if (type.calculationMethod == 'fixed') {
+                          discountAmount = code.value;
+                          finalAmount = widget.totalPrice - discountAmount;
+                        } else if (type.calculationMethod == 'free') {
+                          discountAmount = widget.totalPrice;
+                          finalAmount = 0;
+                        }
+                        if (finalAmount < 0) finalAmount = 0;
+
+                        discountData = {
+                          "code_id": code.id,
+                          "code": code.code,
+                          "type": type.calculationMethod,
+                          "discount_value": discountAmount,
+                          "original_amount": widget.totalPrice,
+                        };
+                      }
+
+                      final currentUser = FirebaseAuth.instance.currentUser;
+                      final bookingRes = await BookingFirestoreService()
+                          .createImagingBooking(
+                            user: BookingUserInfo(
+                              userId: currentUser?.uid ?? 'guest',
+                              name: currentUser?.displayName ?? 'Guest Patient',
+                              countryCode: '',
+                              number: currentUser?.phoneNumber ?? '',
+                            ),
+                            categoryId: widget.imagingType,
+                            subcategoryId: '',
+                            nameEn: widget.imagingType,
+                            nameAr: widget.imagingType,
+                            selectedDate: widget.selectedDate,
+                            selectedTime: widget.selectedTime,
+                            amount: finalAmount,
+                            discountData: discountData,
+                          );
+
+                      if (bookingRes.success) {
+                        Get.to(
+                          () => ImagingSuccessScreen(
+                            imagingType: widget.imagingType,
+                            selectedDate: widget.selectedDate,
+                            selectedTime: widget.selectedTime,
+                            bookingId:
+                                bookingRes.bookingId ?? _generateBookingId(),
+                          ),
+                        );
+                      } else {
+                        Get.snackbar(
+                          'Error',
+                          bookingRes.message,
+                          snackPosition: SnackPosition.TOP,
+                        );
+                      }
+                    } catch (e) {
+                      Get.snackbar(
+                        'Error',
+                        'Booking failed: $e',
+                        snackPosition: SnackPosition.TOP,
+                      );
+                    } finally {
+                      if (mounted) setState(() => _isBooking = false);
                     }
-                    finalAmount = widget.totalPrice - discountAmount;
-                  } else if (type.calculationMethod == 'fixed') {
-                    discountAmount = code.value;
-                    finalAmount = widget.totalPrice - discountAmount;
-                  } else if (type.calculationMethod == 'free') {
-                    discountAmount = widget.totalPrice;
-                    finalAmount = 0;
-                  }
-                  if (finalAmount < 0) finalAmount = 0;
-                  
-                  discountData = {
-                    "code_id": code.id,
-                    "code": code.code,
-                    "type": type.calculationMethod,
-                    "discount_value": discountAmount,
-                    "original_amount": widget.totalPrice,
-                  };
-                }
-
-                final currentUser = FirebaseAuth.instance.currentUser;
-                final bookingRes = await BookingFirestoreService().createImagingBooking(
-                  user: BookingUserInfo(
-                    userId: currentUser?.uid ?? 'guest',
-                    name: currentUser?.displayName ?? 'Guest Patient',
-                    countryCode: '',
-                    number: currentUser?.phoneNumber ?? '',
-                  ),
-                  categoryId: widget.imagingType,
-                  subcategoryId: '',
-                  nameEn: widget.imagingType,
-                  nameAr: widget.imagingType,
-                  selectedDate: widget.selectedDate,
-                  selectedTime: widget.selectedTime,
-                  amount: finalAmount,
-                  discountData: discountData,
-                );
-
-                if (bookingRes.success) {
-                  Get.to(
-                    () => ImagingSuccessScreen(
-                      imagingType: widget.imagingType,
-                      selectedDate: widget.selectedDate,
-                      selectedTime: widget.selectedTime,
-                      bookingId: bookingRes.bookingId ?? _generateBookingId(),
-                    ),
-                  );
-                } else {
-                  Get.snackbar(
-                    'Error',
-                    bookingRes.message,
-                    snackPosition: SnackPosition.TOP,
-                  );
-                }
-              } catch (e) {
-                Get.snackbar(
-                  'Error',
-                  'Booking failed: $e',
-                  snackPosition: SnackPosition.TOP,
-                );
-              } finally {
-                if (mounted) setState(() => _isBooking = false);
-              }
-            },
+                  },
             child: _isBooking
                 ? const SizedBox(
                     width: 24,
                     height: 24,
-                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
                   )
-                : Text(AppLocalizations.of(context)!.confirm, style: TextStyle(color: Colors.white)),
+                : Text(
+                    AppLocalizations.of(context)!.confirm,
+                    style: TextStyle(color: Colors.white),
+                  ),
           ),
         ),
       ),

@@ -14,23 +14,26 @@ class MediaCompressor {
       if (ext == 'gif') return path; // Skip GIF compression
 
       final tempDir = await getTemporaryDirectory();
-      final targetPath = '${tempDir.path}${Platform.pathSeparator}COMP_${DateTime.now().millisecondsSinceEpoch}.jpg';
+      final targetPath =
+          '${tempDir.path}${Platform.pathSeparator}COMP_${DateTime.now().millisecondsSinceEpoch}.jpg';
 
       CompressFormat format = CompressFormat.jpeg;
       if (ext == 'png') {
-        // If it's PNG we can either compress as PNG or JPEG. 
+        // If it's PNG we can either compress as PNG or JPEG.
         // JPEG yields smaller sizes for photos, but we'll stick to original extension.
         format = CompressFormat.png;
       } else if (ext == 'webp') {
         format = CompressFormat.webp;
       }
 
-      final targetPathWithExt = '${tempDir.path}${Platform.pathSeparator}COMP_${DateTime.now().millisecondsSinceEpoch}.$ext';
+      final targetPathWithExt =
+          '${tempDir.path}${Platform.pathSeparator}COMP_${DateTime.now().millisecondsSinceEpoch}.$ext';
 
       final result = await FlutterImageCompress.compressAndGetFile(
         path,
         targetPathWithExt,
-        quality: 70, // 70% quality reduces size significantly while keeping good visual fidelity
+        quality:
+            70, // 70% quality reduces size significantly while keeping good visual fidelity
         minWidth: 1080,
         minHeight: 1080,
         format: format,

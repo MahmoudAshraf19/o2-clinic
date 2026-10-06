@@ -92,10 +92,7 @@ class DashboardProfileModel {
   ) {
     final map = data ?? const <String, dynamic>{};
 
-    final username = _firstNonEmpty([
-      _s(map['username']),
-      _s(map['id']),
-    ]);
+    final username = _firstNonEmpty([_s(map['username']), _s(map['id'])]);
 
     final phoneMap = _asMap(map['phone']);
     final contactMap = _asMap(map['contact']);
@@ -142,10 +139,7 @@ class DashboardProfileModel {
       uid: uid,
       username: username,
       name: _firstNonEmpty([_s(map['name'])]),
-      email: _firstNonEmpty([
-        _s(map['email']),
-        _s(contactMap['email']),
-      ]),
+      email: _firstNonEmpty([_s(map['email']), _s(contactMap['email'])]),
       phone: phoneDisplay,
       phoneCountryCode: phoneCountryCode,
       phoneNumber: phoneNumber,
@@ -158,14 +152,8 @@ class DashboardProfileModel {
       status: _firstNonEmpty([_s(map['status']), 'active']),
       isBlocked: map['isBlocked'] == true,
       bio: _firstNonEmpty([_s(map['bio'])]),
-      address: _firstNonEmpty([
-        _s(map['address']),
-        _s(contactMap['address']),
-      ]),
-      provider: _firstNonEmpty([
-        _s(authMap['provider']),
-        _s(map['provider']),
-      ]),
+      address: _firstNonEmpty([_s(map['address']), _s(contactMap['address'])]),
+      provider: _firstNonEmpty([_s(authMap['provider']), _s(map['provider'])]),
     );
   }
 

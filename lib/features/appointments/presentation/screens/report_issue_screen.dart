@@ -15,7 +15,11 @@ class ReportIssueScreen extends StatefulWidget {
   final String bookingId;
   final bool isPatient;
 
-  const ReportIssueScreen({super.key, required this.bookingId, required this.isPatient});
+  const ReportIssueScreen({
+    super.key,
+    required this.bookingId,
+    required this.isPatient,
+  });
 
   @override
   State<ReportIssueScreen> createState() => _ReportIssueScreenState();
@@ -49,10 +53,10 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
     try {
       String? imageUrl;
       if (_selectedImage != null) {
-        final ref = FirebaseStorage.instance
-            .ref()
-            .child('reports/${widget.bookingId}_${DateTime.now().millisecondsSinceEpoch}.jpg');
-        
+        final ref = FirebaseStorage.instance.ref().child(
+          'reports/${widget.bookingId}_${DateTime.now().millisecondsSinceEpoch}.jpg',
+        );
+
         if (kIsWeb) {
           await ref.putData(await _selectedImage!.readAsBytes());
         } else {
@@ -85,8 +89,11 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
         };
       }
 
-      await FirebaseFirestore.instance.collection('bookings').doc(widget.bookingId).update(updateData);
-      
+      await FirebaseFirestore.instance
+          .collection('bookings')
+          .doc(widget.bookingId)
+          .update(updateData);
+
       Get.back();
       Get.snackbar(
         AppLocalizations.of(context)!.reportIssue ?? 'Report Issue',
@@ -94,9 +101,13 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
         backgroundColor: AppColors.success,
         colorText: Colors.white,
       );
-
     } catch (e) {
-      Get.snackbar('Error', 'Failed to submit report', backgroundColor: AppColors.error, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Failed to submit report',
+        backgroundColor: AppColors.error,
+        colorText: Colors.white,
+      );
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
     }
@@ -105,12 +116,15 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(l10n.reportIssue ?? 'Report Issue', style: const TextStyle(color: AppColors.textPrimary)),
+        title: Text(
+          l10n.reportIssue ?? 'Report Issue',
+          style: const TextStyle(color: AppColors.textPrimary),
+        ),
         iconTheme: const IconThemeData(color: AppColors.textPrimary),
         elevation: 0,
       ),
@@ -127,7 +141,9 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                   hintText: l10n.describeTheIssue ?? 'Describe the issue...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
+                    borderSide: BorderSide(
+                      color: AppColors.grey.withOpacity(0.3),
+                    ),
                   ),
                   filled: true,
                   fillColor: Colors.white,
@@ -140,14 +156,26 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: kIsWeb 
-                          ? Image.network(_selectedImage!.path, height: 150, width: double.infinity, fit: BoxFit.cover)
-                          : Image.file(File(_selectedImage!.path), height: 150, width: double.infinity, fit: BoxFit.cover),
+                      child: kIsWeb
+                          ? Image.network(
+                              _selectedImage!.path,
+                              height: 150,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.file(
+                              File(_selectedImage!.path),
+                              height: 150,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                     IconButton(
                       icon: const Icon(Icons.close, color: Colors.white),
                       onPressed: () => setState(() => _selectedImage = null),
-                      style: IconButton.styleFrom(backgroundColor: Colors.black54),
+                      style: IconButton.styleFrom(
+                        backgroundColor: Colors.black54,
+                      ),
                     ),
                   ],
                 )
@@ -158,7 +186,9 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                   label: Text(l10n.attachImage ?? 'Attach Image'),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                 ),
               const Spacer(),
@@ -168,11 +198,26 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                   backgroundColor: AppColors.error,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 child: _isSubmitting
-                    ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                    : Text(l10n.submitReport ?? 'Submit Report', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        l10n.submitReport ?? 'Submit Report',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
             ],
           ),
@@ -181,3 +226,4 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
     );
   }
 }
+

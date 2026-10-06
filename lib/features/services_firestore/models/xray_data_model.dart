@@ -24,9 +24,23 @@ class XrayCategoryModel {
   }) {
     return XrayCategoryModel(
       id: id,
-      titleEn: _readString(map, const ['title_en', 'titleEn', 'name_en', 'nameEn'], fallback: id),
-      titleAr: _readString(map, const ['title_ar', 'titleAr', 'name_ar', 'nameAr'], fallback: id),
-      iconKey: _readString(map, const ['icon', 'icon_key', 'iconKey'], fallback: 'medical_services_outlined'),
+      titleEn: _readString(map, const [
+        'title_en',
+        'titleEn',
+        'name_en',
+        'nameEn',
+      ], fallback: id),
+      titleAr: _readString(map, const [
+        'title_ar',
+        'titleAr',
+        'name_ar',
+        'nameAr',
+      ], fallback: id),
+      iconKey: _readString(map, const [
+        'icon',
+        'icon_key',
+        'iconKey',
+      ], fallback: 'medical_services_outlined'),
       order: _readInt(map, const ['order', 'sort', 'priority'], fallback: 0),
       serviceCount: serviceCount,
     );
@@ -82,7 +96,10 @@ class XrayServiceModel {
   }) {
     return XrayServiceModel(
       id: id,
-      categoryId: _readString(map, const ['categoryId', 'category_id'], fallback: ''),
+      categoryId: _readString(map, const [
+        'categoryId',
+        'category_id',
+      ], fallback: ''),
       nameEn: _readString(map, const ['name_en', 'nameEn'], fallback: id),
       nameAr: _readString(map, const ['name_ar', 'nameAr'], fallback: id),
       price: _readNum(map, const ['price'], fallback: 0),
@@ -109,10 +126,10 @@ class XrayCatalog {
   });
 
   factory XrayCatalog.empty() => const XrayCatalog(
-        categories: <XrayCategoryModel>[],
-        services: <XrayServiceModel>[],
-        servicesByCategory: <String, List<XrayServiceModel>>{},
-      );
+    categories: <XrayCategoryModel>[],
+    services: <XrayServiceModel>[],
+    servicesByCategory: <String, List<XrayServiceModel>>{},
+  );
 }
 
 class XrayIconResolver {
@@ -193,4 +210,5 @@ num _readNum(
   }
   return fallback;
 }
+
 typedef XrayDataModel = XrayServiceModel;

@@ -24,7 +24,7 @@ class UltrasoundBookingPage extends StatelessWidget {
     final isAuth = FirebaseAuth.instance.currentUser != null;
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -97,7 +97,9 @@ class UltrasoundBookingPage extends StatelessWidget {
                       color: isSelected ? AppColors.primary : Colors.white,
                       borderRadius: BorderRadius.circular(18),
                       border: Border.all(
-                        color: isSelected ? AppColors.primary : AppColors.border,
+                        color: isSelected
+                            ? AppColors.primary
+                            : AppColors.border,
                       ),
                     ),
                     child: Column(
@@ -106,7 +108,6 @@ class UltrasoundBookingPage extends StatelessWidget {
                         Text(
                           _localizeDayName(day.day, context),
                           style: TextStyle(
-                            
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
                             color: isSelected ? Colors.white : AppColors.grey,
@@ -169,16 +170,16 @@ class UltrasoundBookingPage extends StatelessWidget {
                 children: [
                   Text(
                     slot.time
-                      .replaceAll('AM', AppLocalizations.of(context)!.am)
-                      .replaceAll('PM', AppLocalizations.of(context)!.pm),
+                        .replaceAll('AM', AppLocalizations.of(context)!.am)
+                        .replaceAll('PM', AppLocalizations.of(context)!.pm),
                     style: TextStyle(
                       color: selected ? Colors.white : Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    slot.isFull 
-                        ? AppLocalizations.of(context)!.full 
+                    slot.isFull
+                        ? AppLocalizations.of(context)!.full
                         : "${slot.remainingSlots} ${AppLocalizations.of(context)!.available}",
                     style: TextStyle(
                       fontSize: 12,
@@ -219,13 +220,19 @@ class UltrasoundBookingPage extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(double.infinity, 50),
           backgroundColor: AppColors.primary,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
         child: Text(
           AppLocalizations.of(context)!.continueBooking,
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
   }
 }
+

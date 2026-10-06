@@ -7,11 +7,7 @@ class AvailabilityBar extends StatelessWidget {
   final int booked;
   final int total;
 
-  const AvailabilityBar({
-    super.key,
-    required this.booked,
-    required this.total,
-  });
+  const AvailabilityBar({super.key, required this.booked, required this.total});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +20,7 @@ class AvailabilityBar extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context)!.availability,
-              style: AppTextStyles.textTheme.bodyMedium!.copyWith(
-                fontSize: 12,
-              ),
+              style: AppTextStyles.textTheme.bodyMedium!.copyWith(fontSize: 12),
             ),
             Text(
               "$booked / $total Booked",
@@ -48,8 +42,8 @@ class AvailabilityBar extends StatelessWidget {
             color: percent > 0.8
                 ? Colors.redAccent
                 : percent > 0.5
-                    ? AppColors.primary
-                    : AppColors.accent,
+                ? AppColors.primary
+                : AppColors.accent,
           ),
         ),
       ],

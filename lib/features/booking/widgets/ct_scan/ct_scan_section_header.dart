@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 
-class CTScanSectionHeader
-    extends StatelessWidget {
-  const CTScanSectionHeader({
-    super.key,
-    required this.title,
-  });
+class CTScanSectionHeader extends StatelessWidget {
+  const CTScanSectionHeader({super.key, required this.title});
 
   final String title;
 
@@ -20,8 +16,7 @@ class CTScanSectionHeader
         fontSize: 22,
         fontWeight: FontWeight.w700,
         color: AppColors.primary,
-        fontFamily:
-            AppFonts.dancingScript,
+        fontFamily: AppFonts.dancingScript,
         height: 1,
       ),
     );

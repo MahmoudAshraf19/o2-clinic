@@ -39,7 +39,8 @@ class AuthErrorHandler {
         case 'requires-recent-login':
           return 'This action requires recent authentication. Please log in again.';
         default:
-          return e.message ?? 'An unexpected authentication error occurred. Please try again.';
+          return e.message ??
+              'An unexpected authentication error occurred. Please try again.';
       }
     }
 

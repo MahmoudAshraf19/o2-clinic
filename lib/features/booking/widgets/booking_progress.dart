@@ -56,7 +56,7 @@ class BookingProgress extends StatelessWidget {
     return TextStyle(
       fontSize: labelFontSize,
       fontWeight: FontWeight.w600,
-      
+
       color: active ? AppColors.primary : AppColors.grey,
     );
   }
@@ -118,10 +118,7 @@ class BookingProgress extends StatelessWidget {
           AnimatedDefaultTextStyle(
             duration: const Duration(milliseconds: 500),
             style: _labelStyle(active),
-            child: Text(
-              _getTitle(index),
-              textAlign: TextAlign.center,
-            ),
+            child: Text(_getTitle(index), textAlign: TextAlign.center),
           ),
         ],
       ),

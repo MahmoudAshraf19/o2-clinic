@@ -15,11 +15,12 @@ class DoctorNavigationShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DoctorNavigationController controller = Get.find<DoctorNavigationController>();
+    final DoctorNavigationController controller =
+        Get.find<DoctorNavigationController>();
 
     return Obx(() {
       return Scaffold(
-        backgroundColor: AppColors.homeBackground,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: () {
           switch (controller.currentIndex.value) {
             case 0:
@@ -39,3 +40,4 @@ class DoctorNavigationShell extends StatelessWidget {
     });
   }
 }
+

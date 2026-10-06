@@ -14,14 +14,16 @@ class PatientAppointmentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final doctorMap = bookingData['doctor'] as Map<String, dynamic>? ?? {};
     final isAr = Get.locale?.languageCode == 'ar';
-    final doctorName = isAr ? (doctorMap['name_ar'] as String? ?? 'Doctor') : (doctorMap['name_en'] as String? ?? 'Doctor');
+    final doctorName = isAr
+        ? (doctorMap['name_ar'] as String? ?? 'Doctor')
+        : (doctorMap['name_en'] as String? ?? 'Doctor');
     final doctorImage = doctorMap['image'] as String? ?? '';
     final doctorSpecialty = doctorMap['specialty'] as String? ?? '';
 
     final schedule = bookingData['schedule'] as Map<String, dynamic>? ?? {};
     final timeStr = schedule['time'] as String? ?? '';
     final dateStr = schedule['date'] as String? ?? '';
-    
+
     // Extract start time if it's a range like "09:00 AM - 12:00 PM"
     final timeParts = timeStr.split(' - ');
     final startTime = timeParts.isNotEmpty ? timeParts[0] : timeStr;
@@ -37,14 +39,19 @@ class PatientAppointmentCard extends StatelessWidget {
         displayDate = dateStr;
       }
     }
-    final timeDisplay = displayDate.isNotEmpty ? '$displayDate • $startTime' : startTime;
+    final timeDisplay = displayDate.isNotEmpty
+        ? '$displayDate • $startTime'
+        : startTime;
 
-    final type = bookingData['type'] as String? ?? 'clinical'; // online or clinical
+    final type =
+        bookingData['type'] as String? ?? 'clinical'; // online or clinical
     final isOnline = type == 'online';
 
     final service = bookingData['service'] as Map<String, dynamic>? ?? {};
-    final serviceNameEn = service['serviceName_en'] as String? ?? doctorSpecialty;
-    final serviceNameAr = service['serviceName_ar'] as String? ?? doctorSpecialty;
+    final serviceNameEn =
+        service['serviceName_en'] as String? ?? doctorSpecialty;
+    final serviceNameAr =
+        service['serviceName_ar'] as String? ?? doctorSpecialty;
     final serviceName = isAr ? serviceNameAr : serviceNameEn;
 
     final statusMap = bookingData['status'] as Map<String, dynamic>? ?? {};
@@ -67,7 +74,9 @@ class PatientAppointmentCard extends StatelessWidget {
               CircleAvatar(
                 radius: 28,
                 backgroundColor: AppColors.grey.withValues(alpha: 0.2),
-                backgroundImage: doctorImage.isNotEmpty ? NetworkImage(doctorImage) : null,
+                backgroundImage: doctorImage.isNotEmpty
+                    ? NetworkImage(doctorImage)
+                    : null,
                 child: doctorImage.isEmpty
                     ? const Icon(Icons.person, color: AppColors.grey, size: 30)
                     : null,
@@ -116,13 +125,18 @@ class PatientAppointmentCard extends StatelessWidget {
                     _buildInfoRow(Icons.access_time_rounded, timeDisplay),
                     const SizedBox(height: 8),
                     _buildInfoRow(
-                      isOnline ? Icons.videocam_outlined : Icons.medical_services_outlined,
-                      isOnline 
-                          ? (isAr ? 'استشارة أونلاين' : 'Online Consultation') 
+                      isOnline
+                          ? Icons.videocam_outlined
+                          : Icons.medical_services_outlined,
+                      isOnline
+                          ? (isAr ? 'استشارة أونلاين' : 'Online Consultation')
                           : (isAr ? 'حضور شخصي' : 'In Person'),
                     ),
                     const SizedBox(height: 8),
-                    _buildInfoRow(Icons.assignment_outlined, serviceName.isNotEmpty ? serviceName : 'Check-up'),
+                    _buildInfoRow(
+                      Icons.assignment_outlined,
+                      serviceName.isNotEmpty ? serviceName : 'Check-up',
+                    ),
                   ],
                 ),
               ),

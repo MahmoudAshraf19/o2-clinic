@@ -435,7 +435,8 @@ class RegisterController extends GetxController {
         _log('REGISTER: edit mode - updating Firestore for uid: $uid');
 
         String finalImageUrl = imagePath.value.trim();
-        if (finalImageUrl.isNotEmpty && !finalImageUrl.startsWith('https://firebasestorage')) {
+        if (finalImageUrl.isNotEmpty &&
+            !finalImageUrl.startsWith('https://firebasestorage')) {
           finalImageUrl = await _uploadProfileImage(uid, finalImageUrl);
         }
 
@@ -462,7 +463,9 @@ class RegisterController extends GetxController {
       if (!isSocial) {
         final emailValue = email.text.trim();
         _log('REGISTER: checking if email exists in Firestore...');
-        final isExists = await UserFirestoreService.instance.isEmailExists(emailValue);
+        final isExists = await UserFirestoreService.instance.isEmailExists(
+          emailValue,
+        );
         if (isExists) {
           emailError.value = 'This email is already in use by another account.';
           isLoading.value = false;
@@ -534,7 +537,8 @@ class RegisterController extends GetxController {
       }
 
       String finalImageUrl = imagePath.value.trim();
-      if (finalImageUrl.isNotEmpty && !finalImageUrl.startsWith('https://firebasestorage')) {
+      if (finalImageUrl.isNotEmpty &&
+          !finalImageUrl.startsWith('https://firebasestorage')) {
         finalImageUrl = await _uploadProfileImage(uid, finalImageUrl);
       }
 
@@ -732,9 +736,12 @@ class RegisterController extends GetxController {
           .child(uid)
           .child('profile_image_$uid.$ext');
 
-      final uploadTask = await ref.putData(bytes, SettableMetadata(contentType: 'image/jpeg'));
+      final uploadTask = await ref.putData(
+        bytes,
+        SettableMetadata(contentType: 'image/jpeg'),
+      );
       final downloadUrl = await uploadTask.ref.getDownloadURL();
-      
+
       _log('REGISTER: image uploaded successfully -> $downloadUrl');
       return downloadUrl;
     } catch (e) {

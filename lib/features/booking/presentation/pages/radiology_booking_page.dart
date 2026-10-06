@@ -26,7 +26,7 @@ class RadiologyBookingPage extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -106,7 +106,6 @@ class RadiologyBookingPage extends StatelessWidget {
                 fontSize: 13,
                 color: AppColors.textSecondary.withValues(alpha: 0.75),
                 fontWeight: FontWeight.w500,
-                
               ),
             ),
           ],
@@ -119,7 +118,7 @@ class RadiologyBookingPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppColors.border),
         boxShadow: [
@@ -133,8 +132,8 @@ class RadiologyBookingPage extends StatelessWidget {
       child: Row(
         children: [
           ClipOval(
-            child: CachedImageWidget(imageUrl: 
-              service.image,
+            child: CachedImageWidget(
+              imageUrl: service.image,
               width: 56,
               height: 56,
               fit: BoxFit.cover,
@@ -154,7 +153,6 @@ class RadiologyBookingPage extends StatelessWidget {
                 Text(
                   service.getName('en'),
                   style: const TextStyle(
-                    
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
                     color: AppColors.textPrimary,
@@ -163,11 +161,7 @@ class RadiologyBookingPage extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   AppLocalizations.of(context)!.radiologyDepartment,
-                  style: TextStyle(
-                    
-                    color: AppColors.grey,
-                    fontSize: 13,
-                  ),
+                  style: TextStyle(color: AppColors.grey, fontSize: 13),
                 ),
               ],
             ),
@@ -189,7 +183,10 @@ class RadiologyBookingPage extends StatelessWidget {
     return days[weekday - 1];
   }
 
-  Widget _daysSection(BuildContext context, RadiologyAppointmentBookingController controller) {
+  Widget _daysSection(
+    BuildContext context,
+    RadiologyAppointmentBookingController controller,
+  ) {
     return Obx(() {
       final selected = controller.selectedDate.value;
       final dates = controller.availableDates;
@@ -218,16 +215,13 @@ class RadiologyBookingPage extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.cardBackground,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(18),
                 border: Border.all(color: AppColors.border),
               ),
               child: Text(
                 AppLocalizations.of(context)!.noAvailableDates,
-                style: TextStyle(
-                  
-                  color: AppColors.grey,
-                ),
+                style: TextStyle(color: AppColors.grey),
               ),
             )
           else
@@ -248,15 +242,21 @@ class RadiologyBookingPage extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 10),
                       width: 72,
                       decoration: BoxDecoration(
-                        color: isSelected ? AppColors.primary : AppColors.cardBackground,
+                        color: isSelected
+                            ? AppColors.primary
+                            : AppColors.cardBackground,
                         borderRadius: BorderRadius.circular(18),
                         border: Border.all(
-                          color: isSelected ? AppColors.primary : AppColors.border,
+                          color: isSelected
+                              ? AppColors.primary
+                              : AppColors.border,
                         ),
                         boxShadow: isSelected
                             ? [
                                 BoxShadow(
-                                  color: AppColors.primary.withValues(alpha: 0.25),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.25,
+                                  ),
                                   blurRadius: 12,
                                   offset: const Offset(0, 6),
                                 ),
@@ -267,9 +267,11 @@ class RadiologyBookingPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            _getDayShort(date.weekday, Get.locale?.languageCode ?? 'en'),
+                            _getDayShort(
+                              date.weekday,
+                              Get.locale?.languageCode ?? 'en',
+                            ),
                             style: TextStyle(
-                              
                               fontSize: 11,
                               letterSpacing: 1.5,
                               color: isSelected ? Colors.white : AppColors.grey,
@@ -279,10 +281,11 @@ class RadiologyBookingPage extends StatelessWidget {
                           Text(
                             "${date.day}",
                             style: TextStyle(
-                              
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
-                              color: isSelected ? Colors.white : AppColors.textPrimary,
+                              color: isSelected
+                                  ? Colors.white
+                                  : AppColors.textPrimary,
                             ),
                           ),
                         ],
@@ -297,7 +300,10 @@ class RadiologyBookingPage extends StatelessWidget {
     });
   }
 
-  Widget _timeSection(BuildContext context, RadiologyAppointmentBookingController controller) {
+  Widget _timeSection(
+    BuildContext context,
+    RadiologyAppointmentBookingController controller,
+  ) {
     return Obx(() {
       if (controller.selectedDate.value == null) {
         return const SizedBox();
@@ -336,9 +342,14 @@ class RadiologyBookingPage extends StatelessWidget {
                 onTap: () => controller.selectTime(t),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
-                    color: isSelected ? AppColors.primary : AppColors.cardBackground,
+                    color: isSelected
+                        ? AppColors.primary
+                        : AppColors.cardBackground,
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
                       color: isSelected ? AppColors.primary : AppColors.border,
@@ -352,7 +363,6 @@ class RadiologyBookingPage extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       color: isSelected ? Colors.white : AppColors.textPrimary,
-                      
                     ),
                   ),
                 ),
@@ -371,27 +381,57 @@ class RadiologyBookingPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           final date = controller.selectedDate.value;
           if (date == null) {
-            Get.snackbar('Selection Required', 'Please select a date first', snackPosition: SnackPosition.TOP);
+            Get.snackbar(
+              'Selection Required',
+              'Please select a date first',
+              snackPosition: SnackPosition.TOP,
+            );
             return;
           }
 
           final time = controller.selectedTime.value;
           if (time.isEmpty) {
-            Get.snackbar('Selection Required', 'Please select a time first', snackPosition: SnackPosition.TOP);
+            Get.snackbar(
+              'Selection Required',
+              'Please select a time first',
+              snackPosition: SnackPosition.TOP,
+            );
             return;
           }
 
-          Get.to(
-            () => RadiologyConfirmBookingScreen(
-              service: controller.service,
-              selectedDate: date,
-              selectedTime: time,
-              controllerTag: controller.service.id,
+          Get.dialog(
+            const Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
             ),
+            barrierDismissible: false,
           );
+
+          final result = await controller.createPendingBooking();
+
+          Get.back(); // close loading
+
+          if (result.success && result.bookingId != null) {
+            Get.to(
+              () => RadiologyConfirmBookingScreen(
+                service: controller.service,
+                selectedDate: date,
+                selectedTime: time,
+                controllerTag: controller.service.id,
+                bookingId: result.bookingId!,
+              ),
+            );
+          } else {
+            Get.snackbar(
+              'Error',
+              result.message,
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
+          }
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
@@ -403,14 +443,11 @@ class RadiologyBookingPage extends StatelessWidget {
         ),
         child: Text(
           AppLocalizations.of(context)!.bookAppointment,
-          style: TextStyle(
-            
-            fontWeight: FontWeight.w800,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w800, color: Colors.white),
         ),
       ),
     );
   }
 }
+
 

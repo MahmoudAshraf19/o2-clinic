@@ -47,8 +47,8 @@ class _RadiologyCardItemState extends State<RadiologyCardItem> {
                 child: AnimatedScale(
                   duration: const Duration(milliseconds: 400),
                   scale: hovered ? 1.06 : 1.0,
-                  child: CachedImageWidget(imageUrl: 
-                    m.image,
+                  child: CachedImageWidget(
+                    imageUrl: m.image,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -77,7 +77,9 @@ class _RadiologyCardItemState extends State<RadiologyCardItem> {
                 left: 10,
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 5),
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.95),
                     borderRadius: BorderRadius.circular(12),
@@ -167,10 +169,7 @@ class _RadiologyCardItemState extends State<RadiologyCardItem> {
                   duration: const Duration(milliseconds: 300),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        AppColors.primary,
-                        AppColors.secondary,
-                      ],
+                      colors: [AppColors.primary, AppColors.secondary],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),

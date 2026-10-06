@@ -26,17 +26,21 @@ class DoctorCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(22),
           decoration: BoxDecoration(
-            color: AppColors.white.withValues(alpha: 0.75),
+            color: Theme.of(context).brightness == Brightness.dark 
+                ? Theme.of(context).cardColor.withValues(alpha: 0.75) 
+                : AppColors.white.withValues(alpha: 0.75),
             borderRadius: BorderRadius.circular(28),
             border: Border.all(
-              color: AppColors.primary.withValues(alpha: 0.15),
+              color: Theme.of(context).brightness == Brightness.dark 
+                  ? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1) 
+                  : AppColors.primary.withValues(alpha: 0.15),
             ),
             boxShadow: [
               BoxShadow(
                 color: AppColors.primary.withValues(alpha: 0.08),
                 blurRadius: 40,
                 offset: const Offset(0, 15),
-              )
+              ),
             ],
           ),
           child: Column(
@@ -62,7 +66,9 @@ class DoctorCard extends StatelessWidget {
                       ),
                       CircleAvatar(
                         radius: 42,
-                        backgroundImage: CachedNetworkImageProvider(doctor.image),
+                        backgroundImage: CachedNetworkImageProvider(
+                          doctor.image,
+                        ),
                       ),
                     ],
                   ),
@@ -79,7 +85,7 @@ class DoctorCard extends StatelessWidget {
                 doctor.name,
                 style: AppTextStyles.textTheme.titleLarge!.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),
                 ),
               ),
 
@@ -107,24 +113,23 @@ class DoctorCard extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     "(${doctor.reviews})",
-                    style: AppTextStyles.textTheme.bodyMedium!
-                        .copyWith(color: AppColors.outline),
+                    style: AppTextStyles.textTheme.bodyMedium!.copyWith(
+                      color: AppColors.outline,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Text(
                     doctor.availability,
-                    style: AppTextStyles.textTheme.bodyMedium!
-                        .copyWith(color: AppColors.primary),
+                    style: AppTextStyles.textTheme.bodyMedium!.copyWith(
+                      color: AppColors.primary,
+                    ),
                   ),
                 ],
               ),
 
               const SizedBox(height: 16),
 
-              AvailabilityBar(
-                booked: doctor.booked,
-                total: doctor.total,
-              ),
+              AvailabilityBar(booked: doctor.booked, total: doctor.total),
 
               const SizedBox(height: 24),
 
@@ -150,7 +155,7 @@ class DoctorCard extends StatelessWidget {
                           AppLocalizations.of(context)!.fullProfile,
                           style: AppTextStyles.textTheme.bodyMedium!.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: AppColors.textSecondary,
+                            color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary),
                           ),
                         ),
                       ),
@@ -205,3 +210,4 @@ class DoctorCard extends StatelessWidget {
     );
   }
 }
+

@@ -29,8 +29,7 @@ class BookingService {
 
     final now = DateTime.now();
 
-    final availableNumbers =
-        availableDays.map((e) => _dayToNumber(e)).toList();
+    final availableNumbers = availableDays.map((e) => _dayToNumber(e)).toList();
 
     List<DateTime> result = [];
     int i = 0;

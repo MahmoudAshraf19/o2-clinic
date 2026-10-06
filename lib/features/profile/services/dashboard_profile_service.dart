@@ -2,10 +2,9 @@ import '../../services_firestore/user_firestore_service.dart';
 import '../models/dashboard_profile_model.dart';
 
 class DashboardProfileService {
-  DashboardProfileService({
-    UserFirestoreService? userFirestoreService,
-  }) : _userFirestoreService =
-            userFirestoreService ?? UserFirestoreService.instance;
+  DashboardProfileService({UserFirestoreService? userFirestoreService})
+    : _userFirestoreService =
+          userFirestoreService ?? UserFirestoreService.instance;
 
   final UserFirestoreService _userFirestoreService;
 

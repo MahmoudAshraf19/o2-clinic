@@ -43,30 +43,31 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
             .limit(1)
             .snapshots()
             .listen((snapshot) {
-          if (snapshot.docs.isNotEmpty) {
-            final data = snapshot.docs.first.data();
-            
-            // Handle localized name based on app locale, or just fallback to English for now
-            // To be precise, we can just use name_en or the title_en depending on how it's stored.
-            // But we will fetch name_en by default, and update with locale later if needed.
-            String name = data['name_en'] ?? data['name_ar'] ?? data['name_he'] ?? '';
-            String image = data['image'] ?? '';
-            
-            if (mounted) {
-              setState(() {
-                _doctorName = name;
-                _doctorImage = image;
-                _isLoading = false;
-              });
-            }
-          } else {
-            if (mounted) {
-              setState(() {
-                _isLoading = false;
-              });
-            }
-          }
-        });
+              if (snapshot.docs.isNotEmpty) {
+                final data = snapshot.docs.first.data();
+
+                // Handle localized name based on app locale, or just fallback to English for now
+                // To be precise, we can just use name_en or the title_en depending on how it's stored.
+                // But we will fetch name_en by default, and update with locale later if needed.
+                String name =
+                    data['name_en'] ?? data['name_ar'] ?? data['name_he'] ?? '';
+                String image = data['image'] ?? '';
+
+                if (mounted) {
+                  setState(() {
+                    _doctorName = name;
+                    _doctorImage = image;
+                    _isLoading = false;
+                  });
+                }
+              } else {
+                if (mounted) {
+                  setState(() {
+                    _isLoading = false;
+                  });
+                }
+              }
+            });
       } else {
         if (mounted) {
           setState(() {
@@ -87,13 +88,15 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
   @override
   Widget build(BuildContext context) {
     // Current date format like "9 September, 2026"
-    final String formattedDate = DateFormat('d MMMM, yyyy').format(DateTime.now());
+    final String formattedDate = DateFormat(
+      'd MMMM, yyyy',
+    ).format(DateTime.now());
 
     // You can adjust the colors to match AppColors if needed
     final Color surface = Colors.white;
 
     return SliverAppBar(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       expandedHeight: 357.0,
       pinned: true,
       elevation: 0,
@@ -127,12 +130,18 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                         if (_isLoading)
                           Container(
                             color: Colors.grey.shade200,
-                            child: const Center(child: CircularProgressIndicator()),
+                            child: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
                           )
                         else if (_doctorImage.isEmpty)
                           Container(
                             color: AppColors.primaryContainer,
-                            child: const Icon(Icons.person, size: 80, color: Colors.white),
+                            child: const Icon(
+                              Icons.person,
+                              size: 80,
+                              color: Colors.white,
+                            ),
                           )
                         else
                           CachedNetworkImage(
@@ -142,7 +151,11 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                             height: double.infinity,
                             errorWidget: (context, url, error) => Container(
                               color: AppColors.primaryContainer,
-                              child: const Icon(Icons.person, size: 80, color: Colors.white),
+                              child: const Icon(
+                                Icons.person,
+                                size: 80,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
 
@@ -172,7 +185,11 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                _isLoading ? 'Hi Dr...' : (_doctorName.isNotEmpty ? 'Hi $_doctorName' : 'Hi Doctor'),
+                                _isLoading
+                                    ? 'Hi Dr...'
+                                    : (_doctorName.isNotEmpty
+                                          ? 'Hi $_doctorName'
+                                          : 'Hi Doctor'),
                                 style: const TextStyle(
                                   fontSize: 24,
                                   height: 1.3,
@@ -191,7 +208,11 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                               Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Icon(Icons.calendar_today_outlined, color: Colors.white70, size: 16),
+                                  const Icon(
+                                    Icons.calendar_today_outlined,
+                                    color: Colors.white70,
+                                    size: 16,
+                                  ),
                                   const SizedBox(width: 8),
                                   Text(
                                     formattedDate,
@@ -249,7 +270,10 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                               decoration: BoxDecoration(
                                 color: surface.withOpacity(0.2),
                                 shape: BoxShape.circle,
-                                border: Border.all(color: surface.withOpacity(0.5), width: 1),
+                                border: Border.all(
+                                  color: surface.withOpacity(0.5),
+                                  width: 1,
+                                ),
                               ),
                               child: const Icon(
                                 Icons.notifications_outlined,
@@ -259,8 +283,11 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                             ),
                             if (Get.isRegistered<NotificationsController>())
                               Obx(() {
-                                final unreadCount = Get.find<NotificationsController>().unreadCount;
-                                if (unreadCount == 0) return const SizedBox.shrink();
+                                final unreadCount =
+                                    Get.find<NotificationsController>()
+                                        .unreadCount;
+                                if (unreadCount == 0)
+                                  return const SizedBox.shrink();
                                 return Positioned(
                                   top: 0,
                                   right: 0,
@@ -271,7 +298,9 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Text(
-                                      unreadCount > 9 ? '9+' : unreadCount.toString(),
+                                      unreadCount > 9
+                                          ? '9+'
+                                          : unreadCount.toString(),
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 10,
@@ -295,3 +324,4 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
     );
   }
 }
+

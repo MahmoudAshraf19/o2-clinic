@@ -55,9 +55,14 @@ class NotificationService {
   }
 
   Future<void> _initLocalNotifications() async {
-    const androidInit = AndroidInitializationSettings('@drawable/ic_notification');
+    const androidInit = AndroidInitializationSettings(
+      '@drawable/ic_notification',
+    );
     const iosInit = DarwinInitializationSettings();
-    const initSettings = InitializationSettings(android: androidInit, iOS: iosInit);
+    const initSettings = InitializationSettings(
+      android: androidInit,
+      iOS: iosInit,
+    );
 
     await _local.initialize(
       initSettings,
@@ -78,7 +83,9 @@ class NotificationService {
 
     if (defaultTargetPlatform == TargetPlatform.android) {
       final androidPlugin = _local
-          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >();
 
       const mainChannel = AndroidNotificationChannel(
         'custom_sound_channel_1',
@@ -167,22 +174,30 @@ class NotificationService {
     switch (langCode) {
       case 'ar':
         return {
-          'title12h': '\u062a\u0630\u0643\u064a\u0631 \u0628\u0627\u0644\u0645\u0648\u0639\u062f \ud83d\udcc5',
-          'body12h': '\u0645\u0648\u0639\u062f\u0643 \u063a\u062f\u0627\u064b. \u0644\u0627 \u062a\u0646\u0633\u064e \u0627\u0644\u062d\u0636\u0648\u0631 \u0641\u064a \u0627\u0644\u0648\u0642\u062a \u0627\u0644\u0645\u062d\u062f\u062f.',
-          'title3h': '\u0645\u0648\u0639\u062f\u0643 \u0642\u0631\u064a\u0628 \u23f0',
-          'body3h': '\u0645\u0648\u0639\u062f\u0643 \u062e\u0644\u0627\u0644 3 \u0633\u0627\u0639\u0627\u062a. \u0628\u0631\u062c\u0627\u0621 \u0627\u0644\u0627\u0633\u062a\u0639\u062f\u0627\u062f.',
+          'title12h':
+              '\u062a\u0630\u0643\u064a\u0631 \u0628\u0627\u0644\u0645\u0648\u0639\u062f \ud83d\udcc5',
+          'body12h':
+              '\u0645\u0648\u0639\u062f\u0643 \u063a\u062f\u0627\u064b. \u0644\u0627 \u062a\u0646\u0633\u064e \u0627\u0644\u062d\u0636\u0648\u0631 \u0641\u064a \u0627\u0644\u0648\u0642\u062a \u0627\u0644\u0645\u062d\u062f\u062f.',
+          'title3h':
+              '\u0645\u0648\u0639\u062f\u0643 \u0642\u0631\u064a\u0628 \u23f0',
+          'body3h':
+              '\u0645\u0648\u0639\u062f\u0643 \u062e\u0644\u0627\u0644 3 \u0633\u0627\u0639\u0627\u062a. \u0628\u0631\u062c\u0627\u0621 \u0627\u0644\u0627\u0633\u062a\u0639\u062f\u0627\u062f.',
         };
       case 'he':
         return {
-          'title12h': '\u05ea\u05d6\u05db\u05d5\u05e8\u05ea \u05ea\u05d5\u05e8 \ud83d\udcc5',
-          'body12h': '\u05d4\u05ea\u05d5\u05e8 \u05e9\u05dc\u05da \u05de\u05d7\u05e8. \u05d0\u05dc \u05ea\u05e9\u05db\u05d7 \u05dc\u05d4\u05d2\u05d9\u05e2 \u05d1\u05d6\u05de\u05df.',
+          'title12h':
+              '\u05ea\u05d6\u05db\u05d5\u05e8\u05ea \u05ea\u05d5\u05e8 \ud83d\udcc5',
+          'body12h':
+              '\u05d4\u05ea\u05d5\u05e8 \u05e9\u05dc\u05da \u05de\u05d7\u05e8. \u05d0\u05dc \u05ea\u05e9\u05db\u05d7 \u05dc\u05d4\u05d2\u05d9\u05e2 \u05d1\u05d6\u05de\u05df.',
           'title3h': '\u05ea\u05d5\u05e8 \u05e7\u05e8\u05d5\u05d1 \u23f0',
-          'body3h': '\u05d4\u05ea\u05d5\u05e8 \u05e9\u05dc\u05da \u05d1\u05e2\u05d5\u05d3 3 \u05e9\u05e2\u05d5\u05ea. \u05d0\u05e0\u05d0 \u05d4\u05ea\u05db\u05d5\u05e0\u05df.',
+          'body3h':
+              '\u05d4\u05ea\u05d5\u05e8 \u05e9\u05dc\u05da \u05d1\u05e2\u05d5\u05d3 3 \u05e9\u05e2\u05d5\u05ea. \u05d0\u05e0\u05d0 \u05d4\u05ea\u05db\u05d5\u05e0\u05df.',
         };
       default: // 'en'
         return {
           'title12h': 'Appointment Reminder \ud83d\udcc5',
-          'body12h': "Your appointment is tomorrow. Don't forget to attend on time.",
+          'body12h':
+              "Your appointment is tomorrow. Don't forget to attend on time.",
           'title3h': 'Upcoming Appointment \u23f0',
           'body3h': 'Your appointment is in 3 hours. Please be ready.',
         };
@@ -219,7 +234,10 @@ class NotificationService {
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.absoluteTime,
-          payload: json.encode({'bookingId': bookingId, 'screen': 'booking_details'}),
+          payload: json.encode({
+            'bookingId': bookingId,
+            'screen': 'booking_details',
+          }),
         );
         debugPrint('12h reminder scheduled for $bookingId at $time12h');
       } catch (e) {
@@ -240,7 +258,10 @@ class NotificationService {
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.absoluteTime,
-          payload: json.encode({'bookingId': bookingId, 'screen': 'booking_details'}),
+          payload: json.encode({
+            'bookingId': bookingId,
+            'screen': 'booking_details',
+          }),
         );
         debugPrint('3h reminder scheduled for $bookingId at $time3h');
       } catch (e) {
@@ -249,7 +270,7 @@ class NotificationService {
     }
 
     // Note: We no longer save local reminders to Firestore to prevent duplicates.
-    // The Cloud Functions (sendAppointmentReminders) will generate the push 
+    // The Cloud Functions (sendAppointmentReminders) will generate the push
     // notifications 12h/24h before the appointment which will appear in the UI.
   }
 
@@ -263,16 +284,19 @@ class NotificationService {
 
     final now = DateTime.now();
     final time30m = appointmentDate.subtract(const Duration(minutes: 30));
-    
+
     if (time30m.isAfter(now)) {
-      final title = langCode == 'ar' ? 'موعد استشارة أونلاين قريب ⏱️' : 'Upcoming Online Consultation ⏱️';
-      final body = langCode == 'ar' 
-          ? 'تذكير: موعد الكشف الأونلاين يبدأ بعد 30 دقيقة.' 
+      final title = langCode == 'ar'
+          ? 'موعد استشارة أونلاين قريب ⏱️'
+          : 'Upcoming Online Consultation ⏱️';
+      final body = langCode == 'ar'
+          ? 'تذكير: موعد الكشف الأونلاين يبدأ بعد 30 دقيقة.'
           : 'Reminder: Your online consultation starts in 30 minutes.';
 
       try {
         await _local.zonedSchedule(
-          _stableId(bookingId, is12h: false) + 1000, // Avoid collision with patient's 3h reminder
+          _stableId(bookingId, is12h: false) +
+              1000, // Avoid collision with patient's 3h reminder
           title,
           body,
           tz.TZDateTime.from(time30m, tz.local),
@@ -280,9 +304,14 @@ class NotificationService {
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.absoluteTime,
-          payload: json.encode({'bookingId': bookingId, 'screen': 'booking_details'}),
+          payload: json.encode({
+            'bookingId': bookingId,
+            'screen': 'booking_details',
+          }),
         );
-        debugPrint('Doctor 30m online reminder scheduled for $bookingId at $time30m');
+        debugPrint(
+          'Doctor 30m online reminder scheduled for $bookingId at $time30m',
+        );
       } catch (e) {
         debugPrint('Could not schedule doctor 30m online reminder: $e');
       }
@@ -311,7 +340,10 @@ class NotificationService {
     try {
       final docId = 'reminder_$bookingId';
       // Skip if already exists (idempotent)
-      final existing = await _firestore.collection('notifications').doc(docId).get();
+      final existing = await _firestore
+          .collection('notifications')
+          .doc(docId)
+          .get();
       if (existing.exists) return;
 
       await _firestore.collection('notifications').doc(docId).set({
@@ -320,18 +352,20 @@ class NotificationService {
         'type': 'reminder',
         'title': {
           'en': 'Appointment Reminder \ud83d\udcc5',
-          'ar': '\u062a\u0630\u0643\u064a\u0631 \u0628\u0627\u0644\u0645\u0648\u0639\u062f \ud83d\udcc5',
-          'he': '\u05ea\u05d6\u05db\u05d5\u05e8\u05ea \u05ea\u05d5\u05e8 \ud83d\udcc5',
+          'ar':
+              '\u062a\u0630\u0643\u064a\u0631 \u0628\u0627\u0644\u0645\u0648\u0639\u062f \ud83d\udcc5',
+          'he':
+              '\u05ea\u05d6\u05db\u05d5\u05e8\u05ea \u05ea\u05d5\u05e8 \ud83d\udcc5',
         },
         'body': {
-          'en': 'You have an upcoming appointment. Local reminders are set on your device.',
-          'ar': '\u0644\u062f\u064a\u0643 \u0645\u0648\u0639\u062f \u0642\u0627\u062f\u0645. \u062a\u0645 \u062a\u0639\u064a\u064a\u0646 \u0627\u0644\u062a\u0630\u0643\u064a\u0631\u0627\u062a \u0639\u0644\u0649 \u062c\u0647\u0627\u0632\u0643.',
-          'he': '\u05d9\u05e9 \u05dc\u05da \u05ea\u05d5\u05e8 \u05e7\u05e8\u05d5\u05d1. \u05d4\u05ea\u05d6\u05db\u05d5\u05e8\u05d5\u05ea \u05d4\u05de\u05e7\u05d5\u05de\u05d9\u05d5\u05ea \u05d4\u05d5\u05d2\u05d3\u05e8\u05d5 \u05d1\u05de\u05db\u05e9\u05d9\u05e8 \u05e9\u05dc\u05da.',
+          'en':
+              'You have an upcoming appointment. Local reminders are set on your device.',
+          'ar':
+              '\u0644\u062f\u064a\u0643 \u0645\u0648\u0639\u062f \u0642\u0627\u062f\u0645. \u062a\u0645 \u062a\u0639\u064a\u064a\u0646 \u0627\u0644\u062a\u0630\u0643\u064a\u0631\u0627\u062a \u0639\u0644\u0649 \u062c\u0647\u0627\u0632\u0643.',
+          'he':
+              '\u05d9\u05e9 \u05dc\u05da \u05ea\u05d5\u05e8 \u05e7\u05e8\u05d5\u05d1. \u05d4\u05ea\u05d6\u05db\u05d5\u05e8\u05d5\u05ea \u05d4\u05de\u05e7\u05d5\u05de\u05d9\u05d5\u05ea \u05d4\u05d5\u05d2\u05d3\u05e8\u05d5 \u05d1\u05de\u05db\u05e9\u05d9\u05e8 \u05e9\u05dc\u05da.',
         },
-        'data': {
-          'bookingId': bookingId,
-          'screen': 'booking_details',
-        },
+        'data': {'bookingId': bookingId, 'screen': 'booking_details'},
         'priority': 'high',
         'status': {'read': false, 'readAt': null},
         'createdAt': FieldValue.serverTimestamp(),
@@ -416,9 +450,15 @@ class NotificationService {
       userId: userId,
       type: isReminder ? 'reminder' : 'booking',
       title: {
-        'en': isReminder ? 'Upcoming Appointment \u23f0' : 'Booking Confirmed \u2705',
-        'ar': isReminder ? '\u0645\u0648\u0639\u062f\u0643 \u0642\u0631\u064a\u0628 \u23f0' : '\u062a\u0645 \u062a\u0623\u0643\u064a\u062f \u0627\u0644\u062d\u062c\u0632 \u2705',
-        'he': isReminder ? '\u05ea\u05d5\u05e8 \u05e7\u05e8\u05d5\u05d1 \u23f0' : '\u05d4\u05d6\u05de\u05e0\u05ea\u05da \u05d0\u05d5\u05e9\u05e8\u05d4 \u2705',
+        'en': isReminder
+            ? 'Upcoming Appointment \u23f0'
+            : 'Booking Confirmed \u2705',
+        'ar': isReminder
+            ? '\u0645\u0648\u0639\u062f\u0643 \u0642\u0631\u064a\u0628 \u23f0'
+            : '\u062a\u0645 \u062a\u0623\u0643\u064a\u062f \u0627\u0644\u062d\u062c\u0632 \u2705',
+        'he': isReminder
+            ? '\u05ea\u05d5\u05e8 \u05e7\u05e8\u05d5\u05d1 \u23f0'
+            : '\u05d4\u05d6\u05de\u05e0\u05ea\u05da \u05d0\u05d5\u05e9\u05e8\u05d4 \u2705',
       },
       body: {
         'en': isReminder
@@ -445,9 +485,15 @@ class NotificationService {
       userId: userId,
       type: 'payment',
       title: {
-        'en': success ? 'Payment Successful \ud83d\udcb3' : 'Payment Failed \u274c',
-        'ar': success ? '\u062a\u0645 \u0627\u0644\u062f\u0641\u0639 \u0628\u0646\u062c\u0627\u062d \ud83d\udcb3' : '\u0641\u0634\u0644 \u0627\u0644\u062f\u0641\u0639 \u274c',
-        'he': success ? '\u05ea\u05e9\u05dc\u05d5\u05dd \u05e0\u05e7\u05dc\u05d8 \ud83d\udcb3' : '\u05d4\u05ea\u05e9\u05dc\u05d5\u05dd \u05e0\u05db\u05e9\u05dc \u274c',
+        'en': success
+            ? 'Payment Successful \ud83d\udcb3'
+            : 'Payment Failed \u274c',
+        'ar': success
+            ? '\u062a\u0645 \u0627\u0644\u062f\u0641\u0639 \u0628\u0646\u062c\u0627\u062d \ud83d\udcb3'
+            : '\u0641\u0634\u0644 \u0627\u0644\u062f\u0641\u0639 \u274c',
+        'he': success
+            ? '\u05ea\u05e9\u05dc\u05d5\u05dd \u05e0\u05e7\u05dc\u05d8 \ud83d\udcb3'
+            : '\u05d4\u05ea\u05e9\u05dc\u05d5\u05dd \u05e0\u05db\u05e9\u05dc \u274c',
       },
       body: {
         'en': success
@@ -482,13 +528,17 @@ class NotificationService {
       type: 'message',
       title: {
         'en': 'New Message \ud83d\udcac',
-        'ar': '\u0631\u0633\u0627\u0644\u0629 \u062c\u062f\u064a\u062f\u0629 \ud83d\udcac',
-        'he': '\u05d4\u05d5\u05d3\u05e2\u05d4 \u05d7\u05d3\u05e9\u05d4 \ud83d\udcac',
+        'ar':
+            '\u0631\u0633\u0627\u0644\u0629 \u062c\u062f\u064a\u062f\u0629 \ud83d\udcac',
+        'he':
+            '\u05d4\u05d5\u05d3\u05e2\u05d4 \u05d7\u05d3\u05e9\u05d4 \ud83d\udcac',
       },
       body: {
         'en': 'You have a new message from $sender.',
-        'ar': '\u0644\u062f\u064a\u0643 \u0631\u0633\u0627\u0644\u0629 \u062c\u062f\u064a\u062f\u0629 \u0645\u0646 $sender.',
-        'he': '\u05d9\u05e9 \u05dc\u05da \u05d4\u05d5\u05d3\u05e2\u05d4 \u05d7\u05d3\u05e9\u05d4 \u05de\u05d0\u05ea $sender.',
+        'ar':
+            '\u0644\u062f\u064a\u0643 \u0631\u0633\u0627\u0644\u0629 \u062c\u062f\u064a\u062f\u0629 \u0645\u0646 $sender.',
+        'he':
+            '\u05d9\u05e9 \u05dc\u05da \u05d4\u05d5\u05d3\u05e2\u05d4 \u05d7\u05d3\u05e9\u05d4 \u05de\u05d0\u05ea $sender.',
       },
       data: {
         'chatRoomId': chatRoomId,
@@ -521,10 +571,12 @@ class NotificationService {
       String title = notification?.title ?? '';
       String body = notification?.body ?? '';
 
-      if (data.containsKey('title_$langCode') && data['title_$langCode']!.isNotEmpty) {
+      if (data.containsKey('title_$langCode') &&
+          data['title_$langCode']!.isNotEmpty) {
         title = data['title_$langCode']!;
       }
-      if (data.containsKey('body_$langCode') && data['body_$langCode']!.isNotEmpty) {
+      if (data.containsKey('body_$langCode') &&
+          data['body_$langCode']!.isNotEmpty) {
         body = data['body_$langCode']!;
       }
 

@@ -34,10 +34,7 @@ class DoctorProfileController extends GetxController {
       if (snapshot.docs.isNotEmpty) {
         final doc = snapshot.docs.first;
         _docId = doc.id;
-        doctor.value = DoctorModel.fromMap(
-          id: _docId!,
-          map: doc.data(),
-        );
+        doctor.value = DoctorModel.fromMap(id: _docId!, map: doc.data());
       }
     } catch (e) {
       Get.snackbar('Error', 'Failed to load profile data');
@@ -49,13 +46,13 @@ class DoctorProfileController extends GetxController {
   Future<bool> updateProfile(Map<String, dynamic> data) async {
     try {
       if (_docId == null) return false;
-      
+
       isLoading.value = true;
       await FirebaseFirestore.instance
           .collection(AppFirestoreCollections.doctors)
           .doc(_docId)
           .update(data);
-          
+
       await fetchDoctorData();
       return true;
     } catch (e) {

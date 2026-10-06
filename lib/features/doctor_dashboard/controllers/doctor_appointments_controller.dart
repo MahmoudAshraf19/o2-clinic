@@ -5,12 +5,12 @@ import 'package:get/get.dart';
 
 class DoctorAppointmentsController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  
+
   final RxList<DocumentSnapshot> bookings = <DocumentSnapshot>[].obs;
   final RxBool isLoading = true.obs;
   final Rx<DateTime?> selectedTargetDate = Rx<DateTime?>(null);
   final Rx<String?> targetStatus = Rx<String?>(null);
-  
+
   StreamSubscription? _bookingsSub;
 
   @override
@@ -32,12 +32,14 @@ class DoctorAppointmentsController extends GetxController {
           .where('auth_uid', isEqualTo: authUid)
           .limit(1)
           .get();
-          
+
       if (snapshot.docs.isNotEmpty) {
         final doctorId = snapshot.docs.first.id;
         _listenToBookings(doctorId);
       } else {
-        print('[DoctorAppointmentsController] No doctor profile found for auth_uid: $authUid');
+        print(
+          '[DoctorAppointmentsController] No doctor profile found for auth_uid: $authUid',
+        );
         isLoading.value = false;
       }
     } catch (e) {
@@ -47,29 +49,36 @@ class DoctorAppointmentsController extends GetxController {
   }
 
   void _listenToBookings(String doctorId) {
-    print('[DoctorAppointmentsController] Fetching bookings for doctor: $doctorId');
+    print(
+      '[DoctorAppointmentsController] Fetching bookings for doctor: $doctorId',
+    );
     _bookingsSub = _firestore
         .collection('bookings')
         .where('doctor.doctorId', isEqualTo: doctorId)
         .snapshots()
-        .listen((snapshot) {
-      print('[DoctorAppointmentsController] Received ${snapshot.docs.length} bookings');
-      
-      final sortedDocs = snapshot.docs.toList();
-      sortedDocs.sort((a, b) {
-        final dataA = a.data() as Map<String, dynamic>;
-        final dataB = b.data() as Map<String, dynamic>;
-        final dateA = (dataA['schedule']?['date'] as String?) ?? '';
-        final dateB = (dataB['schedule']?['date'] as String?) ?? '';
-        return dateA.compareTo(dateB);
-      });
+        .listen(
+          (snapshot) {
+            print(
+              '[DoctorAppointmentsController] Received ${snapshot.docs.length} bookings',
+            );
 
-      bookings.assignAll(sortedDocs);
-      isLoading.value = false;
-    }, onError: (e) {
-      print('[DoctorAppointmentsController] ERROR fetching bookings: $e');
-      isLoading.value = false;
-    });
+            final sortedDocs = snapshot.docs.toList();
+            sortedDocs.sort((a, b) {
+              final dataA = a.data() as Map<String, dynamic>;
+              final dataB = b.data() as Map<String, dynamic>;
+              final dateA = (dataA['schedule']?['date'] as String?) ?? '';
+              final dateB = (dataB['schedule']?['date'] as String?) ?? '';
+              return dateA.compareTo(dateB);
+            });
+
+            bookings.assignAll(sortedDocs);
+            isLoading.value = false;
+          },
+          onError: (e) {
+            print('[DoctorAppointmentsController] ERROR fetching bookings: $e');
+            isLoading.value = false;
+          },
+        );
   }
 
   @override

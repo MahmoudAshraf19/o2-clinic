@@ -46,7 +46,10 @@ class SearchResultTile extends StatelessWidget {
                     : null,
               ),
               child: (imageUrl == null || imageUrl!.isEmpty)
-                  ? Icon(icon ?? Icons.category_rounded, color: AppColors.primary)
+                  ? Icon(
+                      icon ?? Icons.category_rounded,
+                      color: AppColors.primary,
+                    )
                   : null,
             ),
             const SizedBox(width: 14),
@@ -59,7 +62,6 @@ class SearchResultTile extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      
                       fontSize: 14,
                       fontWeight: FontWeight.w800,
                       color: AppColors.textPrimary,

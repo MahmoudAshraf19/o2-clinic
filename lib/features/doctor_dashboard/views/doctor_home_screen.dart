@@ -14,30 +14,19 @@ class DoctorHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: CustomScrollView(
         slivers: [
           const DoctorHomeTopCover(),
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 16),
-          ),
-          const SliverToBoxAdapter(
-            child: QuickActionsWidget(),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 16),
-          ),
-          const SliverToBoxAdapter(
-            child: NextPatientWidget(),
-          ),
-          const SliverToBoxAdapter(
-            child: PastAppointmentsWidget(),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 32),
-          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          const SliverToBoxAdapter(child: QuickActionsWidget()),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          const SliverToBoxAdapter(child: NextPatientWidget()),
+          const SliverToBoxAdapter(child: PastAppointmentsWidget()),
+          const SliverToBoxAdapter(child: SizedBox(height: 32)),
         ],
       ),
     );
   }
 }
+

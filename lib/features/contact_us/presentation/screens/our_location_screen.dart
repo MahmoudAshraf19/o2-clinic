@@ -27,7 +27,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
 
   Set<Marker> _markers = {};
   Set<Polyline> _polylines = {};
-  
+
   bool _isDrawingRoute = false;
 
   final String _googleMapsApiKey = "AIzaSyBNKXPbgmEG6gxOrdVHkqDo1pWQXsRH0Sc";
@@ -38,7 +38,12 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
     print("[OurLocationScreen] Initialized");
   }
 
-  void _onMapCreated(GoogleMapController c, LatLng clinicLocation, String name, String city) {
+  void _onMapCreated(
+    GoogleMapController c,
+    LatLng clinicLocation,
+    String name,
+    String city,
+  ) {
     print("[OurLocationScreen] Map created. Clinic location: $clinicLocation");
     mapController = c;
     setState(() {
@@ -51,7 +56,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
         ),
       );
     });
-    
+
     // Automatically open the info window to show the message
     Future.delayed(const Duration(milliseconds: 500), () {
       mapController?.showMarkerInfoWindow(const MarkerId('clinic_location'));
@@ -59,8 +64,10 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
   }
 
   Future<void> _drawRoute(LatLng clinicLocation) async {
-    print("[OurLocationScreen] 'Take Me There' clicked. Starting route drawing process...");
-    
+    print(
+      "[OurLocationScreen] 'Take Me There' clicked. Starting route drawing process...",
+    );
+
     setState(() {
       _isDrawingRoute = true;
     });
@@ -68,15 +75,21 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
     try {
       print("[OurLocationScreen] Checking location services...");
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      
+
       String lang = Get.locale?.languageCode ?? 'en';
-      String errorTitle = lang == 'ar' ? 'عفواً' : (lang == 'he' ? 'שגיאה' : 'Error');
-      String servicesDisabledMsg = lang == 'ar' 
-          ? 'يرجى تفعيل خدمات الموقع للاستمرار.' 
-          : (lang == 'he' ? 'אנא הפעל את שירותי המיקום כדי להמשיך.' : 'Please enable Location Services to continue.');
+      String errorTitle = lang == 'ar'
+          ? 'عفواً'
+          : (lang == 'he' ? 'שגיאה' : 'Error');
+      String servicesDisabledMsg = lang == 'ar'
+          ? 'يرجى تفعيل خدمات الموقع للاستمرار.'
+          : (lang == 'he'
+                ? 'אנא הפעל את שירותי המיקום כדי להמשיך.'
+                : 'Please enable Location Services to continue.');
       String permissionDeniedMsg = lang == 'ar'
           ? 'لن نتمكن من الاستمرار حتى نحصل على صلاحيات الموقع منك.'
-          : (lang == 'he' ? 'לא נוכל להמשיך עד שנקבל ממך הרשאות מיקום.' : 'We cannot proceed until we get location permissions from you.');
+          : (lang == 'he'
+                ? 'לא נוכל להמשיך עד שנקבל ממך הרשאות מיקום.'
+                : 'We cannot proceed until we get location permissions from you.');
 
       if (!serviceEnabled) {
         print("[OurLocationScreen] Error: Location services are disabled.");
@@ -89,7 +102,9 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
       print("[OurLocationScreen] Checking location permissions...");
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
-        print("[OurLocationScreen] Permissions denied, requesting permissions...");
+        print(
+          "[OurLocationScreen] Permissions denied, requesting permissions...",
+        );
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
           print("[OurLocationScreen] Error: Location permissions are denied.");
@@ -100,7 +115,9 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
       }
 
       if (permission == LocationPermission.deniedForever) {
-        print("[OurLocationScreen] Error: Location permissions are permanently denied.");
+        print(
+          "[OurLocationScreen] Error: Location permissions are permanently denied.",
+        );
         Get.snackbar(errorTitle, permissionDeniedMsg);
         await Geolocator.openAppSettings();
         setState(() => _isDrawingRoute = false);
@@ -111,7 +128,9 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-      print("[OurLocationScreen] User location found: ${position.latitude}, ${position.longitude}");
+      print(
+        "[OurLocationScreen] User location found: ${position.latitude}, ${position.longitude}",
+      );
 
       LatLng userLocation = LatLng(position.latitude, position.longitude);
 
@@ -122,26 +141,35 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
             markerId: const MarkerId('user_location'),
             position: userLocation,
             infoWindow: const InfoWindow(title: "My Location"),
-            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+              BitmapDescriptor.hueBlue,
+            ),
           ),
         );
       });
 
-      print("[OurLocationScreen] Requesting route from Google Maps Directions API via HTTP...");
-      final String urlStr = 'https://maps.googleapis.com/maps/api/directions/json?origin=${position.latitude},${position.longitude}&destination=${clinicLocation.latitude},${clinicLocation.longitude}&mode=driving&key=$_googleMapsApiKey';
-      
+      print(
+        "[OurLocationScreen] Requesting route from Google Maps Directions API via HTTP...",
+      );
+      final String urlStr =
+          'https://maps.googleapis.com/maps/api/directions/json?origin=${position.latitude},${position.longitude}&destination=${clinicLocation.latitude},${clinicLocation.longitude}&mode=driving&key=$_googleMapsApiKey';
+
       final response = await http.get(Uri.parse(urlStr));
-      print("[OurLocationScreen] Directions API response status: ${response.statusCode}");
-      
+      print(
+        "[OurLocationScreen] Directions API response status: ${response.statusCode}",
+      );
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final status = data['status'];
         print("[OurLocationScreen] Directions API status: $status");
-        
+
         if (status == 'OK') {
           final points = data['routes'][0]['overview_polyline']['points'];
           List<LatLng> polylineCoordinates = _decodePolyline(points);
-          print("[OurLocationScreen] Route found! Decoding ${polylineCoordinates.length} points...");
+          print(
+            "[OurLocationScreen] Route found! Decoding ${polylineCoordinates.length} points...",
+          );
 
           Polyline polyline = Polyline(
             polylineId: const PolylineId("route"),
@@ -154,71 +182,107 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
             _polylines.add(polyline);
           });
 
-          print("[OurLocationScreen] Route drawn successfully. Adjusting camera bounds...");
+          print(
+            "[OurLocationScreen] Route drawn successfully. Adjusting camera bounds...",
+          );
           LatLngBounds bounds;
-          if (position.latitude > clinicLocation.latitude && position.longitude > clinicLocation.longitude) {
-            bounds = LatLngBounds(southwest: clinicLocation, northeast: userLocation);
+          if (position.latitude > clinicLocation.latitude &&
+              position.longitude > clinicLocation.longitude) {
+            bounds = LatLngBounds(
+              southwest: clinicLocation,
+              northeast: userLocation,
+            );
           } else if (position.longitude > clinicLocation.longitude) {
             bounds = LatLngBounds(
-                southwest: LatLng(position.latitude, clinicLocation.longitude),
-                northeast: LatLng(clinicLocation.latitude, position.longitude));
+              southwest: LatLng(position.latitude, clinicLocation.longitude),
+              northeast: LatLng(clinicLocation.latitude, position.longitude),
+            );
           } else if (position.latitude > clinicLocation.latitude) {
             bounds = LatLngBounds(
-                southwest: LatLng(clinicLocation.latitude, position.longitude),
-                northeast: LatLng(position.latitude, clinicLocation.longitude));
+              southwest: LatLng(clinicLocation.latitude, position.longitude),
+              northeast: LatLng(position.latitude, clinicLocation.longitude),
+            );
           } else {
-            bounds = LatLngBounds(southwest: userLocation, northeast: clinicLocation);
+            bounds = LatLngBounds(
+              southwest: userLocation,
+              northeast: clinicLocation,
+            );
           }
-          
-          mapController?.animateCamera(CameraUpdate.newLatLngBounds(bounds, 100));
+
+          mapController?.animateCamera(
+            CameraUpdate.newLatLngBounds(bounds, 100),
+          );
           print("[OurLocationScreen] Route drawing process complete.");
         } else {
           final errorMessage = data['error_message'] ?? 'Unknown API Error';
           if (status == 'ZERO_RESULTS') {
-             print("[OurLocationScreen] No driving route found. Drawing direct straight line...");
-             List<LatLng> polylineCoordinates = [userLocation, clinicLocation];
-             Polyline polyline = Polyline(
-               polylineId: const PolylineId("route"),
-               color: AppColors.primary,
-               points: polylineCoordinates,
-               width: 5,
-               patterns: [PatternItem.dash(30), PatternItem.gap(20)],
-             );
-             setState(() {
-               _polylines.add(polyline);
-             });
+            print(
+              "[OurLocationScreen] No driving route found. Drawing direct straight line...",
+            );
+            List<LatLng> polylineCoordinates = [userLocation, clinicLocation];
+            Polyline polyline = Polyline(
+              polylineId: const PolylineId("route"),
+              color: AppColors.primary,
+              points: polylineCoordinates,
+              width: 5,
+              patterns: [PatternItem.dash(30), PatternItem.gap(20)],
+            );
+            setState(() {
+              _polylines.add(polyline);
+            });
 
-             LatLngBounds bounds;
-             if (position.latitude > clinicLocation.latitude && position.longitude > clinicLocation.longitude) {
-               bounds = LatLngBounds(southwest: clinicLocation, northeast: userLocation);
-             } else if (position.longitude > clinicLocation.longitude) {
-               bounds = LatLngBounds(
-                   southwest: LatLng(position.latitude, clinicLocation.longitude),
-                   northeast: LatLng(clinicLocation.latitude, position.longitude));
-             } else if (position.latitude > clinicLocation.latitude) {
-               bounds = LatLngBounds(
-                   southwest: LatLng(clinicLocation.latitude, position.longitude),
-                   northeast: LatLng(position.latitude, clinicLocation.longitude));
-             } else {
-               bounds = LatLngBounds(southwest: userLocation, northeast: clinicLocation);
-             }
-             mapController?.animateCamera(CameraUpdate.newLatLngBounds(bounds, 100));
-             Get.snackbar('Route Info', 'No roads found between your location and the clinic. Showing direct distance.');
-          } else if (status == 'REQUEST_DENIED' || status == 'OVER_QUERY_LIMIT') {
-             print("[OurLocationScreen] Billing/API Key issue detected. Opening native map fallback...");
-             _launchMapsUrl(clinicLocation.latitude, clinicLocation.longitude);
+            LatLngBounds bounds;
+            if (position.latitude > clinicLocation.latitude &&
+                position.longitude > clinicLocation.longitude) {
+              bounds = LatLngBounds(
+                southwest: clinicLocation,
+                northeast: userLocation,
+              );
+            } else if (position.longitude > clinicLocation.longitude) {
+              bounds = LatLngBounds(
+                southwest: LatLng(position.latitude, clinicLocation.longitude),
+                northeast: LatLng(clinicLocation.latitude, position.longitude),
+              );
+            } else if (position.latitude > clinicLocation.latitude) {
+              bounds = LatLngBounds(
+                southwest: LatLng(clinicLocation.latitude, position.longitude),
+                northeast: LatLng(position.latitude, clinicLocation.longitude),
+              );
+            } else {
+              bounds = LatLngBounds(
+                southwest: userLocation,
+                northeast: clinicLocation,
+              );
+            }
+            mapController?.animateCamera(
+              CameraUpdate.newLatLngBounds(bounds, 100),
+            );
+            Get.snackbar(
+              'Route Info',
+              'No roads found between your location and the clinic. Showing direct distance.',
+            );
+          } else if (status == 'REQUEST_DENIED' ||
+              status == 'OVER_QUERY_LIMIT') {
+            print(
+              "[OurLocationScreen] Billing/API Key issue detected. Opening native map fallback...",
+            );
+            _launchMapsUrl(clinicLocation.latitude, clinicLocation.longitude);
           } else {
-             Get.snackbar('API Error', 'Directions API: $status. $errorMessage');
+            Get.snackbar('API Error', 'Directions API: $status. $errorMessage');
           }
         }
       } else {
-         print("[OurLocationScreen] HTTP Request failed with status ${response.statusCode}");
-         Get.snackbar('Error', 'Failed to fetch directions.');
+        print(
+          "[OurLocationScreen] HTTP Request failed with status ${response.statusCode}",
+        );
+        Get.snackbar('Error', 'Failed to fetch directions.');
       }
     } catch (e) {
       print("[OurLocationScreen] Exception caught during route drawing: $e");
       if (kIsWeb) {
-        print("[OurLocationScreen] Web CORS detected. Falling back to native Google Maps URL...");
+        print(
+          "[OurLocationScreen] Web CORS detected. Falling back to native Google Maps URL...",
+        );
         _launchMapsUrl(clinicLocation.latitude, clinicLocation.longitude);
       } else {
         Get.snackbar('Error', 'An error occurred while drawing the route.');
@@ -233,7 +297,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: ClipRect(
@@ -246,11 +310,13 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                   color: Color(0xFF1A2020),
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
-                  
                 ),
               ),
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF1A2020)),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: Color(0xFF1A2020),
+                ),
                 onPressed: () => Get.back(),
               ),
               backgroundColor: Colors.white.withOpacity(0.55),
@@ -263,7 +329,9 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
       extendBodyBehindAppBar: true,
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.primary),
+          );
         }
         if (controller.error.value.isNotEmpty) {
           return Center(child: Text(controller.error.value));
@@ -275,7 +343,10 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
         }
 
         final loc = data.location!;
-        final center = LatLng(loc.coordinates.latitude, loc.coordinates.longitude);
+        final center = LatLng(
+          loc.coordinates.latitude,
+          loc.coordinates.longitude,
+        );
 
         return Stack(
           children: [
@@ -288,125 +359,153 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
               markers: _markers,
               polylines: _polylines,
               onMapCreated: (c) => _onMapCreated(
-                c, 
-                center, 
-                controller.getLocalizedText(loc.name, context), 
-                controller.getLocalizedText(loc.city, context)
+                c,
+                center,
+                controller.getLocalizedText(loc.name, context),
+                controller.getLocalizedText(loc.city, context),
               ),
             ),
-            
+
             // Draggable Bottom Sheet
             DraggableScrollableSheet(
               initialChildSize: 0.38,
               minChildSize: 0.15,
               maxChildSize: 0.55,
-              builder: (BuildContext context, ScrollController scrollController) {
-                return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF0F766E).withValues(alpha: 0.15),
-                        blurRadius: 24,
-                        offset: const Offset(0, -8),
+              builder:
+                  (BuildContext context, ScrollController scrollController) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 16,
                       ),
-                    ],
-                  ),
-                  child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Drag Handle
-                        Center(
-                          child: Container(
-                            width: 48,
-                            height: 4,
-                            margin: const EdgeInsets.only(bottom: 24),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFE6ECEC),
-                              borderRadius: BorderRadius.circular(2),
-                            ),
-                          ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(32),
                         ),
-                        
-                        Text(
-                          controller.getLocalizedText(loc.name, context),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w800,
-                            color: Color(0xFF1A2020),
-                            
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(
+                              0xFF0F766E,
+                            ).withValues(alpha: 0.15),
+                            blurRadius: 24,
+                            offset: const Offset(0, -8),
                           ),
-                        ),
-                        const SizedBox(height: 12),
-                        Row(
+                        ],
+                      ),
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(Icons.location_on_rounded, color: AppColors.primary, size: 20),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                controller.getLocalizedText(loc.address, context),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xFF546868),
-                                  height: 1.5,
+                            // Drag Handle
+                            Center(
+                              child: Container(
+                                width: 48,
+                                height: 4,
+                                margin: const EdgeInsets.only(bottom: 24),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFE6ECEC),
+                                  borderRadius: BorderRadius.circular(2),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 24),
-                        Row(
-                          children: [
-                            _ContactButton(
-                              icon: Icons.phone_rounded,
-                              label: AppLocalizations.of(context)!.callUs,
-                              onTap: () => _launchUrl('tel:${data.contact?.phone}'),
-                            ),
-                            const SizedBox(width: 16),
-                            _ContactButton(
-                              icon: Icons.email_rounded,
-                              label: AppLocalizations.of(context)!.emailUs,
-                              onTap: () => _launchUrl('mailto:${data.contact?.email}'),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 24),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton.icon(
-                            onPressed: _isDrawingRoute ? null : () => _drawRoute(center),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              elevation: 0,
-                            ),
-                            icon: _isDrawingRoute 
-                                ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                                : const Icon(Icons.directions_rounded),
-                            label: Text(
-                              AppLocalizations.of(context)!.takeMeThere,
+
+                            Text(
+                              controller.getLocalizedText(loc.name, context),
                               style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w800,
+                                color: Color(0xFF1A2020),
                               ),
                             ),
-                          ),
+                            const SizedBox(height: 12),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Icon(
+                                  Icons.location_on_rounded,
+                                  color: AppColors.primary,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    controller.getLocalizedText(
+                                      loc.address,
+                                      context,
+                                    ),
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Color(0xFF546868),
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 24),
+                            Row(
+                              children: [
+                                _ContactButton(
+                                  icon: Icons.phone_rounded,
+                                  label: AppLocalizations.of(context)!.callUs,
+                                  onTap: () =>
+                                      _launchUrl('tel:${data.contact?.phone}'),
+                                ),
+                                const SizedBox(width: 16),
+                                _ContactButton(
+                                  icon: Icons.email_rounded,
+                                  label: AppLocalizations.of(context)!.emailUs,
+                                  onTap: () => _launchUrl(
+                                    'mailto:${data.contact?.email}',
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 24),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton.icon(
+                                onPressed: _isDrawingRoute
+                                    ? null
+                                    : () => _drawRoute(center),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primary,
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  elevation: 0,
+                                ),
+                                icon: _isDrawingRoute
+                                    ? const SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2,
+                                        ),
+                                      )
+                                    : const Icon(Icons.directions_rounded),
+                                label: Text(
+                                  AppLocalizations.of(context)!.takeMeThere,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 16), // Bottom padding
+                          ],
                         ),
-                        const SizedBox(height: 16), // Bottom padding
-                      ],
-                    ),
-                  ),
-                );
-              },
+                      ),
+                    );
+                  },
             ),
           ],
         );
@@ -452,7 +551,8 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
   }
 
   Future<void> _launchMapsUrl(double lat, double lng) async {
-    final String googleMapsUrl = 'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng';
+    final String googleMapsUrl =
+        'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng';
     final Uri url = Uri.parse(googleMapsUrl);
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       Get.snackbar('Error', 'Could not open maps');
@@ -503,3 +603,4 @@ class _ContactButton extends StatelessWidget {
     );
   }
 }
+

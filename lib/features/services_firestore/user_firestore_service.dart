@@ -28,14 +28,22 @@ class UserFirestoreService {
     if (_cachedUid == uid && _cachedDocId != null) return _cachedDocId;
 
     try {
-      final q = await _firestore.collection(FirestorePaths.users).where('uid', isEqualTo: uid).limit(1).get(const GetOptions(source: Source.cache));
+      final q = await _firestore
+          .collection(FirestorePaths.users)
+          .where('uid', isEqualTo: uid)
+          .limit(1)
+          .get(const GetOptions(source: Source.cache));
       if (q.docs.isNotEmpty) {
         _cachedDocId = q.docs.first.id;
         return _cachedDocId;
       }
     } catch (_) {}
 
-    final q2 = await _firestore.collection(FirestorePaths.users).where('uid', isEqualTo: uid).limit(1).get(const GetOptions(source: Source.server));
+    final q2 = await _firestore
+        .collection(FirestorePaths.users)
+        .where('uid', isEqualTo: uid)
+        .limit(1)
+        .get(const GetOptions(source: Source.server));
     if (q2.docs.isNotEmpty) {
       _cachedDocId = q2.docs.first.id;
       return _cachedDocId;
@@ -44,11 +52,14 @@ class UserFirestoreService {
   }
 
   /// Gets user data with an intelligent caching strategy.
-  /// 
+  ///
   /// 1. Checks memory cache first.
   /// 2. If not in memory, tries Firestore persistent cache (offline-safe).
   /// 3. Only hits the server if necessary.
-  Future<Map<String, dynamic>?> getUser(String uid, {bool forceRefresh = false}) async {
+  Future<Map<String, dynamic>?> getUser(
+    String uid, {
+    bool forceRefresh = false,
+  }) async {
     // 1. Memory Cache
     if (!forceRefresh && _cachedUid == uid && _cachedUserData != null) {
       return _cachedUserData;
@@ -64,7 +75,7 @@ class UserFirestoreService {
             .collection(FirestorePaths.users)
             .doc(docId)
             .get(const GetOptions(source: Source.cache));
-        
+
         if (cacheDoc.exists) {
           _cachedUserData = cacheDoc.data();
           _cachedUid = uid;
@@ -85,7 +96,7 @@ class UserFirestoreService {
       _cachedUserData = serverDoc.data();
       _cachedUid = uid;
     }
-    
+
     return _cachedUserData;
   }
 
@@ -139,14 +150,14 @@ class UserFirestoreService {
         .limit(1)
         .snapshots()
         .map((snapshot) {
-      if (snapshot.docs.isNotEmpty) {
-        final data = snapshot.docs.first.data();
-        if (_cachedUid == uid) _cachedUserData = data;
-        _cachedDocId = snapshot.docs.first.id;
-        _cachedUid = uid;
-        return data;
-      }
-      return null;
-    });
+          if (snapshot.docs.isNotEmpty) {
+            final data = snapshot.docs.first.data();
+            if (_cachedUid == uid) _cachedUserData = data;
+            _cachedDocId = snapshot.docs.first.id;
+            _cachedUid = uid;
+            return data;
+          }
+          return null;
+        });
   }
 }

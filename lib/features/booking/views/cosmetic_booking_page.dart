@@ -23,33 +23,57 @@ class CosmeticBookingPage extends StatelessWidget {
     final lang = Get.locale?.languageCode ?? 'en';
     if (lang == 'ar') {
       switch (text) {
-        case "Booking": return "الحجز";
-        case "Select Date & Time": return "حدد التاريخ والوقت";
-        case "Cosmetic Department": return "قسم التجميل";
-        case "Direct Services": return "خدمات مباشرة";
-        case "Available Days": return "الأيام المتاحة";
-        case "No available dates": return "لا توجد أيام متاحة";
-        case "Time": return "الوقت";
-        case "No available time slots.": return "لا توجد مواعيد متاحة.";
-        case "Book Appointment": return "احجز الموعد";
-        case "Selection Required": return "مطلوب الاختيار";
-        case "Please select a date first": return "الرجاء تحديد التاريخ أولا";
-        case "Please select a time first": return "الرجاء تحديد الوقت أولا";
+        case "Booking":
+          return "الحجز";
+        case "Select Date & Time":
+          return "حدد التاريخ والوقت";
+        case "Cosmetic Department":
+          return "قسم التجميل";
+        case "Direct Services":
+          return "خدمات مباشرة";
+        case "Available Days":
+          return "الأيام المتاحة";
+        case "No available dates":
+          return "لا توجد أيام متاحة";
+        case "Time":
+          return "الوقت";
+        case "No available time slots.":
+          return "لا توجد مواعيد متاحة.";
+        case "Book Appointment":
+          return "احجز الموعد";
+        case "Selection Required":
+          return "مطلوب الاختيار";
+        case "Please select a date first":
+          return "الرجاء تحديد التاريخ أولا";
+        case "Please select a time first":
+          return "الرجاء تحديد الوقت أولا";
       }
     } else if (lang == 'he') {
       switch (text) {
-        case "Booking": return "הזמנה";
-        case "Select Date & Time": return "בחר תאריך ושעה";
-        case "Cosmetic Department": return "מחלקת קוסמטיקה";
-        case "Direct Services": return "שירותים ישירים";
-        case "Available Days": return "ימים פנויים";
-        case "No available dates": return "אין תאריכים פנויים";
-        case "Time": return "זמן";
-        case "No available time slots.": return "אין זמנים פנויים.";
-        case "Book Appointment": return "הזמן תור";
-        case "Selection Required": return "נדרשת בחירה";
-        case "Please select a date first": return "נא לבחור תאריך תחילה";
-        case "Please select a time first": return "נא לבחור זמן תחילה";
+        case "Booking":
+          return "הזמנה";
+        case "Select Date & Time":
+          return "בחר תאריך ושעה";
+        case "Cosmetic Department":
+          return "מחלקת קוסמטיקה";
+        case "Direct Services":
+          return "שירותים ישירים";
+        case "Available Days":
+          return "ימים פנויים";
+        case "No available dates":
+          return "אין תאריכים פנויים";
+        case "Time":
+          return "זמן";
+        case "No available time slots.":
+          return "אין זמנים פנויים.";
+        case "Book Appointment":
+          return "הזמן תור";
+        case "Selection Required":
+          return "נדרשת בחירה";
+        case "Please select a date first":
+          return "נא לבחור תאריך תחילה";
+        case "Please select a time first":
+          return "נא לבחור זמן תחילה";
       }
     }
     return text;
@@ -63,7 +87,7 @@ class CosmeticBookingPage extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -143,7 +167,6 @@ class CosmeticBookingPage extends StatelessWidget {
                 fontSize: 13,
                 color: AppColors.textSecondary.withValues(alpha: 0.75),
                 fontWeight: FontWeight.w500,
-                
               ),
             ),
           ],
@@ -154,11 +177,11 @@ class CosmeticBookingPage extends StatelessWidget {
 
   Widget _serviceCard(BuildContext context) {
     final langCode = Get.locale?.languageCode ?? 'en';
-    
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppColors.border),
         boxShadow: [
@@ -172,15 +195,15 @@ class CosmeticBookingPage extends StatelessWidget {
       child: Row(
         children: [
           ClipOval(
-            child: model.image.isNotEmpty 
-            ? CachedImageWidget(imageUrl: 
-                model.image,
-                width: 56,
-                height: 56,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => _fallbackAvatar(),
-              )
-            : _fallbackAvatar(),
+            child: model.image.isNotEmpty
+                ? CachedImageWidget(
+                    imageUrl: model.image,
+                    width: 56,
+                    height: 56,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => _fallbackAvatar(),
+                  )
+                : _fallbackAvatar(),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -190,7 +213,6 @@ class CosmeticBookingPage extends StatelessWidget {
                 Text(
                   model.getName(langCode),
                   style: const TextStyle(
-                    
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
                     color: AppColors.textPrimary,
@@ -198,14 +220,11 @@ class CosmeticBookingPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  (model.id == 'Sleep_study' || model.id == 'pulmonary_function')
+                  (model.id == 'Sleep_study' ||
+                          model.id == 'pulmonary_function')
                       ? _t("Direct Services")
                       : _t("Cosmetic Department"),
-                  style: TextStyle(
-                    color: AppColors.grey,
-                    fontSize: 13,
-                    
-                  ),
+                  style: TextStyle(color: AppColors.grey, fontSize: 13),
                 ),
               ],
             ),
@@ -220,18 +239,22 @@ class CosmeticBookingPage extends StatelessWidget {
       width: 56,
       height: 56,
       color: AppColors.primary.withValues(alpha: 0.1),
-      child: Icon(
-        model.getBadgeIcon(),
-        color: AppColors.primary,
-        size: 28,
-      ),
+      child: Icon(model.getBadgeIcon(), color: AppColors.primary, size: 28),
     );
   }
 
   String _getDayShort(int weekday) {
     final lang = Get.locale?.languageCode ?? 'en';
     if (lang == 'ar') {
-      const daysAr = ['الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت', 'الأحد'];
+      const daysAr = [
+        'الاثنين',
+        'الثلاثاء',
+        'الأربعاء',
+        'الخميس',
+        'الجمعة',
+        'السبت',
+        'الأحد',
+      ];
       return daysAr[weekday - 1];
     } else if (lang == 'he') {
       const daysHe = ['שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת', 'ראשון'];
@@ -241,7 +264,10 @@ class CosmeticBookingPage extends StatelessWidget {
     return days[weekday - 1];
   }
 
-  Widget _daysSection(BuildContext context, CosmeticAppointmentBookingController controller) {
+  Widget _daysSection(
+    BuildContext context,
+    CosmeticAppointmentBookingController controller,
+  ) {
     return Obx(() {
       final selected = controller.selectedDate.value;
       final dates = controller.availableDates;
@@ -271,16 +297,13 @@ class CosmeticBookingPage extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.cardBackground,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(18),
                 border: Border.all(color: AppColors.border),
               ),
               child: Text(
                 _t("No available dates"),
-                style: TextStyle(
-                  
-                  color: AppColors.grey,
-                ),
+                style: TextStyle(color: AppColors.grey),
               ),
             )
           else
@@ -298,18 +321,27 @@ class CosmeticBookingPage extends StatelessWidget {
                     onTap: () => controller.selectDate(date),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 250),
-                      margin: EdgeInsets.only(right: isAr ? 0 : 10, left: isAr ? 10 : 0),
+                      margin: EdgeInsets.only(
+                        right: isAr ? 0 : 10,
+                        left: isAr ? 10 : 0,
+                      ),
                       width: 72,
                       decoration: BoxDecoration(
-                        color: isSelected ? AppColors.primary : AppColors.cardBackground,
+                        color: isSelected
+                            ? AppColors.primary
+                            : AppColors.cardBackground,
                         borderRadius: BorderRadius.circular(18),
                         border: Border.all(
-                          color: isSelected ? AppColors.primary : AppColors.border,
+                          color: isSelected
+                              ? AppColors.primary
+                              : AppColors.border,
                         ),
                         boxShadow: isSelected
                             ? [
                                 BoxShadow(
-                                  color: AppColors.primary.withValues(alpha: 0.25),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.25,
+                                  ),
                                   blurRadius: 12,
                                   offset: const Offset(0, 6),
                                 ),
@@ -322,7 +354,6 @@ class CosmeticBookingPage extends StatelessWidget {
                           Text(
                             _getDayShort(date.weekday),
                             style: TextStyle(
-                              
                               fontSize: 11,
                               letterSpacing: 1.5,
                               color: isSelected ? Colors.white : AppColors.grey,
@@ -332,10 +363,11 @@ class CosmeticBookingPage extends StatelessWidget {
                           Text(
                             "${date.day}",
                             style: TextStyle(
-                              
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
-                              color: isSelected ? Colors.white : AppColors.textPrimary,
+                              color: isSelected
+                                  ? Colors.white
+                                  : AppColors.textPrimary,
                             ),
                           ),
                         ],
@@ -350,7 +382,10 @@ class CosmeticBookingPage extends StatelessWidget {
     });
   }
 
-  Widget _timeSection(BuildContext context, CosmeticAppointmentBookingController controller) {
+  Widget _timeSection(
+    BuildContext context,
+    CosmeticAppointmentBookingController controller,
+  ) {
     return Obx(() {
       if (controller.selectedDate.value == null) {
         return const SizedBox();
@@ -389,21 +424,27 @@ class CosmeticBookingPage extends StatelessWidget {
                 onTap: () => controller.selectTime(t),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
-                    color: isSelected ? AppColors.primary : AppColors.cardBackground,
+                    color: isSelected
+                        ? AppColors.primary
+                        : AppColors.cardBackground,
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
                       color: isSelected ? AppColors.primary : AppColors.border,
                     ),
                   ),
                   child: Text(
-                    t.replaceAll('AM', AppLocalizations.of(context)!.am).replaceAll('PM', AppLocalizations.of(context)!.pm),
+                    t
+                        .replaceAll('AM', AppLocalizations.of(context)!.am)
+                        .replaceAll('PM', AppLocalizations.of(context)!.pm),
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       color: isSelected ? Colors.white : AppColors.textPrimary,
-                      
                     ),
                   ),
                 ),
@@ -425,13 +466,21 @@ class CosmeticBookingPage extends StatelessWidget {
         onPressed: () {
           final date = controller.selectedDate.value;
           if (date == null) {
-            Get.snackbar(_t('Selection Required'), _t('Please select a date first'), snackPosition: SnackPosition.TOP);
+            Get.snackbar(
+              _t('Selection Required'),
+              _t('Please select a date first'),
+              snackPosition: SnackPosition.TOP,
+            );
             return;
           }
 
           final time = controller.selectedTime.value;
           if (time.isEmpty) {
-            Get.snackbar(_t('Selection Required'), _t('Please select a time first'), snackPosition: SnackPosition.TOP);
+            Get.snackbar(
+              _t('Selection Required'),
+              _t('Please select a time first'),
+              snackPosition: SnackPosition.TOP,
+            );
             return;
           }
 
@@ -455,13 +504,11 @@ class CosmeticBookingPage extends StatelessWidget {
         ),
         child: Text(
           _t("Book Appointment"),
-          style: TextStyle(
-            
-            fontWeight: FontWeight.w800,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w800, color: Colors.white),
         ),
       ),
     );
   }
 }
+
+

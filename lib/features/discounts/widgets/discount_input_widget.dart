@@ -34,11 +34,14 @@ class DiscountInputWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    _getTranslatedString('enter_coupon', Get.locale?.languageCode),
+                    _getTranslatedString(
+                      'enter_coupon',
+                      Get.locale?.languageCode,
+                    ),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      
+
                       color: AppColors.textPrimary,
                     ),
                   ),
@@ -52,16 +55,23 @@ class DiscountInputWidget {
               TextField(
                 controller: textController,
                 decoration: InputDecoration(
-                  hintText: _getTranslatedString('coupon_hint', Get.locale?.languageCode),
+                  hintText: _getTranslatedString(
+                    'coupon_hint',
+                    Get.locale?.languageCode,
+                  ),
                   filled: true,
                   fillColor: AppColors.surface,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
-                    borderSide: BorderSide(color: AppColors.border.withValues(alpha: 0.5)),
+                    borderSide: BorderSide(
+                      color: AppColors.border.withValues(alpha: 0.5),
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
-                    borderSide: BorderSide(color: AppColors.border.withValues(alpha: 0.5)),
+                    borderSide: BorderSide(
+                      color: AppColors.border.withValues(alpha: 0.5),
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
@@ -76,7 +86,7 @@ class DiscountInputWidget {
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: Text(
                       discountController.verificationError.value,
-                      style: const TextStyle(color: Colors.red, fontSize: 13, ),
+                      style: const TextStyle(color: Colors.red, fontSize: 13),
                     ),
                   );
                 }
@@ -99,8 +109,11 @@ class DiscountInputWidget {
                         ? null
                         : () async {
                             if (textController.text.trim().isEmpty) return;
-                            await discountController.verifyDiscountCode(textController.text.trim());
-                            if (discountController.currentValidCode.value != null) {
+                            await discountController.verifyDiscountCode(
+                              textController.text.trim(),
+                            );
+                            if (discountController.currentValidCode.value !=
+                                null) {
                               Get.back();
                             }
                           },
@@ -108,15 +121,20 @@ class DiscountInputWidget {
                         ? const SizedBox(
                             width: 24,
                             height: 24,
-                            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
                           )
                         : Text(
-                            _getTranslatedString('apply', Get.locale?.languageCode),
+                            _getTranslatedString(
+                              'apply',
+                              Get.locale?.languageCode,
+                            ),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              
                             ),
                           ),
                   );

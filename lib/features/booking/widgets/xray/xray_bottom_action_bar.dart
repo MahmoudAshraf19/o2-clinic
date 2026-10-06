@@ -23,9 +23,7 @@ class XRayBottomActionBar extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.white,
           border: Border(
-            top: BorderSide(
-              color: AppColors.border.withValues(alpha: .7),
-            ),
+            top: BorderSide(color: AppColors.border.withValues(alpha: .7)),
           ),
         ),
         child: Row(
@@ -35,9 +33,7 @@ class XRayBottomActionBar extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.surface,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(
-                  color: AppColors.border,
-                ),
+                border: Border.all(color: AppColors.border),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -49,7 +45,6 @@ class XRayBottomActionBar extends StatelessWidget {
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textSecondary,
-                      
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -59,7 +54,6 @@ class XRayBottomActionBar extends StatelessWidget {
                       fontSize: 15,
                       fontWeight: FontWeight.w800,
                       color: AppColors.primary,
-                      
                     ),
                   ),
                 ],
@@ -87,14 +81,10 @@ class XRayBottomActionBar extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          
                         ),
                       ),
                       const SizedBox(width: 6),
-                      const Icon(
-                        Icons.arrow_forward_rounded,
-                        size: 18,
-                      ),
+                      const Icon(Icons.arrow_forward_rounded, size: 18),
                     ],
                   ),
                 ),

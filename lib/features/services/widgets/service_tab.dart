@@ -23,18 +23,13 @@ class ServiceTab extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: isSelected
               ? const LinearGradient(
-                  colors: [
-                    AppColors.primary,
-                    AppColors.secondary,
-                  ],
+                  colors: [AppColors.primary, AppColors.secondary],
                 )
               : null,
           color: isSelected ? null : AppColors.surfaceContainer,
           borderRadius: BorderRadius.circular(30),
           border: Border.all(
-            color: isSelected
-                ? Colors.transparent
-                : AppColors.border,
+            color: isSelected ? Colors.transparent : AppColors.border,
           ),
           boxShadow: isSelected
               ? [
@@ -42,7 +37,7 @@ class ServiceTab extends StatelessWidget {
                     color: AppColors.primary.withValues(alpha: .25),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
-                  )
+                  ),
                 ]
               : [],
         ),
@@ -50,9 +45,7 @@ class ServiceTab extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-              color: isSelected
-                  ? Colors.white
-                  : AppColors.grey,
+              color: isSelected ? Colors.white : AppColors.grey,
               fontWeight: FontWeight.w600,
               fontSize: 14,
             ),

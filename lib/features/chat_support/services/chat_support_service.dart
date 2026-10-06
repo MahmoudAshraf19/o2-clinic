@@ -72,8 +72,12 @@ class SupportChatService {
   }
 
   Stream<List<ChatMessage>> watchMessages(String uid) {
-    return _messagesRef(uid).orderBy('createdAt').snapshots(includeMetadataChanges: true).map(
-          (snap) => snap.docs.map((e) => ChatMessage.fromMap(e.data())).toList(),
+    return _messagesRef(uid)
+        .orderBy('createdAt')
+        .snapshots(includeMetadataChanges: true)
+        .map(
+          (snap) =>
+              snap.docs.map((e) => ChatMessage.fromMap(e.data())).toList(),
         );
   }
 
@@ -101,20 +105,16 @@ class SupportChatService {
 
     batch.set(_messagesRef(uid).doc(message.id), message.toMap());
 
-    batch.set(
-      _chatRef(uid),
-      {
-        'uid': uid,
-        'title': 'O2 Clinic',
-        'avatarPath': 'assets/images/logos/logo.png',
-        'updatedAt': Timestamp.fromDate(now),
-        'lastMessage': text,
-        'lastMessageKind': 'text',
-        'lastMessageAt': Timestamp.fromDate(now),
-        'lastSender': 'user',
-      },
-      SetOptions(merge: true),
-    );
+    batch.set(_chatRef(uid), {
+      'uid': uid,
+      'title': 'O2 Clinic',
+      'avatarPath': 'assets/images/logos/logo.png',
+      'updatedAt': Timestamp.fromDate(now),
+      'lastMessage': text,
+      'lastMessageKind': 'text',
+      'lastMessageAt': Timestamp.fromDate(now),
+      'lastSender': 'user',
+    }, SetOptions(merge: true));
 
     await batch.commit();
   }
@@ -136,7 +136,11 @@ class SupportChatService {
       bytes: bytes,
     );
 
-    final safeFileName = fileName ?? (kIsWeb ? localPath.split('/').last : localPath.split(Platform.pathSeparator).last);
+    final safeFileName =
+        fileName ??
+        (kIsWeb
+            ? localPath.split('/').last
+            : localPath.split(Platform.pathSeparator).last);
 
     final message = ChatMessage(
       id: _id(),
@@ -155,23 +159,16 @@ class SupportChatService {
 
     batch.set(_messagesRef(uid).doc(message.id), message.toMap());
 
-    batch.set(
-      _chatRef(uid),
-      {
-        'uid': uid,
-        'title': 'O2 Clinic',
-        'avatarPath': 'assets/images/logos/logo.png',
-        'updatedAt': Timestamp.fromDate(now),
-        'lastMessage': _buildLastMessageLabel(
-          kind: kind,
-          caption: caption,
-        ),
-        'lastMessageKind': kind.name,
-        'lastMessageAt': Timestamp.fromDate(now),
-        'lastSender': 'user',
-      },
-      SetOptions(merge: true),
-    );
+    batch.set(_chatRef(uid), {
+      'uid': uid,
+      'title': 'O2 Clinic',
+      'avatarPath': 'assets/images/logos/logo.png',
+      'updatedAt': Timestamp.fromDate(now),
+      'lastMessage': _buildLastMessageLabel(kind: kind, caption: caption),
+      'lastMessageKind': kind.name,
+      'lastMessageAt': Timestamp.fromDate(now),
+      'lastSender': 'user',
+    }, SetOptions(merge: true));
 
     await batch.commit();
   }
@@ -192,7 +189,7 @@ class SupportChatService {
     };
 
     final ref = _storage.ref('support_chats/$uid/$folder/$fileName');
-    
+
     if (kIsWeb && bytes != null) {
       final task = await ref.putData(bytes);
       return task.ref.getDownloadURL();

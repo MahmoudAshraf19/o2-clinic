@@ -6,7 +6,8 @@ import '../models/notification_model.dart';
 import '../services/notifications_firestore_service.dart';
 
 class NotificationsController extends GetxController {
-  final NotificationsFirestoreService _service = NotificationsFirestoreService();
+  final NotificationsFirestoreService _service =
+      NotificationsFirestoreService();
   final RxList<NotificationModel> notifications = <NotificationModel>[].obs;
   StreamSubscription? _sub;
 
@@ -28,12 +29,12 @@ class NotificationsController extends GetxController {
       _sub = _service.watchUserNotifications(uid).listen((data) {
         final seenBookingIds = <String>{};
         final deduplicated = <NotificationModel>[];
-        
+
         for (final n in data) {
           // Removed deduplication to allow all booking updates to show
           deduplicated.add(n);
         }
-        
+
         notifications.value = deduplicated;
       });
     } else {
@@ -93,8 +94,11 @@ class NotificationsController extends GetxController {
 
   List<NotificationModel> get earlierNotifications {
     final yesterday = DateTime.now().subtract(const Duration(days: 1));
-    final startOfYesterday =
-        DateTime(yesterday.year, yesterday.month, yesterday.day);
+    final startOfYesterday = DateTime(
+      yesterday.year,
+      yesterday.month,
+      yesterday.day,
+    );
     return notifications.where((n) {
       if (!n.isRead) return false;
       return n.createdAt.isBefore(startOfYesterday);

@@ -23,10 +23,10 @@ class HtmlContentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         iconTheme: const IconThemeData(color: AppColors.primary),
         title: Text(
           title,
@@ -39,7 +39,10 @@ class HtmlContentScreen extends StatelessWidget {
         ),
       ),
       body: FutureBuilder<DocumentSnapshot>(
-        future: FirebaseFirestore.instance.collection(collection).doc(docId).get(),
+        future: FirebaseFirestore.instance
+            .collection(collection)
+            .doc(docId)
+            .get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -49,10 +52,7 @@ class HtmlContentScreen extends StatelessWidget {
             return Center(
               child: Text(
                 'Error loading content',
-                style: TextStyle(
-                  
-                  color: AppColors.textSecondary,
-                ),
+                style: TextStyle(color: AppColors.textSecondary),
               ),
             );
           }
@@ -61,10 +61,7 @@ class HtmlContentScreen extends StatelessWidget {
             return Center(
               child: Text(
                 'Content not found',
-                style: TextStyle(
-                  
-                  color: AppColors.textSecondary,
-                ),
+                style: TextStyle(color: AppColors.textSecondary),
               ),
             );
           }
@@ -76,10 +73,7 @@ class HtmlContentScreen extends StatelessWidget {
             return Center(
               child: Text(
                 'Content is empty',
-                style: TextStyle(
-                  
-                  color: AppColors.textSecondary,
-                ),
+                style: TextStyle(color: AppColors.textSecondary),
               ),
             );
           }
@@ -90,7 +84,6 @@ class HtmlContentScreen extends StatelessWidget {
               data: htmlData,
               style: {
                 "body": Style(
-                  
                   color: AppColors.textPrimary,
                   fontSize: FontSize(14.0),
                 ),
@@ -102,3 +95,4 @@ class HtmlContentScreen extends StatelessWidget {
     );
   }
 }
+

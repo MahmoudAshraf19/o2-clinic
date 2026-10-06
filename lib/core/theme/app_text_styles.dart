@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 import 'app_fonts.dart';
+
 class AppTextStyles {
   AppTextStyles._();
 
@@ -12,49 +13,42 @@ class AppTextStyles {
       fontWeight: FontWeight.w700,
       color: AppColors.black,
       height: 1.2,
-      
     ),
     headlineMedium: TextStyle(
       fontSize: 28,
       fontWeight: FontWeight.w700,
       color: AppColors.black,
       height: 1.2,
-      
     ),
     titleLarge: TextStyle(
       fontSize: 22,
       fontWeight: FontWeight.w600,
       color: AppColors.black,
       height: 1.3,
-      
     ),
     titleMedium: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w600,
       color: AppColors.black,
       height: 1.3,
-      
     ),
     bodyLarge: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w400,
       color: AppColors.black,
       height: 1.5,
-      
     ),
     bodyMedium: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w400,
       color: AppColors.grey,
       height: 1.5,
-      
     ),
     labelLarge: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w600,
       color: AppColors.white,
       height: 1.2,
-      
     ),
   );
 

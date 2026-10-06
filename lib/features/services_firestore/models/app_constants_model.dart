@@ -14,15 +14,18 @@ class AppConstantsModel {
   factory AppConstantsModel.fromMap(Map<String, dynamic> map) {
     return AppConstantsModel(
       currency: CurrencyModel.fromMap(
-          (map['currency'] as Map<String, dynamic>?) ?? {}),
+        (map['currency'] as Map<String, dynamic>?) ?? {},
+      ),
       languages: (map['languages'] as Map<String, dynamic>? ?? {}).map(
-        (key, value) => MapEntry(
-            key, LanguageModel.fromMap(value as Map<String, dynamic>)),
+        (key, value) =>
+            MapEntry(key, LanguageModel.fromMap(value as Map<String, dynamic>)),
       ),
       version: AppVersionModel.fromMap(
-          (map['version'] as Map<String, dynamic>?) ?? {}),
+        (map['version'] as Map<String, dynamic>?) ?? {},
+      ),
       contactUs: ContactUsModel.fromMap(
-          (map['ContactUs'] as Map<String, dynamic>?) ?? {}),
+        (map['ContactUs'] as Map<String, dynamic>?) ?? {},
+      ),
     );
   }
 
@@ -40,23 +43,14 @@ class CurrencyModel {
   final String name;
   final String symbol;
 
-  CurrencyModel({
-    required this.name,
-    required this.symbol,
-  });
+  CurrencyModel({required this.name, required this.symbol});
 
   factory CurrencyModel.fromMap(Map<String, dynamic> map) {
-    return CurrencyModel(
-      name: map['name'] ?? '',
-      symbol: map['symbol'] ?? '',
-    );
+    return CurrencyModel(name: map['name'] ?? '', symbol: map['symbol'] ?? '');
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'symbol': symbol,
-    };
+    return {'name': name, 'symbol': symbol};
   }
 }
 
@@ -95,20 +89,14 @@ class LanguageModel {
 class AppVersionModel {
   final String appVersion;
 
-  AppVersionModel({
-    required this.appVersion,
-  });
+  AppVersionModel({required this.appVersion});
 
   factory AppVersionModel.fromMap(Map<String, dynamic> map) {
-    return AppVersionModel(
-      appVersion: map['app_version'] ?? '',
-    );
+    return AppVersionModel(appVersion: map['app_version'] ?? '');
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'app_version': appVersion,
-    };
+    return {'app_version': appVersion};
   }
 }
 
@@ -132,10 +120,6 @@ class ContactUsModel {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'Address': address,
-      'Email': email,
-      'Phone': phone,
-    };
+    return {'Address': address, 'Email': email, 'Phone': phone};
   }
 }

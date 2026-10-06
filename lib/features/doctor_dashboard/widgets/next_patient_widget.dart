@@ -24,15 +24,22 @@ class NextPatientWidget extends StatelessWidget {
       final data = doc.data() as Map<String, dynamic>?;
       if (data == null) continue;
 
-      final status = (data['status'] as Map<String, dynamic>?)?['current'] as String? ?? '';
-      if (status != 'upcoming' && status != 'pending' && status != 'confirmed') continue;
+      final status =
+          (data['status'] as Map<String, dynamic>?)?['current'] as String? ??
+          '';
+      if (status != 'upcoming' && status != 'pending' && status != 'confirmed')
+        continue;
 
-      if (data['schedule'] != null && data['schedule']['date'] != null && data['schedule']['time'] != null) {
+      if (data['schedule'] != null &&
+          data['schedule']['date'] != null &&
+          data['schedule']['time'] != null) {
         final dateStr = data['schedule']['date'] as String;
         final timeStr = data['schedule']['time'] as String;
         try {
           final date = DateTime.parse(dateStr);
-          if (date.year == now.year && date.month == now.month && date.day == now.day) {
+          if (date.year == now.year &&
+              date.month == now.month &&
+              date.day == now.day) {
             // Parse time flexibly
             DateTime? parsedTime;
             String startTimeStr = timeStr;
@@ -48,9 +55,16 @@ class NextPatientWidget extends StatelessWidget {
             }
 
             if (parsedTime != null) {
-              final appointmentDateTime = DateTime(now.year, now.month, now.day, parsedTime.hour, parsedTime.minute);
+              final appointmentDateTime = DateTime(
+                now.year,
+                now.month,
+                now.day,
+                parsedTime.hour,
+                parsedTime.minute,
+              );
               // Pick the earliest one for today that is still pending/upcoming
-              if (closestTime == null || appointmentDateTime.isBefore(closestTime)) {
+              if (closestTime == null ||
+                  appointmentDateTime.isBefore(closestTime)) {
                 closestTime = appointmentDateTime;
                 closest = data;
               }
@@ -70,9 +84,15 @@ class NextPatientWidget extends StatelessWidget {
     final doctor = profileCtrl.doctor.value;
     if (doctor == null) return;
 
-    final customerId = (bookingData['user'] as Map<String, dynamic>?)?['userId'] as String? ?? '';
-    final customerName = (bookingData['user'] as Map<String, dynamic>?)?['name'] as String? ?? 'Patient';
-    final customerImage = (bookingData['user'] as Map<String, dynamic>?)?['image'] as String? ?? '';
+    final customerId =
+        (bookingData['user'] as Map<String, dynamic>?)?['userId'] as String? ??
+        '';
+    final customerName =
+        (bookingData['user'] as Map<String, dynamic>?)?['name'] as String? ??
+        'Patient';
+    final customerImage =
+        (bookingData['user'] as Map<String, dynamic>?)?['image'] as String? ??
+        '';
 
     // Create a temporary chat room object to pass
     final ids = [customerId, doctor.id];
@@ -114,7 +134,11 @@ class NextPatientWidget extends StatelessWidget {
             children: [
               Text(
                 l10n.nextPatient,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
               ),
               const SizedBox(height: 16),
               Container(
@@ -127,11 +151,19 @@ class NextPatientWidget extends StatelessWidget {
                 child: Center(
                   child: Column(
                     children: [
-                      Icon(Icons.event_available_rounded, size: 40, color: AppColors.grey.withOpacity(0.5)),
+                      Icon(
+                        Icons.event_available_rounded,
+                        size: 40,
+                        color: AppColors.grey.withOpacity(0.5),
+                      ),
                       const SizedBox(height: 12),
                       Text(
                         l10n.noPatientsToday,
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.grey),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.grey,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -146,10 +178,14 @@ class NextPatientWidget extends StatelessWidget {
       final userMap = nextPatient['user'] as Map<String, dynamic>? ?? {};
       final customerName = userMap['name'] as String? ?? 'Unknown Patient';
       final customerImage = userMap['image'] as String? ?? '';
-      final userId = userMap['auth_uid'] as String? ?? userMap['userId'] as String? ?? '';
-      final timeStr = (nextPatient['schedule'] as Map<String, dynamic>?)?['time'] as String? ?? '';
+      final userId =
+          userMap['auth_uid'] as String? ?? userMap['userId'] as String? ?? '';
+      final timeStr =
+          (nextPatient['schedule'] as Map<String, dynamic>?)?['time']
+              as String? ??
+          '';
       final isOnline = (nextPatient['type'] as String?) == 'online';
-      
+
       // Determine service type safely
       String serviceType = 'Consultation';
       if (nextPatient['service'] != null && nextPatient['service'] is Map) {
@@ -167,7 +203,11 @@ class NextPatientWidget extends StatelessWidget {
               children: [
                 Text(
                   l10n.nextPatient,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -175,16 +215,23 @@ class NextPatientWidget extends StatelessWidget {
                     navCtrl.changeIndex(1); // Go to APPTS tab
                     final apptCtrl = Get.put(DoctorAppointmentsController());
                     apptCtrl.setSelectedTargetDate(DateTime.now());
-                    apptCtrl.targetStatus.value = 'upcoming'; 
+                    apptCtrl.targetStatus.value = 'upcoming';
                   },
                   child: Row(
                     children: [
                       Text(
                         l10n.viewAll,
-                        style: const TextStyle(color: AppColors.grey, fontSize: 13),
+                        style: const TextStyle(
+                          color: AppColors.grey,
+                          fontSize: 13,
+                        ),
                       ),
                       const SizedBox(width: 4),
-                      const Icon(Icons.chevron_right_rounded, color: AppColors.grey, size: 16),
+                      const Icon(
+                        Icons.chevron_right_rounded,
+                        color: AppColors.grey,
+                        size: 16,
+                      ),
                     ],
                   ),
                 ),
@@ -198,7 +245,11 @@ class NextPatientWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: AppColors.primary.withOpacity(0.1)),
                 boxShadow: [
-                  BoxShadow(color: AppColors.primary.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4)),
+                  BoxShadow(
+                    color: AppColors.primary.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
                 ],
               ),
               child: Row(
@@ -211,11 +262,17 @@ class NextPatientWidget extends StatelessWidget {
                     )
                   else if (userId.trim().isNotEmpty)
                     FutureBuilder<DocumentSnapshot>(
-                      future: FirebaseFirestore.instance.collection('users').doc(userId.trim()).get(),
+                      future: FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(userId.trim())
+                          .get(),
                       builder: (context, snapshot) {
                         String fetchedImage = '';
-                        if (snapshot.hasData && snapshot.data != null && snapshot.data!.exists) {
-                          final data = snapshot.data!.data() as Map<String, dynamic>?;
+                        if (snapshot.hasData &&
+                            snapshot.data != null &&
+                            snapshot.data!.exists) {
+                          final data =
+                              snapshot.data!.data() as Map<String, dynamic>?;
                           if (data != null) {
                             fetchedImage = data['image'] as String? ?? '';
                           }
@@ -223,8 +280,15 @@ class NextPatientWidget extends StatelessWidget {
                         return CircleAvatar(
                           radius: 30,
                           backgroundColor: AppColors.primary.withOpacity(0.1),
-                          backgroundImage: fetchedImage.trim().isNotEmpty ? NetworkImage(fetchedImage.trim()) : null,
-                          child: fetchedImage.trim().isEmpty ? const Icon(Icons.person, color: AppColors.primary) : null,
+                          backgroundImage: fetchedImage.trim().isNotEmpty
+                              ? NetworkImage(fetchedImage.trim())
+                              : null,
+                          child: fetchedImage.trim().isEmpty
+                              ? const Icon(
+                                  Icons.person,
+                                  color: AppColors.primary,
+                                )
+                              : null,
                         );
                       },
                     )
@@ -244,20 +308,31 @@ class NextPatientWidget extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 customerName,
-                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.textPrimary,
+                                ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
                                 color: AppColors.primary.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: const Text(
                                 'UPCOMING',
-                                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.primary),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primary,
+                                ),
                               ),
                             ),
                           ],
@@ -265,11 +340,19 @@ class NextPatientWidget extends StatelessWidget {
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            const Icon(Icons.access_time_rounded, size: 14, color: AppColors.textSecondary),
+                            const Icon(
+                              Icons.access_time_rounded,
+                              size: 14,
+                              color: AppColors.textSecondary,
+                            ),
                             const SizedBox(width: 4),
                             Text(
                               timeStr,
-                              style: const TextStyle(fontSize: 14, color: AppColors.textSecondary, fontWeight: FontWeight.w500),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: AppColors.textSecondary,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ],
                         ),
@@ -279,8 +362,13 @@ class NextPatientWidget extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                isOnline ? 'Online - $serviceType' : 'Clinical - $serviceType',
-                                style: const TextStyle(fontSize: 13, color: AppColors.grey),
+                                isOnline
+                                    ? 'Online - $serviceType'
+                                    : 'Clinical - $serviceType',
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grey,
+                                ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -290,18 +378,34 @@ class NextPatientWidget extends StatelessWidget {
                               onPressed: () => _openChat(nextPatient),
                               style: OutlinedButton.styleFrom(
                                 foregroundColor: AppColors.primary,
-                                side: const BorderSide(color: AppColors.primary),
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                side: const BorderSide(
+                                  color: AppColors.primary,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 8,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 minimumSize: Size.zero,
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text(l10n.openChat, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                                  Text(
+                                    l10n.openChat,
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                   const SizedBox(width: 4),
-                                  const Icon(Icons.arrow_forward_rounded, size: 14),
+                                  const Icon(
+                                    Icons.arrow_forward_rounded,
+                                    size: 14,
+                                  ),
                                 ],
                               ),
                             ),

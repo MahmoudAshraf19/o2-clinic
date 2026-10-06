@@ -34,11 +34,11 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 0,
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Colors.transparent,
         toolbarHeight: 60,
         automaticallyImplyLeading: false,
@@ -57,7 +57,9 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
         listenable: _controller,
         builder: (context, _) {
           if (_controller.isLoading) {
-            return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
+            );
           }
 
           if (_controller.errorMessage != null) {
@@ -65,11 +67,18 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.error_outline, color: AppColors.error, size: 48),
+                  const Icon(
+                    Icons.error_outline,
+                    color: AppColors.error,
+                    size: 48,
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     _controller.errorMessage!,
-                    style: const TextStyle(color: AppColors.error, fontSize: 16),
+                    style: const TextStyle(
+                      color: AppColors.error,
+                      fontSize: 16,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
@@ -90,7 +99,8 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppLocalizations.of(context)?.changeLanguage ?? 'Change Language',
+                    AppLocalizations.of(context)?.changeLanguage ??
+                        'Change Language',
                     style: TextStyle(
                       fontFamily: AppFonts.dancingScript,
                       fontSize: 24,
@@ -101,7 +111,10 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    AppLocalizations.of(context)?.selectYourPreferredLanguageFor ?? 'Select your preferred language for a personalized app experience.',
+                    AppLocalizations.of(
+                          context,
+                        )?.selectYourPreferredLanguageFor ??
+                        'Select your preferred language for a personalized app experience.',
                     style: const TextStyle(
                       fontSize: 14,
                       height: 1.5,
@@ -113,15 +126,17 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                   Expanded(
                     child: GridView.builder(
                       itemCount: _controller.languageList.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1 / 1.15,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 1 / 1.15,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                          ),
                       itemBuilder: (context, index) {
                         final data = _controller.languageList[index];
-                        final isSelected = _controller.selectedLanguage?.slug == data.slug;
+                        final isSelected =
+                            _controller.selectedLanguage?.slug == data.slug;
 
                         return GestureDetector(
                           onTap: () {
@@ -129,13 +144,13 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                              color: isSelected 
-                                  ? AppColors.primary.withOpacity(0.08) 
+                              color: isSelected
+                                  ? AppColors.primary.withOpacity(0.08)
                                   : AppColors.surface,
                               borderRadius: BorderRadius.circular(18),
                               border: Border.all(
-                                color: isSelected 
-                                    ? AppColors.primary 
+                                color: isSelected
+                                    ? AppColors.primary
                                     : AppColors.borderSoft,
                                 width: 2,
                               ),
@@ -154,17 +169,23 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(40),
-                                  child: CachedImageWidget(imageUrl: 
-                                    data.image,
+                                  child: CachedImageWidget(
+                                    imageUrl: data.image,
                                     width: 80,
                                     height: 80,
                                     fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) => Container(
-                                      width: 80,
-                                      height: 80,
-                                      color: AppColors.primarySoft,
-                                      child: const Icon(Icons.flag_rounded, color: AppColors.primary, size: 36),
-                                    ),
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(
+                                              width: 80,
+                                              height: 80,
+                                              color: AppColors.primarySoft,
+                                              child: const Icon(
+                                                Icons.flag_rounded,
+                                                color: AppColors.primary,
+                                                size: 36,
+                                              ),
+                                            ),
                                     loadingBuilder: (context, child, loadingProgress) {
                                       if (loadingProgress == null) return child;
                                       return SizedBox(
@@ -173,8 +194,14 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                         child: Center(
                                           child: CircularProgressIndicator(
                                             color: AppColors.primary,
-                                            value: loadingProgress.expectedTotalBytes != null
-                                                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                            value:
+                                                loadingProgress
+                                                        .expectedTotalBytes !=
+                                                    null
+                                                ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
                                                 : null,
                                           ),
                                         ),
@@ -187,10 +214,12 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                   data.title,
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: isSelected 
-                                        ? AppColors.primary 
+                                    color: isSelected
+                                        ? AppColors.primary
                                         : AppColors.textPrimary,
-                                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                                    fontWeight: isSelected
+                                        ? FontWeight.w700
+                                        : FontWeight.w500,
                                   ),
                                 ),
                               ],
@@ -237,3 +266,4 @@ class _TopIconButton extends StatelessWidget {
     );
   }
 }
+

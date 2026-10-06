@@ -144,7 +144,8 @@ class DoctorChatMessage {
       createdAt = DateTime.now();
     }
 
-    final kindRaw = (map['messageType'] ?? map['attachmentType'] ?? 'text').toString();
+    final kindRaw = (map['messageType'] ?? map['attachmentType'] ?? 'text')
+        .toString();
     final kind = switch (kindRaw) {
       'image' => ChatMessageKind.image,
       'video' => ChatMessageKind.video,

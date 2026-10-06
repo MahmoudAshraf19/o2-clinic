@@ -55,15 +55,16 @@ class DoctorModel extends DoctorEntity {
         maxBookingsPerTime: (json['maxBookingsPerTime'] is num)
             ? (json['maxBookingsPerTime'] as num).toInt()
             : 0,
-        yearsExp:
-            (json['yearsExp'] is num) ? (json['yearsExp'] as num).toInt() : 0,
-        patients:
-            (json['patients'] is num) ? (json['patients'] as num).toInt() : 0,
+        yearsExp: (json['yearsExp'] is num)
+            ? (json['yearsExp'] as num).toInt()
+            : 0,
+        patients: (json['patients'] is num)
+            ? (json['patients'] as num).toInt()
+            : 0,
         about: (json['about'] ?? '') as String,
         academicDegrees: (degreesJson is List)
             ? degreesJson
-                .map(
-                  (d) {
+                  .map((d) {
                     if (d is Map) {
                       final map = Map<String, dynamic>.from(d);
                       return AcademicDegreeEntity(
@@ -72,13 +73,13 @@ class DoctorModel extends DoctorEntity {
                       );
                     }
 
-                    return const AcademicDegreeEntity(name: '', description: '');
-                  },
-                )
-                .where(
-                  (d) => d.name.isNotEmpty || d.description.isNotEmpty,
-                )
-                .toList()
+                    return const AcademicDegreeEntity(
+                      name: '',
+                      description: '',
+                    );
+                  })
+                  .where((d) => d.name.isNotEmpty || d.description.isNotEmpty)
+                  .toList()
             : const [],
       );
     } catch (e) {
@@ -100,12 +101,7 @@ class DoctorModel extends DoctorEntity {
       'patients': patients,
       'about': about,
       'academicDegrees': academicDegrees
-          .map(
-            (d) => {
-              'name': d.name,
-              'description': d.description,
-            },
-          )
+          .map((d) => {'name': d.name, 'description': d.description})
           .toList(),
     };
   }

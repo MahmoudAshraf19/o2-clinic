@@ -10,8 +10,6 @@ class UltrasoundModel {
   final int order;
   final List<DaySchedule> availableDays;
 
-
-
   const UltrasoundModel({
     required this.id,
     required this.title,
@@ -30,21 +28,23 @@ class UltrasoundModel {
   }) {
     return UltrasoundModel(
       id: _readString(map, const ['id'], fallback: id),
-      title: _readString(
-        map,
-        const ['name_en', 'title_en', 'nameEn', 'titleEn'],
-        fallback: id,
-      ),
-      description: _readString(
-        map,
-        const ['description_en', 'descriptionEn', 'desc_en', 'descEn'],
-        fallback: '',
-      ),
-      image: _readString(
-        map,
-        const ['image', 'image_url', 'imageUrl'],
-        fallback: '',
-      ),
+      title: _readString(map, const [
+        'name_en',
+        'title_en',
+        'nameEn',
+        'titleEn',
+      ], fallback: id),
+      description: _readString(map, const [
+        'description_en',
+        'descriptionEn',
+        'desc_en',
+        'descEn',
+      ], fallback: ''),
+      image: _readString(map, const [
+        'image',
+        'image_url',
+        'imageUrl',
+      ], fallback: ''),
       price: _readNum(map, const ['price'], fallback: 0).toDouble(),
       isActive: _readBool(map, const ['isActive', 'active'], fallback: true),
       order: _readInt(map, const ['order', 'sort', 'priority'], fallback: 0),
@@ -54,11 +54,7 @@ class UltrasoundModel {
 
   String titleForLanguage(String languageCode) {
     final isArabic = languageCode.toLowerCase().startsWith('ar');
-    final ar = _readString(
-      const <String, dynamic>{},
-      const [],
-      fallback: '',
-    );
+    final ar = _readString(const <String, dynamic>{}, const [], fallback: '');
     if (isArabic && ar.isNotEmpty) {
       return ar;
     }
@@ -70,10 +66,7 @@ class DaySchedule {
   final String day;
   final List<TimeSlot> slots;
 
-  const DaySchedule({
-    required this.day,
-    required this.slots,
-  });
+  const DaySchedule({required this.day, required this.slots});
 }
 
 class TimeSlot {
@@ -90,7 +83,8 @@ class TimeSlot {
   bool get isFull => currentBookings >= maxBookings;
   bool get isAvailable => currentBookings < maxBookings;
 
-  int get remainingSlots => (maxBookings - currentBookings).clamp(0, maxBookings);
+  int get remainingSlots =>
+      (maxBookings - currentBookings).clamp(0, maxBookings);
 }
 
 class UltrasoundData {
@@ -153,11 +147,10 @@ class UltrasoundData {
         final value = Map<String, dynamic>.from(rawValue);
 
         try {
-          final isActive = _readBool(
-            value,
-            const ['isActive', 'active'],
-            fallback: true,
-          );
+          final isActive = _readBool(value, const [
+            'isActive',
+            'active',
+          ], fallback: true);
 
           if (!isActive) {
             print('⚠️  [ULTRASOUND] Skipped "$key" because isActive=false.');
@@ -229,7 +222,8 @@ class UltrasoundData {
     Map<String, dynamic> map, {
     required String seed,
   }) {
-    final raw = map['available_days'] ??
+    final raw =
+        map['available_days'] ??
         map['availableDays'] ??
         map['schedule'] ??
         map['schedules'];
@@ -246,12 +240,7 @@ class UltrasoundData {
 
         if (day.trim().isEmpty) continue;
 
-        parsed.add(
-          DaySchedule(
-            day: day,
-            slots: _parseSlots(slotsRaw),
-          ),
-        );
+        parsed.add(DaySchedule(day: day, slots: _parseSlots(slotsRaw)));
       }
 
       if (parsed.isNotEmpty) return parsed;
@@ -267,12 +256,7 @@ class UltrasoundData {
 
         if (slots.isEmpty) continue;
 
-        parsed.add(
-          DaySchedule(
-            day: day,
-            slots: slots,
-          ),
-        );
+        parsed.add(DaySchedule(day: day, slots: slots));
       }
 
       if (parsed.isNotEmpty) return parsed;
@@ -294,7 +278,9 @@ class UltrasoundData {
         TimeSlot(
           time: _readString(item, const ['time'], fallback: ''),
           maxBookings: _readInt(item, const ['maxBookings'], fallback: 0),
-          currentBookings: _readInt(item, const ['currentBookings'], fallback: 0),
+          currentBookings: _readInt(item, const [
+            'currentBookings',
+          ], fallback: 0),
         ),
       );
     }

@@ -16,12 +16,17 @@ import '../../controllers/radiology_booking_controller.dart';
 import '../../../discounts/controllers/discount_controller.dart';
 import '../../../discounts/widgets/discount_input_widget.dart';
 import 'radiology_booking_success_screen.dart';
+import '../../../chat_support/services/radiology_chat_service.dart';
+import '../../../chat_support/screens/radiology_chat_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
 
 class RadiologyConfirmBookingScreen extends StatefulWidget {
   final RadiologyCategoryModel service;
   final DateTime selectedDate;
   final String selectedTime;
   final String controllerTag;
+  final String bookingId;
 
   const RadiologyConfirmBookingScreen({
     super.key,
@@ -29,18 +34,63 @@ class RadiologyConfirmBookingScreen extends StatefulWidget {
     required this.selectedDate,
     required this.selectedTime,
     required this.controllerTag,
+    required this.bookingId,
   });
 
   @override
-  State<RadiologyConfirmBookingScreen> createState() => _RadiologyConfirmBookingScreenState();
+  State<RadiologyConfirmBookingScreen> createState() =>
+      _RadiologyConfirmBookingScreenState();
 }
 
-class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingScreen> {
+class _RadiologyConfirmBookingScreenState
+    extends State<RadiologyConfirmBookingScreen> {
   bool _isBooking = false;
   final DiscountController discountController = Get.put(DiscountController());
+  final RxNum _determinedPrice = RxNum(-1);
+  StreamSubscription? _chatSub;
+
+  bool _hasEnsuredChat = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      _chatSub = RadiologyChatService.instance
+          .watchChatInfo(widget.bookingId)
+          .listen((doc) {
+            if (doc.exists) {
+              final data = doc.data();
+              if (data != null && data['determinedPrice'] != null) {
+                _determinedPrice.value = (data['determinedPrice'] as num);
+              }
+            }
+          });
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_hasEnsuredChat) {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        RadiologyChatService.instance.ensureConversation(
+          user.uid,
+          widget.bookingId,
+          widget.service.getName(Get.locale?.languageCode ?? 'en'),
+          defaultWelcomeMessage: AppLocalizations.of(
+            context,
+          )?.radiologyChatWelcome,
+        );
+      }
+      _hasEnsuredChat = true;
+    }
+  }
 
   @override
   void dispose() {
+    _chatSub?.cancel();
     discountController.removeDiscountCode();
     super.dispose();
   }
@@ -48,8 +98,7 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
-      bottomNavigationBar: _bottomBar(context),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -57,31 +106,33 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _sectionTitle("Service Details"),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _serviceCard(),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18),
                     _sectionTitle("Appointment Schedule"),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _scheduleCard(),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18),
                     _sectionTitle("Clinic Location"),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _locationCard(),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18),
                     _sectionTitle("Payment Summary"),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _paymentCard(),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     _discountSection(),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18),
                     _sectionTitle("Patient Info"),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _patientCard(),
+                    SizedBox(height: 30),
+                    _bottomBar(context),
                   ],
                 ),
               ),
@@ -110,14 +161,14 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: AppColors.border),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back_ios_new_rounded,
                 size: 18,
                 color: AppColors.primary,
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -133,14 +184,13 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
                   height: 1,
                 ),
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Text(
                 AppLocalizations.of(context)!.reviewAppointmentDetails,
                 style: TextStyle(
                   fontSize: 13,
-                  color: AppColors.textSecondary.withValues(alpha: 0.75),
+                  color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7).withValues(alpha: 0.75),
                   fontWeight: FontWeight.w500,
-                  
                 ),
               ),
             ],
@@ -154,27 +204,45 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
     final lang = Get.locale?.languageCode ?? 'en';
     if (lang == 'ar') {
       switch (text) {
-        case "Service Details": return "تفاصيل الخدمة";
-        case "Appointment Schedule": return "موعد الحجز";
-        case "Clinic Location": return "موقع العيادة";
-        case "Payment Summary": return "ملخص الدفع";
-        case "Patient Info": return "بيانات المريض";
-        case "Name": return "الاسم";
-        case "Phone": return "الهاتف";
-        case "Not linked": return "غير مرتبط";
-        case "Guest Patient": return "مريض زائر";
+        case "Service Details":
+          return "تفاصيل الخدمة";
+        case "Appointment Schedule":
+          return "موعد الحجز";
+        case "Clinic Location":
+          return "موقع العيادة";
+        case "Payment Summary":
+          return "ملخص الدفع";
+        case "Patient Info":
+          return "بيانات المريض";
+        case "Name":
+          return "الاسم";
+        case "Phone":
+          return "الهاتف";
+        case "Not linked":
+          return "غير مرتبط";
+        case "Guest Patient":
+          return "مريض زائر";
       }
     } else if (lang == 'he') {
       switch (text) {
-        case "Service Details": return "פרטי שירות";
-        case "Appointment Schedule": return "מועד התור";
-        case "Clinic Location": return "מיקום המרפאה";
-        case "Payment Summary": return "סיכום תשלום";
-        case "Patient Info": return "פרטי מטופל";
-        case "Name": return "שם";
-        case "Phone": return "טלפון";
-        case "Not linked": return "לא מקושר";
-        case "Guest Patient": return "מטופל אורח";
+        case "Service Details":
+          return "פרטי שירות";
+        case "Appointment Schedule":
+          return "מועד התור";
+        case "Clinic Location":
+          return "מיקום המרפאה";
+        case "Payment Summary":
+          return "סיכום תשלום";
+        case "Patient Info":
+          return "פרטי מטופל";
+        case "Name":
+          return "שם";
+        case "Phone":
+          return "טלפון";
+        case "Not linked":
+          return "לא מקושר";
+        case "Guest Patient":
+          return "מטופל אורח";
       }
     }
     return text;
@@ -202,35 +270,30 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
                 ? CachedNetworkImageProvider(widget.service.image)
                 : null,
             child: widget.service.image.isEmpty
-                ? const Icon(Icons.medical_services, color: Colors.white)
+                ? Icon(Icons.medical_services, color: Colors.white)
                 : null,
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.service.getName('en'),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   AppLocalizations.of(context)!.radiologyDepartment,
-                  style: TextStyle(
-                    color: AppColors.grey,
-                    fontSize: 13,
-                    
-                  ),
+                  style: TextStyle(color: AppColors.grey, fontSize: 13),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.verified, color: AppColors.primary),
+          Icon(Icons.verified, color: AppColors.primary),
         ],
       ),
     );
@@ -246,18 +309,15 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
         children: [
           Row(
             children: [
-              const Icon(Icons.calendar_month, color: AppColors.primary),
-              const SizedBox(width: 8),
+              Icon(Icons.calendar_month, color: AppColors.primary),
+              SizedBox(width: 8),
               Text(
                 dateKey,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  
-                ),
+                style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
@@ -268,10 +328,9 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
               widget.selectedTime
                   .replaceAll('AM', AppLocalizations.of(context)!.am)
                   .replaceAll('PM', AppLocalizations.of(context)!.pm),
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w700,
-                
               ),
             ),
           ),
@@ -284,15 +343,12 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
     return _card(
       child: Row(
         children: [
-          const Icon(Icons.location_on, color: AppColors.primary),
-          const SizedBox(width: 10),
+          Icon(Icons.location_on, color: AppColors.primary),
+          SizedBox(width: 10),
           Expanded(
             child: Text(
               AppLocalizations.of(context)!.o2ClinicMainBranchnfloor1,
-              style: TextStyle(
-                color: AppColors.grey,
-                
-              ),
+              style: TextStyle(color: AppColors.grey),
             ),
           ),
         ],
@@ -301,47 +357,93 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
   }
 
   Widget _paymentCard() {
-    final num originalAmount = num.tryParse(widget.service.price?.toString() ?? '0') ?? 0;
+    return Obx(() {
+      final num originalAmount = _determinedPrice.value;
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border.withValues(alpha: 0.4)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
+      if (originalAmount < 0) {
+        return GestureDetector(
+          onTap: () {
+            Get.to(
+              () => RadiologyChatScreen(
+                bookingId: widget.bookingId,
+                serviceName: widget.service.getName(
+                  Get.locale?.languageCode ?? 'en',
+                ),
+              ),
+            );
+          },
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.primary),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.support_agent,
+                  color: AppColors.primary,
+                  size: 28,
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    AppLocalizations.of(context)!.radiologyPricingInquiryPrompt,
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: AppColors.primary,
+                  size: 16,
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
-      child: Obx(() {
-        final code = discountController.currentValidCode.value;
-        final type = discountController.discountTypes.firstWhereOrNull((t) => t.id == code?.discountTypeId);
-        
-        num finalAmount = originalAmount;
-        num discountAmount = 0;
-        
-        if (code != null && type != null) {
-          if (type.calculationMethod == 'percentage') {
-            discountAmount = (originalAmount * (code.value / 100));
-            if (code.maximumDiscountAmount != null && discountAmount > code.maximumDiscountAmount!) {
-              discountAmount = code.maximumDiscountAmount!;
-            }
-            finalAmount = originalAmount - discountAmount;
-          } else if (type.calculationMethod == 'fixed') {
-            discountAmount = code.value;
-            finalAmount = originalAmount - discountAmount;
-          } else if (type.calculationMethod == 'free') {
-            discountAmount = originalAmount;
-            finalAmount = 0;
-          }
-          if (finalAmount < 0) finalAmount = 0;
-        }
+        );
+      }
 
-        return Column(
+      final code = discountController.currentValidCode.value;
+      final type = discountController.discountTypes.firstWhereOrNull(
+        (t) => t.id == code?.discountTypeId,
+      );
+
+      num finalAmount = originalAmount;
+      num discountAmount = 0;
+
+      if (code != null && type != null) {
+        if (type.calculationMethod == 'percentage') {
+          discountAmount = (originalAmount * (code.value / 100));
+          if (code.maximumDiscountAmount != null &&
+              discountAmount > code.maximumDiscountAmount!) {
+            discountAmount = code.maximumDiscountAmount!;
+          }
+          finalAmount = originalAmount - discountAmount;
+        } else if (type.calculationMethod == 'fixed') {
+          discountAmount = code.value;
+          finalAmount = originalAmount - discountAmount;
+        } else if (type.calculationMethod == 'free') {
+          discountAmount = originalAmount;
+          finalAmount = 0;
+        }
+        if (finalAmount < 0) finalAmount = 0;
+      }
+
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.border.withValues(alpha: 0.4)),
+        ),
+        child: Column(
           children: [
             if (code != null) ...[
               Row(
@@ -351,8 +453,8 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
                     AppLocalizations.of(context)!.paymentSummary,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      
-                      color: AppColors.textPrimary,
+
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                   ),
                   Text(
@@ -361,12 +463,11 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
                       fontSize: 14,
                       decoration: TextDecoration.lineThrough,
                       color: AppColors.grey,
-                      
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -374,17 +475,13 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
                     code.localizedTitle,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      
+
                       color: Colors.green,
                     ),
                   ),
                   Text(
                     "-$discountAmount ${AppConstants.currencySymbol}",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.green,
-                      
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.green),
                   ),
                 ],
               ),
@@ -397,26 +494,25 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
                   AppLocalizations.of(context)!.totalPayment,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    
-                    color: AppColors.textPrimary,
+
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                     fontSize: 16,
                   ),
                 ),
                 Text(
                   "$finalAmount ${AppConstants.currencySymbol}",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
                     color: AppColors.primary,
-                    
                   ),
                 ),
               ],
             ),
           ],
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 
   Widget _discountSection() {
@@ -426,27 +522,28 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
     if (langCode == 'he') askText = 'יש לך קופון הנחה?';
 
     return Obx(() {
+      if (_determinedPrice.value < 0) return const SizedBox.shrink();
+
       if (discountController.currentValidCode.value != null) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
-                const Icon(Icons.check_circle, color: Colors.green, size: 20),
-                const SizedBox(width: 8),
+                Icon(Icons.check_circle, color: Colors.green, size: 20),
+                SizedBox(width: 8),
                 Text(
                   discountController.currentValidCode.value!.code,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
-                    
                   ),
                 ),
               ],
             ),
             TextButton(
               onPressed: () => discountController.removeDiscountCode(),
-              child: const Icon(Icons.close, color: Colors.red, size: 20),
+              child: Icon(Icons.close, color: Colors.red, size: 20),
             ),
           ],
         );
@@ -455,14 +552,18 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
         onTap: () => DiscountInputWidget.show(context),
         child: Row(
           children: [
-            const Icon(Icons.local_offer_outlined, color: AppColors.primary, size: 20),
-            const SizedBox(width: 8),
+            Icon(
+              Icons.local_offer_outlined,
+              color: AppColors.primary,
+              size: 20,
+            ),
+            SizedBox(width: 8),
             Text(
               askText,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w600,
-                
+
                 decoration: TextDecoration.underline,
               ),
             ),
@@ -474,7 +575,9 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
 
   Widget _patientCard() {
     return Obx(() {
-      final globalAuth = Get.isRegistered<GlobalAuthController>() ? Get.find<GlobalAuthController>() : null;
+      final globalAuth = Get.isRegistered<GlobalAuthController>()
+          ? Get.find<GlobalAuthController>()
+          : null;
       final userData = globalAuth?.currentUserData.value;
       final currentUser = FirebaseAuth.instance.currentUser;
 
@@ -482,9 +585,16 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
       String phone = _t("Not linked");
 
       if (userData != null) {
-        name = userData['name'] ?? userData['first_name'] ?? currentUser?.displayName ?? _t("Guest Patient");
+        name =
+            userData['name'] ??
+            userData['first_name'] ??
+            currentUser?.displayName ??
+            _t("Guest Patient");
         if (userData['phone'] != null && userData['phone'] is Map) {
-          phone = userData['phone']['full'] ?? userData['phone']['number'] ?? _t("Not linked");
+          phone =
+              userData['phone']['full'] ??
+              userData['phone']['number'] ??
+              _t("Not linked");
         } else if (userData['phoneNumber'] != null) {
           phone = userData['phoneNumber'].toString();
         }
@@ -497,7 +607,7 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
         child: Column(
           children: [
             _infoRow(_t("Name"), name),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             _infoRow(_t("Phone"), phone),
           ],
         ),
@@ -506,138 +616,154 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
   }
 
   Widget _bottomBar(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 20,
-            color: Colors.black.withValues(alpha: 0.05),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: SizedBox(
-          height: 52,
-          child: ElevatedButton(
+    return SafeArea(
+      child: SizedBox(
+        height: 52,
+        child: Obx(
+          () => ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
               ),
             ),
-            onPressed: _isBooking ? null : () async {
-              setState(() => _isBooking = true);
-              try {
-                final controller = Get.find<RadiologyAppointmentBookingController>(
-                  tag: widget.controllerTag,
-                );
+            onPressed: (_isBooking || _determinedPrice.value < 0)
+                ? null
+                : () async {
+                    setState(() => _isBooking = true);
+                    try {
+                      RadiologyAppointmentBookingController controller;
+                      if (Get.isRegistered<RadiologyAppointmentBookingController>(tag: widget.controllerTag)) {
+                        controller = Get.find<RadiologyAppointmentBookingController>(tag: widget.controllerTag);
+                      } else {
+                        controller = Get.put(RadiologyAppointmentBookingController(widget.service), tag: widget.controllerTag);
+                      }
 
-                // ✅ لو UI عدّل التاريخ/الوقت (احتياطي)
-                controller.selectedDate.value = widget.selectedDate;
-                controller.selectedTime.value = widget.selectedTime;
-                controller.selectTime(widget.selectedTime);
+                      // ✅ لو UI عدّل التاريخ/الوقت (احتياطي)
+                      controller.selectedDate.value = widget.selectedDate;
+                      controller.selectedTime.value = widget.selectedTime;
+                      controller.selectTime(widget.selectedTime);
 
-                if (widget.selectedTime.trim().isEmpty) {
-                  Get.snackbar(
-                    'Error',
-                    'Time is not available',
-                    snackPosition: SnackPosition.TOP,
-                  );
-                  return;
-                }
+                      if (widget.selectedTime.trim().isEmpty) {
+                        Get.snackbar(
+                          'Error',
+                          'Time is not available',
+                          snackPosition: SnackPosition.TOP,
+                        );
+                        return;
+                      }
 
-                Map<String, dynamic>? discountData;
-                final code = discountController.currentValidCode.value;
-                final type = discountController.discountTypes.firstWhereOrNull((t) => t.id == code?.discountTypeId);
-                num finalAmount = num.tryParse(widget.service.price?.toString() ?? '0') ?? 0;
-                num discountAmount = 0;
-                
-                if (code != null && type != null) {
-                  final num originalPrice = num.tryParse(widget.service.price?.toString() ?? '0') ?? 0;
-                  if (type.calculationMethod == 'percentage') {
-                    discountAmount = (originalPrice * (code.value / 100));
-                    if (code.maximumDiscountAmount != null && discountAmount > code.maximumDiscountAmount!) {
-                      discountAmount = code.maximumDiscountAmount!;
+                      Map<String, dynamic>? discountData;
+                      final code = discountController.currentValidCode.value;
+                      final type = discountController.discountTypes
+                          .firstWhereOrNull(
+                            (t) => t.id == code?.discountTypeId,
+                          );
+                      num finalAmount = _determinedPrice.value;
+                      num discountAmount = 0;
+
+                      if (code != null && type != null) {
+                        final num originalPrice = _determinedPrice.value;
+                        if (type.calculationMethod == 'percentage') {
+                          discountAmount = (originalPrice * (code.value / 100));
+                          if (code.maximumDiscountAmount != null &&
+                              discountAmount > code.maximumDiscountAmount!) {
+                            discountAmount = code.maximumDiscountAmount!;
+                          }
+                          finalAmount = originalPrice - discountAmount;
+                        } else if (type.calculationMethod == 'fixed') {
+                          discountAmount = code.value;
+                          finalAmount = originalPrice - discountAmount;
+                        } else if (type.calculationMethod == 'free') {
+                          discountAmount = originalPrice;
+                          finalAmount = 0;
+                        }
+                        if (finalAmount < 0) finalAmount = 0;
+
+                        discountData = {
+                          "code_id": code.id,
+                          "code": code.code,
+                          "type": type.calculationMethod,
+                          "discount_value": discountAmount,
+                          "original_amount": originalPrice,
+                        };
+                      }
+
+                      final res = await controller.confirmBooking(
+                        finalAmount: finalAmount,
+                        discountData: discountData,
+                        existingBookingId: widget.bookingId.isNotEmpty ? widget.bookingId : null,
+                      );
+
+                      if (!res.success) {
+                        debugPrint(
+                          "❌ [RadiologyConfirmBookingScreen] Booking unsuccessful: ${res.message}",
+                        );
+
+                        String userMessage = res.message;
+                        if (userMessage.toLowerCase().contains("failed:") ||
+                            userMessage.toLowerCase().contains("error") ||
+                            userMessage.toLowerCase().contains("exception")) {
+                          userMessage =
+                              'Could not complete your booking at this time. Please try again.';
+                        }
+
+                        Get.snackbar(
+                          'Booking Failed',
+                          userMessage,
+                          snackPosition: SnackPosition.TOP,
+                        );
+                        return;
+                      }
+
+                      // Reset the price so the next booking asks for the price again!
+                      final cUser = FirebaseAuth.instance.currentUser;
+                      if (cUser != null) {
+                        RadiologyChatService.instance.resetDeterminedPrice(
+                          widget.bookingId,
+                        );
+                      }
+
+                      final bookingId = res.bookingId ?? '';
+
+                      Get.to(
+                        () => RadiologyBookingSuccessScreen(
+                          service: widget.service,
+                          selectedDate: widget.selectedDate,
+                          selectedTime: widget.selectedTime,
+                          bookingId: bookingId,
+                        ),
+                        transition: Transition.rightToLeftWithFade,
+                        duration: const Duration(milliseconds: 350),
+                      );
+                    } catch (e, st) {
+                      debugPrint("❌ [RadiologyConfirmBookingScreen] Error: $e");
+                      debugPrint(
+                        "❌ [RadiologyConfirmBookingScreen] StackTrace: $st",
+                      );
+                      Get.snackbar(
+                        'Booking Failed',
+                        'An unexpected error occurred. Please try again.',
+                        snackPosition: SnackPosition.TOP,
+                      );
+                    } finally {
+                      if (mounted) setState(() => _isBooking = false);
                     }
-                    finalAmount = originalPrice - discountAmount;
-                  } else if (type.calculationMethod == 'fixed') {
-                    discountAmount = code.value;
-                    finalAmount = originalPrice - discountAmount;
-                  } else if (type.calculationMethod == 'free') {
-                    discountAmount = originalPrice;
-                    finalAmount = 0;
-                  }
-                  if (finalAmount < 0) finalAmount = 0;
-                  
-                  discountData = {
-                    "code_id": code.id,
-                    "code": code.code,
-                    "type": type.calculationMethod,
-                    "discount_value": discountAmount,
-                    "original_amount": originalPrice,
-                  };
-                }
-
-                final res = await controller.confirmBooking(
-                  finalAmount: finalAmount,
-                  discountData: discountData,
-                );
-
-                if (!res.success) {
-                  debugPrint("❌ [RadiologyConfirmBookingScreen] Booking unsuccessful: ${res.message}");
-                  
-                  String userMessage = res.message;
-                  if (userMessage.toLowerCase().contains("failed:") || 
-                      userMessage.toLowerCase().contains("error") || 
-                      userMessage.toLowerCase().contains("exception")) {
-                    userMessage = 'Could not complete your booking at this time. Please try again.';
-                  }
-
-                  Get.snackbar(
-                    'Booking Failed',
-                    userMessage,
-                    snackPosition: SnackPosition.TOP,
-                  );
-                  return;
-                }
-
-                final bookingId = res.bookingId ?? '';
-
-                Get.to(
-                  () => RadiologyBookingSuccessScreen(
-                    service: widget.service,
-                    selectedDate: widget.selectedDate,
-                    selectedTime: widget.selectedTime,
-                    bookingId: bookingId,
-                  ),
-                  transition: Transition.rightToLeftWithFade,
-                  duration: const Duration(milliseconds: 350),
-                );
-              } catch (e, st) {
-                debugPrint("❌ [RadiologyConfirmBookingScreen] Error: $e");
-                debugPrint("❌ [RadiologyConfirmBookingScreen] StackTrace: $st");
-                Get.snackbar(
-                  'Booking Failed',
-                  'An unexpected error occurred. Please try again.',
-                  snackPosition: SnackPosition.TOP,
-                );
-              } finally {
-                if (mounted) setState(() => _isBooking = false);
-              }
-            },
+                  },
             child: _isBooking
-                ? const SizedBox(
+                ? SizedBox(
                     width: 24,
                     height: 24,
-                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).cardColor,
+                      strokeWidth: 2,
+                    ),
                   )
                 : Text(
                     AppLocalizations.of(context)!.confirm,
                     style: TextStyle(
-                      color: Colors.white,
-                      
+                      color: Theme.of(context).cardColor,
+
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -652,16 +778,9 @@ class _RadiologyConfirmBookingScreenState extends State<RadiologyConfirmBookingS
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 16,
-            offset: const Offset(0, 6),
-          ),
-        ],
       ),
       child: child,
     );
@@ -679,20 +798,21 @@ class _infoRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: TextStyle(color: AppColors.grey, ),
-        ),
+        Text(title, style: TextStyle(color: AppColors.grey)),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w700,
-            
-            color: AppColors.textPrimary,
+
+            color: Theme.of(context).textTheme.bodyLarge?.color,
           ),
         ),
       ],
     );
   }
 }
+
+
+
+
 

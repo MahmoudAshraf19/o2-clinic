@@ -32,8 +32,5 @@ class AcademicDegreeEntity {
   final String name;
   final String description;
 
-  const AcademicDegreeEntity({
-    required this.name,
-    required this.description,
-  });
+  const AcademicDegreeEntity({required this.name, required this.description});
 }

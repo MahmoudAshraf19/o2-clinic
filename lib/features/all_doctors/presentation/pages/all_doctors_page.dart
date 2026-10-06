@@ -32,6 +32,7 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
   bool _isLoading = true;
   String _selectedCategory = 'All';
   String? _errorMessage;
+  int _displayCount = 10;
 
   String _query = '';
 
@@ -70,7 +71,7 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
       for (final item in specialized) {
         final englishLabel = item.nameEn;
         String localized = englishLabel;
-        
+
         if (locale == 'ar' && item.nameAr.isNotEmpty) {
           localized = item.nameAr;
         } else if (locale == 'he' && item.nameHe.isNotEmpty) {
@@ -78,20 +79,23 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
         }
 
         if (englishLabel.isNotEmpty) {
-           final key = _normalizeCategory(englishLabel);
-           categoryMap[key] = localized;
+          final key = _normalizeCategory(englishLabel);
+          categoryMap[key] = localized;
         }
-        
+
         if (item.id.isNotEmpty) {
-           final idKey = _normalizeCategory(item.id);
-           categoryMap[idKey] = localized;
+          final idKey = _normalizeCategory(item.id);
+          categoryMap[idKey] = localized;
         }
       }
 
       for (final doctor in doctors) {
         final key = _normalizeCategory(doctor.specialty);
         if (key.isNotEmpty) {
-          categoryMap.putIfAbsent(key, () => _beautifyCategory(doctor.specialty));
+          categoryMap.putIfAbsent(
+            key,
+            () => _beautifyCategory(doctor.specialty),
+          );
         }
       }
 
@@ -136,6 +140,7 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
   void _onSearchChanged(String value) {
     setState(() {
       _query = value.trim().toLowerCase();
+      _displayCount = 10;
       _filteredDoctors = _buildFilteredDoctors();
     });
   }
@@ -143,6 +148,7 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
   void _onCategorySelected(String category) {
     setState(() {
       _selectedCategory = category;
+      _displayCount = 10;
       _filteredDoctors = _buildFilteredDoctors();
     });
   }
@@ -161,10 +167,11 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
           doctor.titleAr.toLowerCase().contains(query) ||
           doctor.titleHe.toLowerCase().contains(query);
 
-      final localizedSpecialty = _categoryMap[_normalizeCategory(doctor.specialty)] ?? _beautifyCategory(doctor.specialty);
+      final localizedSpecialty =
+          _categoryMap[_normalizeCategory(doctor.specialty)] ??
+          _beautifyCategory(doctor.specialty);
       final matchesCategory =
-          _selectedCategory == 'All' ||
-          localizedSpecialty == _selectedCategory;
+          _selectedCategory == 'All' || localizedSpecialty == _selectedCategory;
 
       return matchesSearch && matchesCategory;
     }).toList();
@@ -182,7 +189,10 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
 
   String _normalizeCategory(String value) {
     return value
-        .replaceAll(RegExp(r'[^a-zA-Z0-9\u0600-\u06FF\u0590-\u05FF\s]'), ' ') // support arabic/hebrew if needed, but mainly for english special chars
+        .replaceAll(
+          RegExp(r'[^a-zA-Z0-9\u0600-\u06FF\u0590-\u05FF\s]'),
+          ' ',
+        ) // support arabic/hebrew if needed, but mainly for english special chars
         .trim()
         .toLowerCase()
         .replaceAll(RegExp(r'\s+'), ' ');
@@ -250,11 +260,11 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
             GestureDetector(
               onTap: widget.onBack ?? () => Navigator.of(context).pop(),
               child: Container(
-                width: 44,
-                height: 44,
+                width: 42,
+                height: 42,
                 decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(14),
+                  color: AppColors.surface,
+                  borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: AppColors.border),
                 ),
                 child: const Icon(
@@ -275,7 +285,7 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.primary,
+                    color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary,
                     fontFamily: AppFonts.dancingScript,
                     height: 1,
                   ),
@@ -285,7 +295,7 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
                   AppLocalizations.of(context)!.chooseYourSpecialist,
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.textSecondary.withOpacity(0.75),
+                    color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withOpacity(0.75),
                     fontWeight: FontWeight.w500,
                     fontFamily: AppFonts.inter,
                   ),
@@ -301,14 +311,17 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: _refresh,
-          child: CustomScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            slivers: [
-              SliverToBoxAdapter(child: _buildTopSection()),
+        child: Column(
+          children: [
+            _buildTopSection(),
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: _refresh,
+                child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
               SliverPadding(
                 padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
                 sliver: SliverToBoxAdapter(
@@ -339,7 +352,9 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
                   hasScrollBody: false,
                   child: Center(
                     child: Text(
-                      _errorMessage == 'Failed to load doctors' ? AppLocalizations.of(context)!.failedToLoadDoctors : _errorMessage!,
+                      _errorMessage == 'Failed to load doctors'
+                          ? AppLocalizations.of(context)!.failedToLoadDoctors
+                          : _errorMessage!,
                       style: const TextStyle(
                         fontFamily: AppFonts.inter,
                         fontSize: 16,
@@ -379,21 +394,38 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate((context, index) {
+                      if (index == _displayCount && _displayCount < _filteredDoctors.length) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: OutlinedButton(
+                            onPressed: () {
+                              setState(() {
+                                _displayCount += 10;
+                              });
+                            },
+                            child: Text(Localizations.localeOf(context).languageCode == 'ar' ? 'عرض المزيد' : 'Load More'),
+                          ),
+                        );
+                      }
+
                       final doctor = _filteredDoctors[index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 16),
                         child: DoctorCard(
                           doctor: doctor,
-                          localizedSpecialty: _categories[_normalizeCategory(doctor.specialty)],
+                          localizedSpecialty:
+                              _categories[_normalizeCategory(doctor.specialty)],
                           onViewProfile: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) =>
-                                    DoctorProfilePage(
-                                      doctor: doctor,
-                                      localizedSpecialty: _categories[_normalizeCategory(doctor.specialty)],
-                                    ),
+                                builder: (_) => DoctorProfilePage(
+                                  doctor: doctor,
+                                  localizedSpecialty:
+                                      _categories[_normalizeCategory(
+                                        doctor.specialty,
+                                      )],
+                                ),
                               ),
                             );
                           },
@@ -401,21 +433,26 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) =>
-                                    DoctorProfilePage(
-                                      doctor: doctor,
-                                      localizedSpecialty: _categories[_normalizeCategory(doctor.specialty)],
-                                    ),
+                                builder: (_) => DoctorProfilePage(
+                                  doctor: doctor,
+                                  localizedSpecialty:
+                                      _categories[_normalizeCategory(
+                                        doctor.specialty,
+                                      )],
+                                ),
                               ),
                             );
                           },
                         ),
                       );
-                    }, childCount: _filteredDoctors.length),
+                    }, childCount: _displayCount < _filteredDoctors.length ? _displayCount + 1 : _filteredDoctors.length),
                   ),
                 ),
-            ],
+              ],
+            ),
           ),
+        ),
+          ],
         ),
       ),
     );

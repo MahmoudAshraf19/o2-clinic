@@ -13,6 +13,7 @@ import '../../doctors/views/doctors_screen.dart';
 import '../controllers/cosmetic_controller.dart';
 import '../models/cosmetic_model.dart';
 import '../models/cosmetic_category_model.dart';
+
 class CosmeticCards extends StatelessWidget {
   const CosmeticCards({super.key});
 
@@ -114,17 +115,18 @@ class _CosmeticCardState extends State<CosmeticCard> {
       backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
-          decoration: const BoxDecoration(
-            color: AppColors.scaffoldBackground,
+          decoration: BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                child: CachedImageWidget(imageUrl: 
-                  widget.model.image,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(24),
+                ),
+                child: CachedImageWidget(
+                  imageUrl: widget.model.image,
                   height: 200,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -156,7 +158,9 @@ class _CosmeticCardState extends State<CosmeticCard> {
                               width: 22,
                               height: 22,
                               decoration: BoxDecoration(
-                                color: AppColors.primary.withValues(alpha: 0.12),
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.12,
+                                ),
                                 shape: BoxShape.circle,
                               ),
                               child: const Icon(
@@ -187,18 +191,23 @@ class _CosmeticCardState extends State<CosmeticCard> {
                       text: "Book Now",
                       onPressed: () {
                         Navigator.pop(context);
-                        Get.to(() => CosmeticBookingPage(
-                          model: CosmeticCategoryModel(
-                            id: widget.model.id,
-                            image: widget.model.image,
-                            isActive: widget.model.isActive,
-                            order: 0,
-                            nameMap: {'en': widget.model.titleEn, 'ar': widget.model.titleAr},
-                            descMap: {},
-                            availabilityDay: widget.model.availabilityDay,
-                            price: widget.model.price.toString(),
+                        Get.to(
+                          () => CosmeticBookingPage(
+                            model: CosmeticCategoryModel(
+                              id: widget.model.id,
+                              image: widget.model.image,
+                              isActive: widget.model.isActive,
+                              order: 0,
+                              nameMap: {
+                                'en': widget.model.titleEn,
+                                'ar': widget.model.titleAr,
+                              },
+                              descMap: {},
+                              availabilityDay: widget.model.availabilityDay,
+                              price: widget.model.price.toString(),
+                            ),
                           ),
-                        ));
+                        );
                       },
                       type: CommonButtonType.primary,
                       size: CommonButtonSize.large,
@@ -233,7 +242,9 @@ class _CosmeticCardState extends State<CosmeticCard> {
             borderRadius: BorderRadius.circular(18),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withValues(alpha: hovered ? 0.18 : 0.08),
+                color: AppColors.primary.withValues(
+                  alpha: hovered ? 0.18 : 0.08,
+                ),
                 blurRadius: hovered ? 24 : 14,
                 offset: const Offset(0, 10),
               ),
@@ -247,8 +258,8 @@ class _CosmeticCardState extends State<CosmeticCard> {
                   child: AnimatedScale(
                     duration: const Duration(milliseconds: 400),
                     scale: hovered ? 1.06 : 1.0,
-                    child: CachedImageWidget(imageUrl: 
-                      m.image,
+                    child: CachedImageWidget(
+                      imageUrl: m.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -309,3 +320,5 @@ class _CosmeticCardState extends State<CosmeticCard> {
     );
   }
 }
+
+

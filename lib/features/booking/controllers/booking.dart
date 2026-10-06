@@ -86,14 +86,14 @@ class BookingFirestoreService {
       // time could be: "14:00", "01:00 PM", or "14:00 - 17:00"
       final clean = time.split('-').first.trim();
       final parts = clean.split(':');
-      
+
       var h = int.tryParse(parts[0].trim()) ?? 0;
       final rest = parts.length > 1 ? parts[1].trim() : '00';
-      
+
       var min = 0;
       bool isPM = clean.toLowerCase().contains('pm');
       bool isAM = clean.toLowerCase().contains('am');
-      
+
       if (isPM || isAM) {
         min = int.tryParse(rest.split(' ')[0]) ?? 0;
         if (isPM && h < 12) h += 12;
@@ -153,20 +153,34 @@ class BookingFirestoreService {
         DocumentReference? discountRef;
         DocumentSnapshot? discountSnap;
         if (discountData != null && discountData['code_id'] != null) {
-          discountRef = _firestore.collection("discount_codes").doc(discountData['code_id']);
+          discountRef = _firestore
+              .collection("discount_codes")
+              .doc(discountData['code_id']);
           discountSnap = await tx.get(discountRef);
-          
+
           if (discountSnap.exists) {
             final data = discountSnap.data() as Map<String, dynamic>? ?? {};
             final status = data['status'] as String?;
             final usageLimit = (data['usage_limit'] ?? -1) as int;
             final usedCount = (data['used_count'] ?? 0) as int;
-            
+
             if (status != 'active') {
-              return BookingResult(success: false, message: _getDiscountErrorMessage('not_active'), bookingId: null, bookedCount: 0, maxBookings: 0);
+              return BookingResult(
+                success: false,
+                message: _getDiscountErrorMessage('not_active'),
+                bookingId: null,
+                bookedCount: 0,
+                maxBookings: 0,
+              );
             }
             if (usageLimit != -1 && usedCount >= usageLimit) {
-              return BookingResult(success: false, message: _getDiscountErrorMessage('limit_reached'), bookingId: null, bookedCount: 0, maxBookings: 0);
+              return BookingResult(
+                success: false,
+                message: _getDiscountErrorMessage('limit_reached'),
+                bookingId: null,
+                bookedCount: 0,
+                maxBookings: 0,
+              );
             }
           }
         }
@@ -190,7 +204,8 @@ class BookingFirestoreService {
         // ✅ Sequential ID logic
         int currentSeq = 1000;
         if (counterSnap.exists) {
-          currentSeq = ((counterSnap.data()?['clinical'] ?? 1000) as num).toInt();
+          currentSeq = ((counterSnap.data()?['clinical'] ?? 1000) as num)
+              .toInt();
         }
         final newSeq = currentSeq + 1;
 
@@ -213,12 +228,14 @@ class BookingFirestoreService {
         }
 
         tx.set(counterRef, {'clinical': newSeq}, SetOptions(merge: true));
-        
-        if (discountRef != null && discountSnap != null && discountSnap.exists) {
+
+        if (discountRef != null &&
+            discountSnap != null &&
+            discountSnap.exists) {
           final data = discountSnap.data() as Map<String, dynamic>? ?? {};
           final usageLimit = (data['usage_limit'] ?? -1) as int;
           final usedCount = (data['used_count'] ?? 0) as int;
-          
+
           final newUsedCount = usedCount + 1;
           final updates = <String, dynamic>{"used_count": newUsedCount};
           if (usageLimit != -1 && newUsedCount >= usageLimit) {
@@ -274,7 +291,10 @@ class BookingFirestoreService {
             if (discountData != null) "discount": discountData,
           },
 
-          "status": {"current": isOnline ? "pending" : "upcoming", "label": isOnline ? "Pending" : "Confirmed"},
+          "status": {
+            "current": isOnline ? "pending" : "upcoming",
+            "label": isOnline ? "Pending" : "Confirmed",
+          },
 
           "timeline": {
             "createdAt": FieldValue.serverTimestamp(),
@@ -295,6 +315,27 @@ class BookingFirestoreService {
         };
 
         tx.set(bookingRef, bookingData);
+
+        // Prepare Admin Notification
+        final adminNotifRef = _firestore.collection('admin_notifications').doc();
+        tx.set(adminNotifRef, {
+          'kind': 'booking.created',
+          'tone': 'success',
+          'title': {
+            'en': 'New Clinical Booking',
+            'ar': 'حجز عيادة جديد'
+          },
+          'body': {
+            'en': 'A new clinical booking has been created by ${user.name} for Doctor ${doctor.nameEn} (ID: $bookingId).',
+            'ar': 'قام ${user.name} بحجز جديد لدى الطبيب ${doctor.nameAr} (رقم: $bookingId).'
+          },
+          'bookingId': bookingId,
+          'link': '/bookings/$bookingId',
+          'actor': user.userId,
+          'read': false,
+          'readAt': null,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
 
         return BookingResult(
           success: true,
@@ -348,36 +389,53 @@ class BookingFirestoreService {
         DocumentReference? discountRef;
         DocumentSnapshot? discountSnap;
         if (discountData != null && discountData['code_id'] != null) {
-          discountRef = _firestore.collection("discount_codes").doc(discountData['code_id']);
+          discountRef = _firestore
+              .collection("discount_codes")
+              .doc(discountData['code_id']);
           discountSnap = await tx.get(discountRef);
-          
+
           if (discountSnap.exists) {
             final data = discountSnap.data() as Map<String, dynamic>? ?? {};
             final status = data['status'] as String?;
             final usageLimit = (data['usage_limit'] ?? -1) as int;
             final usedCount = (data['used_count'] ?? 0) as int;
-            
+
             if (status != 'active') {
-              return BookingResult(success: false, message: _getDiscountErrorMessage('not_active'), bookingId: null, bookedCount: 0, maxBookings: 0);
+              return BookingResult(
+                success: false,
+                message: _getDiscountErrorMessage('not_active'),
+                bookingId: null,
+                bookedCount: 0,
+                maxBookings: 0,
+              );
             }
             if (usageLimit != -1 && usedCount >= usageLimit) {
-              return BookingResult(success: false, message: _getDiscountErrorMessage('limit_reached'), bookingId: null, bookedCount: 0, maxBookings: 0);
+              return BookingResult(
+                success: false,
+                message: _getDiscountErrorMessage('limit_reached'),
+                bookingId: null,
+                bookedCount: 0,
+                maxBookings: 0,
+              );
             }
           }
         }
 
         int currentSeq = 1000;
         if (counterSnap.exists) {
-          currentSeq = ((counterSnap.data()?['imaging'] ?? 1000) as num).toInt();
+          currentSeq = ((counterSnap.data()?['imaging'] ?? 1000) as num)
+              .toInt();
         }
         final newSeq = currentSeq + 1;
         tx.set(counterRef, {'imaging': newSeq}, SetOptions(merge: true));
-        
-        if (discountRef != null && discountSnap != null && discountSnap.exists) {
+
+        if (discountRef != null &&
+            discountSnap != null &&
+            discountSnap.exists) {
           final data = discountSnap.data() as Map<String, dynamic>? ?? {};
           final usageLimit = (data['usage_limit'] ?? -1) as int;
           final usedCount = (data['used_count'] ?? 0) as int;
-          
+
           final newUsedCount = usedCount + 1;
           final updates = <String, dynamic>{"used_count": newUsedCount};
           if (usageLimit != -1 && newUsedCount >= usageLimit) {
@@ -432,6 +490,27 @@ class BookingFirestoreService {
 
         tx.set(bookingRef, bookingData);
 
+        // Prepare Admin Notification
+        final adminNotifRef = _firestore.collection('admin_notifications').doc();
+        tx.set(adminNotifRef, {
+          'kind': 'booking.created',
+          'tone': 'success',
+          'title': {
+            'en': 'New Imaging Booking',
+            'ar': 'حجز أشعة جديد'
+          },
+          'body': {
+            'en': 'A new imaging booking ($nameEn) has been created by ${user.name} (ID: $bookingId).',
+            'ar': 'قام ${user.name} بحجز أشعة جديد ($nameAr) (رقم: $bookingId).'
+          },
+          'bookingId': bookingId,
+          'link': '/bookings/$bookingId',
+          'actor': user.userId,
+          'read': false,
+          'readAt': null,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+
         return BookingResult(
           success: true,
           message: "Booking confirmed",
@@ -483,36 +562,53 @@ class BookingFirestoreService {
         DocumentReference? discountRef;
         DocumentSnapshot? discountSnap;
         if (discountData != null && discountData['code_id'] != null) {
-          discountRef = _firestore.collection("discount_codes").doc(discountData['code_id']);
+          discountRef = _firestore
+              .collection("discount_codes")
+              .doc(discountData['code_id']);
           discountSnap = await tx.get(discountRef);
-          
+
           if (discountSnap.exists) {
             final data = discountSnap.data() as Map<String, dynamic>? ?? {};
             final status = data['status'] as String?;
             final usageLimit = (data['usage_limit'] ?? -1) as int;
             final usedCount = (data['used_count'] ?? 0) as int;
-            
+
             if (status != 'active') {
-              return BookingResult(success: false, message: _getDiscountErrorMessage('not_active'), bookingId: null, bookedCount: 0, maxBookings: 0);
+              return BookingResult(
+                success: false,
+                message: _getDiscountErrorMessage('not_active'),
+                bookingId: null,
+                bookedCount: 0,
+                maxBookings: 0,
+              );
             }
             if (usageLimit != -1 && usedCount >= usageLimit) {
-              return BookingResult(success: false, message: _getDiscountErrorMessage('limit_reached'), bookingId: null, bookedCount: 0, maxBookings: 0);
+              return BookingResult(
+                success: false,
+                message: _getDiscountErrorMessage('limit_reached'),
+                bookingId: null,
+                bookedCount: 0,
+                maxBookings: 0,
+              );
             }
           }
         }
 
         int currentSeq = 1000;
         if (counterSnap.exists) {
-          currentSeq = ((counterSnap.data()?['cosmetic'] ?? 1000) as num).toInt();
+          currentSeq = ((counterSnap.data()?['cosmetic'] ?? 1000) as num)
+              .toInt();
         }
         final newSeq = currentSeq + 1;
         tx.set(counterRef, {'cosmetic': newSeq}, SetOptions(merge: true));
-        
-        if (discountRef != null && discountSnap != null && discountSnap.exists) {
+
+        if (discountRef != null &&
+            discountSnap != null &&
+            discountSnap.exists) {
           final data = discountSnap.data() as Map<String, dynamic>? ?? {};
           final usageLimit = (data['usage_limit'] ?? -1) as int;
           final usedCount = (data['used_count'] ?? 0) as int;
-          
+
           final newUsedCount = usedCount + 1;
           final updates = <String, dynamic>{"used_count": newUsedCount};
           if (usageLimit != -1 && newUsedCount >= usageLimit) {
@@ -527,44 +623,65 @@ class BookingFirestoreService {
         final bookingData = <String, dynamic>{
           "id": bookingId,
           "user": user.toMap(),
-        "type": "cosmetic",
-        "service": null,
-        "doctor": null,
-        "imaging": null,
-        "cosmetic": {
-          "cosmeticId": cosmeticId,
-          "name_en": nameEn,
-          "name_ar": nameAr,
-        },
-        "schedule": {
-          "date": dateKey,
-          "time": selectedTime,
-          "timestamp": ts,
-          "duration_minutes": durationMinutes,
-        },
-        "location": {"clinic": clinicName, "floor": floor, "room": room},
-        "payment": {
-          "status": paymentStatus,
-          "method": paymentMethod,
-          "amount": amount,
-          "currency": currency,
-          if (discountData != null) "discount": discountData,
-        },
-        "status": {"current": "upcoming", "label": "Upcoming"},
-        "timeline": {
-          "createdAt": FieldValue.serverTimestamp(),
-          "confirmedAt": FieldValue.serverTimestamp(),
-          "cancelledAt": null,
-          "completedAt": null,
-        },
-        "reminders": {
-          "12h_before": {"sent": false, "sentAt": null},
-          "3h_before": {"sent": false, "sentAt": null},
-        },
-        "meta": {"source": "mobile_app", "version": appVersion},
-      };
+          "type": "cosmetic",
+          "service": null,
+          "doctor": null,
+          "imaging": null,
+          "cosmetic": {
+            "cosmeticId": cosmeticId,
+            "name_en": nameEn,
+            "name_ar": nameAr,
+          },
+          "schedule": {
+            "date": dateKey,
+            "time": selectedTime,
+            "timestamp": ts,
+            "duration_minutes": durationMinutes,
+          },
+          "location": {"clinic": clinicName, "floor": floor, "room": room},
+          "payment": {
+            "status": paymentStatus,
+            "method": paymentMethod,
+            "amount": amount,
+            "currency": currency,
+            if (discountData != null) "discount": discountData,
+          },
+          "status": {"current": "upcoming", "label": "Upcoming"},
+          "timeline": {
+            "createdAt": FieldValue.serverTimestamp(),
+            "confirmedAt": FieldValue.serverTimestamp(),
+            "cancelledAt": null,
+            "completedAt": null,
+          },
+          "reminders": {
+            "12h_before": {"sent": false, "sentAt": null},
+            "3h_before": {"sent": false, "sentAt": null},
+          },
+          "meta": {"source": "mobile_app", "version": appVersion},
+        };
 
         tx.set(bookingRef, bookingData);
+
+        // Prepare Admin Notification
+        final adminNotifRef = _firestore.collection('admin_notifications').doc();
+        tx.set(adminNotifRef, {
+          'kind': 'booking.created',
+          'tone': 'success',
+          'title': {
+            'en': 'New Cosmetic Booking',
+            'ar': 'حجز تجميل جديد'
+          },
+          'body': {
+            'en': 'A new cosmetic booking ($nameEn) has been created by ${user.name} (ID: $bookingId).',
+            'ar': 'قام ${user.name} بحجز تجميل جديد ($nameAr) (رقم: $bookingId).'
+          },
+          'bookingId': bookingId,
+          'link': '/bookings/$bookingId',
+          'actor': user.userId,
+          'read': false,
+          'readAt': null,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
 
         print("✅ [Cosmetic Booking] Created: $bookingId");
 
@@ -620,20 +737,34 @@ class BookingFirestoreService {
         DocumentReference? discountRef;
         DocumentSnapshot? discountSnap;
         if (discountData != null && discountData['code_id'] != null) {
-          discountRef = _firestore.collection("discount_codes").doc(discountData['code_id']);
+          discountRef = _firestore
+              .collection("discount_codes")
+              .doc(discountData['code_id']);
           discountSnap = await tx.get(discountRef);
-          
+
           if (discountSnap.exists) {
             final data = discountSnap.data() as Map<String, dynamic>? ?? {};
             final status = data['status'] as String?;
             final usageLimit = (data['usage_limit'] ?? -1) as int;
             final usedCount = (data['used_count'] ?? 0) as int;
-            
+
             if (status != 'active') {
-              return BookingResult(success: false, message: _getDiscountErrorMessage('not_active'), bookingId: null, bookedCount: 0, maxBookings: 0);
+              return BookingResult(
+                success: false,
+                message: _getDiscountErrorMessage('not_active'),
+                bookingId: null,
+                bookedCount: 0,
+                maxBookings: 0,
+              );
             }
             if (usageLimit != -1 && usedCount >= usageLimit) {
-              return BookingResult(success: false, message: _getDiscountErrorMessage('limit_reached'), bookingId: null, bookedCount: 0, maxBookings: 0);
+              return BookingResult(
+                success: false,
+                message: _getDiscountErrorMessage('limit_reached'),
+                bookingId: null,
+                bookedCount: 0,
+                maxBookings: 0,
+              );
             }
           }
         }
@@ -644,12 +775,14 @@ class BookingFirestoreService {
         }
         final newSeq = currentSeq + 1;
         tx.set(counterRef, {'direct': newSeq}, SetOptions(merge: true));
-        
-        if (discountRef != null && discountSnap != null && discountSnap.exists) {
+
+        if (discountRef != null &&
+            discountSnap != null &&
+            discountSnap.exists) {
           final data = discountSnap.data() as Map<String, dynamic>? ?? {};
           final usageLimit = (data['usage_limit'] ?? -1) as int;
           final usedCount = (data['used_count'] ?? 0) as int;
-          
+
           final newUsedCount = usedCount + 1;
           final updates = <String, dynamic>{"used_count": newUsedCount};
           if (usageLimit != -1 && newUsedCount >= usageLimit) {
@@ -858,31 +991,32 @@ class BookingService {
   /// ✅ Convert time string from 24h to 12h format (e.g. "14:00 - 17:00" -> "02:00 PM - 05:00 PM")
   String convertTo12HourFormat(String timeStr) {
     if (timeStr.isEmpty) return timeStr;
-    
+
     final parts = timeStr.split('-');
     List<String> formattedParts = [];
-    
+
     for (var part in parts) {
       part = part.trim();
       final timeParts = part.split(':');
       if (timeParts.length == 2) {
         final hStr = timeParts[0].replaceAll(RegExp(r'[^0-9]'), '');
         final mStr = timeParts[1].replaceAll(RegExp(r'[^0-9]'), '');
-        
+
         final h = int.tryParse(hStr);
         final m = int.tryParse(mStr);
-        
+
         if (h != null && m != null) {
           // Check if am/pm already exists
-          if (part.toLowerCase().contains('am') || part.toLowerCase().contains('pm')) {
+          if (part.toLowerCase().contains('am') ||
+              part.toLowerCase().contains('pm')) {
             formattedParts.add(part);
             continue;
           }
-          
+
           final suffix = h >= 12 ? 'PM' : 'AM';
           var hour12 = h % 12;
           if (hour12 == 0) hour12 = 12;
-          
+
           final newH = hour12.toString().padLeft(2, '0');
           final newM = m.toString().padLeft(2, '0');
           formattedParts.add("$newH:$newM $suffix");
@@ -892,7 +1026,7 @@ class BookingService {
       // fallback
       formattedParts.add(part);
     }
-    
+
     return formattedParts.join(' - ');
   }
 
@@ -900,58 +1034,77 @@ class BookingService {
   /// If the next full hour is past the end of the slot, returns an empty string.
   String adjustTimeForToday(String rawTime, DateTime selectedDate) {
     if (rawTime.trim().isEmpty) return rawTime;
-    
+
     final now = DateTime.now();
-    
-    if (selectedDate.year == now.year && selectedDate.month == now.month && selectedDate.day == now.day) {
+
+    if (selectedDate.year == now.year &&
+        selectedDate.month == now.month &&
+        selectedDate.day == now.day) {
       final parts = rawTime.split('-');
       if (parts.isNotEmpty) {
         final startPart = parts[0].trim();
         int h = 0;
         int m = 0;
-        
+
         final timeParts = startPart.split(':');
         if (timeParts.isNotEmpty) {
           final hStr = timeParts[0].replaceAll(RegExp(r'[^0-9]'), '');
-          final mStr = timeParts.length > 1 ? timeParts[1].replaceAll(RegExp(r'[^0-9]'), '') : '00';
+          final mStr = timeParts.length > 1
+              ? timeParts[1].replaceAll(RegExp(r'[^0-9]'), '')
+              : '00';
           h = int.tryParse(hStr) ?? 0;
           m = int.tryParse(mStr) ?? 0;
-          
+
           if (startPart.toLowerCase().contains('pm') && h < 12) h += 12;
           if (startPart.toLowerCase().contains('am') && h == 12) h = 0;
         }
-        
+
         final slotStart = DateTime(now.year, now.month, now.day, h, m);
-        
+
         int nextHour = now.hour;
         if (now.minute > 0 || now.second > 0) {
           nextHour += 1;
         }
-        
-        final currentNextHourTime = DateTime(now.year, now.month, now.day, nextHour, 0);
-        
+
+        final currentNextHourTime = DateTime(
+          now.year,
+          now.month,
+          now.day,
+          nextHour,
+          0,
+        );
+
         if (currentNextHourTime.isAfter(slotStart)) {
           if (parts.length > 1) {
             final endPart = parts[1].trim();
             final endParts = endPart.split(':');
             if (endParts.isNotEmpty) {
-               final endHStr = endParts[0].replaceAll(RegExp(r'[^0-9]'), '');
-               final endMStr = endParts.length > 1 ? endParts[1].replaceAll(RegExp(r'[^0-9]'), '') : '00';
-               int endH = int.tryParse(endHStr) ?? 0;
-               int endM = int.tryParse(endMStr) ?? 0;
-               if (endPart.toLowerCase().contains('pm') && endH < 12) endH += 12;
-               if (endPart.toLowerCase().contains('am') && endH == 12) endH = 0;
-               
-               final slotEnd = DateTime(now.year, now.month, now.day, endH, endM);
-               
-               if (currentNextHourTime.isAfter(slotEnd) || currentNextHourTime.isAtSameMomentAs(slotEnd)) {
-                 return ""; // Empty string indicates no valid time remaining for today
-               }
+              final endHStr = endParts[0].replaceAll(RegExp(r'[^0-9]'), '');
+              final endMStr = endParts.length > 1
+                  ? endParts[1].replaceAll(RegExp(r'[^0-9]'), '')
+                  : '00';
+              int endH = int.tryParse(endHStr) ?? 0;
+              int endM = int.tryParse(endMStr) ?? 0;
+              if (endPart.toLowerCase().contains('pm') && endH < 12) endH += 12;
+              if (endPart.toLowerCase().contains('am') && endH == 12) endH = 0;
+
+              final slotEnd = DateTime(
+                now.year,
+                now.month,
+                now.day,
+                endH,
+                endM,
+              );
+
+              if (currentNextHourTime.isAfter(slotEnd) ||
+                  currentNextHourTime.isAtSameMomentAs(slotEnd)) {
+                return ""; // Empty string indicates no valid time remaining for today
+              }
             }
           } else {
-             return "";
+            return "";
           }
-          
+
           final newH = nextHour.toString().padLeft(2, '0');
           return "$newH:00 - ${parts[1].trim()}";
         }
@@ -988,14 +1141,22 @@ class AppointmentBookingController extends GetxController {
 
   int _dayStringToNumber(String day) {
     switch (day.toLowerCase()) {
-      case 'monday': return DateTime.monday;
-      case 'tuesday': return DateTime.tuesday;
-      case 'wednesday': return DateTime.wednesday;
-      case 'thursday': return DateTime.thursday;
-      case 'friday': return DateTime.friday;
-      case 'saturday': return DateTime.saturday;
-      case 'sunday': return DateTime.sunday;
-      default: return DateTime.friday;
+      case 'monday':
+        return DateTime.monday;
+      case 'tuesday':
+        return DateTime.tuesday;
+      case 'wednesday':
+        return DateTime.wednesday;
+      case 'thursday':
+        return DateTime.thursday;
+      case 'friday':
+        return DateTime.friday;
+      case 'saturday':
+        return DateTime.saturday;
+      case 'sunday':
+        return DateTime.sunday;
+      default:
+        return DateTime.friday;
     }
   }
 
@@ -1008,12 +1169,22 @@ class AppointmentBookingController extends GetxController {
     for (int i = 0; i < 6; i++) {
       DateTime firstDayOfMonth = DateTime(currentYear, currentMonth, 1);
       int daysToFirstTarget = (targetWeekday - firstDayOfMonth.weekday + 7) % 7;
-      DateTime firstOccurrence = firstDayOfMonth.add(Duration(days: daysToFirstTarget));
-      DateTime targetDate = firstOccurrence.add(Duration(days: 7 * (weekIndex - 1)));
-      
+      DateTime firstOccurrence = firstDayOfMonth.add(
+        Duration(days: daysToFirstTarget),
+      );
+      DateTime targetDate = firstOccurrence.add(
+        Duration(days: 7 * (weekIndex - 1)),
+      );
+
       if (targetDate.month == currentMonth) {
-        if (targetDate.isAfter(DateTime(now.year, now.month, now.day).subtract(const Duration(days: 1)))) {
-           dates.add(targetDate);
+        if (targetDate.isAfter(
+          DateTime(
+            now.year,
+            now.month,
+            now.day,
+          ).subtract(const Duration(days: 1)),
+        )) {
+          dates.add(targetDate);
         }
       }
 
@@ -1033,7 +1204,7 @@ class AppointmentBookingController extends GetxController {
     maxBookings = doctor.maxBooking <= 0 ? 1 : doctor.maxBooking;
 
     List<DateTime> rawDates = [];
-    
+
     if (doctor.scheduleType == 'monthly' && doctor.monthlySchedule != null) {
       final weekIndex = doctor.monthlySchedule!['week_of_month'] as int? ?? 1;
       final dayString = doctor.monthlySchedule!['day'] as String? ?? 'friday';
@@ -1047,18 +1218,31 @@ class AppointmentBookingController extends GetxController {
     }
 
     final now = DateTime.now();
-    
+
     rawDates.removeWhere((date) {
-      if (date.year == now.year && date.month == now.month && date.day == now.day) {
-        final weekdayKey = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'][date.weekday - 1];
+      if (date.year == now.year &&
+          date.month == now.month &&
+          date.day == now.day) {
+        final weekdayKey = [
+          'monday',
+          'tuesday',
+          'wednesday',
+          'thursday',
+          'friday',
+          'saturday',
+          'sunday',
+        ][date.weekday - 1];
         final timeRange = _availability[weekdayKey]?.toString() ?? '';
         if (timeRange.contains('-')) {
           final endTimeStr = timeRange.split('-').last.trim();
           try {
-             final endTs = BookingFirestoreService.buildTimestamp(date, endTimeStr).toDate();
-             return endTs.isBefore(now);
-          } catch(e) {
-             return false;
+            final endTs = BookingFirestoreService.buildTimestamp(
+              date,
+              endTimeStr,
+            ).toDate();
+            return endTs.isBefore(now);
+          } catch (e) {
+            return false;
           }
         }
       }
@@ -1087,7 +1271,7 @@ class AppointmentBookingController extends GetxController {
 
     final dayKey = BookingService.weekdayKeyLower(date.weekday);
     final rawTime = _service.extractTime(_availability[dayKey]);
-    
+
     // Adjust time if it's today
     final adjustedTime = _service.adjustTimeForToday(rawTime, date);
     selectedTime.value = _service.convertTo12HourFormat(adjustedTime);

@@ -148,12 +148,14 @@ class SupportChatController extends GetxController {
     if (file == null) return;
     final bytes = kIsWeb ? await file.readAsBytes() : null;
 
-    _sendAttachmentBackground(PendingAttachment(
-      kind: ChatMessageKind.image,
-      localPath: file.path,
-      fileName: file.name,
-      bytes: bytes,
-    ));
+    _sendAttachmentBackground(
+      PendingAttachment(
+        kind: ChatMessageKind.image,
+        localPath: file.path,
+        fileName: file.name,
+        bytes: bytes,
+      ),
+    );
   }
 
   Future<void> pickVideo() async {
@@ -165,12 +167,14 @@ class SupportChatController extends GetxController {
     if (file == null) return;
     final bytes = kIsWeb ? await file.readAsBytes() : null;
 
-    _sendAttachmentBackground(PendingAttachment(
-      kind: ChatMessageKind.video,
-      localPath: file.path,
-      fileName: file.name,
-      bytes: bytes,
-    ));
+    _sendAttachmentBackground(
+      PendingAttachment(
+        kind: ChatMessageKind.video,
+        localPath: file.path,
+        fileName: file.name,
+        bytes: bytes,
+      ),
+    );
   }
 
   Future<void> startOrStopVoiceRecording() async {
@@ -190,10 +194,7 @@ class SupportChatController extends GetxController {
     }
 
     await _recorder.start(
-      const RecordConfig(
-        encoder: AudioEncoder.aacLc,
-        bitRate: 64000,
-      ),
+      const RecordConfig(encoder: AudioEncoder.aacLc, bitRate: 64000),
       path: filePath,
     );
 
@@ -220,13 +221,15 @@ class SupportChatController extends GetxController {
       bytes = await xFile.readAsBytes();
     }
 
-    _sendAttachmentBackground(PendingAttachment(
-      kind: ChatMessageKind.voice,
-      localPath: path,
-      fileName: 'voice_note.m4a',
-      durationMs: recordingSeconds.value * 1000,
-      bytes: bytes,
-    ));
+    _sendAttachmentBackground(
+      PendingAttachment(
+        kind: ChatMessageKind.voice,
+        localPath: path,
+        fileName: 'voice_note.m4a',
+        durationMs: recordingSeconds.value * 1000,
+        bytes: bytes,
+      ),
+    );
 
     recordingSeconds.value = 0;
     _recordStartedAt = null;
@@ -248,16 +251,20 @@ class SupportChatController extends GetxController {
         durationMs: draft.durationMs,
       ),
     );
-    
+
     uploadingItems.add(dummyMessage);
     _scrollToBottom();
-    
+
     try {
       String finalPath = draft.localPath;
       if (draft.kind == ChatMessageKind.image) {
-        finalPath = await MediaCompressor.compressImage(draft.localPath) ?? draft.localPath;
+        finalPath =
+            await MediaCompressor.compressImage(draft.localPath) ??
+            draft.localPath;
       } else if (draft.kind == ChatMessageKind.video) {
-        finalPath = await MediaCompressor.compressVideo(draft.localPath) ?? draft.localPath;
+        finalPath =
+            await MediaCompressor.compressVideo(draft.localPath) ??
+            draft.localPath;
       }
 
       await service.sendUserAttachmentMessage(

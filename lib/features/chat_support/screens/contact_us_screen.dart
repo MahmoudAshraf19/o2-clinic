@@ -22,10 +22,10 @@ class ContactUsScreen extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Colors.transparent,
         title: Text(
           AppLocalizations.of(context)!.contactUs,
@@ -55,7 +55,9 @@ class ContactUsScreen extends StatelessWidget {
                 }
                 if (index == 1) {
                   return SupportChatTile(
-                    lastMessage: summary?.lastMessage ?? AppLocalizations.of(context)!.tapToStartChat,
+                    lastMessage:
+                        summary?.lastMessage ??
+                        AppLocalizations.of(context)!.tapToStartChat,
                     lastMessageTime: summary?.lastMessageAt == null
                         ? '--:--'
                         : formatTime(summary!.lastMessageAt!),
@@ -67,7 +69,7 @@ class ContactUsScreen extends StatelessWidget {
                     },
                   );
                 }
-                
+
                 final room = controller.doctorChatRooms[index - 2];
                 return SupportChatTile(
                   title: room.doctorName,
@@ -98,3 +100,4 @@ class ContactUsScreen extends StatelessWidget {
     );
   }
 }
+

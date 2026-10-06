@@ -21,7 +21,10 @@ class RadiologyCategoryModel {
     required this.price,
   });
 
-  factory RadiologyCategoryModel.fromMap(String docId, Map<String, dynamic> map) {
+  factory RadiologyCategoryModel.fromMap(
+    String docId,
+    Map<String, dynamic> map,
+  ) {
     return RadiologyCategoryModel(
       id: docId,
       image: map['image'] ?? '',

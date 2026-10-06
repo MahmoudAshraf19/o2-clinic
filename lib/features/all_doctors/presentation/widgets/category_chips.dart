@@ -43,17 +43,9 @@ class CategoryChips extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isActive
                     ? AppColors.primary
-                    : AppColors.surfaceContainer,
+                    : Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(999),
-                boxShadow: isActive
-                    ? [
-                        BoxShadow(
-                          color: AppColors.primary.withOpacity(0.18),
-                          blurRadius: 12,
-                          offset: const Offset(0, 6),
-                        ),
-                      ]
-                    : null,
+
                 border: Border.all(
                   color: isActive
                       ? Colors.transparent
@@ -62,14 +54,16 @@ class CategoryChips extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  categoryKey == 'All' ? AppLocalizations.of(context)!.allCategory : categoryValue,
+                  categoryKey == 'All'
+                      ? AppLocalizations.of(context)!.allCategory
+                      : categoryValue,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontFamily: AppFonts.poppins,
                     fontSize: 13,
                     fontWeight: isActive ? FontWeight.w700 : FontWeight.w600,
-                    color: isActive ? Colors.white : AppColors.textSecondary,
+                    color: isActive ? Colors.white : (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary),
                   ),
                 ),
               ),
@@ -80,3 +74,4 @@ class CategoryChips extends StatelessWidget {
     );
   }
 }
+

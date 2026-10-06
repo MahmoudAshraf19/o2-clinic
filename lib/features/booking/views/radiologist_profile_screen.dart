@@ -21,7 +21,7 @@ class RadiologistProfileScreen extends StatelessWidget {
     final price = radiologist.price;
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -87,7 +87,6 @@ class RadiologistProfileScreen extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
                 color: AppColors.primary,
-                
               ),
             ),
           ),
@@ -118,11 +117,15 @@ class RadiologistProfileScreen extends StatelessWidget {
             height: 110,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.primary.withValues(alpha: 0.15), width: 3),
+              border: Border.all(
+                color: AppColors.primary.withValues(alpha: 0.15),
+                width: 3,
+              ),
               image: DecorationImage(
-                image: radiologist.image.isNotEmpty 
-                    ? CachedNetworkImageProvider(radiologist.image) 
-                    : const AssetImage('assets/images/common/Doctor_avatar.jpg') as ImageProvider,
+                image: radiologist.image.isNotEmpty
+                    ? CachedNetworkImageProvider(radiologist.image)
+                    : const AssetImage('assets/images/common/Doctor_avatar.jpg')
+                          as ImageProvider,
                 fit: BoxFit.cover,
               ),
             ),
@@ -134,7 +137,7 @@ class RadiologistProfileScreen extends StatelessWidget {
             style: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w800,
-              
+
               color: AppColors.textPrimary,
             ),
           ),
@@ -145,7 +148,7 @@ class RadiologistProfileScreen extends StatelessWidget {
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
-              
+
               color: AppColors.primary,
             ),
           ),
@@ -182,7 +185,7 @@ class RadiologistProfileScreen extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
-                  
+
                   color: AppColors.textPrimary,
                 ),
               ),
@@ -195,7 +198,7 @@ class RadiologistProfileScreen extends StatelessWidget {
               fontSize: 14,
               height: 1.6,
               color: AppColors.textSecondary,
-              
+
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -225,14 +228,18 @@ class RadiologistProfileScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.monetization_on_rounded, color: AppColors.primary, size: 22),
+              Icon(
+                Icons.monetization_on_rounded,
+                color: AppColors.primary,
+                size: 22,
+              ),
               const SizedBox(width: 8),
               Text(
                 langCode == 'ar' ? "سعر الاستشارة" : "Consultation Price",
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
-                  
+
                   color: AppColors.textPrimary,
                 ),
               ),
@@ -243,7 +250,7 @@ class RadiologistProfileScreen extends StatelessWidget {
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w900,
-              
+
               color: AppColors.primary,
             ),
           ),
@@ -252,3 +259,4 @@ class RadiologistProfileScreen extends StatelessWidget {
     );
   }
 }
+

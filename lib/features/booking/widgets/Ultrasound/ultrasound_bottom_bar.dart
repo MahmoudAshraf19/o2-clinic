@@ -55,7 +55,6 @@ class UltrasoundBottomBar extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       color: AppColors.grey,
                       letterSpacing: 1,
-                      
                     ),
                   ),
 
@@ -67,7 +66,6 @@ class UltrasoundBottomBar extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w800,
                       color: AppColors.primary,
-                      
                     ),
                   ),
                 ],
@@ -97,7 +95,6 @@ class UltrasoundBottomBar extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w700,
-                          
                         ),
                       ),
 
@@ -115,4 +112,3 @@ class UltrasoundBottomBar extends StatelessWidget {
     );
   }
 }
-

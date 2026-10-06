@@ -36,9 +36,9 @@ class CosmeticController extends ChangeNotifier {
     _setLoading(true);
     try {
       final categories = await CosmeticCacheService.getCategories();
-      
+
       final localeCode = Localizations.localeOf(Get.context!).languageCode;
-      
+
       _cosmetics = categories.map((cat) {
         return CosmeticModel(
           id: cat.id,
@@ -53,9 +53,10 @@ class CosmeticController extends ChangeNotifier {
           availabilityDay: cat.availabilityDay,
         );
       }).toList();
-      
+
       if (_cosmetics.isEmpty) {
-        _cosmetics = CosmeticService.getAllCosmetics(); // fallback to demo data if empty
+        _cosmetics =
+            CosmeticService.getAllCosmetics(); // fallback to demo data if empty
       }
       _error = null;
     } catch (e) {

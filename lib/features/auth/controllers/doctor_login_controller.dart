@@ -49,11 +49,15 @@ class DoctorLoginController extends GetxController {
         if (doctorsSnapshot.docs.isEmpty) {
           // Not a doctor, sign out and show error
           await FirebaseAuth.instance.signOut();
-          
+
           final context = Get.context;
           Get.snackbar(
-            context != null ? AppLocalizations.of(context)!.doctorEmailNotFoundTitle : 'Email Not Found',
-            context != null ? AppLocalizations.of(context)!.doctorEmailNotFound : 'This email is not found. Please contact administration.',
+            context != null
+                ? AppLocalizations.of(context)!.doctorEmailNotFoundTitle
+                : 'Email Not Found',
+            context != null
+                ? AppLocalizations.of(context)!.doctorEmailNotFound
+                : 'This email is not found. Please contact administration.',
             snackPosition: SnackPosition.TOP,
             backgroundColor: Colors.red.withOpacity(0.9),
             colorText: Colors.white,
@@ -72,7 +76,9 @@ class DoctorLoginController extends GetxController {
         // Get FCM Token only if it doesn't exist or is empty, and NOT on Web
         if (!kIsWeb && (fcmToken == null || fcmToken.isEmpty)) {
           try {
-            fcmToken = await FirebaseMessaging.instance.getToken().timeout(const Duration(seconds: 3));
+            fcmToken = await FirebaseMessaging.instance.getToken().timeout(
+              const Duration(seconds: 3),
+            );
           } catch (e) {
             debugPrint('Failed to get FCM token: $e');
           }
@@ -80,26 +86,39 @@ class DoctorLoginController extends GetxController {
 
         // Update the doctor's document if auth_uid or fcmToken changed
         final docId = doctorsSnapshot.docs.first.id;
-        if (existingAuthUid != uid || (fcmToken != null && fcmToken != existingToken)) {
-          await FirebaseFirestore.instance.collection(AppFirestoreCollections.doctors).doc(docId).update({
-            'auth_uid': uid,
-            if (fcmToken != null && fcmToken.isNotEmpty) 'fcmToken': fcmToken,
-          });
+        if (existingAuthUid != uid ||
+            (fcmToken != null && fcmToken != existingToken)) {
+          await FirebaseFirestore.instance
+              .collection(AppFirestoreCollections.doctors)
+              .doc(docId)
+              .update({
+                'auth_uid': uid,
+                if (fcmToken != null && fcmToken.isNotEmpty)
+                  'fcmToken': fcmToken,
+              });
         }
 
         final locale = Get.locale?.languageCode ?? 'en';
-        final doctorName = locale == 'ar' 
+        final doctorName = locale == 'ar'
             ? (doctorData['name_ar'] ?? '')
-            : (locale == 'he' ? (doctorData['name_he'] ?? '') : (doctorData['name_en'] ?? ''));
+            : (locale == 'he'
+                  ? (doctorData['name_he'] ?? '')
+                  : (doctorData['name_en'] ?? ''));
 
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('user_role', 'doctor');
-        
+
         Get.offAllNamed(AppRoutes.doctorNavigation);
 
         Get.snackbar(
-          locale == 'ar' ? 'مرحباً، $doctorName 👋' : (locale == 'he' ? 'שלום, $doctorName 👋' : 'Hi, $doctorName 👋'),
-          locale == 'ar' ? 'تم تسجيل الدخول بنجاح' : (locale == 'he' ? 'ההתחברות הצליחה' : 'Login successful'),
+          locale == 'ar'
+              ? 'مرحباً، $doctorName 👋'
+              : (locale == 'he'
+                    ? 'שלום, $doctorName 👋'
+                    : 'Hi, $doctorName 👋'),
+          locale == 'ar'
+              ? 'تم تسجيل الدخول بنجاح'
+              : (locale == 'he' ? 'ההתחברות הצליחה' : 'Login successful'),
           snackPosition: SnackPosition.TOP,
         );
       }

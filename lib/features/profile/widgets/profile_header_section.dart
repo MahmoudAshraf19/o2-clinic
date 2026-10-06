@@ -14,12 +14,6 @@ class ProfileHeaderSection extends StatelessWidget {
   final DashboardProfileModel user;
   final bool isDesktop;
 
-
-
-
-
-
-
   const ProfileHeaderSection({
     super.key,
     required this.user,
@@ -98,10 +92,10 @@ class ProfileHeaderSection extends StatelessWidget {
               height: size,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [Color(0xffEAF8F6), Colors.white],
+                  colors: Theme.of(context).brightness == Brightness.dark ? [Theme.of(context).scaffoldBackgroundColor, Theme.of(context).scaffoldBackgroundColor] : [const Color(0xffEAF8F6), Colors.white],
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -134,12 +128,12 @@ class ProfileHeaderSection extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColors.primary,
-                    border: Border.all(color: Colors.white, width: 2),
+                    border: Border.all(color: Theme.of(context).cardColor, width: 2),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.verified,
                     size: 14,
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                   ),
                 ),
               ),
@@ -148,7 +142,7 @@ class ProfileHeaderSection extends StatelessWidget {
                 bottom: -5,
                 right: -5,
                 child: Material(
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   shape: const CircleBorder(),
                   elevation: 2,
                   shadowColor: Colors.black26,
@@ -157,9 +151,9 @@ class ProfileHeaderSection extends StatelessWidget {
                     onTap: _openEditProfile,
                     child: Container(
                       padding: const EdgeInsets.all(10),
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white,
+                        color: Theme.of(context).cardColor,
                       ),
                       child: const Icon(
                         Icons.edit,
@@ -184,7 +178,7 @@ class ProfileHeaderSection extends StatelessWidget {
                 style: GoogleFonts.manrope(
                   fontSize: isDesktop ? 34 : 26,
                   fontWeight: FontWeight.w800,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.textPrimary,
                   height: 1.05,
                   letterSpacing: -0.4,
                 ),
@@ -231,27 +225,27 @@ class _ProfileAvatar extends StatelessWidget {
     final url = imageUrl.trim();
 
     if (url.isEmpty) {
-      return _fallback();
+      return _fallback(context);
     }
 
     return Container(
-      color: Colors.white,
-      child: CachedImageWidget(imageUrl: 
-        url,
+      color: Theme.of(context).cardColor,
+      child: CachedImageWidget(
+        imageUrl: url,
         key: ValueKey(url),
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => _fallback(),
+        errorBuilder: (context, error, stackTrace) => _fallback(context),
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
-          return _fallback();
+          return _fallback(context);
         },
       ),
     );
   }
 
-  Widget _fallback() {
+  Widget _fallback(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       alignment: Alignment.center,
       child: Image.asset(
         fallbackAsset,
@@ -263,4 +257,8 @@ class _ProfileAvatar extends StatelessWidget {
     );
   }
 }
+
+
+
+
 

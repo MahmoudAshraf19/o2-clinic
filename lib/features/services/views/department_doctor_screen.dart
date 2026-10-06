@@ -75,9 +75,9 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.surface,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColors.primary),
@@ -86,7 +86,6 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
         title: Text(
           "O2 Clinics",
           style: TextStyle(
-            
             fontWeight: FontWeight.w700,
             color: AppColors.primary,
           ),
@@ -146,7 +145,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
           style: TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.w800,
-            
+
             color: AppColors.textPrimary,
           ),
         ),
@@ -155,11 +154,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
 
         Text(
           "Select a department to explore our medical services.",
-          style: TextStyle(
-            fontSize: 14,
-            color: AppColors.grey,
-            
-          ),
+          style: TextStyle(fontSize: 14, color: AppColors.grey),
         ),
       ],
     );
@@ -196,8 +191,8 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
 
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: CachedImageWidget(imageUrl: 
-                department.image,
+              child: CachedImageWidget(
+                imageUrl: department.image,
                 width: 52,
                 height: 52,
                 fit: BoxFit.cover,
@@ -205,16 +200,20 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
             ),
 
             title: Text(
-              department.getLocalizedName(Localizations.localeOf(context).languageCode),
+              department.getLocalizedName(
+                Localizations.localeOf(context).languageCode,
+              ),
               style: TextStyle(
                 fontWeight: FontWeight.w700,
-                
+
                 color: isOpen ? AppColors.primary : AppColors.textPrimary,
               ),
             ),
 
             subtitle: Text(
-              department.getLocalizedSubtitle(Localizations.localeOf(context).languageCode),
+              department.getLocalizedSubtitle(
+                Localizations.localeOf(context).languageCode,
+              ),
               style: const TextStyle(fontSize: 12),
             ),
 
@@ -233,12 +232,13 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                   const SizedBox(height: 8),
 
                   Text(
-                    department.getLocalizedDescription(Localizations.localeOf(context).languageCode),
+                    department.getLocalizedDescription(
+                      Localizations.localeOf(context).languageCode,
+                    ),
                     style: TextStyle(
                       fontSize: 13,
                       height: 1.6,
                       color: AppColors.grey,
-                      
                     ),
                   ),
 
@@ -252,7 +252,10 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                   else
                     Column(
                       children: doctors
-                          .map((doctor) => _doctorCard(context, doctor, department))
+                          .map(
+                            (doctor) =>
+                                _doctorCard(context, doctor, department),
+                          )
                           .toList(),
                     ),
                 ],
@@ -263,7 +266,11 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
     );
   }
 
-  Widget _doctorCard(BuildContext context, DoctorModel doctor, SpecializedServiceModel department) {
+  Widget _doctorCard(
+    BuildContext context,
+    DoctorModel doctor,
+    SpecializedServiceModel department,
+  ) {
     final lang = Localizations.localeOf(context).languageCode;
     String doctorName = doctor.nameEn;
     if (lang == 'ar' && doctor.nameAr.isNotEmpty) doctorName = doctor.nameAr;
@@ -279,8 +286,8 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
       child: Row(
         children: [
           ClipOval(
-            child: CachedImageWidget(imageUrl: 
-              doctor.image,
+            child: CachedImageWidget(
+              imageUrl: doctor.image,
               width: 56,
               height: 56,
               fit: BoxFit.cover,
@@ -299,7 +306,9 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                 ),
 
                 Text(
-                  department.getLocalizedName(Localizations.localeOf(context).languageCode),
+                  department.getLocalizedName(
+                    Localizations.localeOf(context).languageCode,
+                  ),
                   style: const TextStyle(fontSize: 12, color: AppColors.grey),
                 ),
               ],
@@ -310,3 +319,5 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
     );
   }
 }
+
+

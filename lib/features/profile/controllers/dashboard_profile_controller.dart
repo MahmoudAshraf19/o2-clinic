@@ -29,8 +29,10 @@ class DashboardProfileController extends GetxController {
     super.onInit();
     loadUser();
     startRealtimeSync();
-    
-    _authSubscription = FirebaseAuth.instance.authStateChanges().listen((firebaseUser) {
+
+    _authSubscription = FirebaseAuth.instance.authStateChanges().listen((
+      firebaseUser,
+    ) {
       if (_uid != firebaseUser?.uid) {
         debugPrint('[PROFILE] Auth state changed: uid=${firebaseUser?.uid}');
         _uid = firebaseUser?.uid;
@@ -125,7 +127,7 @@ class DashboardProfileController extends GetxController {
 
   Future<void> logout() async {
     if (isGuest) {
-      Get.offAllNamed(AppRoutes.welcome);
+      Get.offAllNamed(AppRoutes.login);
       return;
     }
     try {

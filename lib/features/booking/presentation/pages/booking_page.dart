@@ -27,7 +27,7 @@ class BookingPage extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -44,10 +44,10 @@ class BookingPage extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     children: [
-                      _doctorCard(),
+                      _doctorCard(context),
                       const SizedBox(height: 24),
                       _daysSection(context, controller),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 32),
                       _timeSection(context, controller),
                     ],
                   ),
@@ -71,7 +71,7 @@ class BookingPage extends StatelessWidget {
             width: 42,
             height: 42,
             decoration: BoxDecoration(
-              color: AppColors.surface,
+              color: (Theme.of(context).brightness == Brightness.dark ? Colors.transparent : AppColors.surface),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppColors.border),
             ),
@@ -105,7 +105,6 @@ class BookingPage extends StatelessWidget {
                 fontSize: 13,
                 color: AppColors.textSecondary.withValues(alpha: 0.75),
                 fontWeight: FontWeight.w500,
-                
               ),
             ),
           ],
@@ -127,8 +126,8 @@ class BookingPage extends StatelessWidget {
     }
 
     return ClipOval(
-      child: CachedImageWidget(imageUrl: 
-        doctor.image,
+      child: CachedImageWidget(
+        imageUrl: doctor.image,
         width: 56,
         height: 56,
         fit: BoxFit.cover,
@@ -137,7 +136,7 @@ class BookingPage extends StatelessWidget {
     );
   }
 
-  Widget _doctorCard() {
+  Widget _doctorCard(BuildContext context) {
     final lang = Get.locale?.languageCode ?? 'en';
     String doctorName = doctor.nameEn;
     if (lang == 'ar' && doctor.nameAr.isNotEmpty) doctorName = doctor.nameAr;
@@ -150,16 +149,9 @@ class BookingPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppColors.border),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
-          ),
-        ],
       ),
       child: Row(
         children: [
@@ -171,21 +163,12 @@ class BookingPage extends StatelessWidget {
               children: [
                 Text(
                   doctorName,
-                  style: const TextStyle(
-                    
-                    fontWeight: FontWeight.w800,
-                    fontSize: 16,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16, color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   doctorTitle,
-                  style: const TextStyle(
-                    
-                    color: AppColors.grey,
-                    fontSize: 13,
-                  ),
+                  style: const TextStyle(color: AppColors.grey, fontSize: 13),
                 ),
               ],
             ),
@@ -195,7 +178,10 @@ class BookingPage extends StatelessWidget {
     );
   }
 
-  Widget _daysSection(BuildContext context, AppointmentBookingController controller) {
+  Widget _daysSection(
+    BuildContext context,
+    AppointmentBookingController controller,
+  ) {
     return Obx(() {
       final selected = controller.selectedDate.value;
       final dates = controller.availableDates;
@@ -218,22 +204,19 @@ class BookingPage extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           if (dates.isEmpty)
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.cardBackground,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(18),
                 border: Border.all(color: AppColors.border),
               ),
               child: Text(
                 AppLocalizations.of(context)!.noAvailableDatesForThis,
-                style: TextStyle(
-                  
-                  color: AppColors.grey,
-                ),
+                style: TextStyle(color: AppColors.grey),
               ),
             )
           else
@@ -255,32 +238,23 @@ class BookingPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? AppColors.primary
-                            : AppColors.cardBackground,
+                            : (Theme.of(context).brightness == Brightness.dark ? Theme.of(context).cardColor : AppColors.cardBackground),
                         borderRadius: BorderRadius.circular(18),
                         border: Border.all(
                           color: isSelected
                               ? AppColors.primary
                               : AppColors.border,
                         ),
-                        boxShadow: isSelected
-                            ? [
-                                BoxShadow(
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.25,
-                                  ),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ]
-                            : [],
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            DateFormat('E', Get.locale?.languageCode ?? 'en').format(date).toUpperCase(),
+                            DateFormat(
+                              'E',
+                              Get.locale?.languageCode ?? 'en',
+                            ).format(date).toUpperCase(),
                             style: TextStyle(
-                              
                               fontSize: 11,
                               letterSpacing: 1.5,
                               color: isSelected ? Colors.white : AppColors.grey,
@@ -290,12 +264,9 @@ class BookingPage extends StatelessWidget {
                           Text(
                             "${date.day}",
                             style: TextStyle(
-                              
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
-                              color: isSelected
-                                  ? Colors.white
-                                  : AppColors.textPrimary,
+                              color: isSelected ? Colors.white : (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),
                             ),
                           ),
                         ],
@@ -310,7 +281,10 @@ class BookingPage extends StatelessWidget {
     });
   }
 
-  Widget _timeSection(BuildContext context, AppointmentBookingController controller) {
+  Widget _timeSection(
+    BuildContext context,
+    AppointmentBookingController controller,
+  ) {
     return Obx(() {
       if (controller.selectedDate.value == null) {
         return const SizedBox();
@@ -324,22 +298,29 @@ class BookingPage extends StatelessWidget {
       final lang = Get.locale?.languageCode ?? 'en';
       String translatedTime = selectedTimeStr;
       if (lang == 'ar') {
-        translatedTime = translatedTime.replaceAll('AM', 'ص').replaceAll('PM', 'م');
+        translatedTime = translatedTime
+            .replaceAll('AM', 'ص')
+            .replaceAll('PM', 'م');
       } else if (lang == 'he') {
-        translatedTime = translatedTime.replaceAll('AM', 'לפנה״צ').replaceAll('PM', 'אחה״צ');
+        translatedTime = translatedTime
+            .replaceAll('AM', 'לפנה״צ')
+            .replaceAll('PM', 'אחה״צ');
       }
 
       String displayDate = '';
       if (controller.selectedDate.value != null) {
-        displayDate = DateFormat('d MMM yyyy', lang).format(controller.selectedDate.value!);
+        displayDate = DateFormat(
+          'd MMM yyyy',
+          lang,
+        ).format(controller.selectedDate.value!);
       }
 
       final bool isAvailable = max > 0 ? booked < max : true;
       final String percentText = "${(percent * 100).round()}%";
 
-      const Color primary = Color(0xFF00685F);
-      const Color secondary = Color(0xFF006A61);
-      const Color secondaryFixed = Color(0xFF6FD8CA);
+      const Color primary = AppColors.brandBlue;
+      const Color secondary = AppColors.brandBlue;
+      const Color secondaryFixed = AppColors.vibrantCyan;
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -359,7 +340,7 @@ class BookingPage extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 450),
             switchInCurve: Curves.easeOutCubic,
@@ -397,13 +378,6 @@ class BookingPage extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: primary.withValues(alpha: 0.2),
-                          blurRadius: 30,
-                          offset: const Offset(0, 10),
-                        ),
-                      ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -423,7 +397,8 @@ class BookingPage extends StatelessWidget {
                                   const SizedBox(width: 6),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
@@ -433,7 +408,6 @@ class BookingPage extends StatelessWidget {
                                             fontSize: 15,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w600,
-                                            
                                           ),
                                         ),
                                         if (displayDate.isNotEmpty) ...[
@@ -443,8 +417,9 @@ class BookingPage extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               fontSize: 13,
-                                              color: Colors.white.withValues(alpha: 0.7),
-                                              
+                                              color: Colors.white.withValues(
+                                                alpha: 0.7,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -490,13 +465,16 @@ class BookingPage extends StatelessWidget {
                                       const SizedBox(width: 6),
                                       Text(
                                         isAvailable
-                                            ? AppLocalizations.of(context)!.available
-                                            : AppLocalizations.of(context)!.full,
+                                            ? AppLocalizations.of(
+                                                context,
+                                              )!.available
+                                            : AppLocalizations.of(
+                                                context,
+                                              )!.full,
                                         style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
-                                          
                                         ),
                                       ),
                                     ],
@@ -515,7 +493,6 @@ class BookingPage extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.white.withValues(alpha: 0.8),
-                                
                               ),
                             ),
                             Text(
@@ -524,7 +501,6 @@ class BookingPage extends StatelessWidget {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
-                                
                               ),
                             ),
                           ],
@@ -611,7 +587,9 @@ class BookingPage extends StatelessWidget {
             if (!isAvailable) {
               Get.snackbar(
                 AppLocalizations.of(context)!.slotFull,
-                AppLocalizations.of(context)!.thisSlotHasReachedItsMaximumCapacity,
+                AppLocalizations.of(
+                  context,
+                )!.thisSlotHasReachedItsMaximumCapacity,
                 snackPosition: SnackPosition.TOP,
               );
               return;
@@ -641,17 +619,18 @@ class BookingPage extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
           ),
           minimumSize: const Size(double.infinity, 55),
-          elevation: 8,
+          elevation: 0,
         ),
         child: Text(
           AppLocalizations.of(context)!.bookAppointment,
-          style: TextStyle(
-            
-            fontWeight: FontWeight.w800,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w800),
         ),
       ),
     );
   }
 }
+
+
+
+
 

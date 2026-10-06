@@ -18,7 +18,7 @@ class DoctorsController extends GetxController {
     isLoading.value = true;
     try {
       final firestoreDoctors = await DoctorsCacheService.getDoctors();
-      
+
       final mappedDoctors = firestoreDoctors.map((fsDoctor) {
         // Find current language or default to english if Get.context is null
         String locale = 'en';
@@ -27,16 +27,22 @@ class DoctorsController extends GetxController {
         }
 
         String name = fsDoctor.nameEn;
-        if (locale == 'ar' && fsDoctor.nameAr.isNotEmpty) name = fsDoctor.nameAr;
-        if (locale == 'he' && fsDoctor.nameHe.isNotEmpty) name = fsDoctor.nameHe;
+        if (locale == 'ar' && fsDoctor.nameAr.isNotEmpty)
+          name = fsDoctor.nameAr;
+        if (locale == 'he' && fsDoctor.nameHe.isNotEmpty)
+          name = fsDoctor.nameHe;
 
         String title = fsDoctor.titleEn;
-        if (locale == 'ar' && fsDoctor.titleAr.isNotEmpty) title = fsDoctor.titleAr;
-        if (locale == 'he' && fsDoctor.titleHe.isNotEmpty) title = fsDoctor.titleHe;
+        if (locale == 'ar' && fsDoctor.titleAr.isNotEmpty)
+          title = fsDoctor.titleAr;
+        if (locale == 'he' && fsDoctor.titleHe.isNotEmpty)
+          title = fsDoctor.titleHe;
 
         String description = fsDoctor.descriptionEn;
-        if (locale == 'ar' && fsDoctor.descriptionAr.isNotEmpty) description = fsDoctor.descriptionAr;
-        if (locale == 'he' && fsDoctor.descriptionHe.isNotEmpty) description = fsDoctor.descriptionHe;
+        if (locale == 'ar' && fsDoctor.descriptionAr.isNotEmpty)
+          description = fsDoctor.descriptionAr;
+        if (locale == 'he' && fsDoctor.descriptionHe.isNotEmpty)
+          description = fsDoctor.descriptionHe;
 
         return ui_model.DoctorModel(
           id: fsDoctor.id,
@@ -45,7 +51,8 @@ class DoctorsController extends GetxController {
           image: fsDoctor.image,
           rating: fsDoctor.ratingAverage.toDouble(),
           reviews: fsDoctor.reviewsCount,
-          availability: 'Available', // Can be computed based on fsDoctor.availabilityDay
+          availability:
+              'Available', // Can be computed based on fsDoctor.availabilityDay
           booked: 0,
           total: fsDoctor.maxBooking,
           isTopRated: fsDoctor.theTop,

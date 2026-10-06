@@ -11,7 +11,8 @@ import 'package:record/record.dart';
 
 import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/media_compressor.dart';
-import '../../chat_support/controllers/support_chat_controller.dart' show PendingAttachment;
+import '../../chat_support/controllers/support_chat_controller.dart'
+    show PendingAttachment;
 import '../../chat_support/models/chat_support_model.dart';
 import '../models/doctor_chat_model.dart';
 import '../services/doctor_chat_service.dart';
@@ -82,21 +83,23 @@ class DoctorChatController extends GetxController {
 
       // No pending attachment logic, media sends automatically in background
       if (text.isNotEmpty) {
-        service.sendTextMessage(
-          patientId: patientId,
-          patientName: patientName,
-          patientProfileImage: patientProfileImage,
-          doctorId: doctorId,
-          doctorName: doctorName,
-          doctorProfileImage: doctorProfileImage,
-          senderId: doctorId,
-          receiverId: patientId,
-          text: text,
-          senderNameForNotification: doctorName,
-          screenForNotification: 'doctor_chat_patient',
-        ).catchError((e) {
-          debugPrint('Error sending message: $e');
-        });
+        service
+            .sendTextMessage(
+              patientId: patientId,
+              patientName: patientName,
+              patientProfileImage: patientProfileImage,
+              doctorId: doctorId,
+              doctorName: doctorName,
+              doctorProfileImage: doctorProfileImage,
+              senderId: doctorId,
+              receiverId: patientId,
+              text: text,
+              senderNameForNotification: doctorName,
+              screenForNotification: 'doctor_chat_patient',
+            )
+            .catchError((e) {
+              debugPrint('Error sending message: $e');
+            });
         textController.clear();
         this.currentText.value = '';
         _scrollToBottom();
@@ -107,29 +110,39 @@ class DoctorChatController extends GetxController {
   }
 
   Future<void> pickImage() async {
-    final file = await _picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
+    final file = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+    );
     if (file == null) return;
     final bytes = kIsWeb ? await file.readAsBytes() : null;
 
-    _sendAttachmentBackground(PendingAttachment(
-      kind: ChatMessageKind.image,
-      localPath: file.path,
-      fileName: file.name,
-      bytes: bytes,
-    ));
+    _sendAttachmentBackground(
+      PendingAttachment(
+        kind: ChatMessageKind.image,
+        localPath: file.path,
+        fileName: file.name,
+        bytes: bytes,
+      ),
+    );
   }
 
   Future<void> pickVideo() async {
-    final file = await _picker.pickVideo(source: ImageSource.gallery, maxDuration: const Duration(minutes: 2));
+    final file = await _picker.pickVideo(
+      source: ImageSource.gallery,
+      maxDuration: const Duration(minutes: 2),
+    );
     if (file == null) return;
     final bytes = kIsWeb ? await file.readAsBytes() : null;
 
-    _sendAttachmentBackground(PendingAttachment(
-      kind: ChatMessageKind.video,
-      localPath: file.path,
-      fileName: file.name,
-      bytes: bytes,
-    ));
+    _sendAttachmentBackground(
+      PendingAttachment(
+        kind: ChatMessageKind.video,
+        localPath: file.path,
+        fileName: file.name,
+        bytes: bytes,
+      ),
+    );
   }
 
   Future<void> startOrStopVoiceRecording() async {
@@ -144,7 +157,8 @@ class DoctorChatController extends GetxController {
     String filePath = '';
     if (!kIsWeb) {
       final tempDir = await Directory.systemTemp.createTemp('o2_doctor_voice');
-      filePath = '${tempDir.path}${Platform.pathSeparator}${DateTime.now().microsecondsSinceEpoch}.m4a';
+      filePath =
+          '${tempDir.path}${Platform.pathSeparator}${DateTime.now().microsecondsSinceEpoch}.m4a';
     }
 
     await _recorder.start(
@@ -174,13 +188,15 @@ class DoctorChatController extends GetxController {
       bytes = await xFile.readAsBytes();
     }
 
-    _sendAttachmentBackground(PendingAttachment(
-      kind: ChatMessageKind.voice,
-      localPath: path,
-      fileName: 'voice_note.m4a',
-      durationMs: recordingSeconds.value * 1000,
-      bytes: bytes,
-    ));
+    _sendAttachmentBackground(
+      PendingAttachment(
+        kind: ChatMessageKind.voice,
+        localPath: path,
+        fileName: 'voice_note.m4a',
+        durationMs: recordingSeconds.value * 1000,
+        bytes: bytes,
+      ),
+    );
 
     recordingSeconds.value = 0;
     _recordStartedAt = null;
@@ -205,16 +221,20 @@ class DoctorChatController extends GetxController {
         durationMs: draft.durationMs,
       ),
     );
-    
+
     uploadingItems.add(dummyMessage);
     _scrollToBottom();
-    
+
     try {
       String finalPath = draft.localPath;
       if (draft.kind == ChatMessageKind.image) {
-        finalPath = await MediaCompressor.compressImage(draft.localPath) ?? draft.localPath;
+        finalPath =
+            await MediaCompressor.compressImage(draft.localPath) ??
+            draft.localPath;
       } else if (draft.kind == ChatMessageKind.video) {
-        finalPath = await MediaCompressor.compressVideo(draft.localPath) ?? draft.localPath;
+        finalPath =
+            await MediaCompressor.compressVideo(draft.localPath) ??
+            draft.localPath;
       }
 
       await service.sendAttachmentMessage(
@@ -250,7 +270,10 @@ class DoctorChatController extends GetxController {
     _recordTimer?.cancel();
     _recordTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (_recordStartedAt == null) return;
-      recordingSeconds.value = DateTime.now().difference(_recordStartedAt!).inSeconds.clamp(0, 3599);
+      recordingSeconds.value = DateTime.now()
+          .difference(_recordStartedAt!)
+          .inSeconds
+          .clamp(0, 3599);
     });
   }
 
@@ -272,7 +295,11 @@ class DoctorChatController extends GetxController {
         if (!scrollController.hasClients) return;
         final position = 0.0;
         if (animated) {
-          scrollController.animateTo(position, duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
+          scrollController.animateTo(
+            position,
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeOut,
+          );
         } else {
           scrollController.jumpTo(position);
         }

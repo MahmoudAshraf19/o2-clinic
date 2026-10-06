@@ -11,17 +11,17 @@ class NotificationsFirestoreService {
         // Removed .orderBy to avoid composite index requirement issues
         .snapshots()
         .map((snapshot) {
-      final list = snapshot.docs
-          .map((doc) => NotificationModel.fromMap(doc.data(), doc.id))
-          .toList();
-      // Sort locally
-      list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      // Limit to 50 locally
-      if (list.length > 50) {
-        return list.sublist(0, 50);
-      }
-      return list;
-    });
+          final list = snapshot.docs
+              .map((doc) => NotificationModel.fromMap(doc.data(), doc.id))
+              .toList();
+          // Sort locally
+          list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+          // Limit to 50 locally
+          if (list.length > 50) {
+            return list.sublist(0, 50);
+          }
+          return list;
+        });
   }
 
   Future<void> markAsRead(String notificationId) async {

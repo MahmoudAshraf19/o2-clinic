@@ -114,10 +114,14 @@ class BannerModel {
     );
   }
 
-  String getLocalizedTitle(String langCode) => title[langCode] ?? title['en'] ?? '';
-  String getLocalizedSubtitle(String langCode) => subtitle[langCode] ?? subtitle['en'] ?? '';
-  String getLocalizedBadge(String langCode) => badge[langCode] ?? badge['en'] ?? '';
-  String getLocalizedButtonText(String langCode) => buttonText[langCode] ?? buttonText['en'] ?? '';
+  String getLocalizedTitle(String langCode) =>
+      title[langCode] ?? title['en'] ?? '';
+  String getLocalizedSubtitle(String langCode) =>
+      subtitle[langCode] ?? subtitle['en'] ?? '';
+  String getLocalizedBadge(String langCode) =>
+      badge[langCode] ?? badge['en'] ?? '';
+  String getLocalizedButtonText(String langCode) =>
+      buttonText[langCode] ?? buttonText['en'] ?? '';
 
   static Map<String, String> _asMapString(dynamic value) {
     if (value is Map) {

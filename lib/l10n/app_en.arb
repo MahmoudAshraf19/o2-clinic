@@ -426,4 +426,13 @@
   "describeTheIssue": "Describe the issue...",
   "attachImage": "Attach Image",
   "submitReport": "Submit Report"
-, "chooseConsultationType": "Choose Consultation Type", "howConsultWithDoctor": "How would you like to consult with the doctor?", "inO2Clinic": "In O2 Clinic" }
+, "chooseConsultationType": "Choose Consultation Type", "howConsultWithDoctor": "How would you like to consult with the doctor?", "inO2Clinic": "In O2 Clinic"
+, "radiologyPricingInquiryPrompt": "Please attach the radiology image for management to review and determine the price", "radiologyChatWelcome": "Welcome. Please attach the radiology scan or details to determine the price" , "requiresYourAction": "Requires Your Action", "continueBooking": "Continue", "requiresActionFilter": "Requires Action", "continueBookingOrChat": "Continue Booking / Chat"
+, "betterHealth": "Better Health", "brighterTomorrow": "Brighter Tomorrow", "getStarted": "Get Started"
+, "onboarding1Title": "Easy Access\nto Healthcare", "onboarding1Desc": "Quality medical services\nwhenever you need them."
+, "onboarding2TitlePart1": "Experienced Doctors\n", "onboarding2TitlePart2": "& Trusted Care", "onboarding2Desc": "Our team is here to provide\nyou with the best care."
+, "onboarding3TitlePart1": "Book Appointments\n", "onboarding3TitlePart2": "with Ease", "onboarding3Desc": "Quick booking, smooth visits,\nfull support."
+, "emailOrPhone": "Email or Phone Number", "emailHint": "your@email.com", "passwordHint": "Enter your password", "continueAsGuest": "Continue as Guest"
+, "password": "Password", "or": "or", "continueWithGoogle": "Continue with Google", "continueWithApple": "Continue with Apple", "signUp": "Sign Up",
+"editAccount": "Edit Account", "editYourAccount": "Edit Your Account", "createYourAccount": "Create Your Account", "updateProfileSafely": "Update your profile details safely.", "joinUsJourney": "Join us and start your journey 👋", "fullName": "Full Name", "confirmPassword": "Confirm Password", "phone": "Phone Number", "bio": "Bio (Optional)", "male": "Male", "female": "Female", "saveChanges": "Save Changes", "createAccountBtn": "Create Account", "passwordsMatch": "Passwords match perfectly 🎉", "passwordsNotMatch": "Passwords do not match"
+}

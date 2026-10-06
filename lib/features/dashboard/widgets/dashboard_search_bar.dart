@@ -22,11 +22,10 @@ class DashboardSearchBar extends StatelessWidget {
       prefixIcon: Icons.search_rounded,
       size: CommonTextFieldSize.medium,
       borderRadius: BorderRadius.circular(24),
-      fillColor: AppColors.cardBackground,
+      fillColor: Theme.of(context).cardColor,
       borderColor: AppColors.border.withValues(alpha: 0.20),
       focusBorderColor: AppColors.primary,
-      style: const TextStyle(
-        color: Color(0xFF181C1C),
+      style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181C1C),
         fontSize: 14,
         fontWeight: FontWeight.w600,
       ),
@@ -37,3 +36,5 @@ class DashboardSearchBar extends StatelessWidget {
     );
   }
 }
+
+

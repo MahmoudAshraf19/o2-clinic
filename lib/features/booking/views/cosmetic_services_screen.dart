@@ -34,7 +34,7 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
     super.build(context);
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -86,12 +86,13 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  isAr ? "اختر الخدمة التجميلية المناسبة لك" : "Choose your aesthetic service",
+                  isAr
+                      ? "اختر الخدمة التجميلية المناسبة لك"
+                      : "Choose your aesthetic service",
                   style: TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary.withValues(alpha: 0.75),
                     fontWeight: FontWeight.w500,
-                    
                   ),
                 ),
               ],
@@ -116,9 +117,10 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  Get.locale?.languageCode == 'ar' ? "حدث خطأ ما" : "Something went wrong",
+                  Get.locale?.languageCode == 'ar'
+                      ? "حدث خطأ ما"
+                      : "Something went wrong",
                   style: TextStyle(
-                    
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.w700,
                   ),
@@ -127,15 +129,16 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                 Text(
                   c.error,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    
-                    color: AppColors.textSecondary,
-                  ),
+                  style: TextStyle(color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: 14),
                 ElevatedButton(
                   onPressed: () => c.load(forceRefresh: true),
-                  child: Text(Get.locale?.languageCode == 'ar' ? "إعادة المحاولة" : "Try again"),
+                  child: Text(
+                    Get.locale?.languageCode == 'ar'
+                        ? "إعادة المحاولة"
+                        : "Try again",
+                  ),
                 ),
               ],
             ),
@@ -145,7 +148,13 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
 
       final services = c.services;
       if (services.isEmpty) {
-        return Center(child: Text(Get.locale?.languageCode == 'ar' ? "لم يتم العثور على خدمات" : "No cosmetic services found"));
+        return Center(
+          child: Text(
+            Get.locale?.languageCode == 'ar'
+                ? "لم يتم العثور على خدمات"
+                : "No cosmetic services found",
+          ),
+        );
       }
 
       return ListView.builder(
@@ -220,7 +229,6 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                             color: isExpanded
                                 ? AppColors.primary
                                 : AppColors.textPrimary,
-                            
                           ),
                           child: Text(service.getName(langCode)),
                         ),
@@ -251,7 +259,6 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                                     fontSize: 11,
                                     fontWeight: FontWeight.w800,
                                     color: AppColors.primary,
-                                    
                                   ),
                                 ),
                               ),
@@ -309,13 +316,13 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                       height: 1.4,
                       color: AppColors.textPrimary.withValues(alpha: 0.85),
                       fontWeight: FontWeight.w600,
-                      
                     ),
                   ),
                   const SizedBox(height: 22),
                   _PrimaryButton(
                     text: isAr ? 'احجز الآن' : 'Book Now',
-                    onPressed: () => Get.to(() => CosmeticBookingPage(model: service)),
+                    onPressed: () =>
+                        Get.to(() => CosmeticBookingPage(model: service)),
                   ),
                 ],
               ),
@@ -332,7 +339,11 @@ class _ServiceImage extends StatelessWidget {
   final bool isHighlighted;
   final IconData fallbackIcon;
 
-  const _ServiceImage({required this.urlOrAsset, required this.isHighlighted, required this.fallbackIcon});
+  const _ServiceImage({
+    required this.urlOrAsset,
+    required this.isHighlighted,
+    required this.fallbackIcon,
+  });
 
   bool get _isNetwork => urlOrAsset.trim().startsWith("http");
 
@@ -346,11 +357,7 @@ class _ServiceImage extends StatelessWidget {
           borderRadius: BorderRadius.circular(22),
           color: AppColors.primary.withValues(alpha: 0.1),
         ),
-        child: Icon(
-          fallbackIcon,
-          color: AppColors.primary,
-          size: 32,
-        ),
+        child: Icon(fallbackIcon, color: AppColors.primary, size: 32),
       );
     }
 
@@ -368,12 +375,10 @@ class _ServiceImage extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: _isNetwork
-          ? CachedImageWidget(imageUrl: 
-              urlOrAsset,
+          ? CachedImageWidget(
+              imageUrl: urlOrAsset,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => _ImageFallback(
-                icon: fallbackIcon,
-              ),
+              errorBuilder: (_, __, ___) => _ImageFallback(icon: fallbackIcon),
               loadingBuilder: (context, child, progress) => progress == null
                   ? child
                   : const _ImageFallback(icon: Icons.hourglass_bottom_rounded),
@@ -381,9 +386,7 @@ class _ServiceImage extends StatelessWidget {
           : Image.asset(
               urlOrAsset,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => _ImageFallback(
-                icon: fallbackIcon,
-              ),
+              errorBuilder: (_, __, ___) => _ImageFallback(icon: fallbackIcon),
             ),
     );
   }
@@ -436,11 +439,7 @@ class _PrimaryButton extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               text,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                
-              ),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -448,3 +447,4 @@ class _PrimaryButton extends StatelessWidget {
     );
   }
 }
+

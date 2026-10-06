@@ -32,31 +32,13 @@ class NavigationBookButton extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: LinearGradient(
-              colors: [
-                activeColor,
-                activeColor.withValues(alpha: 0.92),
-              ],
+              colors: [activeColor, activeColor.withValues(alpha: 0.92)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            border: Border.all(
-              color: Colors.white,
-              width: 2,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: activeColor.withValues(alpha: 0.25),
-                blurRadius: isActive ? 20 : 16,
-                spreadRadius: isActive ? 2 : 1,
-                offset: const Offset(0, 8),
-              ),
-            ],
+            border: Border.all(color: Colors.white, width: 2),
           ),
-          child: const Icon(
-            Icons.add_rounded,
-            color: Colors.white,
-            size: 28,
-          ),
+          child: const Icon(Icons.add_rounded, color: Colors.white, size: 28),
         ),
       ),
     );

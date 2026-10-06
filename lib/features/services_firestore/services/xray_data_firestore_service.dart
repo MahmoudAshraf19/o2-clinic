@@ -4,7 +4,7 @@ import '../models/xray_data_model.dart';
 
 class XrayDataFirestoreService {
   XrayDataFirestoreService({FirebaseFirestore? firestore})
-      : _firestore = firestore ?? FirebaseFirestore.instance;
+    : _firestore = firestore ?? FirebaseFirestore.instance;
 
   final FirebaseFirestore _firestore;
 
@@ -38,7 +38,9 @@ class XrayDataFirestoreService {
       _logInfo('Services docs count: ${servicesSnapshot.docs.length}');
 
       if (!categoryDoc.exists) {
-        _logError('Category document not found: $_categoryCollection/$_categoryDocument');
+        _logError(
+          'Category document not found: $_categoryCollection/$_categoryDocument',
+        );
         _logDivider();
         return XrayCatalog.empty();
       }
@@ -170,7 +172,11 @@ class XrayDataFirestoreService {
 
       final knownCategoryIds = categories.map((e) => e.id).toSet();
       final unknownServices = services
-          .where((s) => s.categoryId.isNotEmpty && !knownCategoryIds.contains(s.categoryId))
+          .where(
+            (s) =>
+                s.categoryId.isNotEmpty &&
+                !knownCategoryIds.contains(s.categoryId),
+          )
           .toList();
 
       if (unknownServices.isNotEmpty) {
@@ -188,7 +194,9 @@ class XrayDataFirestoreService {
       return XrayCatalog(
         categories: categories,
         services: services,
-        servicesByCategory: Map<String, List<XrayServiceModel>>.unmodifiable(grouped),
+        servicesByCategory: Map<String, List<XrayServiceModel>>.unmodifiable(
+          grouped,
+        ),
       );
     } on FirebaseException catch (e, stack) {
       _logError('FirebaseException occurred.');

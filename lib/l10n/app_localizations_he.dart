@@ -141,7 +141,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get name => 'שֵׁם';
 
   @override
-  String get phone => 'טֵלֵפוֹן';
+  String get phone => 'מספר טלפון';
 
   @override
   String get location => 'מִקוּם';
@@ -292,7 +292,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get yourImagingAppointmentHasBeen => 'התור שלך לדימות הוזמן בהצלחה.';
 
   @override
-  String get continueBooking => 'המשך';
+  String get continueBooking => 'המשך בהזמנה';
 
   @override
   String get confirmImaging => 'אישור תור לדימות';
@@ -1100,4 +1100,121 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get inO2Clinic => 'במרפאת O2';
+
+  @override
+  String get radiologyPricingInquiryPrompt =>
+      'נא לצרף תמונה של צילום הרנטגן להנהלה כדי לבדוק ולקבוע את המחיר';
+
+  @override
+  String get radiologyChatWelcome =>
+      'ברוך הבא. אנא צרף תמונה או פרטים של צילום רנטגן כדי לקבוע את המחיר';
+
+  @override
+  String get requiresYourAction => 'דורש את פעולתך';
+
+  @override
+  String get requiresActionFilter => 'דורש פעולה';
+
+  @override
+  String get continueBookingOrChat => 'המשך בהזמנה / צ\'אט';
+
+  @override
+  String get betterHealth => 'בריאות טובה יותר';
+
+  @override
+  String get brighterTomorrow => 'מחר בהיר יותר';
+
+  @override
+  String get getStarted => 'התחל עכשיו';
+
+  @override
+  String get onboarding1Title => 'גישה קלה\nלשירותי בריאות';
+
+  @override
+  String get onboarding1Desc => 'שירותים רפואיים איכותיים\nבכל זמן שתצטרך.';
+
+  @override
+  String get onboarding2TitlePart1 => 'רופאים מנוסים\n';
+
+  @override
+  String get onboarding2TitlePart2 => 'וטיפול אמין';
+
+  @override
+  String get onboarding2Desc =>
+      'הצוות שלנו כאן כדי להעניק\nלך את הטיפול הטוב ביותר.';
+
+  @override
+  String get onboarding3TitlePart1 => 'הזמנת תורים\n';
+
+  @override
+  String get onboarding3TitlePart2 => 'בקלות';
+
+  @override
+  String get onboarding3Desc => 'הזמנה מהירה, ביקורים חלקים,\nותמיכה מלאה.';
+
+  @override
+  String get emailOrPhone => 'דוא\"ל או מספר טלפון';
+
+  @override
+  String get emailHint => 'your@email.com';
+
+  @override
+  String get passwordHint => 'הכנס סיסמה';
+
+  @override
+  String get password => 'סיסמה';
+
+  @override
+  String get or => 'או';
+
+  @override
+  String get continueWithGoogle => 'המשך עם גוגל';
+
+  @override
+  String get continueWithApple => 'המשך עם אפל';
+
+  @override
+  String get signUp => 'הירשם';
+
+  @override
+  String get editAccount => 'ערוך חשבון';
+
+  @override
+  String get editYourAccount => 'ערוך את חשבונך';
+
+  @override
+  String get createYourAccount => 'צור את חשבונך';
+
+  @override
+  String get updateProfileSafely => 'עדכן את פרטי הפרופיל שלך בבטחה.';
+
+  @override
+  String get joinUsJourney => 'הצטרף אלינו והתחל את המסע שלך 👋';
+
+  @override
+  String get fullName => 'שם מלא';
+
+  @override
+  String get confirmPassword => 'אימות סיסמה';
+
+  @override
+  String get bio => 'ביוגרפיה (אופציונלי)';
+
+  @override
+  String get male => 'זכר';
+
+  @override
+  String get female => 'נקבה';
+
+  @override
+  String get saveChanges => 'שמור שינויים';
+
+  @override
+  String get createAccountBtn => 'צור חשבון';
+
+  @override
+  String get passwordsMatch => 'הסיסמאות תואמות לחלוטין 🎉';
+
+  @override
+  String get passwordsNotMatch => 'הסיסמאות אינן תואמות';
 }

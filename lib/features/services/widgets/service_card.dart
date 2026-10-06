@@ -63,8 +63,8 @@ class ServiceCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: CachedImageWidget(imageUrl: 
-                department.image,
+              child: CachedImageWidget(
+                imageUrl: department.image,
                 width: 70,
                 height: 70,
                 fit: BoxFit.cover,
@@ -72,7 +72,10 @@ class ServiceCard extends StatelessWidget {
                   width: 70,
                   height: 70,
                   color: AppColors.primary.withValues(alpha: 0.1),
-                  child: const Icon(Icons.medical_services, color: AppColors.primary),
+                  child: const Icon(
+                    Icons.medical_services,
+                    color: AppColors.primary,
+                  ),
                 ),
               ),
             ),
@@ -86,18 +89,14 @@ class ServiceCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      
+
                       color: AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     _getLocalizedSubtitle(context, department),
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: AppColors.grey,
-                      
-                    ),
+                    style: TextStyle(fontSize: 13, color: AppColors.grey),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),

@@ -16,11 +16,7 @@ class ChatOption {
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'subtitle': subtitle,
-      'payload': payload,
-    };
+    return {'title': title, 'subtitle': subtitle, 'payload': payload};
   }
 
   factory ChatOption.fromMap(Map<String, dynamic> map) {

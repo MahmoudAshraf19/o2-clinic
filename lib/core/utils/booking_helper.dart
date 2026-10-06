@@ -10,16 +10,26 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 class BookingHelper {
   /// Navigates to the booking page or shows a bottom sheet for online consultation choice.
   /// The [doctor] parameter can be of type from either doctor model implementations.
-  static Future<void> onBookNowClicked(BuildContext context, dynamic doctor) async {
-    Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
-    
+  static Future<void> onBookNowClicked(
+    BuildContext context,
+    dynamic doctor,
+  ) async {
+    Get.dialog(
+      const Center(child: CircularProgressIndicator()),
+      barrierDismissible: false,
+    );
+
     bool isOnline = false;
     try {
-      final doc = await FirebaseFirestore.instance.collection('Doctors').doc(doctor.id).get();
+      final doc = await FirebaseFirestore.instance
+          .collection('Doctors')
+          .doc(doctor.id)
+          .get();
       if (doc.exists && doc.data() != null) {
         final data = doc.data()!;
-        isOnline = data['is_online_consultation_available'] == true || 
-                   data['isOnlineConsultationAvailable'] == true;
+        isOnline =
+            data['is_online_consultation_available'] == true ||
+            data['isOnlineConsultationAvailable'] == true;
       } else {
         isOnline = doctor.isOnlineConsultationAvailable == true;
       }
@@ -28,7 +38,7 @@ class BookingHelper {
         isOnline = doctor.isOnlineConsultationAvailable == true;
       } catch (_) {}
     }
-    
+
     Get.back(); // Close loading dialog
 
     if (isOnline) {
@@ -43,7 +53,10 @@ class BookingHelper {
     }
   }
 
-  static Widget _buildBookingOptionsSheet(BuildContext context, dynamic doctor) {
+  static Widget _buildBookingOptionsSheet(
+    BuildContext context,
+    dynamic doctor,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
       decoration: const BoxDecoration(
@@ -66,9 +79,10 @@ class BookingHelper {
             ),
           ),
           const SizedBox(height: 32),
-          
+
           Text(
-            AppLocalizations.of(context)?.chooseConsultationType ?? 'Choose Consultation Type',
+            AppLocalizations.of(context)?.chooseConsultationType ??
+                'Choose Consultation Type',
             style: AppTextStyles.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
@@ -77,14 +91,15 @@ class BookingHelper {
           ),
           const SizedBox(height: 8),
           Text(
-            AppLocalizations.of(context)?.howConsultWithDoctor ?? 'How would you like to consult with the doctor?',
+            AppLocalizations.of(context)?.howConsultWithDoctor ??
+                'How would you like to consult with the doctor?',
             style: AppTextStyles.textTheme.bodyMedium?.copyWith(
               color: AppColors.textSecondary,
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),
-          
+
           // Option 1: In O2 Clinic
           _buildOptionButton(
             context: context,
@@ -96,18 +111,20 @@ class BookingHelper {
             },
           ),
           const SizedBox(height: 16),
-          
+
           // Option 2: Online Consultation
           _buildOptionButton(
             context: context,
-            title: AppLocalizations.of(context)?.onlineConsultation ?? 'Online Consultation',
+            title:
+                AppLocalizations.of(context)?.onlineConsultation ??
+                'Online Consultation',
             icon: Icons.video_camera_front_outlined,
             onTap: () {
               Navigator.pop(context); // Close bottom sheet
               Get.to(() => OnlineConsultationBookingPage(doctor: doctor));
             },
           ),
-          
+
           const SizedBox(height: 16),
         ],
       ),

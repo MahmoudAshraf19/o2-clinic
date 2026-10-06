@@ -35,8 +35,10 @@ class LoginController extends GetxController {
       );
 
       if (userCred.user != null) {
-        final userData = await UserFirestoreService.instance.getUser(userCred.user!.uid);
-        
+        final userData = await UserFirestoreService.instance.getUser(
+          userCred.user!.uid,
+        );
+
         if (userData == null) {
           await FirebaseAuth.instance.signOut();
           Get.snackbar(
@@ -48,7 +50,7 @@ class LoginController extends GetxController {
           );
           return;
         }
-        
+
         if (userData != null && userData['isBlocked'] == true) {
           await FirebaseAuth.instance.signOut();
           Get.snackbar(
@@ -65,7 +67,10 @@ class LoginController extends GetxController {
                 }
                 Get.to(() => const SupportChatScreen());
               },
-              child: const Text('Contact Support', style: TextStyle(color: Colors.white)),
+              child: const Text(
+                'Contact Support',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           );
           return;

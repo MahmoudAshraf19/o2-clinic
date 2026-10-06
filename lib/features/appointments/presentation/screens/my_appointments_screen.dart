@@ -9,10 +9,27 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../services_firestore/models/booking_model.dart';
 import '../../../services_firestore/services/bookings_firestore_service.dart';
+import '../../../dashboard/controllers/dashboard_pending_actions_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../services/models/radiology_category_model.dart';
+import '../../../booking/presentation/pages/radiology_confirm_booking_screen.dart';
+import '../../../booking/controllers/radiology_booking_controller.dart';
 import 'report_issue_screen.dart';
 import 'review_doctor_screen.dart';
+import 'dart:ui';
 
-enum AppointmentFilter { all, upcoming, completed, cancelled, issues }
+enum AppointmentStatusFilter {
+  all,
+  upcoming,
+  pending,
+  completed,
+  cancelled,
+  requiresAction,
+}
+
+enum AppointmentTypeFilter { all, doctor, online, imaging, cosmetic }
+
+enum AppointmentTimeFilter { all, thisWeek, thisMonth, last30Days }
 
 class MyAppointmentsScreen extends StatefulWidget {
   const MyAppointmentsScreen({super.key});
@@ -25,10 +42,14 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
   final TextEditingController _searchController = TextEditingController();
   final BookingsFirestoreService _service = BookingsFirestoreService();
 
-  AppointmentFilter _selectedFilter = AppointmentFilter.all;
+  AppointmentStatusFilter _statusFilter = AppointmentStatusFilter.all;
+  AppointmentTypeFilter _typeFilter = AppointmentTypeFilter.all;
+  AppointmentTimeFilter _timeFilter = AppointmentTimeFilter.all;
+
   String _searchText = '';
   Stream<List<BookingModel>>? _bookingsStream;
   String? _showBookingId;
+  bool _showFilters = false;
 
   @override
   void initState() {
@@ -41,6 +62,13 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
 
     if (Get.arguments is Map) {
       _showBookingId = Get.arguments['showBookingId']?.toString();
+
+      final filterArg = Get.arguments['filter']?.toString();
+      if (filterArg == 'requiresAction') {
+        _statusFilter = AppointmentStatusFilter.requiresAction;
+        _showFilters =
+            true; // Show filters so the user knows a filter is active
+      }
     }
   }
 
@@ -61,7 +89,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFA),
+      backgroundColor: const Color(0xFFF4F7F9),
       body: SafeArea(
         child: user == null
             ? _buildNotLoggedInView(context)
@@ -71,10 +99,11 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                   if (snapshot.hasError) {
                     return _buildErrorView(context, snapshot.error.toString());
                   }
-
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
                     );
                   }
 
@@ -84,9 +113,11 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
 
                   if (_showBookingId != null && allBookings.isNotEmpty) {
                     final bookingId = _showBookingId;
-                    _showBookingId = null; // Clear to prevent showing again
+                    _showBookingId = null;
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      final booking = allBookings.firstWhereOrNull((b) => b.id == bookingId);
+                      final booking = allBookings.firstWhereOrNull(
+                        (b) => b.id == bookingId,
+                      );
                       if (booking != null && mounted) {
                         _showBookingDetails(context, booking);
                       }
@@ -94,60 +125,84 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                   }
 
                   return RefreshIndicator(
+                    color: AppColors.primary,
+                    backgroundColor: Colors.white,
                     onRefresh: () async {
                       setState(() {
                         if (user != null) {
-                          _bookingsStream = _service.streamBookingsByUserId(user.uid);
+                          _bookingsStream = _service.streamBookingsByUserId(
+                            user.uid,
+                          );
                         }
                       });
                     },
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildHeader(context),
-                            const SizedBox(height: 16),
-
-                            _buildNextAppointmentCard(
-                              context,
-                              nextAppointment: nextAppointment,
-                            ),
-                            const SizedBox(height: 16),
-
-                            _buildSearchBar(),
-                            const SizedBox(height: 12),
-
-                            _buildFilters(),
-                            const SizedBox(height: 22),
-
-                            _SectionTitle(
-                              title: AppLocalizations.of(context)!.myAppointments,
-                              subtitle: AppLocalizations.of(context)!.bookingFound(filteredBookings.length.toString()),
-                            ),
-                            const SizedBox(height: 12),
-
-                            if (filteredBookings.isEmpty)
-                              _buildEmptyState()
-                            else
-                              ListView.separated(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: filteredBookings.length,
-                                separatorBuilder: (_, __) => const SizedBox(height: 12),
-                                itemBuilder: (context, index) {
-                                  final booking = filteredBookings[index];
-                                  return _AppointmentCard(
-                                    booking: booking,
-                                    onTap: () => _showBookingDetails(context, booking),
-                                  );
-                                },
-                              ),
-                          ],
-                        ),
+                    child: CustomScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(
+                        parent: BouncingScrollPhysics(),
                       ),
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildHeader(context),
+                                const SizedBox(height: 20),
+                                _buildNextAppointmentCard(
+                                  context,
+                                  nextAppointment: nextAppointment,
+                                ),
+                                const SizedBox(height: 24),
+                                _buildSearchBar(),
+                                const SizedBox(height: 12),
+                                _buildFilterToggle(),
+                                if (_showFilters) ...[
+                                  const SizedBox(height: 16),
+                                  _buildAdvancedFilters(),
+                                ],
+                                const SizedBox(height: 24),
+                                _buildSectionTitle(
+                                  context,
+                                  filteredBookings.length,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        if (filteredBookings.isEmpty)
+                          SliverToBoxAdapter(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 40,
+                              ),
+                              child: _buildEmptyState(),
+                            ),
+                          )
+                        else
+                          SliverPadding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                            ).copyWith(bottom: 40),
+                            sliver: SliverList(
+                              delegate: SliverChildBuilderDelegate((
+                                context,
+                                index,
+                              ) {
+                                final booking = filteredBookings[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 16),
+                                  child: _AppointmentCard(
+                                    booking: booking,
+                                    onTap: () =>
+                                        _showBookingDetails(context, booking),
+                                  ),
+                                );
+                              }, childCount: filteredBookings.length),
+                            ),
+                          ),
+                      ],
                     ),
                   );
                 },
@@ -162,12 +217,17 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         GestureDetector(
           onTap: () => Get.back(),
           child: Container(
-            width: 44,
-            height: 44,
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: AppColors.border),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
             child: const Icon(
               Icons.arrow_back_ios_new_rounded,
@@ -176,29 +236,27 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
             ),
           ),
         ),
-        const SizedBox(width: 14),
+        const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 AppLocalizations.of(context)!.myAppointments,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
+                style: const TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
                   color: AppColors.primary,
                   fontFamily: AppFonts.dancingScript,
-                  height: 1,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               Text(
                 AppLocalizations.of(context)!.manageYourBookingsEasily,
                 style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondary.withValues(alpha: 0.75),
+                  fontSize: 13,
+                  color: Colors.grey.shade600,
                   fontWeight: FontWeight.w500,
-                  
                 ),
               ),
             ],
@@ -212,471 +270,427 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     BuildContext context, {
     required BookingModel? nextAppointment,
   }) {
-    if (nextAppointment == null) {
-      return Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF21897E), Color(0xFF3BA99C)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF21897E).withOpacity(0.15),
-              blurRadius: 24,
-              offset: const Offset(0, 10),
-            ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              right: -10,
-              top: -10,
-              child: Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.08),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.noUpcomingAppointment,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        AppLocalizations.of(context)!.yourNextBookingWillAppear,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white.withOpacity(0.92),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.18),
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: const Icon(
-                    Icons.event_available_rounded,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-    }
+    if (nextAppointment == null) return const SizedBox.shrink();
 
     final date = nextAppointment.schedule.timestamp?.toDate();
-    final title = _displayTitle(context, nextAppointment);
-    final subtitle = _displaySubtitle(context, nextAppointment);
+    final title = _BookingHelper.title(context, nextAppointment);
+    final subtitle = _BookingHelper.subtitle(context, nextAppointment);
     final whenText = date == null
         ? '${nextAppointment.schedule.date} • ${nextAppointment.schedule.time}'
         : '${MaterialLocalizations.of(context).formatMediumDate(date)} • '
-            '${MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(date))}';
+              '${MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(date))}';
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
+          colors: [Color(0xFF1E877B), Color(0xFF0F5A51)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.primary, Color(0xFF005049)],
         ),
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.20),
-            blurRadius: 22,
+            color: const Color(0xFF1E877B).withOpacity(0.3),
+            blurRadius: 24,
             offset: const Offset(0, 10),
           ),
         ],
       ),
-      child: Stack(
-        children: [
-          Positioned(
-            right: -10,
-            top: -10,
-            child: Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.08),
-                shape: BoxShape.circle,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(28),
+        child: Stack(
+          children: [
+            Positioned(
+              right: -30,
+              top: -30,
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.05),
+                  shape: BoxShape.circle,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            left: -15,
-            bottom: -20,
-            child: Container(
-              width: 90,
-              height: 90,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.08),
-                shape: BoxShape.circle,
+            Positioned(
+              left: -20,
+              bottom: -20,
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.05),
+                  shape: BoxShape.circle,
+                ),
               ),
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+            Padding(
+              padding: const EdgeInsets.all(22),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _DoctorAvatar(
-                    imageUrl: nextAppointment.doctor?.image,
-                    fallbackIcon: Icons.calendar_month_rounded,
-                    isHero: true,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _DoctorAvatar(
+                        imageUrl: nextAppointment.doctor?.image,
+                        fallbackIcon: Icons.calendar_month_rounded,
+                        isHero: true,
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              subtitle,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white.withOpacity(0.85),
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.1),
+                          ),
+                        ),
+                        child: Text(
+                          _daysLeftText(context, date),
                           style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: 6),
-                        Text(
-                          subtitle,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.white.withOpacity(0.92),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.access_time_filled_rounded,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            whenText,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.18),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      _daysLeftText(context, date),
-                      style: const TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _ActionButton(
+                          text: AppLocalizations.of(context)!.viewDetails,
+                          icon: Icons.visibility_rounded,
+                          filled: true,
+                          onTap: () =>
+                              _showBookingDetails(context, nextAppointment),
+                        ),
                       ),
-                    ),
+                      if (nextAppointment.type == 'online') ...[
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _ActionButton(
+                            text: AppLocalizations.of(
+                              context,
+                            )!.onlineConsultation,
+                            icon: Icons.videocam_rounded,
+                            filled: false,
+                            onTap: () =>
+                                _showBookingDetails(context, nextAppointment),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.18),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.calendar_month_rounded,
-                      size: 18,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        whenText,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 14),
-              Row(
-                children: [
-                  Expanded(
-                    child: _ActionButton(
-                      text: AppLocalizations.of(context)!.viewDetails,
-                      icon: Icons.visibility_rounded,
-                      filled: true,
-                      onTap: () => _showBookingDetails(context, nextAppointment),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _ActionButton(
-                      text: nextAppointment.type == 'online'
-                          ? AppLocalizations.of(context)!.onlineConsultation
-                          : AppLocalizations.of(context)!.directions,
-                      icon: nextAppointment.type == 'online'
-                          ? Icons.videocam_rounded
-                          : Icons.directions_rounded,
-                      filled: false,
-                      onTap: () => _showBookingDetails(context, nextAppointment),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSearchBar() {
-    return TextField(
-      controller: _searchController,
-      decoration: InputDecoration(
-        hintText: AppLocalizations.of(context)!.searchDoctorServiceClinic,
-        prefixIcon: const Icon(Icons.search_rounded),
-        filled: true,
-        fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-          borderSide: const BorderSide(color: Color(0xFFE6ECEC)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.4),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFilters() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: AppointmentFilter.values.map((filter) {
-          final selected = _selectedFilter == filter;
-
-          return Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: ChoiceChip(
-              label: Text(_filterLabel(context, filter)),
-              selected: selected,
-              selectedColor: AppColors.primary,
-              labelStyle: TextStyle(
-                color: selected ? Colors.white : const Color(0xFF546868),
-                fontWeight: FontWeight.w600,
-              ),
-              backgroundColor: Colors.white,
-              side: const BorderSide(color: Color(0xFFE6ECEC)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
-              onSelected: (_) {
-                setState(() => _selectedFilter = filter);
-              },
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget _buildEmptyState() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(28),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE6ECEC)),
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: 72,
-            height: 72,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.08),
-              borderRadius: BorderRadius.circular(24),
-            ),
-            child: const Icon(
-              Icons.event_busy_rounded,
-              size: 34,
-              color: AppColors.primary,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            AppLocalizations.of(context)!.noAppointmentsFound,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF1A2020),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            AppLocalizations.of(context)!.tryChangingTheFilterOr,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14,
-              color: Color(0xFF546868),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNotLoggedInView(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(18),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: AppColors.outlineVariant.withOpacity(.25)),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 68,
-                height: 68,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(.08),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.lock_outline_rounded,
-                  color: AppColors.primary,
-                  size: 34,
-                ),
-              ),
-              const SizedBox(height: 14),
-              Text(
-                AppLocalizations.of(context)!.signInToContinue,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                AppLocalizations.of(context)!.pleaseLoginOrCreateAn,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 13.5,
-                  height: 1.5,
-                  color: Colors.grey.shade600,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 18),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => Get.toNamed(AppRoutes.login),
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: AppColors.primary),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        minimumSize: const Size.fromHeight(50),
-                      ),
-                      child: const Text('Login'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () => Get.toNamed(AppRoutes.register),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        minimumSize: const Size.fromHeight(50),
-                      ),
-                      child: const Text('Create Account'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildErrorView(BuildContext context, String error) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.error_outline_rounded, size: 48, color: Colors.red),
-            const SizedBox(height: 12),
-            Text(
-              AppLocalizations.of(context)!.somethingWentWrong,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              error,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Color(0xFF546868)),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => setState(() {}),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
-              ),
-              child: const Text('Retry'),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  String _daysLeftText(BuildContext context, DateTime? date) {
+    if (date == null)
+      return Localizations.localeOf(context).languageCode == 'ar'
+          ? 'قريباً'
+          : 'Soon';
+    final now = DateTime.now();
+    final diff = date.difference(now).inDays;
+    final isAr = Localizations.localeOf(context).languageCode == 'ar';
+    if (diff == 0) return isAr ? 'اليوم' : 'Today';
+    if (diff == 1) return isAr ? 'غداً' : 'Tomorrow';
+    if (diff < 0) return isAr ? 'انتهى' : 'Passed';
+    return isAr ? 'بعد $diff أيام' : 'In $diff days';
+  }
+
+  Widget _buildSearchBar() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: TextField(
+        controller: _searchController,
+        decoration: InputDecoration(
+          hintText: AppLocalizations.of(context)!.searchDoctorServiceClinic,
+          hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
+          prefixIcon: const Icon(
+            Icons.search_rounded,
+            color: AppColors.primary,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 16,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFilterToggle() {
+    return GestureDetector(
+      onTap: () => setState(() => _showFilters = !_showFilters),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.filter_list_rounded,
+            size: 20,
+            color: _showFilters ? AppColors.primary : Colors.grey.shade600,
+          ),
+          const SizedBox(width: 6),
+          Text(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? 'خيارات التصفية المتقدمة'
+                : 'Advanced Filters',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: _showFilters ? AppColors.primary : Colors.grey.shade600,
+            ),
+          ),
+          const SizedBox(width: 4),
+          Icon(
+            _showFilters
+                ? Icons.keyboard_arrow_up_rounded
+                : Icons.keyboard_arrow_down_rounded,
+            size: 18,
+            color: _showFilters ? AppColors.primary : Colors.grey.shade600,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAdvancedFilters() {
+    final isAr = Localizations.localeOf(context).languageCode == 'ar';
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            isAr ? 'حالة الحجز' : 'Status',
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          ),
+          const SizedBox(height: 8),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: AppointmentStatusFilter.values.map((f) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: _FilterChipWidget(
+                    label: _statusLabel(context, f, isAr),
+                    isSelected: _statusFilter == f,
+                    onTap: () => setState(() => _statusFilter = f),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            isAr ? 'نوع الخدمة' : 'Type',
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          ),
+          const SizedBox(height: 8),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: AppointmentTypeFilter.values.map((f) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: _FilterChipWidget(
+                    label: _typeLabel(f, isAr),
+                    isSelected: _typeFilter == f,
+                    onTap: () => setState(() => _typeFilter = f),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            isAr ? 'الفترة الزمنية' : 'Time Period',
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          ),
+          const SizedBox(height: 8),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: AppointmentTimeFilter.values.map((f) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: _FilterChipWidget(
+                    label: _timeLabel(f, isAr),
+                    isSelected: _timeFilter == f,
+                    onTap: () => setState(() => _timeFilter = f),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _statusLabel(BuildContext context, AppointmentStatusFilter filter, bool isAr) {
+    switch (filter) {
+      case AppointmentStatusFilter.all:
+        return isAr ? 'الكل' : 'All';
+      case AppointmentStatusFilter.upcoming:
+        return isAr ? 'قادم' : 'Upcoming';
+      case AppointmentStatusFilter.pending:
+        return isAr ? 'معلق' : 'Pending';
+      case AppointmentStatusFilter.completed:
+        return isAr ? 'مكتمل' : 'Completed';
+      case AppointmentStatusFilter.cancelled:
+        return isAr ? 'ملغي' : 'Cancelled';
+      case AppointmentStatusFilter.requiresAction:
+        return AppLocalizations.of(context)!.requiresActionFilter;
+    }
+  }
+
+  String _typeLabel(AppointmentTypeFilter filter, bool isAr) {
+    switch (filter) {
+      case AppointmentTypeFilter.all:
+        return isAr ? 'الكل' : 'All';
+      case AppointmentTypeFilter.doctor:
+        return isAr ? 'كشف عيادة' : 'Clinical';
+      case AppointmentTypeFilter.online:
+        return isAr ? 'استشارة عن بعد' : 'Online';
+      case AppointmentTypeFilter.imaging:
+        return isAr ? 'أشعة' : 'Imaging';
+      case AppointmentTypeFilter.cosmetic:
+        return isAr ? 'تجميل' : 'Cosmetic';
+    }
+  }
+
+  String _timeLabel(AppointmentTimeFilter filter, bool isAr) {
+    switch (filter) {
+      case AppointmentTimeFilter.all:
+        return isAr ? 'كل الوقت' : 'All Time';
+      case AppointmentTimeFilter.thisWeek:
+        return isAr ? 'هذا الأسبوع' : 'This Week';
+      case AppointmentTimeFilter.thisMonth:
+        return isAr ? 'هذا الشهر' : 'This Month';
+      case AppointmentTimeFilter.last30Days:
+        return isAr ? 'آخر 30 يوم' : 'Last 30 Days';
+    }
+  }
+
+  Widget _buildSectionTitle(BuildContext context, int count) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          AppLocalizations.of(context)!.myAppointments,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(
+            '$count',
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: AppColors.primary,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -685,8 +699,10 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
 
     return bookings.where((booking) {
       final matchesSearch = query.isEmpty || _matchesSearch(booking, query);
-      final matchesFilter = _matchesFilter(booking, _selectedFilter);
-      return matchesSearch && matchesFilter;
+      final matchesStatus = _matchesStatus(booking, _statusFilter);
+      final matchesType = _matchesType(booking, _typeFilter);
+      final matchesTime = _matchesTime(booking, _timeFilter);
+      return matchesSearch && matchesStatus && matchesType && matchesTime;
     }).toList();
   }
 
@@ -704,426 +720,269 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
       booking.imaging?.nameEn,
       booking.cosmetic?.serviceName,
       booking.location.clinic,
-      booking.location.floor,
-      booking.location.room,
       booking.status.current,
       booking.status.label,
-      booking.payment.method,
     ].whereType<String>().join(' ').toLowerCase();
 
     return text.contains(query);
   }
 
-  bool _matchesFilter(BookingModel booking, AppointmentFilter filter) {
+  bool _matchesStatus(BookingModel booking, AppointmentStatusFilter filter) {
+    final status = booking.status.current.toLowerCase();
     switch (filter) {
-      case AppointmentFilter.all:
+      case AppointmentStatusFilter.all:
         return true;
-      case AppointmentFilter.upcoming:
+      case AppointmentStatusFilter.upcoming:
         return _isUpcoming(booking);
-      case AppointmentFilter.completed:
-        return booking.status.current.toLowerCase() == 'completed';
-      case AppointmentFilter.cancelled:
-        return booking.status.current.toLowerCase() == 'cancelled';
-      case AppointmentFilter.issues:
-        return booking.status.current.toLowerCase() == 'under_investigation';
+      case AppointmentStatusFilter.pending:
+        return status == 'pending' || status == 'pending_price';
+      case AppointmentStatusFilter.completed:
+        return status == 'completed';
+      case AppointmentStatusFilter.cancelled:
+        return status == 'cancelled';
+      case AppointmentStatusFilter.requiresAction:
+        if (Get.isRegistered<DashboardPendingActionsController>()) {
+          final pendingCtrl = Get.find<DashboardPendingActionsController>();
+          return pendingCtrl.pendingBookings.any((b) => b.id == booking.id);
+        }
+        return false;
+    }
+  }
+
+  bool _matchesType(BookingModel booking, AppointmentTypeFilter filter) {
+    final type = booking.type.toLowerCase();
+    switch (filter) {
+      case AppointmentTypeFilter.all:
+        return true;
+      case AppointmentTypeFilter.doctor:
+        return type == 'clinical';
+      case AppointmentTypeFilter.online:
+        return type == 'online';
+      case AppointmentTypeFilter.imaging:
+        return type == 'imaging';
+      case AppointmentTypeFilter.cosmetic:
+        return type == 'cosmetic';
+    }
+  }
+
+  bool _matchesTime(BookingModel booking, AppointmentTimeFilter filter) {
+    if (filter == AppointmentTimeFilter.all) return true;
+    final date =
+        booking.schedule.timestamp?.toDate() ??
+        booking.timeline.createdAt?.toDate();
+    if (date == null) return false;
+
+    final now = DateTime.now();
+    final diffDays = now.difference(date).inDays;
+
+    switch (filter) {
+      case AppointmentTimeFilter.all:
+        return true;
+      case AppointmentTimeFilter.thisWeek:
+        return date.isAfter(now.subtract(Duration(days: now.weekday - 1))) &&
+            date.isBefore(now.add(Duration(days: 7 - now.weekday + 1)));
+      case AppointmentTimeFilter.thisMonth:
+        return date.month == now.month && date.year == now.year;
+      case AppointmentTimeFilter.last30Days:
+        return diffDays >= 0 && diffDays <= 30;
     }
   }
 
   BookingModel? _getNextUpcomingBooking(List<BookingModel> bookings) {
     final upcomingBookings = bookings.where(_isUpcoming).toList();
-
     upcomingBookings.sort((a, b) {
-      final aDate = _bookingDate(a) ?? DateTime.fromMillisecondsSinceEpoch(0);
-      final bDate = _bookingDate(b) ?? DateTime.fromMillisecondsSinceEpoch(0);
+      final aDate =
+          a.schedule.timestamp?.toDate() ??
+          DateTime.fromMillisecondsSinceEpoch(0);
+      final bDate =
+          b.schedule.timestamp?.toDate() ??
+          DateTime.fromMillisecondsSinceEpoch(0);
       return aDate.compareTo(bDate);
     });
-
     return upcomingBookings.isEmpty ? null : upcomingBookings.first;
   }
 
   bool _isUpcoming(BookingModel booking) {
     final status = booking.status.current.toLowerCase();
     if (status == 'completed' || status == 'cancelled') return false;
-
-    final date = _bookingDate(booking);
-    if (date == null) return status == 'confirmed' || status == 'pending' || status == 'upcoming';
-
-    return date.isAfter(DateTime.now()) ||
+    final date = booking.schedule.timestamp?.toDate();
+    if (date == null) return status == 'confirmed' || status == 'upcoming';
+    return date.isAfter(DateTime.now().subtract(const Duration(hours: 1))) ||
         status == 'confirmed' ||
-        status == 'pending' ||
         status == 'upcoming';
   }
 
-  DateTime? _bookingDate(BookingModel booking) {
-    return booking.schedule.timestamp?.toDate() ??
-        booking.timeline.createdAt?.toDate();
-  }
-
-  String _filterLabel(BuildContext context, AppointmentFilter filter) {
-    switch (filter) {
-      case AppointmentFilter.all:
-        return AppLocalizations.of(context)!.allAppointments;
-      case AppointmentFilter.upcoming:
-        return AppLocalizations.of(context)!.upcoming;
-      case AppointmentFilter.completed:
-        return AppLocalizations.of(context)!.completed;
-      case AppointmentFilter.cancelled:
-        return AppLocalizations.of(context)!.cancelled;
-      case AppointmentFilter.issues:
-        return Localizations.localeOf(context).languageCode == 'ar' ? 'منازعات' : 'Disputes';
-    }
-  }
-
-  void _showBookingDetails(BuildContext context, BookingModel booking) {
-    final date = booking.schedule.timestamp?.toDate() ??
-        booking.timeline.createdAt?.toDate();
-
-    showModalBottomSheet(
-      context: context,
-      showDragHandle: true,
-      isScrollControlled: true,
-      backgroundColor: const Color(0xFFF8FAFA),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+  Widget _buildEmptyState() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.grey.shade200, width: 2),
       ),
-      builder: (context) {
-        return DraggableScrollableSheet(
-          initialChildSize: 0.78,
-          minChildSize: 0.5,
-          maxChildSize: 0.95,
-          expand: false,
-          builder: (_, controller) {
-            return SingleChildScrollView(
-              controller: controller,
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _BottomSheetHeader(booking: booking),
-                  const SizedBox(height: 20),
-                  _DetailSection(
-                    title: AppLocalizations.of(context)!.appointmentInfo,
-                    items: [
-                      _DetailRow(
-                        label: AppLocalizations.of(context)!.type,
-                        value: _bookingTypeLabel(context, booking),
-                      ),
-                      _DetailRow(
-                        label: AppLocalizations.of(context)!.status,
-                        value: booking.status.label.isNotEmpty
-                            ? booking.status.label
-                            : booking.status.current,
-                      ),
-                      _DetailRow(
-                        label: AppLocalizations.of(context)!.location,
-                        value: booking.type == 'online'
-                            ? AppLocalizations.of(context)!.onlineConsultation
-                            : '${booking.location.clinic}${booking.location.floor.isNotEmpty ? ' - Floor ${booking.location.floor}' : ''}${booking.location.room.isNotEmpty ? ' - Room ${booking.location.room}' : ''}',
-                      ),
-                      _DetailRow(
-                        label: AppLocalizations.of(context)!.date,
-                        value: date == null
-                            ? '-'
-                            : MaterialLocalizations.of(context).formatMediumDate(date),
-                      ),
-                      _DetailRow(
-                        label: AppLocalizations.of(context)!.time,
-                        value: date == null
-                            ? booking.schedule.time
-                            : MaterialLocalizations.of(context).formatTimeOfDay(
-                                TimeOfDay.fromDateTime(date),
-                              ),
-                      ),
-                      _DetailRow(
-                        label: AppLocalizations.of(context)!.duration,
-                        value: '${booking.schedule.durationMinutes} min',
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  _DetailSection(
-                    title: AppLocalizations.of(context)!.patient,
-                    items: [
-                      _DetailRow(label: AppLocalizations.of(context)!.name, value: booking.user.name),
-                      _DetailRow(label: AppLocalizations.of(context)!.phone, value: booking.user.phone.full),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  _DetailSection(
-                    title: AppLocalizations.of(context)!.location,
-                    items: [
-                      _DetailRow(label: AppLocalizations.of(context)!.clinic, value: booking.location.clinic),
-                      _DetailRow(label: AppLocalizations.of(context)!.floor, value: booking.location.floor),
-                      _DetailRow(label: AppLocalizations.of(context)!.room, value: booking.location.room),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  _DetailSection(
-                    title: AppLocalizations.of(context)!.payment,
-                    items: [
-                      _DetailRow(label: AppLocalizations.of(context)!.status, value: booking.payment.status),
-                      _DetailRow(label: AppLocalizations.of(context)!.method, value: booking.payment.method),
-                      _DetailRow(
-                        label: AppLocalizations.of(context)!.amount,
-                        value: '${booking.payment.amount} ${booking.payment.currency}',
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  _DetailSection(
-                    title: AppLocalizations.of(context)!.meta,
-                    items: [
-                      _DetailRow(label: AppLocalizations.of(context)!.source, value: booking.meta.source),
-                      _DetailRow(label: AppLocalizations.of(context)!.version, value: booking.meta.version),
-                      _DetailRow(label: AppLocalizations.of(context)!.bookingId, value: booking.id),
-                    ],
-                  ),
-                  if (booking.doctorReport != null) ...[
-                    const SizedBox(height: 16),
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: AppColors.error.withOpacity(0.08),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: AppColors.error.withOpacity(0.3)),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            Localizations.localeOf(context).languageCode == 'ar' ? 'شكوى الطبيب' : 'Doctor Complaint',
-                            style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.error, fontSize: 16),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(booking.doctorReport!.text),
-                          if (booking.doctorReport!.image != null) ...[
-                            const SizedBox(height: 12),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: CachedImageWidget(
-                                imageUrl: booking.doctorReport!.image!,
-                                width: double.infinity,
-                                height: 160,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                  ],
-                  if (booking.patientReport != null) ...[
-                    const SizedBox(height: 16),
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: AppColors.success.withOpacity(0.08),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: AppColors.success.withOpacity(0.3)),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            Localizations.localeOf(context).languageCode == 'ar' ? 'ردك على الشكوى' : 'Your Reply',
-                            style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.success, fontSize: 16),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(booking.patientReport!.text),
-                          if (booking.patientReport!.image != null) ...[
-                            const SizedBox(height: 12),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: CachedImageWidget(
-                                imageUrl: booking.patientReport!.image!,
-                                width: double.infinity,
-                                height: 160,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () => Navigator.pop(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                      icon: const Icon(Icons.check_rounded),
-                      label: Text(AppLocalizations.of(context)!.done),
-                    ),
-                  ),
-
-                  if (booking.status.current == 'completed' && booking.reviewId == null) ...[
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Get.to(() => ReviewDoctorScreen(
-                            bookingId: booking.id,
-                            doctorId: booking.doctor?.doctorId ?? '',
-                            patientName: booking.user.name,
-                            patientImage: '', // Can add actual patient image later
-                          ));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orangeAccent,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                        icon: const Icon(Icons.star_rounded),
-                        label: Text(AppLocalizations.of(context)!.rateYourExperience ?? 'Rate Experience'),
-                      ),
-                    ),
-                  ],
-
-                  if ((booking.status.current == 'completed' || booking.status.current == 'under_investigation') && booking.patientReport == null) ...[
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Get.to(() => ReportIssueScreen(
-                            bookingId: booking.id,
-                            isPatient: true,
-                          ));
-                        },
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.error,
-                          side: const BorderSide(color: AppColors.error),
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                        icon: const Icon(Icons.report_problem_rounded),
-                        label: Text(booking.status.current == 'under_investigation'
-                            ? (Localizations.localeOf(context).languageCode == 'ar' ? 'الرد على الشكوى' : 'Reply to Issue')
-                            : (AppLocalizations.of(context)!.reportIssue ?? 'Report Issue')),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            );
-          },
-        );
-      },
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.05),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.event_busy_rounded,
+              size: 48,
+              color: AppColors.primary,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            AppLocalizations.of(context)!.noAppointmentsFound,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            AppLocalizations.of(context)!.tryChangingTheFilterOr,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+          ),
+        ],
+      ),
     );
   }
 
-  String _bookingTypeLabel(BuildContext context, BookingModel booking) {
-    final type = booking.type.toLowerCase().trim();
-
-    if (type.contains('doctor')) return AppLocalizations.of(context)!.doctorAppointment;
-    if (type.contains('service')) return AppLocalizations.of(context)!.serviceAppointment;
-    if (type.contains('imaging')) return AppLocalizations.of(context)!.imagingAppointment;
-    if (type.contains('cosmetic')) return AppLocalizations.of(context)!.cosmeticAppointment;
-    if (type == 'online') return AppLocalizations.of(context)!.onlineConsultation;
-
-    return booking.type.isEmpty ? AppLocalizations.of(context)!.appointmentOnly : booking.type;
+  Widget _buildNotLoggedInView(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 20),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.lock_outline_rounded,
+                size: 64,
+                color: AppColors.primary,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                AppLocalizations.of(context)!.signInToContinue,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                AppLocalizations.of(context)!.pleaseLoginOrCreateAn,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: () => Get.toNamed(AppRoutes.login),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size.fromHeight(54),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: const Text(
+                  'Login',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
-  String _displayTitle(BuildContext context, BookingModel booking) {
-    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
-    final doctor = booking.doctor;
-    if (doctor != null) {
-      if (isArabic && doctor.nameAr.trim().isNotEmpty) return doctor.nameAr;
-      if (!isArabic && doctor.nameEn.trim().isNotEmpty) return doctor.nameEn;
-      return doctor.nameAr.trim().isNotEmpty ? doctor.nameAr : doctor.nameEn;
-    }
-
-    final service = booking.service;
-    if (service != null) {
-      if (isArabic && service.serviceNameAr.trim().isNotEmpty) return service.serviceNameAr;
-      if (!isArabic && service.serviceNameEn.trim().isNotEmpty) return service.serviceNameEn;
-      return service.serviceNameAr.trim().isNotEmpty ? service.serviceNameAr : service.serviceNameEn;
-    }
-
-    final imaging = booking.imaging;
-    if (imaging != null) {
-      if (isArabic && imaging.nameAr.trim().isNotEmpty) return imaging.nameAr;
-      if (!isArabic && imaging.nameEn.trim().isNotEmpty) return imaging.nameEn;
-      return imaging.nameAr.trim().isNotEmpty ? imaging.nameAr : imaging.nameEn;
-    }
-
-    final cosmetic = booking.cosmetic;
-    if (cosmetic != null && cosmetic.serviceName.trim().isNotEmpty) {
-      return cosmetic.serviceName;
-    }
-
-    return AppLocalizations.of(context)!.appointmentOnly;
+  Widget _buildErrorView(BuildContext context, String error) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.error_outline_rounded, size: 48, color: Colors.red),
+          const SizedBox(height: 12),
+          Text(
+            AppLocalizations.of(context)!.somethingWentWrong,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            error,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.grey.shade600),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () => setState(() {}),
+            child: const Text('Retry'),
+          ),
+        ],
+      ),
+    );
   }
 
-  String _displaySubtitle(BuildContext context, BookingModel booking) {
-    if (booking.doctor?.specialty.trim().isNotEmpty == true) {
-      return booking.doctor!.specialty;
-    }
-
-    if (booking.location.clinic.trim().isNotEmpty) {
-      return booking.location.clinic;
-    }
-
-    return booking._typeFriendly(context);
-  }
-
-  String _daysLeftText(BuildContext context, DateTime? date) {
-    if (date == null) return AppLocalizations.of(context)!.upcoming;
-
-    final diff = date.difference(DateTime.now()).inDays;
-    if (diff <= 0) return AppLocalizations.of(context)!.todayOnly;
-    if (diff == 1) return AppLocalizations.of(context)!.inOneDay;
-    return AppLocalizations.of(context)!.inDays(diff.toString());
+  void _showBookingDetails(BuildContext context, BookingModel booking) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _BookingDetailsSheet(booking: booking),
+    );
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  final String title;
-  final String subtitle;
+class _FilterChipWidget extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
 
-  const _SectionTitle({
-    required this.title,
-    required this.subtitle,
+  const _FilterChipWidget({
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w800,
-            color: Color(0xFF1A2020),
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.primary : Colors.grey.shade100,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isSelected ? AppColors.primary : Colors.grey.shade300,
           ),
         ),
-        const SizedBox(height: 4),
-        Text(
-          subtitle,
-          style: const TextStyle(
+        child: Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.grey.shade700,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
             fontSize: 13,
-            color: Color(0xFF546868),
           ),
         ),
-      ],
+      ),
     );
   }
 }
@@ -1132,188 +991,153 @@ class _AppointmentCard extends StatelessWidget {
   final BookingModel booking;
   final VoidCallback onTap;
 
-  const _AppointmentCard({
-    required this.booking,
-    required this.onTap,
-  });
+  const _AppointmentCard({required this.booking, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     final date = booking.schedule.timestamp?.toDate();
-    final isCompleted = booking.status.current.toLowerCase() == 'completed';
-    final isCancelled = booking.status.current.toLowerCase() == 'cancelled';
-    final isUpcoming = !isCompleted && !isCancelled;
+    final status = booking.status.current.toLowerCase();
 
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF162525).withOpacity(0.04),
-            blurRadius: 18,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        child: InkWell(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(24),
-          onTap: onTap,
-          child: Container(
-            padding: const EdgeInsets.all(18),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: const Color(0xFFF1F5F5), width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 15,
+              offset: const Offset(0, 5),
             ),
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _DoctorAvatar(
-                    imageUrl: booking.doctor?.image,
-                    fallbackIcon: _typeIcon(booking.type),
+          ],
+          border: Border.all(color: Colors.grey.shade100),
+        ),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _DoctorAvatar(
+                  imageUrl: booking.doctor?.image,
+                  fallbackIcon: Icons.local_hospital_rounded,
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _BookingHelper.title(context, booking),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        _BookingHelper.subtitle(context, booking),
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey.shade600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 12),
+                ),
+                _StatusBadge(
+                  status: status,
+                  isAr: Localizations.localeOf(context).languageCode == 'ar',
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF4F7F9),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.calendar_month_rounded,
+                    size: 18,
+                    color: AppColors.primary,
+                  ),
+                  const SizedBox(width: 10),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _title(context, booking),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w800,
-                            color: Color(0xFF1A2020),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          _subtitle(context, booking),
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Color(0xFF546868),
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      date == null
+                          ? '${booking.schedule.date} • ${booking.schedule.time}'
+                          : '${MaterialLocalizations.of(context).formatMediumDate(date)} • ${MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(date))}',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
                     ),
                   ),
-                  _StatusBadge(
-                    label: _getLocalizedStatusLabel(context, booking.status.current),
-                    isUpcoming: isUpcoming,
-                    isCancelled: isCancelled,
-                    isCompleted: isCompleted,
-                    isPending: booking.status.current.toLowerCase() == 'pending',
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 14,
+                    color: Colors.grey.shade400,
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF8FAFA),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.calendar_month_rounded,
-                        size: 18, color: AppColors.primary),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        date == null
-                            ? '${booking.schedule.date} • ${booking.schedule.time}'
-                            : '${MaterialLocalizations.of(context).formatMediumDate(date)} • '
-                                '${MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(date))}',
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF1A2020),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    const Icon(Icons.chevron_right_rounded, color: Color(0xFF8FA3A3)),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-    ),
     );
   }
+}
 
-  String _getLocalizedStatusLabel(BuildContext context, String currentStatus) {
-    final status = currentStatus.toLowerCase();
-    switch (status) {
-      case 'upcoming':
-      case 'confirmed':
-        final isAr = Localizations.localeOf(context).languageCode == 'ar';
-        return isAr ? 'مؤكد' : 'Confirmed';
-      case 'pending':
-        return AppLocalizations.of(context)!.pending;
-      case 'completed':
-        return AppLocalizations.of(context)!.completed;
-      case 'cancelled':
-        return AppLocalizations.of(context)!.cancelled;
-      default:
-        return currentStatus;
-    }
-  }
+class _StatusBadge extends StatelessWidget {
+  final String status;
+  final bool isAr;
 
-  static String _title(BuildContext context, BookingModel booking) {
-    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
-    final doctor = booking.doctor;
-    if (doctor != null) {
-      if (isArabic && doctor.nameAr.trim().isNotEmpty) return doctor.nameAr;
-      if (!isArabic && doctor.nameEn.trim().isNotEmpty) return doctor.nameEn;
-      return doctor.nameAr.trim().isNotEmpty ? doctor.nameAr : doctor.nameEn;
-    }
+  const _StatusBadge({required this.status, required this.isAr});
 
-    final service = booking.service;
-    if (service != null) {
-      if (isArabic && service.serviceNameAr.trim().isNotEmpty) return service.serviceNameAr;
-      if (!isArabic && service.serviceNameEn.trim().isNotEmpty) return service.serviceNameEn;
-      return service.serviceNameAr.trim().isNotEmpty ? service.serviceNameAr : service.serviceNameEn;
+  @override
+  Widget build(BuildContext context) {
+    Color bg, fg;
+    String label;
+    if (status == 'completed') {
+      bg = Colors.green.shade50;
+      fg = Colors.green.shade700;
+      label = isAr ? 'مكتمل' : 'Completed';
+    } else if (status == 'cancelled') {
+      bg = Colors.red.shade50;
+      fg = Colors.red.shade700;
+      label = isAr ? 'ملغي' : 'Cancelled';
+    } else if (status == 'pending' || status == 'pending_price') {
+      bg = Colors.orange.shade50;
+      fg = Colors.orange.shade700;
+      label = isAr ? 'معلق' : 'Pending';
+    } else {
+      bg = AppColors.primary.withOpacity(0.1);
+      fg = AppColors.primary;
+      label = isAr ? 'قادم' : 'Upcoming';
     }
 
-    final imaging = booking.imaging;
-    if (imaging != null) {
-      if (isArabic && imaging.nameAr.trim().isNotEmpty) return imaging.nameAr;
-      if (!isArabic && imaging.nameEn.trim().isNotEmpty) return imaging.nameEn;
-      return imaging.nameAr.trim().isNotEmpty ? imaging.nameAr : imaging.nameEn;
-    }
-
-    final cosmetic = booking.cosmetic;
-    if (cosmetic != null && cosmetic.serviceName.trim().isNotEmpty) {
-      return cosmetic.serviceName;
-    }
-
-    return AppLocalizations.of(context)!.appointmentOnly;
-  }
-
-  static String _subtitle(BuildContext context, BookingModel booking) {
-    if (booking.doctor?.specialty.trim().isNotEmpty == true) {
-      return booking.doctor!.specialty;
-    }
-
-    if (booking.location.clinic.trim().isNotEmpty) {
-      return booking.location.clinic;
-    }
-
-    return booking._typeFriendly(context);
-  }
-
-  static IconData _typeIcon(String type) {
-    final t = type.toLowerCase();
-    if (t.contains('doctor')) return Icons.medical_services_rounded;
-    if (t.contains('imaging')) return Icons.scanner_rounded;
-    if (t.contains('cosmetic')) return Icons.spa_rounded;
-    if (t == 'online') return Icons.videocam_rounded;
-    return Icons.event_note_rounded;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: fg),
+      ),
+    );
   }
 }
 
@@ -1323,95 +1147,37 @@ class _DoctorAvatar extends StatelessWidget {
   final bool isHero;
 
   const _DoctorAvatar({
-    required this.imageUrl,
+    this.imageUrl,
     required this.fallbackIcon,
     this.isHero = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final double size = isHero ? 56 : 56;
+    final double size = isHero ? 60 : 50;
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(isHero ? 0.16 : 1),
-        borderRadius: BorderRadius.circular(isHero ? 18 : 18),
-        border: Border.all(
-          color: isHero ? Colors.white.withOpacity(0.24) : const Color(0xFFE6ECEC),
-        ),
+        color: isHero
+            ? Colors.white.withOpacity(0.15)
+            : AppColors.primary.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(16),
       ),
       clipBehavior: Clip.antiAlias,
       child: (imageUrl != null && imageUrl!.trim().isNotEmpty)
-          ? CachedImageWidget(imageUrl: 
-              imageUrl!,
+          ? CachedImageWidget(
+              imageUrl: imageUrl!,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) {
-                return Icon(
-                  fallbackIcon,
-                  color: isHero ? Colors.white : AppColors.primary,
-                );
-              },
+              errorBuilder: (_, __, ___) => Icon(
+                fallbackIcon,
+                color: isHero ? Colors.white : AppColors.primary,
+              ),
             )
           : Icon(
               fallbackIcon,
               color: isHero ? Colors.white : AppColors.primary,
             ),
-    );
-  }
-}
-
-class _StatusBadge extends StatelessWidget {
-  final String label;
-  final bool isUpcoming;
-  final bool isCancelled;
-  final bool isCompleted;
-  final bool isPending;
-
-  const _StatusBadge({
-    required this.label,
-    required this.isUpcoming,
-    required this.isCancelled,
-    required this.isCompleted,
-    this.isPending = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    Color bg;
-    Color fg;
-
-    if (isCancelled) {
-      bg = const Color(0xFFE53E3E).withOpacity(0.12);
-      fg = const Color(0xFFE53E3E);
-    } else if (isCompleted) {
-      bg = const Color(0xFF2D3737).withOpacity(0.10);
-      fg = const Color(0xFF2D3737);
-    } else if (isPending) {
-      bg = Colors.orange.withOpacity(0.15);
-      fg = Colors.orange[800]!;
-    } else if (isUpcoming) {
-      bg = const Color(0xFF21897E).withOpacity(0.12);
-      fg = const Color(0xFF21897E);
-    } else {
-      bg = const Color(0xFF7EBCE6).withOpacity(0.14);
-      fg = const Color(0xFF21897E);
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: bg,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w800,
-          color: fg,
-        ),
-      ),
     );
   }
 }
@@ -1431,32 +1197,28 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = filled ? Colors.white : Colors.white.withOpacity(0.14);
-    final fg = filled ? const Color(0xFF21897E) : Colors.white;
+    final bg = filled ? Colors.white : Colors.white.withOpacity(0.15);
+    final fg = filled ? AppColors.primary : Colors.white;
 
-    return SizedBox(
-      height: 46,
-      child: Material(
-        color: bg,
-        borderRadius: BorderRadius.circular(16),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: onTap,
+    return Material(
+      color: bg,
+      borderRadius: BorderRadius.circular(14),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(14),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, color: fg, size: 18),
               const SizedBox(width: 8),
-              Flexible(
-                child: Text(
-                  text,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: fg,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 13,
-                  ),
+              Text(
+                text,
+                style: TextStyle(
+                  color: fg,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
                 ),
               ),
             ],
@@ -1467,38 +1229,343 @@ class _ActionButton extends StatelessWidget {
   }
 }
 
-class _BottomSheetHeader extends StatelessWidget {
+class _BookingDetailsSheet extends StatelessWidget {
   final BookingModel booking;
-
-  const _BottomSheetHeader({required this.booking});
+  const _BookingDetailsSheet({required this.booking});
 
   @override
   Widget build(BuildContext context) {
+    final isAr = Localizations.localeOf(context).languageCode == 'ar';
+    final date = booking.schedule.timestamp?.toDate();
+    final now = DateTime.now();
+    
+    // Can cancel if status is not cancelled/completed/no_show
+    final currentStatus = booking.status.current.toLowerCase();
+    final bool canCancel = currentStatus != 'cancelled' &&
+        currentStatus != 'completed' &&
+        currentStatus != 'no_show';
+
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Container(
+              width: 50,
+              height: 5,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Row(
+            children: [
+              _DoctorAvatar(
+                imageUrl: booking.doctor?.image,
+                fallbackIcon: Icons.medical_services_rounded,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _BookingHelper.title(context, booking),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      _BookingHelper.subtitle(context, booking),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              _StatusBadge(
+                status: booking.status.current.toLowerCase(),
+                isAr: isAr,
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          _buildDetailRow(
+            context,
+            Icons.calendar_today_rounded,
+            isAr ? 'التاريخ' : 'Date',
+            date == null
+                ? booking.schedule.date
+                : MaterialLocalizations.of(context).formatMediumDate(date),
+          ),
+          const SizedBox(height: 16),
+          _buildDetailRow(
+            context,
+            Icons.access_time_rounded,
+            isAr ? 'الوقت' : 'Time',
+            date == null
+                ? booking.schedule.time
+                : MaterialLocalizations.of(
+                    context,
+                  ).formatTimeOfDay(TimeOfDay.fromDateTime(date)),
+          ),
+          const SizedBox(height: 16),
+          _buildDetailRow(
+            context,
+            Icons.location_on_rounded,
+            isAr ? 'المكان' : 'Location',
+            '${booking.location.clinic} - ${isAr ? 'طابق' : 'Floor'} ${booking.location.floor} - ${isAr ? 'غرفة' : 'Room'} ${booking.location.room}',
+          ),
+          const SizedBox(height: 32),
+          if (booking.type == 'imaging' &&
+              (booking.status.current == 'pending_price' ||
+                  booking.status.current == 'pending')) ...[
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  Get.dialog(
+                    const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    barrierDismissible: false,
+                  );
+                  try {
+                    final catDoc = await FirebaseFirestore.instance
+                        .collection('radiology')
+                        .doc(booking.imaging!.categoryId)
+                        .get();
+                    Get.back(); // close loading
+                    if (catDoc.exists) {
+                      final service = RadiologyCategoryModel.fromMap(
+                        catDoc.id,
+                        catDoc.data()!,
+                      );
+                      Get.back(); // close bottom sheet
+                      
+                      Get.to(
+                        () => RadiologyConfirmBookingScreen(
+                          service: service,
+                          selectedDate:
+                              booking.schedule.timestamp?.toDate() ??
+                              DateTime.now(),
+                          selectedTime: booking.schedule.time,
+                          controllerTag: service.id,
+                          bookingId: booking.id,
+                        ),
+                      );
+                    } else {
+                      Get.snackbar('Error', 'Service not found');
+                    }
+                  } catch (e) {
+                    Get.back(); // close loading
+                    Get.snackbar('Error', 'Failed to load details');
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: Text(
+                  AppLocalizations.of(context)!.continueBookingOrChat,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () => Get.back(),
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: Text(
+                  isAr ? 'إغلاق' : 'Close',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+              ),
+            ),
+          ] else ...[
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => Get.back(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: Text(
+                  isAr ? 'إغلاق' : 'Close',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+          if (canCancel) ...[
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () async {
+                  final confirm = await Get.dialog<bool>(
+                    AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      title: Text(
+                        isAr ? 'إلغاء الحجز' : 'Cancel Booking',
+                        style: const TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      content: Text(
+                        isAr 
+                          ? 'هل أنت متأكد من إلغاء حجزك؟' 
+                          : 'Are you sure you want to cancel your booking?',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Get.back(result: false),
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.grey.shade600,
+                          ),
+                          child: Text(
+                            isAr ? 'لا' : 'No',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => Get.back(result: true),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            isAr ? 'نعم' : 'Yes',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+
+                  if (confirm == true) {
+                    Get.dialog(
+                      const Center(
+                        child: CircularProgressIndicator(color: AppColors.primary),
+                      ),
+                      barrierDismissible: false,
+                    );
+                    try {
+                      final service = BookingsFirestoreService();
+                      await service.cancelBooking(booking);
+                      Get.back(); // close loading
+                      Get.back(); // close sheet
+                      Get.snackbar(
+                        isAr ? 'تم الإلغاء' : 'Cancelled',
+                        isAr ? 'تم إلغاء حجزك بنجاح.' : 'Your booking has been cancelled successfully.',
+                        backgroundColor: Colors.green,
+                        colorText: Colors.white,
+                      );
+                    } catch (e) {
+                      Get.back(); // close loading
+                      Get.snackbar('Error', 'Failed to cancel booking');
+                    }
+                  }
+                },
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  side: const BorderSide(color: AppColors.primary, width: 1.5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: Text(
+                  isAr ? 'إلغاء الحجز' : 'Cancel Booking',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(
+    BuildContext context,
+    IconData icon,
+    String label,
+    String value,
+  ) {
     return Row(
       children: [
-        _DoctorAvatar(
-          imageUrl: booking.doctor?.image,
-          fallbackIcon: Icons.person_rounded,
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withOpacity(0.08),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(icon, size: 20, color: AppColors.primary),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                _title(context, booking),
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                  color: Color(0xFF1A2020),
-                ),
+                label,
+                style: TextStyle(fontSize: 13, color: Colors.grey.shade500),
               ),
-              const SizedBox(height: 4),
               Text(
-                booking.doctor?.specialty ?? booking.location.clinic,
+                value,
                 style: const TextStyle(
-                  fontSize: 13,
-                  color: Color(0xFF546868),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
                 ),
               ),
             ],
@@ -1507,128 +1574,39 @@ class _BottomSheetHeader extends StatelessWidget {
       ],
     );
   }
+}
 
-  String _title(BuildContext context, BookingModel booking) {
+class _BookingHelper {
+  static String title(BuildContext context, BookingModel booking) {
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
-    final doctor = booking.doctor;
-    if (doctor != null) {
-      if (isArabic && doctor.nameAr.trim().isNotEmpty) return doctor.nameAr;
-      if (!isArabic && doctor.nameEn.trim().isNotEmpty) return doctor.nameEn;
-      return doctor.nameAr.trim().isNotEmpty ? doctor.nameAr : doctor.nameEn;
-    }
-
-    final service = booking.service;
-    if (service != null) {
-      if (isArabic && service.serviceNameAr.trim().isNotEmpty) return service.serviceNameAr;
-      if (!isArabic && service.serviceNameEn.trim().isNotEmpty) return service.serviceNameEn;
-      return service.serviceNameAr.trim().isNotEmpty ? service.serviceNameAr : service.serviceNameEn;
-    }
-
-    final imaging = booking.imaging;
-    if (imaging != null) {
-      if (isArabic && imaging.nameAr.trim().isNotEmpty) return imaging.nameAr;
-      if (!isArabic && imaging.nameEn.trim().isNotEmpty) return imaging.nameEn;
-      return imaging.nameAr.trim().isNotEmpty ? imaging.nameAr : imaging.nameEn;
-    }
-
-    final cosmetic = booking.cosmetic;
-    if (cosmetic != null && cosmetic.serviceName.trim().isNotEmpty) {
-      return cosmetic.serviceName;
-    }
-
+    if (booking.doctor != null)
+      return isArabic ? booking.doctor!.nameAr : booking.doctor!.nameEn;
+    if (booking.service != null)
+      return isArabic
+          ? booking.service!.serviceNameAr
+          : booking.service!.serviceNameEn;
+    if (booking.imaging != null)
+      return isArabic ? booking.imaging!.nameAr : booking.imaging!.nameEn;
+    if (booking.cosmetic != null && booking.cosmetic!.serviceName.isNotEmpty)
+      return booking.cosmetic!.serviceName;
     return AppLocalizations.of(context)!.appointmentOnly;
   }
-}
 
-class _DetailSection extends StatelessWidget {
-  final String title;
-  final List<_DetailRow> items;
-
-  const _DetailSection({
-    required this.title,
-    required this.items,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE6ECEC)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-              color: Color(0xFF1A2020),
-            ),
-          ),
-          const SizedBox(height: 14),
-          ...items.expand((row) => [
-                row,
-                if (row != items.last) const SizedBox(height: 12),
-              ]),
-        ],
-      ),
-    );
+  static String subtitle(BuildContext context, BookingModel booking) {
+    if (booking.doctor?.specialty.isNotEmpty == true)
+      return booking.doctor!.specialty;
+    if (booking.location.clinic.isNotEmpty) return booking.location.clinic;
+    return typeFriendly(context, booking.type);
   }
-}
 
-class _DetailRow extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const _DetailRow({
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 92,
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF546868),
-            ),
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Text(
-            value.isEmpty ? '-' : value,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF1A2020),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-extension on BookingModel {
-  String _typeFriendly(BuildContext context) {
+  static String typeFriendly(BuildContext context, String type) {
     final t = type.toLowerCase();
-    if (t.contains('doctor')) return AppLocalizations.of(context)!.doctor;
-    if (t.contains('service')) return AppLocalizations.of(context)!.service;
-    if (t.contains('imaging')) return AppLocalizations.of(context)!.imaging;
-    if (t.contains('cosmetic')) return AppLocalizations.of(context)!.cosmetic;
-    if (t == 'online') return AppLocalizations.of(context)!.onlineConsultation;
-    return type.isEmpty ? AppLocalizations.of(context)!.appointmentOnly : type;
+    final isAr = Localizations.localeOf(context).languageCode == 'ar';
+    if (t.contains('doctor')) return isAr ? 'طبيب' : 'Doctor';
+    if (t.contains('service')) return isAr ? 'خدمة' : 'Service';
+    if (t.contains('imaging')) return isAr ? 'أشعة' : 'Imaging';
+    if (t.contains('cosmetic')) return isAr ? 'تجميل' : 'Cosmetic';
+    if (t == 'online') return isAr ? 'عن بعد' : 'Online';
+    return isAr ? 'حجز' : 'Booking';
   }
 }

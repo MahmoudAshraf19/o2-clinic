@@ -30,7 +30,11 @@ class RadiologyBookingSuccessScreen extends StatelessWidget {
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
-              children: [_card(context), const SizedBox(height: 18), _actions(context)],
+              children: [
+                _card(context),
+                const SizedBox(height: 18),
+                _actions(context),
+              ],
             ),
           ),
         ),
@@ -55,15 +59,11 @@ class RadiologyBookingSuccessScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Icon(Icons.check_circle, size: 70, color: Colors.teal),
+          const Icon(Icons.check_circle, size: 70, color: const Color(0xFF03458F)),
           const SizedBox(height: 16),
           Text(
             AppLocalizations.of(context)!.bookingConfirmed,
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              
-            ),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           Text(
@@ -71,8 +71,14 @@ class RadiologyBookingSuccessScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.grey.shade600),
           ),
-          _info(AppLocalizations.of(context)!.type, service.getName(Get.locale?.languageCode ?? 'en')),
-          _info(AppLocalizations.of(context)!.radiologyDepartment, AppLocalizations.of(context)!.radiologyDepartment),
+          _info(
+            AppLocalizations.of(context)!.type,
+            service.getName(Get.locale?.languageCode ?? 'en'),
+          ),
+          _info(
+            AppLocalizations.of(context)!.radiologyDepartment,
+            AppLocalizations.of(context)!.radiologyDepartment,
+          ),
           _info(AppLocalizations.of(context)!.date, _formatDate(selectedDate)),
           _info(
             AppLocalizations.of(context)!.time,
@@ -85,7 +91,7 @@ class RadiologyBookingSuccessScreen extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Colors.teal,
+              color: const Color(0xFF03458F),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -147,4 +153,3 @@ class RadiologyBookingSuccessScreen extends StatelessWidget {
     return DateFormat('d MMM', lang).format(date);
   }
 }
-

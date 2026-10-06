@@ -5,7 +5,7 @@ import 'package:o2_clinic/core/localization/locale_controller.dart';
 
 class ChangeLanguageController extends ChangeNotifier {
   final LocaleController localeController;
-  
+
   LanguageModel? _selectedLanguage;
   LanguageModel? get selectedLanguage => _selectedLanguage;
 
@@ -28,8 +28,10 @@ class ChangeLanguageController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final querySnapshot = await FirebaseFirestore.instance.collection('languages').get();
-      
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('languages')
+          .get();
+
       _languageList = querySnapshot.docs
           .map((doc) => LanguageModel.fromJson(doc.data()))
           .where((lang) => lang.isActive) // Only show active languages
@@ -43,7 +45,6 @@ class ChangeLanguageController extends ChangeNotifier {
           break;
         }
       }
-      
     } catch (e) {
       _errorMessage = e.toString();
       debugPrint('[ChangeLanguageController] _fetchLanguages Error: $e');

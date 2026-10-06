@@ -88,10 +88,7 @@ class _XRayScreenState extends State<XRayScreen> {
 
     await Get.to(
       () => const ImagingBookingPage(title: 'X-Ray Imaging'),
-      arguments: {
-        "selectedServiceIds": selectedList,
-        "totalPrice": totalPrice,
-      },
+      arguments: {"selectedServiceIds": selectedList, "totalPrice": totalPrice},
     );
   }
 
@@ -105,7 +102,7 @@ class _XRayScreenState extends State<XRayScreen> {
         : (_selectedCategory?.titleForLanguage(localeCode) ?? 'X-Ray');
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           const XRayBackground(),
@@ -122,10 +119,10 @@ class _XRayScreenState extends State<XRayScreen> {
                             child: CircularProgressIndicator(),
                           )
                         : _errorMessage != null
-                            ? _buildErrorState()
-                            : (selectedCategoryId == null
-                                ? _buildCategories()
-                                : _buildServices()),
+                        ? _buildErrorState()
+                        : (selectedCategoryId == null
+                              ? _buildCategories()
+                              : _buildServices()),
                   ),
                 ),
               ],
@@ -194,13 +191,11 @@ class _XRayScreenState extends State<XRayScreen> {
                     fontSize: 12,
                     color: AppColors.textSecondary.withValues(alpha: .75),
                     fontWeight: FontWeight.w500,
-                    
                   ),
                 ),
               ],
             ),
           ),
-
         ],
       ),
     );
@@ -306,7 +301,6 @@ class _XRayScreenState extends State<XRayScreen> {
                         color: selected
                             ? AppColors.primary
                             : AppColors.textPrimary,
-                        
                       ),
                     ),
                   ),
@@ -345,18 +339,13 @@ class _XRayScreenState extends State<XRayScreen> {
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
-                
               ),
             ),
             const SizedBox(height: 6),
             Text(
               _errorMessage ?? '',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.textSecondary,
-                
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -389,18 +378,13 @@ class _XRayScreenState extends State<XRayScreen> {
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
-                
               ),
             ),
             const SizedBox(height: 6),
             Text(
               subtitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.textSecondary,
-                
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
             ),
           ],
         ),
@@ -408,3 +392,4 @@ class _XRayScreenState extends State<XRayScreen> {
     );
   }
 }
+

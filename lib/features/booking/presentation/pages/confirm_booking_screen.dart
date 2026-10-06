@@ -50,8 +50,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
-      bottomNavigationBar: _bottomBar(context),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -63,26 +62,30 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _sectionTitle(AppLocalizations.of(context)!.doctorDetails),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _doctorCard(),
-                    const SizedBox(height: 18),
-                    _sectionTitle(AppLocalizations.of(context)!.appointmentSchedule),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 18),
+                    _sectionTitle(
+                      AppLocalizations.of(context)!.appointmentSchedule,
+                    ),
+                    SizedBox(height: 10),
                     _scheduleCard(),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18),
                     _sectionTitle(AppLocalizations.of(context)!.clinicLocation),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _locationCard(),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18),
                     _sectionTitle(AppLocalizations.of(context)!.paymentSummary),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _paymentCard(),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     _discountSection(),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18),
                     _sectionTitle(AppLocalizations.of(context)!.patientInfo),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     _patientCard(),
+                    SizedBox(height: 24),
+                    _bottomBar(context),
                   ],
                 ),
               ),
@@ -111,14 +114,14 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: AppColors.border),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back_ios_new_rounded,
                 size: 18,
                 color: AppColors.primary,
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -134,14 +137,13 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                   height: 1,
                 ),
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Text(
                 AppLocalizations.of(context)!.reviewAppointmentDetails,
                 style: TextStyle(
                   fontSize: 13,
-                  color: AppColors.textSecondary.withValues(alpha: 0.75),
+                  color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7).withValues(alpha: 0.75),
                   fontWeight: FontWeight.w500,
-                  
                 ),
               ),
             ],
@@ -162,15 +164,20 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
       ),
     );
   }
+
   Widget _doctorCard() {
     final lang = Get.locale?.languageCode ?? 'en';
     String doctorName = widget.doctor.nameEn;
-    if (lang == 'ar' && widget.doctor.nameAr.isNotEmpty) doctorName = widget.doctor.nameAr;
-    if (lang == 'he' && widget.doctor.nameHe.isNotEmpty) doctorName = widget.doctor.nameHe;
+    if (lang == 'ar' && widget.doctor.nameAr.isNotEmpty)
+      doctorName = widget.doctor.nameAr;
+    if (lang == 'he' && widget.doctor.nameHe.isNotEmpty)
+      doctorName = widget.doctor.nameHe;
 
     String doctorTitle = widget.doctor.titleEn;
-    if (lang == 'ar' && widget.doctor.titleAr.isNotEmpty) doctorTitle = widget.doctor.titleAr;
-    if (lang == 'he' && widget.doctor.titleHe.isNotEmpty) doctorTitle = widget.doctor.titleHe;
+    if (lang == 'ar' && widget.doctor.titleAr.isNotEmpty)
+      doctorTitle = widget.doctor.titleAr;
+    if (lang == 'he' && widget.doctor.titleHe.isNotEmpty)
+      doctorTitle = widget.doctor.titleHe;
 
     return _card(
       child: Row(
@@ -181,35 +188,30 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 ? CachedNetworkImageProvider(widget.doctor.image)
                 : null,
             child: widget.doctor.image.isEmpty
-                ? const Icon(Icons.person, color: Colors.white)
+                ? Icon(Icons.person, color: Colors.white)
                 : null,
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   doctorName,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   doctorTitle,
-                  style: TextStyle(
-                    color: AppColors.grey,
-                    fontSize: 13,
-                    
-                  ),
+                  style: TextStyle(color: AppColors.grey, fontSize: 13),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.verified, color: AppColors.primary),
+          Icon(Icons.verified, color: AppColors.primary),
         ],
       ),
     );
@@ -217,13 +219,20 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
 
   Widget _scheduleCard() {
     final lang = Get.locale?.languageCode ?? 'en';
-    final formattedDate = DateFormat('d MMM yyyy', lang).format(widget.selectedDate);
+    final formattedDate = DateFormat(
+      'd MMM yyyy',
+      lang,
+    ).format(widget.selectedDate);
 
     String translatedTime = widget.selectedTime;
     if (lang == 'ar') {
-      translatedTime = translatedTime.replaceAll('AM', 'ص').replaceAll('PM', 'م');
+      translatedTime = translatedTime
+          .replaceAll('AM', 'ص')
+          .replaceAll('PM', 'م');
     } else if (lang == 'he') {
-      translatedTime = translatedTime.replaceAll('AM', 'לפנה״צ').replaceAll('PM', 'אחה״צ');
+      translatedTime = translatedTime
+          .replaceAll('AM', 'לפנה״צ')
+          .replaceAll('PM', 'אחה״צ');
     }
 
     return _card(
@@ -232,18 +241,15 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
         children: [
           Row(
             children: [
-              const Icon(Icons.calendar_month, color: AppColors.primary),
-              const SizedBox(width: 8),
+              Icon(Icons.calendar_month, color: AppColors.primary),
+              SizedBox(width: 8),
               Text(
                 formattedDate,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  
-                ),
+                style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
@@ -252,10 +258,9 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
             ),
             child: Text(
               translatedTime,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w700,
-                
               ),
             ),
           ),
@@ -268,16 +273,15 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
     return _card(
       child: Row(
         children: [
-          const Icon(Icons.location_on, color: AppColors.primary),
-          const SizedBox(width: 10),
+          Icon(Icons.location_on, color: AppColors.primary),
+          SizedBox(width: 10),
           Expanded(
             child: Text(
-              widget.isOnline 
-                  ? (AppLocalizations.of(context)!.onlineConsultation ?? 'Online Consultation') 
+              widget.isOnline
+                  ? (AppLocalizations.of(context)!.onlineConsultation ??
+                        'Online Consultation')
                   : AppLocalizations.of(context)!.o2ClinicMainBranchnfloor4,
-              style: TextStyle(
-                color: AppColors.grey,
-              ),
+              style: TextStyle(color: AppColors.grey),
             ),
           ),
         ],
@@ -286,13 +290,15 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
   }
 
   Widget _paymentCard() {
-    final originalAmount = widget.isOnline ? widget.doctor.priceForOnline : widget.doctor.price;
+    final originalAmount = widget.isOnline
+        ? widget.doctor.priceForOnline
+        : widget.doctor.price;
 
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.4)),
         boxShadow: [
@@ -303,17 +309,21 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
         ],
       ),
       child: Obx(() {
-        final currency = Get.find<AppConstantsController>().currencySymbol.value;
+        final currency =
+            Get.find<AppConstantsController>().currencySymbol.value;
         final code = discountController.currentValidCode.value;
-        final type = discountController.discountTypes.firstWhereOrNull((t) => t.id == code?.discountTypeId);
-        
+        final type = discountController.discountTypes.firstWhereOrNull(
+          (t) => t.id == code?.discountTypeId,
+        );
+
         num finalAmount = originalAmount;
         num discountAmount = 0;
-        
+
         if (code != null && type != null) {
           if (type.calculationMethod == 'percentage') {
             discountAmount = (originalAmount * (code.value / 100));
-            if (code.maximumDiscountAmount != null && discountAmount > code.maximumDiscountAmount!) {
+            if (code.maximumDiscountAmount != null &&
+                discountAmount > code.maximumDiscountAmount!) {
               discountAmount = code.maximumDiscountAmount!;
             }
             finalAmount = originalAmount - discountAmount;
@@ -334,11 +344,13 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.paymentSummary, // Or original price text
+                    AppLocalizations.of(
+                      context,
+                    )!.paymentSummary, // Or original price text
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      
-                      color: AppColors.textPrimary,
+
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                   ),
                   Text(
@@ -347,12 +359,11 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                       fontSize: 14,
                       decoration: TextDecoration.lineThrough,
                       color: AppColors.grey,
-                      
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -360,17 +371,13 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                     code.localizedTitle,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      
+
                       color: Colors.green,
                     ),
                   ),
                   Text(
                     "-$discountAmount $currency",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.green,
-                      
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.green),
                   ),
                 ],
               ),
@@ -383,18 +390,17 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                   AppLocalizations.of(context)!.totalPayment,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    
-                    color: AppColors.textPrimary,
+
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                     fontSize: 16,
                   ),
                 ),
                 Text(
                   "$finalAmount $currency",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
                     color: AppColors.primary,
-                    
                   ),
                 ),
               ],
@@ -418,21 +424,20 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
           children: [
             Row(
               children: [
-                const Icon(Icons.check_circle, color: Colors.green, size: 20),
-                const SizedBox(width: 8),
+                Icon(Icons.check_circle, color: Colors.green, size: 20),
+                SizedBox(width: 8),
                 Text(
                   discountController.currentValidCode.value!.code,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
-                    
                   ),
                 ),
               ],
             ),
             TextButton(
               onPressed: () => discountController.removeDiscountCode(),
-              child: const Icon(Icons.close, color: Colors.red, size: 20),
+              child: Icon(Icons.close, color: Colors.red, size: 20),
             ),
           ],
         );
@@ -441,14 +446,18 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
         onTap: () => DiscountInputWidget.show(context),
         child: Row(
           children: [
-            const Icon(Icons.local_offer_outlined, color: AppColors.primary, size: 20),
-            const SizedBox(width: 8),
+            Icon(
+              Icons.local_offer_outlined,
+              color: AppColors.primary,
+              size: 20,
+            ),
+            SizedBox(width: 8),
             Text(
               askText,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w600,
-                
+
                 decoration: TextDecoration.underline,
               ),
             ),
@@ -468,22 +477,32 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
       String phone = AppLocalizations.of(context)!.notLinked;
 
       if (userData != null) {
-        name = userData['name'] ?? userData['first_name'] ?? currentUser?.displayName ?? AppLocalizations.of(context)!.guestPatient;
+        name =
+            userData['name'] ??
+            userData['first_name'] ??
+            currentUser?.displayName ??
+            AppLocalizations.of(context)!.guestPatient;
         if (userData['phone'] != null && userData['phone'] is Map) {
-          phone = userData['phone']['full'] ?? userData['phone']['number'] ?? AppLocalizations.of(context)!.notLinked;
+          phone =
+              userData['phone']['full'] ??
+              userData['phone']['number'] ??
+              AppLocalizations.of(context)!.notLinked;
         } else if (userData['phoneNumber'] != null) {
           phone = userData['phoneNumber'].toString();
         }
       } else if (currentUser != null) {
-        name = currentUser.displayName ?? AppLocalizations.of(context)!.guestPatient;
-        phone = currentUser.phoneNumber ?? AppLocalizations.of(context)!.notLinked;
+        name =
+            currentUser.displayName ??
+            AppLocalizations.of(context)!.guestPatient;
+        phone =
+            currentUser.phoneNumber ?? AppLocalizations.of(context)!.notLinked;
       }
 
       return _card(
         child: Column(
           children: [
             _infoRow(AppLocalizations.of(context)!.name, name),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             _infoRow(AppLocalizations.of(context)!.phone, phone),
           ],
         ),
@@ -493,16 +512,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
 
   Widget _bottomBar(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 20,
-            color: Colors.black.withValues(alpha: 0.05),
-          ),
-        ],
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: SafeArea(
         child: SizedBox(
           height: 52,
@@ -513,190 +523,230 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 borderRadius: BorderRadius.circular(14),
               ),
             ),
-            onPressed: _isBooking ? null : () async {
-              setState(() => _isBooking = true);
-              try {
-                final controller = Get.find<AppointmentBookingController>(
-                  tag: widget.controllerTag,
-                );
+            onPressed: _isBooking
+                ? null
+                : () async {
+                    setState(() => _isBooking = true);
+                    try {
+                      final controller = Get.find<AppointmentBookingController>(
+                        tag: widget.controllerTag,
+                      );
 
-                // ✅ لو UI عدّل التاريخ/الوقت (احتياطي)
-                controller.selectedDate.value = widget.selectedDate;
-                controller.selectedTime.value = widget.selectedTime;
+                      // ✅ لو UI عدّل التاريخ/الوقت (احتياطي)
+                      controller.selectedDate.value = widget.selectedDate;
+                      controller.selectedTime.value = widget.selectedTime;
 
-                // ✅ لازم الوقت يبقى موجود
-                if (widget.selectedTime.trim().isEmpty) {
-                  Get.snackbar(
-                    AppLocalizations.of(context)!.error,
-                    AppLocalizations.of(context)!.timeIsNotAvailable,
-                    snackPosition: SnackPosition.TOP,
-                  );
-                  return;
-                }
+                      // ✅ لازم الوقت يبقى موجود
+                      if (widget.selectedTime.trim().isEmpty) {
+                        Get.snackbar(
+                          AppLocalizations.of(context)!.error,
+                          AppLocalizations.of(context)!.timeIsNotAvailable,
+                          snackPosition: SnackPosition.TOP,
+                        );
+                        return;
+                      }
 
-                // ✅ User info 
-                final globalAuth = Get.find<GlobalAuthController>();
-                final userData = globalAuth.currentUserData.value;
-                final currentUser = FirebaseAuth.instance.currentUser;
+                      // ✅ User info
+                      final globalAuth = Get.find<GlobalAuthController>();
+                      final userData = globalAuth.currentUserData.value;
+                      final currentUser = FirebaseAuth.instance.currentUser;
 
-                String name = AppLocalizations.of(context)!.guestPatient;
-                String countryCode = "";
-                String number = AppLocalizations.of(context)!.notLinked;
+                      String name = AppLocalizations.of(context)!.guestPatient;
+                      String countryCode = "";
+                      String number = AppLocalizations.of(context)!.notLinked;
 
-                if (userData != null) {
-                  name = userData['name'] ?? userData['first_name'] ?? currentUser?.displayName ?? AppLocalizations.of(context)!.guestPatient;
-                  if (userData['phone'] != null && userData['phone'] is Map) {
-                    countryCode = userData['phone']['countryCode']?.toString() ?? "";
-                    number = userData['phone']['number']?.toString() ?? AppLocalizations.of(context)!.notLinked;
-                  } else if (userData['phoneNumber'] != null) {
-                    number = userData['phoneNumber'].toString();
-                  }
-                } else if (currentUser != null) {
-                  name = currentUser.displayName ?? AppLocalizations.of(context)!.guestPatient;
-                  number = currentUser.phoneNumber ?? AppLocalizations.of(context)!.notLinked;
-                }
+                      if (userData != null) {
+                        name =
+                            userData['name'] ??
+                            userData['first_name'] ??
+                            currentUser?.displayName ??
+                            AppLocalizations.of(context)!.guestPatient;
+                        if (userData['phone'] != null &&
+                            userData['phone'] is Map) {
+                          countryCode =
+                              userData['phone']['countryCode']?.toString() ??
+                              "";
+                          number =
+                              userData['phone']['number']?.toString() ??
+                              AppLocalizations.of(context)!.notLinked;
+                        } else if (userData['phoneNumber'] != null) {
+                          number = userData['phoneNumber'].toString();
+                        }
+                      } else if (currentUser != null) {
+                        name =
+                            currentUser.displayName ??
+                            AppLocalizations.of(context)!.guestPatient;
+                        number =
+                            currentUser.phoneNumber ??
+                            AppLocalizations.of(context)!.notLinked;
+                      }
 
-                final user = BookingUserInfo(
-                  userId: currentUser?.uid ?? 'guest',
-                  name: name,
-                  countryCode: countryCode,
-                  number: number,
-                );
+                      final user = BookingUserInfo(
+                        userId: currentUser?.uid ?? 'guest',
+                        name: name,
+                        countryCode: countryCode,
+                        number: number,
+                      );
 
-                // Calculate discount data to save
-                Map<String, dynamic>? discountData;
-                final code = discountController.currentValidCode.value;
-                final type = discountController.discountTypes.firstWhereOrNull((t) => t.id == code?.discountTypeId);
-                final originalPrice = widget.isOnline ? widget.doctor.priceForOnline : widget.doctor.price;
-                num finalAmount = originalPrice;
-                num discountAmount = 0;
-                
-                if (code != null && type != null) {
-                  if (type.calculationMethod == 'percentage') {
-                    discountAmount = (originalPrice * (code.value / 100));
-                    if (code.maximumDiscountAmount != null && discountAmount > code.maximumDiscountAmount!) {
-                      discountAmount = code.maximumDiscountAmount!;
+                      // Calculate discount data to save
+                      Map<String, dynamic>? discountData;
+                      final code = discountController.currentValidCode.value;
+                      final type = discountController.discountTypes
+                          .firstWhereOrNull(
+                            (t) => t.id == code?.discountTypeId,
+                          );
+                      final originalPrice = widget.isOnline
+                          ? widget.doctor.priceForOnline
+                          : widget.doctor.price;
+                      num finalAmount = originalPrice;
+                      num discountAmount = 0;
+
+                      if (code != null && type != null) {
+                        if (type.calculationMethod == 'percentage') {
+                          discountAmount = (originalPrice * (code.value / 100));
+                          if (code.maximumDiscountAmount != null &&
+                              discountAmount > code.maximumDiscountAmount!) {
+                            discountAmount = code.maximumDiscountAmount!;
+                          }
+                          finalAmount = originalPrice - discountAmount;
+                        } else if (type.calculationMethod == 'fixed') {
+                          discountAmount = code.value;
+                          finalAmount = originalPrice - discountAmount;
+                        } else if (type.calculationMethod == 'free') {
+                          discountAmount = originalPrice;
+                          finalAmount = 0;
+                        }
+                        if (finalAmount < 0) finalAmount = 0;
+
+                        discountData = {
+                          "code_id": code.id,
+                          "code": code.code,
+                          "type": type.calculationMethod,
+                          "discount_value": discountAmount,
+                          "original_amount": originalPrice,
+                        };
+                      }
+
+                      // ✅ Firestore Transaction booking
+                      final res = await controller.confirmBooking(
+                        user: user,
+                        durationMinutes: 30,
+                        clinicName: "O2 Clinic - Main Branch",
+                        floor: "4",
+                        room: "",
+                        paymentStatus: "pending",
+                        paymentMethod: "cash",
+                        currency: Get.find<AppConstantsController>()
+                            .currencyName
+                            .value,
+                        amountOverride: finalAmount,
+                        appVersion: "8.8",
+                        discountData: discountData,
+                        isOnline: widget.isOnline,
+                      );
+
+                      if (!res.success) {
+                        debugPrint(
+                          "❌ [ConfirmBookingScreen] Booking unsuccessful: ${res.message}",
+                        );
+
+                        String userMessage = res.message;
+                        if (userMessage.toLowerCase().contains("failed:") ||
+                            userMessage.toLowerCase().contains("error") ||
+                            userMessage.toLowerCase().contains("exception")) {
+                          userMessage = AppLocalizations.of(
+                            context,
+                          )!.couldNotCompleteYourBooking;
+                        }
+
+                        Get.snackbar(
+                          AppLocalizations.of(context)!.bookingFailed,
+                          userMessage,
+                          snackPosition: SnackPosition.TOP,
+                        );
+                        return;
+                      }
+
+                      final bookingId = res.bookingId ?? '';
+
+                      if (widget.isOnline) {
+                        // Send notifications for online booking
+                        try {
+                          await FirebaseFirestore.instance
+                              .collection('notifications')
+                              .add({
+                                'userId': currentUser?.uid ?? 'guest',
+                                'title': 'Online Booking Request',
+                                'body':
+                                    'Your online consultation request has been sent to the doctor and is pending confirmation.',
+                                'createdAt': FieldValue.serverTimestamp(),
+                                'type': 'booking',
+                                'data': {'bookingId': bookingId},
+                              });
+
+                          final doctorDoc = await FirebaseFirestore.instance
+                              .collection('Doctors')
+                              .doc(widget.doctor.id)
+                              .get();
+                          final doctorAuthUid =
+                              doctorDoc.data()?['auth_uid'] as String?;
+
+                          if (doctorAuthUid != null &&
+                              doctorAuthUid.isNotEmpty) {
+                            await FirebaseFirestore.instance
+                                .collection('notifications')
+                                .add({
+                                  'userId': doctorAuthUid,
+                                  'title': 'New Online Booking Request',
+                                  'body':
+                                      'You have a new online consultation request from ${user.name} at ${widget.selectedTime} on ${BookingFirestoreService.formatDate(widget.selectedDate)}.',
+                                  'createdAt': FieldValue.serverTimestamp(),
+                                  'type': 'booking',
+                                  'data': {'bookingId': bookingId},
+                                });
+                          }
+                        } catch (e) {
+                          debugPrint('Error sending notifications: $e');
+                        }
+                      }
+
+                      Get.to(
+                        () => BookingSuccessScreen(
+                          doctor: widget.doctor,
+                          selectedDate: widget.selectedDate,
+                          selectedTime: widget.selectedTime,
+                          bookingId: bookingId,
+                          isOnline: widget.isOnline,
+                        ),
+                        transition: Transition.rightToLeftWithFade,
+                        duration: const Duration(milliseconds: 350),
+                      );
+                    } catch (e, st) {
+                      debugPrint("❌ [ConfirmBookingScreen] Error: $e");
+                      debugPrint("❌ [ConfirmBookingScreen] StackTrace: $st");
+                      Get.snackbar(
+                        AppLocalizations.of(context)!.bookingFailed,
+                        AppLocalizations.of(context)!.anUnexpectedErrorOccurred,
+                        snackPosition: SnackPosition.TOP,
+                      );
+                    } finally {
+                      if (mounted) setState(() => _isBooking = false);
                     }
-                    finalAmount = originalPrice - discountAmount;
-                  } else if (type.calculationMethod == 'fixed') {
-                    discountAmount = code.value;
-                    finalAmount = originalPrice - discountAmount;
-                  } else if (type.calculationMethod == 'free') {
-                    discountAmount = originalPrice;
-                    finalAmount = 0;
-                  }
-                  if (finalAmount < 0) finalAmount = 0;
-                  
-                  discountData = {
-                    "code_id": code.id,
-                    "code": code.code,
-                    "type": type.calculationMethod,
-                    "discount_value": discountAmount,
-                    "original_amount": originalPrice,
-                  };
-                }
-
-                // ✅ Firestore Transaction booking
-                final res = await controller.confirmBooking(
-                  user: user,
-                  durationMinutes: 30,
-                  clinicName: "O2 Clinic - Main Branch",
-                  floor: "4",
-                  room: "",
-                  paymentStatus: "pending",
-                  paymentMethod: "cash",
-                  currency: Get.find<AppConstantsController>().currencyName.value,
-                  amountOverride: finalAmount,
-                  appVersion: "8.8",
-                  discountData: discountData,
-                  isOnline: widget.isOnline,
-                );
-
-                if (!res.success) {
-                  debugPrint("❌ [ConfirmBookingScreen] Booking unsuccessful: ${res.message}");
-                  
-                  String userMessage = res.message;
-                  if (userMessage.toLowerCase().contains("failed:") || 
-                      userMessage.toLowerCase().contains("error") || 
-                      userMessage.toLowerCase().contains("exception")) {
-                    userMessage = AppLocalizations.of(context)!.couldNotCompleteYourBooking;
-                  }
-
-                  Get.snackbar(
-                    AppLocalizations.of(context)!.bookingFailed,
-                    userMessage,
-                    snackPosition: SnackPosition.TOP,
-                  );
-                  return;
-                }
-
-                final bookingId = res.bookingId ?? '';
-
-                if (widget.isOnline) {
-                  // Send notifications for online booking
-                  try {
-                    await FirebaseFirestore.instance.collection('notifications').add({
-                      'userId': currentUser?.uid ?? 'guest',
-                      'title': 'Online Booking Request',
-                      'body': 'Your online consultation request has been sent to the doctor and is pending confirmation.',
-                      'createdAt': FieldValue.serverTimestamp(),
-                      'type': 'booking',
-                      'data': {'bookingId': bookingId}
-                    });
-                    
-                    
-                    final doctorDoc = await FirebaseFirestore.instance.collection('Doctors').doc(widget.doctor.id).get();
-                    final doctorAuthUid = doctorDoc.data()?['auth_uid'] as String?;
-                    
-                    if (doctorAuthUid != null && doctorAuthUid.isNotEmpty) {
-                      await FirebaseFirestore.instance.collection('notifications').add({
-                        'userId': doctorAuthUid,
-                        'title': 'New Online Booking Request',
-                        'body': 'You have a new online consultation request from ${user.name} at ${widget.selectedTime} on ${BookingFirestoreService.formatDate(widget.selectedDate)}.',
-                        'createdAt': FieldValue.serverTimestamp(),
-                        'type': 'booking',
-                        'data': {'bookingId': bookingId}
-                      });
-                    }
-                  } catch(e) {
-                    debugPrint('Error sending notifications: $e');
-                  }
-                }
-
-                Get.to(
-                  () => BookingSuccessScreen(
-                    doctor: widget.doctor,
-                    selectedDate: widget.selectedDate,
-                    selectedTime: widget.selectedTime,
-                    bookingId: bookingId,
-                    isOnline: widget.isOnline,
-                  ),
-                  transition: Transition.rightToLeftWithFade,
-                  duration: const Duration(milliseconds: 350),
-                );
-              } catch (e, st) {
-                debugPrint("❌ [ConfirmBookingScreen] Error: $e");
-                debugPrint("❌ [ConfirmBookingScreen] StackTrace: $st");
-                Get.snackbar(
-                  AppLocalizations.of(context)!.bookingFailed,
-                  AppLocalizations.of(context)!.anUnexpectedErrorOccurred,
-                  snackPosition: SnackPosition.TOP,
-                );
-              } finally {
-                if (mounted) setState(() => _isBooking = false);
-              }
-            },
+                  },
             child: _isBooking
-                ? const SizedBox(
+                ? SizedBox(
                     width: 24,
                     height: 24,
-                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).cardColor,
+                      strokeWidth: 2,
+                    ),
                   )
                 : Text(
                     AppLocalizations.of(context)!.confirm,
                     style: TextStyle(
-                      color: Colors.white,
-                      
+                      color: Theme.of(context).cardColor,
+
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -711,16 +761,9 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 16,
-            offset: const Offset(0, 6),
-          ),
-        ],
       ),
       child: child,
     );
@@ -738,20 +781,21 @@ class _infoRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: TextStyle(color: AppColors.grey, ),
-        ),
+        Text(title, style: TextStyle(color: AppColors.grey)),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w700,
-            
-            color: AppColors.textPrimary,
+
+            color: Theme.of(context).textTheme.bodyLarge?.color,
           ),
         ),
       ],
     );
   }
 }
+
+
+
+
 

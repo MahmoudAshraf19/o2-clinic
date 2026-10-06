@@ -19,7 +19,7 @@ class ServicesScreen extends StatelessWidget {
       init: ServicesController(),
       builder: (controller) {
         return Scaffold(
-          backgroundColor: AppColors.scaffoldBackground,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: SafeArea(
             child: Column(
               children: [
@@ -119,3 +119,4 @@ class ServicesScreen extends StatelessWidget {
     );
   }
 }
+

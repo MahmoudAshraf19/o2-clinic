@@ -33,7 +33,7 @@ class DashboardTopDoctors extends StatelessWidget {
               Text(
                 AppLocalizations.of(context)!.topDoctors,
                 style: TextStyle(
-                  color: Color(0xFF081F1D),
+                  color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF081F1D),
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
                   
@@ -68,7 +68,7 @@ class _DoctorCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(28),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.22)),
         boxShadow: [
@@ -93,8 +93,7 @@ class _DoctorCard extends StatelessWidget {
                       : doctor.nameEn,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Color(0xFF081F1D),
+                  style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF081F1D),
                     fontSize: 14,
                     fontWeight: FontWeight.w800,
                     
@@ -107,8 +106,7 @@ class _DoctorCard extends StatelessWidget {
                       : doctor.titleEn,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Color(0xFF6B7280),
+                  style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF6B7280),
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
                     
@@ -171,9 +169,9 @@ class _DoctorAvatar extends StatelessWidget {
         width: 56,
         height: 56,
         decoration: BoxDecoration(
-          color: const Color(0xFFF8FAFA),
+          color: Theme.of(context).brightness == Brightness.dark ? Colors.transparent : const Color(0xFFF8FAFA),
           shape: BoxShape.circle,
-          border: Border.all(color: const Color(0xFFF2F7F6), width: 2),
+          border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF2A3A39) : const Color(0xFFF2F7F6), width: 2),
         ),
         clipBehavior: Clip.antiAlias,
         child: CachedImageWidget(imageUrl: 
@@ -200,7 +198,7 @@ class _MiniInfoChip extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 140),
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3F8F7),
+        color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF2A3A39) : const Color(0xFFF3F8F7),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
@@ -213,8 +211,7 @@ class _MiniInfoChip extends StatelessWidget {
               text,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: Color(0xFF334155),
+              style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF334155),
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
                 
@@ -226,4 +223,7 @@ class _MiniInfoChip extends StatelessWidget {
     );
   }
 }
+
+
+
 

@@ -30,7 +30,9 @@ class XRayCard extends StatelessWidget {
         ? AppColors.primary.withValues(alpha: .12)
         : AppColors.surface;
 
-    final Color titleColor = selected ? AppColors.primary : AppColors.textPrimary;
+    final Color titleColor = selected
+        ? AppColors.primary
+        : AppColors.textPrimary;
 
     return Material(
       color: Colors.transparent,
@@ -83,7 +85,6 @@ class XRayCard extends StatelessWidget {
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: titleColor,
-                    
                   ),
                 ),
               ),
@@ -93,10 +94,7 @@ class XRayCard extends StatelessWidget {
                 transitionBuilder: (child, animation) {
                   return ScaleTransition(
                     scale: animation,
-                    child: FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    ),
+                    child: FadeTransition(opacity: animation, child: child),
                   );
                 },
                 child: Container(

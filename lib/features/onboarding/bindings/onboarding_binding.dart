@@ -7,7 +7,7 @@ class OnboardingBinding extends Bindings {
   @override
   void dependencies() {
     print('🔗 BINDING: Registering onboarding dependencies...');
-    
+
     // Register the service first.
     Get.lazyPut<OnboardingService>(() => OnboardingService());
     print('🔗 BINDING: OnboardingService registered');

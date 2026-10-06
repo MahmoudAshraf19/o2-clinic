@@ -26,7 +26,9 @@ class AppBottomNavigationBar extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(32),
+              ),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
                 child: Container(
@@ -35,19 +37,14 @@ class AppBottomNavigationBar extends StatelessWidget {
                     maxHeight: 80,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.90),
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+                    color: Theme.of(context).brightness == Brightness.dark ? Theme.of(context).scaffoldBackgroundColor : Colors.white.withValues(alpha: 0.90),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(32),
+                    ),
                     border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.50),
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : Colors.white.withValues(alpha: 0.50),
                       width: 1,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
-                        blurRadius: 24,
-                        offset: const Offset(0, -8),
-                      ),
-                    ],
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(

@@ -76,15 +76,15 @@ class BookingsFirestoreService {
         .where("user.userId", isEqualTo: userId)
         .snapshots()
         .map((snapshot) {
-      final bookings = snapshot.docs.map((doc) {
-        return BookingModel.fromMap(id: doc.id, map: doc.data());
-      }).toList();
+          final bookings = snapshot.docs.map((doc) {
+            return BookingModel.fromMap(id: doc.id, map: doc.data());
+          }).toList();
 
-      // ✅ Sync local reminders asynchronously — doesn't block the UI stream
-      _syncLocalReminders(bookings);
+          // ✅ Sync local reminders asynchronously — doesn't block the UI stream
+          _syncLocalReminders(bookings);
 
-      return bookings;
-    });
+          return bookings;
+        });
   }
 
   /// ✅ Schedules local on-device reminders for all upcoming bookings.
@@ -100,15 +100,17 @@ class BookingsFirestoreService {
           final status = booking.status.current.toLowerCase();
 
           // Only schedule for active/upcoming bookings
-          final isActive = status == 'upcoming' ||
+          final isActive =
+              status == 'upcoming' ||
               status == 'confirmed' ||
               status == 'pending';
 
           if (!isActive) {
             // ✅ Cancel reminders for cancelled/completed bookings
             if (status == 'cancelled' || status == 'completed') {
-              await NotificationService.instance
-                  .cancelAppointmentReminders(booking.id);
+              await NotificationService.instance.cancelAppointmentReminders(
+                booking.id,
+              );
             }
             continue;
           }
@@ -159,12 +161,14 @@ class BookingsFirestoreService {
       String bodyAr = 'تم تحديث حالة حجزك.';
 
       if (status == 'completed') {
-        bodyEn = 'Your appointment has been completed. You can now rate your experience!';
+        bodyEn =
+            'Your appointment has been completed. You can now rate your experience!';
         bodyAr = 'تم الانتهاء من موعدك. يمكنك الآن تقييم تجربتك!';
       } else if (status == 'under_investigation') {
         titleEn = 'Issue Reported';
         titleAr = 'تم الإبلاغ عن مشكلة';
-        bodyEn = 'An issue was reported for your booking. We are investigating it.';
+        bodyEn =
+            'An issue was reported for your booking. We are investigating it.';
         bodyAr = 'تم الإبلاغ عن مشكلة في حجزك. نحن نقوم بالتحقيق فيها.';
       }
 
@@ -179,9 +183,120 @@ class BookingsFirestoreService {
         'status': {'read': false},
         'createdAt': FieldValue.serverTimestamp(),
       });
-
     } catch (e) {
       debugPrint("💥 Failed to update booking status: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> cancelBooking(BookingModel booking) async {
+    final bookingId = booking.id;
+    debugPrint("🚀 [Firebase] Starting cancellation for booking: $bookingId ⏳");
+    
+    try {
+      await _firestore.runTransaction((tx) async {
+        final bookingRef = _firestore.collection("bookings").doc(bookingId);
+        final bookingSnap = await tx.get(bookingRef);
+        if (!bookingSnap.exists) {
+          debugPrint("⚠️ [Firebase] Booking not found! $bookingId ❌");
+          return;
+        }
+
+        final data = bookingSnap.data()!;
+        final type = data['type'];
+        final doctor = data['doctor'];
+        final schedule = data['schedule'];
+
+        if ((type == 'clinical' || data['serviceType'] == 'clinical') && 
+            doctor != null && (doctor['id'] != null || doctor['doctorId'] != null) && 
+            schedule != null && schedule['date'] != null) {
+          
+          final doctorId = doctor['id'] ?? doctor['doctorId'];
+          final dateKey = schedule['date'];
+          final statsId = "${doctorId}_$dateKey";
+          final statsRef = _firestore.collection('doctor_booking_stats').doc(statsId);
+          
+          final statsSnap = await tx.get(statsRef);
+          if (statsSnap.exists) {
+            final count = ((statsSnap.data()?['count'] ?? 0) as num).toInt();
+            if (count > 0) {
+              tx.update(statsRef, {'count': count - 1});
+              debugPrint("✅ [Firebase] Decremented doctor stats for $statsId 📉");
+            } else {
+              debugPrint("⚠️ [Firebase] Doctor stats count is already 0 for $statsId 🤔");
+            }
+          } else {
+            debugPrint("⚠️ [Firebase] Doctor stats document not found! $statsId ❌");
+          }
+        }
+
+        final currentStatus = data['status'] as Map<String, dynamic>? ?? {};
+        final rawHistory = currentStatus['history'] as List<dynamic>? ?? [];
+        final history = rawHistory.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+        
+        history.add({
+          "status": "cancelled",
+          "changed_at": Timestamp.now(),
+          "changed_by": "user",
+          "note": "Cancelled by user via app"
+        });
+
+        tx.update(bookingRef, {
+          "status.current": "cancelled",
+          "status.label": "Cancelled",
+          "status.history": history,
+          "timeline.cancelledAt": FieldValue.serverTimestamp(),
+        });
+        
+        debugPrint("✅ [Firebase] Booking $bookingId updated successfully to 'cancelled'! 🎉");
+
+        // Prepare User Notification
+        final userMap = data['user'] as Map<String, dynamic>?;
+        final userId = userMap?['userId'] ?? userMap?['auth_uid'];
+        if (userId != null && userId.toString().isNotEmpty) {
+          final userNotifRef = _firestore.collection('notifications').doc();
+          tx.set(userNotifRef, {
+            'userId': userId,
+            'type': 'booking_cancelled',
+            'title': {
+              'en': 'Booking Cancelled',
+              'ar': 'تم إلغاء الحجز'
+            },
+            'body': {
+              'en': 'Your booking has been successfully cancelled.',
+              'ar': 'تم إلغاء حجزك بنجاح بناءً على طلبك.'
+            },
+            'data': {'bookingId': bookingId},
+            'priority': 'high',
+            'status': {'read': false},
+            'createdAt': FieldValue.serverTimestamp(),
+          });
+        }
+
+        // Prepare Admin Notification
+        final adminNotifRef = _firestore.collection('admin_notifications').doc();
+        tx.set(adminNotifRef, {
+          'kind': 'booking.deleted',
+          'tone': 'danger',
+          'title': {
+            'en': 'Booking Cancelled by User',
+            'ar': 'قام المريض بإلغاء حجزه'
+          },
+          'body': {
+            'en': 'A user has cancelled their booking (ID: $bookingId).',
+            'ar': 'قام المريض بإلغاء حجزه (رقم: $bookingId).'
+          },
+          'bookingId': bookingId,
+          'link': '/bookings/$bookingId',
+          'actor': userId ?? 'user',
+          'read': false,
+          'readAt': null,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+      });
+    } catch (e, stackTrace) {
+      debugPrint("🔥 [Firebase] FATAL ERROR during cancellation 😭: $e");
+      debugPrint("🔥 [Firebase] STACKTRACE 🩸:\n$stackTrace");
       rethrow;
     }
   }

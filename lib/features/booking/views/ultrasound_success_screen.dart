@@ -31,7 +31,11 @@ class UltrasoundSuccessScreen extends StatelessWidget {
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
-              children: [_card(context, lang), const SizedBox(height: 18), _actions(context)],
+              children: [
+                _card(context, lang),
+                const SizedBox(height: 18),
+                _actions(context),
+              ],
             ),
           ),
         ),
@@ -48,23 +52,16 @@ class UltrasoundSuccessScreen extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 18,
-          ),
+          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 18),
         ],
       ),
       child: Column(
         children: [
-          const Icon(Icons.check_circle, size: 70, color: Colors.teal),
+          const Icon(Icons.check_circle, size: 70, color: const Color(0xFF03458F)),
           const SizedBox(height: 16),
           Text(
             AppLocalizations.of(context)!.imagingConfirmed,
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              
-            ),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           Text(
@@ -73,10 +70,13 @@ class UltrasoundSuccessScreen extends StatelessWidget {
             style: TextStyle(color: Colors.grey.shade600),
           ),
           const SizedBox(height: 18),
-          _info(AppLocalizations.of(context)!.type, model.titleForLanguage(lang)),
+          _info(
+            AppLocalizations.of(context)!.type,
+            model.titleForLanguage(lang),
+          ),
           _info(AppLocalizations.of(context)!.date, _formatDate(date, lang)),
           _info(
-            AppLocalizations.of(context)!.time, 
+            AppLocalizations.of(context)!.time,
             time
                 .replaceAll('AM', AppLocalizations.of(context)!.am)
                 .replaceAll('PM', AppLocalizations.of(context)!.pm),
@@ -86,7 +86,7 @@ class UltrasoundSuccessScreen extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Colors.teal,
+              color: const Color(0xFF03458F),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -141,4 +141,3 @@ class UltrasoundSuccessScreen extends StatelessWidget {
     return formatter.format(d);
   }
 }
-

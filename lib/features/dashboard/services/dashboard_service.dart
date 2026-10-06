@@ -29,32 +29,32 @@ class DashboardService {
         DashboardQuickActionModel(
           id: 'location',
           title: isAr ? 'موقعنا' : isHe ? 'המיקום\nשלנו' : 'Our\nLocation',
-          imagePath: 'assets/icons/Our website.png',
+          imagePath: 'assets/icons/svg_icons/location.svg',
         ),
         DashboardQuickActionModel(
           id: 'doctor',
           title: isAr ? 'ابحث عن\nطبيب' : isHe ? 'חפש\nרופא' : 'Find\nDoctor',
-          imagePath: 'assets/icons/find_doctor_icon.png',
+          imagePath: 'assets/icons/svg_icons/search.svg',
         ),
         DashboardQuickActionModel(
           id: 'radiology',
           title: isAr ? 'حجز\nأشعة' : isHe ? 'הזמנת\nרדיולוגיה' : 'Radiology\nBooking',
-          imagePath: 'assets/icons/Radiology_booking_icon.png',
+          imagePath: 'assets/icons/svg_icons/radiology.svg',
         ),
         DashboardQuickActionModel(
           id: 'lab',
           title: isAr ? 'تحاليل\nمخبرية' : isHe ? 'בדיקות\nמעבדה' : 'Lab\nTests',
-          imagePath: 'assets/icons/Lab Tests.png',
+          imagePath: 'assets/icons/svg_icons/lab.svg',
         ),
         DashboardQuickActionModel(
           id: 'cosmetic',
           title: isAr ? 'حجز\nتجميل' : isHe ? 'הזמנת\nקוסמטיקה' : 'Cosmetic\nBooking',
-          imagePath: 'assets/icons/Cosmetic Booking.png',
+          imagePath: 'assets/icons/svg_icons/cosmetic.svg',
         ),
         DashboardQuickActionModel(
           id: 'appointments',
           title: isAr ? 'مواعيدي' : isHe ? 'התורים\nשלי' : 'My\nAppointments',
-          imagePath: 'assets/icons/Book_Appiontment.png',
+          imagePath: 'assets/icons/svg_icons/my_appointments.svg',
         ),
       ],
       topDoctors: const [

@@ -15,7 +15,7 @@ class DoctorsScreen extends StatelessWidget {
     final controller = Get.put(DoctorsController());
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -52,7 +52,9 @@ class DoctorsScreen extends StatelessWidget {
                 const SizedBox(height: 6),
 
                 Text(
-                  AppLocalizations.of(context)!.exceptionalCareFromLeadingSpecialists,
+                  AppLocalizations.of(
+                    context,
+                  )!.exceptionalCareFromLeadingSpecialists,
                   style: AppTextStyles.textTheme.bodyMedium,
                 ),
 

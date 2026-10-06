@@ -17,24 +17,26 @@ import '../../doctor_dashboard/controllers/doctor_appointments_controller.dart';
 import '../../doctor_dashboard/views/doctor_reviews_screen.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/services/notification_router.dart';
+import '../../../core/theme/app_colors.dart';
 
 class NotificationDropdownWidget extends StatelessWidget {
   const NotificationDropdownWidget({super.key});
 
-  static const _surface = Color(0xFFFFFFFF);
-  static const _surfaceContainerLowest = Color(0xFFFFFFFF);
-  static const _surfaceContainerLow = Color(0xFFF0F4F2);
-  static const _surfaceVariant = Color(0xFFDFE3E1);
-  static const _outlineVariant = Color(0xFFBDC9C6);
-  static const _primary = Color(0xFF00685F);
-  static const _tertiaryContainer = Color(0xFF008379);
-  static const _onSurface = Color(0xFF181D1C);
-  static const _onTertiaryContainer = Color(0xFFF4FFFC);
+  Color _surface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).cardColor : const Color(0xFFFFFFFF);
+  Color _surfaceContainerLowest(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).cardColor : const Color(0xFFFFFFFF);
+  Color _surfaceContainerLow(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).scaffoldBackgroundColor : const Color(0xFFF0F4F2);
+  Color _surfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white12 : const Color(0xFFDFE3E1);
+  Color _outlineVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white24 : const Color(0xFFBDC9C6);
+  Color _primary(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.brandBlue;
+  Color _tertiaryContainer(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? AppColors.vibrantCyan.withOpacity(0.5) : AppColors.vibrantCyan;
+  Color _onSurface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181D1C);
+  Color _onTertiaryContainer(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFFF4FFFC);
 
   @override
   Widget build(BuildContext context) {
-    final NotificationsController controller = Get.isRegistered<NotificationsController>() 
-        ? Get.find<NotificationsController>() 
+    final NotificationsController controller =
+        Get.isRegistered<NotificationsController>()
+        ? Get.find<NotificationsController>()
         : Get.put(NotificationsController(), permanent: true);
 
     return Material(
@@ -57,61 +59,65 @@ class NotificationDropdownWidget extends StatelessWidget {
                 width: double.infinity,
                 constraints: const BoxConstraints(maxWidth: 380),
                 margin: const EdgeInsets.only(top: 72, right: 16, left: 16),
-              decoration: BoxDecoration(
-                color: _surfaceContainerLowest,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: _outlineVariant.withValues(alpha: 0.30)),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF006A61).withValues(alpha: 0.08),
-                    blurRadius: 32,
-                    offset: const Offset(0, 8),
+                decoration: BoxDecoration(
+                  color: _surfaceContainerLowest(context),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: _outlineVariant(context).withValues(alpha: 0.30),
                   ),
-                ],
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _header(context, controller),
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxHeight: 420),
-                    child: Obx(() {
-                      final latest = controller.latestFive;
-                      if (latest.isEmpty) {
-                        return Padding(
-                          padding: const EdgeInsets.all(32.0),
-                          child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.noNewNotifications,
-                              style: GoogleFonts.manrope(
-                                fontSize: 14,
-                                color: _outlineVariant,
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF006A61).withValues(alpha: 0.08),
+                      blurRadius: 32,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _header(context, controller),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxHeight: 420),
+                      child: Obx(() {
+                        final latest = controller.latestFive;
+                        if (latest.isEmpty) {
+                          return Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: Center(
+                              child: Text(
+                                AppLocalizations.of(
+                                  context,
+                                )!.noNewNotifications,
+                                style: GoogleFonts.manrope(
+                                  fontSize: 14,
+                                  color: _outlineVariant(context),
+                                ),
                               ),
                             ),
+                          );
+                        }
+                        return Scrollbar(
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            itemCount: latest.length,
+                            itemBuilder: (context, index) {
+                              return _buildNotificationItem(
+                                latest[index],
+                                showTopDivider: index > 0,
+                                controller: controller,
+                                context: context,
+                              );
+                            },
                           ),
                         );
-                      }
-                      return Scrollbar(
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          itemCount: latest.length,
-                          itemBuilder: (context, index) {
-                            return _buildNotificationItem(
-                              latest[index],
-                              showTopDivider: index > 0,
-                              controller: controller,
-                              context: context,
-                            );
-                          },
-                        ),
-                      );
-                    }),
-                  ),
-                  _footer(context),
-                ],
+                      }),
+                    ),
+                    _footer(context),
+                  ],
+                ),
               ),
-            ),
             ),
           ),
         ],
@@ -124,7 +130,7 @@ class NotificationDropdownWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: _surfaceVariant.withValues(alpha: 0.50)),
+          bottom: BorderSide(color: _surfaceVariant(context).withValues(alpha: 0.50)),
         ),
       ),
       child: Row(
@@ -141,32 +147,35 @@ class NotificationDropdownWidget extends StatelessWidget {
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                       height: 1.4,
-                      color: _onSurface,
+                      color: _onSurface(context),
                     ),
                   ),
                 ),
                 const SizedBox(width: 12),
-              Obx(() {
-                final unread = controller.unreadCount;
-                if (unread == 0) return const SizedBox.shrink();
-                return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: _tertiaryContainer,
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Text(
-                    AppLocalizations.of(context)!.notifUnreadCount(unread),
-                    style: GoogleFonts.manrope(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.6,
-                      height: 1.33,
-                      color: _onTertiaryContainer,
+                Obx(() {
+                  final unread = controller.unreadCount;
+                  if (unread == 0) return const SizedBox.shrink();
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
                     ),
-                  ),
-                );
-              }),
+                    decoration: BoxDecoration(
+                      color: _tertiaryContainer(context),
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      AppLocalizations.of(context)!.notifUnreadCount(unread),
+                      style: GoogleFonts.manrope(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.6,
+                        height: 1.33,
+                        color: _onTertiaryContainer(context),
+                      ),
+                    ),
+                  );
+                }),
               ],
             ),
           ),
@@ -178,7 +187,7 @@ class NotificationDropdownWidget extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                foregroundColor: _primary,
+                foregroundColor: _primary(context),
               ),
               child: Text(
                 AppLocalizations.of(context)!.markAllRead,
@@ -186,7 +195,7 @@ class NotificationDropdownWidget extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   height: 1.4,
-                  color: _primary,
+                  color: _primary(context),
                 ),
               ),
             );
@@ -200,9 +209,9 @@ class NotificationDropdownWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: _surface.withValues(alpha: 0.50),
+        color: _surface(context).withValues(alpha: 0.50),
         border: Border(
-          top: BorderSide(color: _surfaceVariant.withValues(alpha: 0.50)),
+          top: BorderSide(color: _surfaceVariant(context).withValues(alpha: 0.50)),
         ),
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(16),
@@ -217,7 +226,7 @@ class NotificationDropdownWidget extends StatelessWidget {
             Get.to(() => const NotificationsScreen());
           },
           style: TextButton.styleFrom(
-            foregroundColor: _primary,
+            foregroundColor: _primary(context),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             shape: const StadiumBorder(),
           ),
@@ -231,11 +240,15 @@ class NotificationDropdownWidget extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   height: 1.4,
-                  color: _primary,
+                  color: _primary(context),
                 ),
               ),
               const SizedBox(width: 6),
-              const Icon(Icons.arrow_forward_rounded, size: 18, color: _primary),
+              Icon(
+                Icons.arrow_forward_rounded,
+                size: 18,
+                color: _primary(context),
+              ),
             ],
           ),
         ),
@@ -282,7 +295,10 @@ class NotificationDropdownWidget extends StatelessWidget {
     final String langCode = Get.locale?.languageCode ?? 'en';
     final title = n.getTitle(langCode);
     final body = n.getBody(langCode);
-    final time = NotificationTimeHelper.getRelativeTime(n.createdAt, context: context);
+    final time = NotificationTimeHelper.getRelativeTime(
+      n.createdAt,
+      context: context,
+    );
 
     void handleTap() async {
       if (!n.isRead) {
@@ -290,30 +306,44 @@ class NotificationDropdownWidget extends StatelessWidget {
       }
       if (n.type == 'review' && n.data['reviewId'] != null) {
         Get.back(); // close dropdown
-        Get.to(() => const DoctorReviewsScreen(), arguments: {'highlightReviewId': n.data['reviewId'].toString()});
+        Get.to(
+          () => const DoctorReviewsScreen(),
+          arguments: {'highlightReviewId': n.data['reviewId'].toString()},
+        );
         return;
       }
-      
+
       if (n.type == 'message' && n.data.isNotEmpty) {
         Get.back(); // close dropdown
         NotificationRouter.handleNotificationTap(n.data);
         return;
       }
-      
-      if (n.data.isNotEmpty && n.data['bookingId'] != null && n.data['bookingId'].toString().isNotEmpty) {
+
+      if (n.data.isNotEmpty &&
+          n.data['bookingId'] != null &&
+          n.data['bookingId'].toString().isNotEmpty) {
         Get.back(); // close dropdown
-        
-        Get.dialog(const Center(child: CircularProgressIndicator(color: Color(0xFF00685F))), barrierDismissible: false, barrierColor: Colors.black12);
-        
+
+        Get.dialog(
+          const Center(
+            child: CircularProgressIndicator(color: AppColors.brandBlue),
+          ),
+          barrierDismissible: false,
+          barrierColor: Colors.black12,
+        );
+
         try {
-          final doc = await FirebaseFirestore.instance.collection('bookings').doc(n.data['bookingId'].toString()).get();
+          final doc = await FirebaseFirestore.instance
+              .collection('bookings')
+              .doc(n.data['bookingId'].toString())
+              .get();
           Get.back(); // close loading
-          
+
           if (doc.exists) {
             if (Get.isRegistered<DoctorNavigationController>()) {
               final navCtrl = Get.find<DoctorNavigationController>();
               navCtrl.changeIndex(1); // Appts tab
-              
+
               if (Get.isRegistered<DoctorAppointmentsController>()) {
                 final apptsCtrl = Get.find<DoctorAppointmentsController>();
                 final bookingData = doc.data() as Map<String, dynamic>?;
@@ -330,7 +360,10 @@ class NotificationDropdownWidget extends StatelessWidget {
                 }
               }
             } else {
-              Get.to(() => const MyAppointmentsScreen(), arguments: {'showBookingId': doc.id});
+              Get.to(
+                () => const MyAppointmentsScreen(),
+                arguments: {'showBookingId': doc.id},
+              );
             }
           } else {
             Get.snackbar('Error', 'Booking not found');
@@ -394,20 +427,22 @@ class _UnreadNotificationItem extends StatelessWidget {
   final bool showTopDivider;
   final bool showUnreadDot;
 
-  static const _surfaceContainerLow = Color(0xFFF0F4F2);
-  static const _primary = Color(0xFF00685F);
-  static const _onSurface = Color(0xFF181D1C);
-  static const _onSurfaceVariant = Color(0xFF3E4947);
+  Color _surfaceContainerLow(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).scaffoldBackgroundColor : const Color(0xFFF0F4F2);
+  Color _primary(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.brandBlue;
+  Color _onSurface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181D1C);
+  Color _onSurfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF3E4947);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: _surfaceContainerLow.withValues(alpha: 0.20),
+        color: _surfaceContainerLow(context).withValues(alpha: 0.20),
         border: Border(
-          left: const BorderSide(color: _primary, width: 4),
+          left: BorderSide(color: _primary(context), width: 4),
           top: BorderSide(
-            color: showTopDivider ? const Color(0xFFBDC9C6).withValues(alpha: 0.30) : Colors.transparent,
+            color: showTopDivider
+                ? const Color(0xFFBDC9C6).withValues(alpha: 0.30)
+                : Colors.transparent,
             width: 1,
           ),
         ),
@@ -416,11 +451,7 @@ class _UnreadNotificationItem extends StatelessWidget {
       child: Stack(
         children: [
           if (showUnreadDot)
-            const Positioned(
-              top: 0,
-              right: 0,
-              child: _UnreadDot(),
-            ),
+            const Positioned(top: 0, right: 0, child: _UnreadDot()),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -453,7 +484,7 @@ class _UnreadNotificationItem extends StatelessWidget {
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 height: 1.5,
-                                color: _onSurface,
+                                color: _onSurface(context),
                               ),
                             ),
                           ),
@@ -465,7 +496,7 @@ class _UnreadNotificationItem extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                               height: 1.33,
                               letterSpacing: 0.6,
-                              color: _onSurfaceVariant,
+                              color: _onSurfaceVariant(context),
                             ),
                           ),
                         ],
@@ -479,7 +510,7 @@ class _UnreadNotificationItem extends StatelessWidget {
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           height: 1.4,
-                          color: _onSurfaceVariant,
+                          color: _onSurfaceVariant(context),
                         ),
                       ),
                     ],
@@ -515,20 +546,22 @@ class _ReadNotificationItem extends StatelessWidget {
   final bool showTopDivider;
   final String? avatarUrl;
 
-  static const _surfaceContainerLowest = Color(0xFFFFFFFF);
-  static const _surfaceVariant = Color(0xFFDFE3E1);
-  static const _outline = Color(0xFF6E7977);
-  static const _onSurface = Color(0xFF181D1C);
+  Color _surfaceContainerLowest(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).cardColor : const Color(0xFFFFFFFF);
+  Color _surfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white12 : const Color(0xFFDFE3E1);
+  Color _outline(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white54 : const Color(0xFF6E7977);
+  Color _onSurface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181D1C);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: _surfaceContainerLowest,
+        color: _surfaceContainerLowest(context),
         border: Border(
-          left: const BorderSide(color: Colors.transparent, width: 4),
+          left: BorderSide(color: Colors.transparent, width: 4),
           top: BorderSide(
-            color: showTopDivider ? _surfaceVariant.withValues(alpha: 0.30) : Colors.transparent,
+            color: showTopDivider
+                ? _surfaceVariant(context).withValues(alpha: 0.30)
+                : Colors.transparent,
             width: 1,
           ),
         ),
@@ -539,8 +572,8 @@ class _ReadNotificationItem extends StatelessWidget {
         children: [
           ClipOval(
             child: avatarUrl != null
-                ? CachedImageWidget(imageUrl: 
-                    avatarUrl!,
+                ? CachedImageWidget(
+                    imageUrl: avatarUrl!,
                     width: 40,
                     height: 40,
                     fit: BoxFit.cover,
@@ -575,7 +608,7 @@ class _ReadNotificationItem extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                             height: 1.5,
-                            color: _onSurface.withValues(alpha: 0.80),
+                            color: _onSurface(context).withValues(alpha: 0.80),
                           ),
                         ),
                       ),
@@ -587,7 +620,7 @@ class _ReadNotificationItem extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           height: 1.33,
                           letterSpacing: 0.6,
-                          color: _outline,
+                          color: _outline(context),
                         ),
                       ),
                     ],
@@ -601,7 +634,7 @@ class _ReadNotificationItem extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       height: 1.4,
-                      color: _outline,
+                      color: _outline(context),
                     ),
                   ),
                 ],
@@ -624,7 +657,7 @@ class _UnreadDot extends StatelessWidget {
       height: 8,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: const Color(0xFF00685F),
+          color: AppColors.brandBlue,
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
@@ -637,4 +670,5 @@ class _UnreadDot extends StatelessWidget {
     );
   }
 }
+
 

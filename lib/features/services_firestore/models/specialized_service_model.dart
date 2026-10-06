@@ -14,7 +14,7 @@ class SpecializedServiceModel {
   final String descriptionHe;
 
   final String image;
-  
+
   final bool isEnabled;
   final int order;
 
@@ -51,7 +51,7 @@ class SpecializedServiceModel {
       descriptionHe: map['description_he'] ?? '',
 
       image: map['image'] ?? '',
-      
+
       isEnabled: map['is_enabled'] ?? true,
       order: map['order'] ?? 0,
     );

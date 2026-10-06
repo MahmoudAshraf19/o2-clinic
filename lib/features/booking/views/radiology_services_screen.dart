@@ -36,7 +36,7 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
     super.build(context);
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -92,7 +92,6 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
                     fontSize: 12,
                     color: AppColors.textSecondary.withValues(alpha: 0.75),
                     fontWeight: FontWeight.w500,
-                    
                   ),
                 ),
               ],
@@ -119,7 +118,6 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
                 Text(
                   AppLocalizations.of(context)!.somethingWentWrong,
                   style: TextStyle(
-                    
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.w700,
                   ),
@@ -128,10 +126,7 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
                 Text(
                   c.error,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    
-                    color: AppColors.textSecondary,
-                  ),
+                  style: TextStyle(color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: 14),
                 ElevatedButton(
@@ -146,7 +141,9 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
 
       final services = c.services;
       if (services.isEmpty) {
-        return Center(child: Text(AppLocalizations.of(context)!.noServicesFound));
+        return Center(
+          child: Text(AppLocalizations.of(context)!.noServicesFound),
+        );
       }
 
       return ListView.builder(
@@ -216,17 +213,17 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
                             fontSize: 16,
                             fontWeight: FontWeight.w800,
                             color: AppColors.textPrimary,
-                            
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          AppLocalizations.of(context)!.availableDaysCount(service.availabilityDay.length.toString()),
+                          AppLocalizations.of(context)!.availableDaysCount(
+                            service.availabilityDay.length.toString(),
+                          ),
                           style: TextStyle(
                             fontSize: 12,
                             color: AppColors.textSecondary,
                             fontWeight: FontWeight.w500,
-                            
                           ),
                         ),
                       ],
@@ -248,7 +245,6 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
   }
 
   // The bottom cross-fade and button section is deleted as we are navigating now.
-
 }
 
 // ✅ Image Widget - يشتغل مع assets أو network وبـ fallback (مفيش crash)
@@ -293,8 +289,8 @@ class _ServiceImage extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: _isNetwork
-          ? CachedImageWidget(imageUrl: 
-              urlOrAsset,
+          ? CachedImageWidget(
+              imageUrl: urlOrAsset,
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => const _ImageFallback(
                 icon: Icons.image_not_supported_outlined,
@@ -346,10 +342,7 @@ class _PrimaryButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
-          colors: [
-            AppColors.primary,
-            AppColors.primary.withValues(alpha: 0.8),
-          ],
+          colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -380,11 +373,7 @@ class _PrimaryButton extends StatelessWidget {
             const SizedBox(width: 10),
             Text(
               text,
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                
-              ),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -392,3 +381,4 @@ class _PrimaryButton extends StatelessWidget {
     );
   }
 }
+

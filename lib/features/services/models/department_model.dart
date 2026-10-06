@@ -24,9 +24,11 @@ class DepartmentModel {
       subtitle: json['subtitle'] ?? '',
       icon: json['icon'] ?? '',
       description: json['description'] ?? '',
-      doctors: (json['doctors'] as List<dynamic>?)
-          ?.map((doctor) => DoctorModel.fromJson(doctor))
-          .toList() ?? [],
+      doctors:
+          (json['doctors'] as List<dynamic>?)
+              ?.map((doctor) => DoctorModel.fromJson(doctor))
+              .toList() ??
+          [],
     );
   }
 

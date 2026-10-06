@@ -22,7 +22,7 @@ class DashboardProfileScreen extends StatelessWidget {
     final DashboardProfileController controller = Get.find<DashboardProfileController>();
 
     return Scaffold(
-      backgroundColor: AppColors.surface,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Obx(() {
           final user = controller.currentUser;
@@ -346,4 +346,6 @@ class _ErrorBanner extends StatelessWidget {
     );
   }
 }
+
+
 

@@ -225,7 +225,7 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
                               bottom: 6,
                               child: CircleAvatar(
                                 radius: 2,
-                                backgroundColor: Colors.teal,
+                                backgroundColor: const Color(0xFF03458F),
                               ),
                             ),
                         ],

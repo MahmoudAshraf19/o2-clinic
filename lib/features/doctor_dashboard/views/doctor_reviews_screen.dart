@@ -22,10 +22,10 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
   bool _scrolled = false;
-  
+
   String _searchQuery = '';
   String _sortType = 'newest'; // newest, oldest, highest, lowest
-  
+
   List<ReviewModel> _reviews = [];
   bool _isLoading = true;
   String? _highlightReviewId;
@@ -41,7 +41,7 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
         _searchQuery = _searchController.text.toLowerCase();
       });
     });
-    
+
     _fetchReviews();
   }
 
@@ -55,7 +55,9 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
     debugPrint('Found Doctor ID: $doctorId');
 
     if (doctorId == null) {
-      debugPrint('doctorId from controller is null, fetching manually via auth_uid...');
+      debugPrint(
+        'doctorId from controller is null, fetching manually via auth_uid...',
+      );
       final uid = FirebaseAuth.instance.currentUser?.uid;
       if (uid != null) {
         final docSnap = await FirebaseFirestore.instance
@@ -83,12 +85,16 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
           .doc(doctorId)
           .collection('reviews')
           .get();
-      
-      debugPrint('Successfully fetched ${snap.docs.length} reviews from Doctors/$doctorId/reviews');
+
+      debugPrint(
+        'Successfully fetched ${snap.docs.length} reviews from Doctors/$doctorId/reviews',
+      );
       debugPrint('================================================');
-      
-      final reviews = snap.docs.map((d) => ReviewModel.fromMap(d.id, d.data())).toList();
-      
+
+      final reviews = snap.docs
+          .map((d) => ReviewModel.fromMap(d.id, d.data()))
+          .toList();
+
       if (mounted) {
         setState(() {
           _reviews = reviews;
@@ -179,14 +185,19 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
     }
 
     final l10n = AppLocalizations.of(context)!;
-    
+
     String localizeCat(String key) {
-      switch(key) {
-        case 'waiting_time': return l10n.catWaitingTime ?? 'Waiting Time';
-        case 'communication': return l10n.catCommunication ?? 'Communication';
-        case 'clinic_cleanliness': return l10n.catClinicCleanliness ?? 'Clinic Cleanliness';
-        case 'effectiveness': return l10n.catEffectiveness ?? 'Effectiveness';
-        default: return key;
+      switch (key) {
+        case 'waiting_time':
+          return l10n.catWaitingTime ?? 'Waiting Time';
+        case 'communication':
+          return l10n.catCommunication ?? 'Communication';
+        case 'clinic_cleanliness':
+          return l10n.catClinicCleanliness ?? 'Clinic Cleanliness';
+        case 'effectiveness':
+          return l10n.catEffectiveness ?? 'Effectiveness';
+        default:
+          return key;
       }
     }
 
@@ -194,11 +205,13 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
     catScores.forEach((key, scores) {
       if (scores.isNotEmpty) {
         num avg = scores.reduce((a, b) => a + b) / scores.length;
-        result.add(_ReviewCategory(
-          title: localizeCat(key),
-          value: avg.toStringAsFixed(1),
-          progress: avg / 5.0,
-        ));
+        result.add(
+          _ReviewCategory(
+            title: localizeCat(key),
+            value: avg.toStringAsFixed(1),
+            progress: avg / 5.0,
+          ),
+        );
       }
     });
 
@@ -211,10 +224,12 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
     final displayedReviews = _filteredAndSortedReviews;
     final l10n = AppLocalizations.of(context)!;
     final reviewsTitle = l10n.reviewTitle ?? 'Doctor Reviews';
-    
+
     double overallRating = 5.0;
     if (_reviews.isNotEmpty) {
-      overallRating = _reviews.map((e) => e.rating).reduce((a, b) => a + b) / _reviews.length;
+      overallRating =
+          _reviews.map((e) => e.rating).reduce((a, b) => a + b) /
+          _reviews.length;
     }
 
     return Scaffold(
@@ -239,18 +254,29 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
       ),
       body: SafeArea(
         child: _isLoading
-            ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
+            ? const Center(
+                child: CircularProgressIndicator(color: AppColors.primary),
+              )
             : SingleChildScrollView(
                 controller: _scrollController,
-                padding: const EdgeInsets.only(top: 16, left: 20, right: 20, bottom: 64),
+                padding: const EdgeInsets.only(
+                  top: 16,
+                  left: 20,
+                  right: 20,
+                  bottom: 64,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (categories.isNotEmpty)
-                      _RatingSummaryCard(categories: categories, overallRating: overallRating, totalReviews: _reviews.length),
-                    
+                      _RatingSummaryCard(
+                        categories: categories,
+                        overallRating: overallRating,
+                        totalReviews: _reviews.length,
+                      ),
+
                     const SizedBox(height: 24),
-                    
+
                     Row(
                       children: [
                         Expanded(
@@ -259,17 +285,30 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(26),
-                              border: Border.all(color: AppColors.grey.withOpacity(0.2)),
+                              border: Border.all(
+                                color: AppColors.grey.withOpacity(0.2),
+                              ),
                             ),
                             child: TextField(
                               controller: _searchController,
-                              style: const TextStyle(color: AppColors.textPrimary),
+                              style: const TextStyle(
+                                color: AppColors.textPrimary,
+                              ),
                               decoration: InputDecoration(
                                 hintText: 'Search...',
-                                hintStyle: const TextStyle(color: AppColors.grey),
-                                prefixIcon: const Icon(Icons.search, color: AppColors.grey, size: 22),
+                                hintStyle: const TextStyle(
+                                  color: AppColors.grey,
+                                ),
+                                prefixIcon: const Icon(
+                                  Icons.search,
+                                  color: AppColors.grey,
+                                  size: 22,
+                                ),
                                 border: InputBorder.none,
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 16,
+                                ),
                               ),
                             ),
                           ),
@@ -285,33 +324,56 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
                               value: _sortType,
-                              icon: const Icon(Icons.filter_list, color: Colors.white, size: 20),
+                              icon: const Icon(
+                                Icons.filter_list,
+                                color: Colors.white,
+                                size: 20,
+                              ),
                               dropdownColor: AppColors.primary,
-                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
                               items: [
-                                DropdownMenuItem(value: 'newest', child: Text(l10n.sortNewest ?? 'Newest')),
-                                DropdownMenuItem(value: 'oldest', child: Text(l10n.sortOldest ?? 'Oldest')),
-                                DropdownMenuItem(value: 'highest', child: Text(l10n.sortHighest ?? 'Highest')),
-                                DropdownMenuItem(value: 'lowest', child: Text(l10n.sortLowest ?? 'Lowest')),
+                                DropdownMenuItem(
+                                  value: 'newest',
+                                  child: Text(l10n.sortNewest ?? 'Newest'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'oldest',
+                                  child: Text(l10n.sortOldest ?? 'Oldest'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'highest',
+                                  child: Text(l10n.sortHighest ?? 'Highest'),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'lowest',
+                                  child: Text(l10n.sortLowest ?? 'Lowest'),
+                                ),
                               ],
                               onChanged: (val) {
-                                if (val != null) setState(() => _sortType = val);
+                                if (val != null)
+                                  setState(() => _sortType = val);
                               },
                             ),
                           ),
                         ),
                       ],
                     ),
-                    
+
                     const SizedBox(height: 24),
-                    
+
                     if (displayedReviews.isEmpty)
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.all(32.0),
                           child: Text(
                             'No reviews found',
-                            style: TextStyle(color: AppColors.grey, fontSize: 16),
+                            style: TextStyle(
+                              color: AppColors.grey,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       )
@@ -320,10 +382,13 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
                         children: [
                           for (int i = 0; i < displayedReviews.length; i++) ...[
                             Container(
-                              key: _itemKeys[displayedReviews[i].id] ??= GlobalKey(),
+                              key: _itemKeys[displayedReviews[i].id] ??=
+                                  GlobalKey(),
                               child: _ReviewCardWidget(
                                 review: displayedReviews[i],
-                                isHighlighted: _highlightReviewId == displayedReviews[i].id,
+                                isHighlighted:
+                                    _highlightReviewId ==
+                                    displayedReviews[i].id,
                               ),
                             ),
                             if (i != displayedReviews.length - 1)
@@ -341,7 +406,11 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
 }
 
 class _RatingSummaryCard extends StatelessWidget {
-  const _RatingSummaryCard({required this.categories, required this.overallRating, required this.totalReviews});
+  const _RatingSummaryCard({
+    required this.categories,
+    required this.overallRating,
+    required this.totalReviews,
+  });
 
   final List<_ReviewCategory> categories;
   final double overallRating;
@@ -406,17 +475,35 @@ class _RatingSummaryCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(5, (index) {
                         if (overallRating >= index + 1) {
-                          return const Icon(Icons.star, size: 20, color: Colors.orangeAccent);
-                        } else if (overallRating > index && overallRating < index + 1) {
-                          return const Icon(Icons.star_half, size: 20, color: Colors.orangeAccent);
+                          return const Icon(
+                            Icons.star,
+                            size: 20,
+                            color: Colors.orangeAccent,
+                          );
+                        } else if (overallRating > index &&
+                            overallRating < index + 1) {
+                          return const Icon(
+                            Icons.star_half,
+                            size: 20,
+                            color: Colors.orangeAccent,
+                          );
                         }
-                        return const Icon(Icons.star_border, size: 20, color: Colors.orangeAccent);
+                        return const Icon(
+                          Icons.star_border,
+                          size: 20,
+                          color: Colors.orangeAccent,
+                        );
                       }),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      AppLocalizations.of(context)!.totalReviewsCount(totalReviews),
-                      style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 14),
+                      AppLocalizations.of(
+                        context,
+                      )!.totalReviewsCount(totalReviews),
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 14,
+                      ),
                     ),
                   ],
                 ),
@@ -481,7 +568,10 @@ class _RatingRow extends StatelessWidget {
             category.title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 14),
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.9),
+              fontSize: 14,
+            ),
           ),
         ),
         const SizedBox(width: 12),
@@ -512,7 +602,11 @@ class _RatingRow extends StatelessWidget {
           child: Text(
             category.value,
             textAlign: TextAlign.right,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+            ),
           ),
         ),
       ],
@@ -543,10 +637,14 @@ class _ReviewCardWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isHighlighted ? AppColors.primary.withOpacity(0.05) : Colors.white,
+        color: isHighlighted
+            ? AppColors.primary.withOpacity(0.05)
+            : Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isHighlighted ? AppColors.primary : AppColors.grey.withOpacity(0.1),
+          color: isHighlighted
+              ? AppColors.primary
+              : AppColors.grey.withOpacity(0.1),
           width: isHighlighted ? 1.5 : 1.0,
         ),
       ),
@@ -558,8 +656,12 @@ class _ReviewCardWidget extends StatelessWidget {
               CircleAvatar(
                 radius: 20,
                 backgroundColor: AppColors.primary.withOpacity(0.1),
-                backgroundImage: review.patientImage.isNotEmpty ? NetworkImage(review.patientImage) : null,
-                child: review.patientImage.isEmpty ? const Icon(Icons.person, color: AppColors.primary) : null,
+                backgroundImage: review.patientImage.isNotEmpty
+                    ? NetworkImage(review.patientImage)
+                    : null,
+                child: review.patientImage.isEmpty
+                    ? const Icon(Icons.person, color: AppColors.primary)
+                    : null,
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -568,11 +670,18 @@ class _ReviewCardWidget extends StatelessWidget {
                   children: [
                     Text(
                       review.patientName,
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
                     Text(
                       '${review.createdAt.day}/${review.createdAt.month}/${review.createdAt.year}',
-                      style: const TextStyle(fontSize: 12, color: AppColors.grey),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.grey,
+                      ),
                     ),
                   ],
                 ),
@@ -583,7 +692,11 @@ class _ReviewCardWidget extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     review.rating.toStringAsFixed(1),
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.textPrimary),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                 ],
               ),
@@ -593,9 +706,13 @@ class _ReviewCardWidget extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               review.text,
-              style: const TextStyle(fontSize: 14, color: AppColors.textPrimary, height: 1.4),
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColors.textPrimary,
+                height: 1.4,
+              ),
             ),
-          ]
+          ],
         ],
       ),
     );

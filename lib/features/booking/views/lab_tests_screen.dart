@@ -14,7 +14,7 @@ class LabTestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -84,7 +84,9 @@ class LabTestsScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
+              border: Border.all(
+                color: AppColors.border.withValues(alpha: 0.5),
+              ),
               boxShadow: [
                 BoxShadow(
                   color: AppColors.primary.withValues(alpha: 0.04),
@@ -115,7 +117,6 @@ class LabTestsScreen extends StatelessWidget {
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
-                    
                   ),
                 ),
                 const SizedBox(height: 32),
@@ -134,7 +135,6 @@ class LabTestsScreen extends StatelessWidget {
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textSecondary,
-                    
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -153,7 +153,6 @@ class LabTestsScreen extends StatelessWidget {
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                     color: AppColors.textSecondary.withValues(alpha: 0.8),
-                    
                   ),
                 ),
               ],
@@ -183,10 +182,7 @@ class _PrimaryButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
-          colors: [
-            AppColors.primary,
-            AppColors.primary.withValues(alpha: 0.8),
-          ],
+          colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -217,11 +213,7 @@ class _PrimaryButton extends StatelessWidget {
             const SizedBox(width: 10),
             Text(
               text,
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                
-              ),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -248,7 +240,10 @@ class _OutlinedButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3), width: 1.5),
+        border: Border.all(
+          color: AppColors.primary.withValues(alpha: 0.3),
+          width: 1.5,
+        ),
         boxShadow: [
           BoxShadow(
             color: AppColors.primary.withValues(alpha: 0.05),
@@ -276,11 +271,7 @@ class _OutlinedButton extends StatelessWidget {
             const SizedBox(width: 10),
             Text(
               text,
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                
-              ),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -288,3 +279,4 @@ class _OutlinedButton extends StatelessWidget {
     );
   }
 }
+

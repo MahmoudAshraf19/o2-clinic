@@ -7,7 +7,9 @@ class CosmeticCategoryService {
 
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<List<CosmeticCategoryModel>> fetchCosmeticCategories({bool forceRefresh = false}) async {
+  Future<List<CosmeticCategoryModel>> fetchCosmeticCategories({
+    bool forceRefresh = false,
+  }) async {
     final snap = await _db.collection('cosmetic').get();
 
     final list = snap.docs

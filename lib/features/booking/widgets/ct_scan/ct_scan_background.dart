@@ -14,10 +14,7 @@ class CTScanBackground extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xffF9FBFF),
-                    Color(0xffF4F7FC),
-                  ],
+                  colors: [Color(0xffF9FBFF), Color(0xffF4F7FC)],
                 ),
               ),
             ),

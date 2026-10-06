@@ -30,16 +30,12 @@ class DashboardUpcomingAppointment extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(
-                Icons.event_available_rounded,
-                size: 18,
-                color: Color(0xFF081F1D),
+              Icon(Icons.event_available_rounded, size: 18, color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF081F1D)),
               ),
               const SizedBox(width: 8),
               Text(
                 AppLocalizations.of(context)!.upcomingDoctors,
-                style: const TextStyle(
-                  color: Color(0xFF081F1D),
+                style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF081F1D),
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
                   
@@ -95,18 +91,7 @@ class _UpcomingDoctorCard extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Positioned(
-            top: -18,
-            right: -18,
-            child: Container(
-              width: 128,
-              height: 128,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.05),
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
+
           Padding(
             padding: const EdgeInsets.all(18),
             child: Column(
@@ -326,4 +311,6 @@ class _InfoChip extends StatelessWidget {
     );
   }
 }
+
+
 

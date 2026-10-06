@@ -33,7 +33,9 @@ class AppConstantsFirestoreService {
   }
 
   Future<List<Map<String, dynamic>>> getAllAppConstants() async {
-    final result = await _firestore.collection(FirestorePaths.appConstants).get();
+    final result = await _firestore
+        .collection(FirestorePaths.appConstants)
+        .get();
 
     return result.docs.map((e) => e.data()).toList();
   }
@@ -60,6 +62,9 @@ class AppConstantsFirestoreService {
   /// DELETE
 
   Future<void> deleteAppConstants(String docId) async {
-    await _firestore.collection(FirestorePaths.appConstants).doc(docId).delete();
+    await _firestore
+        .collection(FirestorePaths.appConstants)
+        .doc(docId)
+        .delete();
   }
 }

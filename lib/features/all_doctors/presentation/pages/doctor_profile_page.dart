@@ -17,7 +17,11 @@ class DoctorProfilePage extends StatefulWidget {
   final DoctorModel doctor;
   final String? localizedSpecialty;
 
-  const DoctorProfilePage({super.key, required this.doctor, this.localizedSpecialty});
+  const DoctorProfilePage({
+    super.key,
+    required this.doctor,
+    this.localizedSpecialty,
+  });
 
   @override
   State<DoctorProfilePage> createState() => _DoctorProfilePageState();
@@ -40,10 +44,13 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   Future<void> _fetchSpecialty() async {
     final specializedList = await SpecializedCache.getData();
     if (!mounted) return;
-    
+
     final locale = Localizations.localeOf(context).languageCode;
-    final String targetId = widget.doctor.specialty.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
-    
+    final String targetId = widget.doctor.specialty.toLowerCase().replaceAll(
+      RegExp(r'[^a-z0-9]'),
+      '',
+    );
+
     for (final item in specializedList) {
       final itemId = item.id.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
       if (itemId == targetId) {
@@ -63,14 +70,22 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   String _getLocalizedDay(BuildContext context, String dayKey) {
     final key = dayKey.trim().toLowerCase();
     switch (key) {
-      case 'monday': return AppLocalizations.of(context)!.monday;
-      case 'tuesday': return AppLocalizations.of(context)!.tuesday;
-      case 'wednesday': return AppLocalizations.of(context)!.wednesday;
-      case 'thursday': return AppLocalizations.of(context)!.thursday;
-      case 'friday': return AppLocalizations.of(context)!.friday;
-      case 'saturday': return AppLocalizations.of(context)!.saturday;
-      case 'sunday': return AppLocalizations.of(context)!.sunday;
-      default: return dayKey;
+      case 'monday':
+        return AppLocalizations.of(context)!.monday;
+      case 'tuesday':
+        return AppLocalizations.of(context)!.tuesday;
+      case 'wednesday':
+        return AppLocalizations.of(context)!.wednesday;
+      case 'thursday':
+        return AppLocalizations.of(context)!.thursday;
+      case 'friday':
+        return AppLocalizations.of(context)!.friday;
+      case 'saturday':
+        return AppLocalizations.of(context)!.saturday;
+      case 'sunday':
+        return AppLocalizations.of(context)!.sunday;
+      default:
+        return dayKey;
     }
   }
 
@@ -93,28 +108,34 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   String _getDoctorDescription(BuildContext context) {
     final doctor = widget.doctor;
     final lang = Localizations.localeOf(context).languageCode;
-    if (lang == 'ar' && doctor.descriptionAr.isNotEmpty) return doctor.descriptionAr;
-    if (lang == 'he' && doctor.descriptionHe.isNotEmpty) return doctor.descriptionHe;
+    if (lang == 'ar' && doctor.descriptionAr.isNotEmpty)
+      return doctor.descriptionAr;
+    if (lang == 'he' && doctor.descriptionHe.isNotEmpty)
+      return doctor.descriptionHe;
     return doctor.descriptionEn;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.scaffoldBackground,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.primary, size: 20),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
           AppLocalizations.of(context)!.doctorProfile,
-          style: const TextStyle(
-            color: AppColors.primary,
+          style: TextStyle(
+            color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -134,12 +155,13 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               const Divider(color: Color(0xFFE8F0EC), thickness: 1.5),
               const SizedBox(height: 24),
               _buildAvailabilitySection(),
-              const SizedBox(height: 40),
+              const SizedBox(height: 32),
+              _buildBottomBar(),
+              const SizedBox(height: 20),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomBar(),
     );
   }
 
@@ -168,8 +190,8 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               child: SizedBox(
                 width: 110,
                 height: 110,
-                child: CachedImageWidget(imageUrl: 
-                  doctor.image,
+                child: CachedImageWidget(
+                  imageUrl: doctor.image,
                   fit: BoxFit.cover,
                   errorBuilder: (_, __, ___) => Image.asset(
                     'assets/images/common/Doctor_avatar.jpg',
@@ -185,11 +207,11 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 right: 8,
                 child: Container(
                   padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
+                  decoration: BoxDecoration(
+                    color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.check, color: Colors.white, size: 16),
+                  child: Icon(Icons.check, color: Colors.white, size: 16),
                 ),
               ),
           ],
@@ -200,21 +222,23 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
         Text(
           _getDoctorName(context),
           textAlign: TextAlign.center,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w900,
-            color: AppColors.primary,
+            color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
           ),
         ),
         const SizedBox(height: 6),
 
         // Specialty
         Text(
-          _getDoctorTitle(context).isNotEmpty ? _getDoctorTitle(context) : (_resolvedSpecialty ?? widget.doctor.specialty),
+          _getDoctorTitle(context).isNotEmpty
+              ? _getDoctorTitle(context)
+              : (_resolvedSpecialty ?? widget.doctor.specialty),
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,
-            color: AppColors.textSecondary.withOpacity(0.8),
+            color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withOpacity(0.8)),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -224,37 +248,19 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.work_outline, color: AppColors.primary, size: 18),
+            Icon(Icons.work_outline, color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary), size: 18),
             const SizedBox(width: 6),
             Text(
               '${doctor.yearsExperience} ${AppLocalizations.of(context)!.yearsExp}',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
-                color: AppColors.primary,
+                color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
               ),
             ),
           ],
         ),
-        if (doctor.reviewsCount > 0) ...[
-          const SizedBox(height: 8),
-          // Rating
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.star_rounded, color: Colors.amber, size: 20),
-              const SizedBox(width: 4),
-              Text(
-                '${doctor.ratingAverage.toStringAsFixed(1)} (${doctor.reviewsCount})',
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textSecondary,
-                ),
-              ),
-            ],
-          ),
-        ],
+
       ],
     );
   }
@@ -275,15 +281,19 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 color: AppColors.primary.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.person_outline, color: AppColors.primary, size: 20),
+              child: Icon(
+                Icons.person_outline,
+                color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                size: 20,
+              ),
             ),
             const SizedBox(width: 12),
             Text(
               AppLocalizations.of(context)!.about,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
-                color: AppColors.primary,
+                color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
               ),
             ),
           ],
@@ -293,15 +303,21 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
           padding: const EdgeInsets.only(left: 4),
           child: AnimatedCrossFade(
             duration: const Duration(milliseconds: 220),
-            crossFadeState: _aboutExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+            crossFadeState: _aboutExpanded
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
             firstChild: Text(
-              about.isEmpty ? AppLocalizations.of(context)!.noDescriptionAvailable : about,
+              about.isEmpty
+                  ? AppLocalizations.of(context)!.noDescriptionAvailable
+                  : about,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: _bodyStyle(),
             ),
             secondChild: Text(
-              about.isEmpty ? AppLocalizations.of(context)!.noDescriptionAvailable : about,
+              about.isEmpty
+                  ? AppLocalizations.of(context)!.noDescriptionAvailable
+                  : about,
               style: _bodyStyle(),
             ),
           ),
@@ -313,13 +329,15 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               onPressed: () => setState(() => _aboutExpanded = !_aboutExpanded),
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.only(top: 4, left: 4, right: 0),
-                foregroundColor: AppColors.primary,
+                foregroundColor: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               child: Text(
-                _aboutExpanded ? AppLocalizations.of(context)!.showLess : AppLocalizations.of(context)!.readMore,
-                style: const TextStyle(
+                _aboutExpanded
+                    ? AppLocalizations.of(context)!.showLess
+                    : AppLocalizations.of(context)!.readMore,
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w800,
                 ),
@@ -346,35 +364,49 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 color: AppColors.primary.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.calendar_month_outlined, color: AppColors.primary, size: 20),
+              child: Icon(
+                Icons.calendar_month_outlined,
+                color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                size: 20,
+              ),
             ),
             const SizedBox(width: 12),
             Text(
               AppLocalizations.of(context)!.availableDays,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
-                color: AppColors.primary,
+                color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
               ),
             ),
           ],
         ),
         const SizedBox(height: 16),
         if (doctor.availabilityDay.isEmpty)
-          Text(AppLocalizations.of(context)!.noAvailabilityProvided, style: _bodyStyle())
+          Text(
+            AppLocalizations.of(context)!.noAvailabilityProvided,
+            style: _bodyStyle(),
+          )
         else
           Column(
             children: doctor.availabilityDay.entries.map((e) {
               return Container(
                 margin: const EdgeInsets.only(bottom: 12),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.primary.withOpacity(0.04), // Very light tint
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.event_note_outlined, color: AppColors.primary, size: 24),
+                    Icon(
+                      Icons.event_note_outlined,
+                      color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                      size: 24,
+                    ),
                     const SizedBox(width: 16),
                     Expanded(
                       child: Column(
@@ -382,10 +414,10 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                         children: [
                           Text(
                             _getLocalizedDay(context, e.key),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
+                              color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -393,14 +425,18 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                             e.value.toString(),
                             style: TextStyle(
                               fontSize: 13,
-                              color: AppColors.textSecondary.withOpacity(0.7),
+                              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white60 : AppColors.textSecondary.withOpacity(0.7)),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, color: AppColors.textSecondary.withOpacity(0.5), size: 16),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: (Theme.of(context).brightness == Brightness.dark ? Colors.white54 : AppColors.textSecondary.withOpacity(0.5)),
+                      size: 16,
+                    ),
                   ],
                 ),
               );
@@ -410,14 +446,11 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
     );
   }
 
-  // ===================== BOTTOM BAR (Two Buttons) =====================
+  // ===================== BUTTONS (Two Buttons) =====================
 
   Widget _buildBottomBar() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(24, 16, 24, 32), // Extra padding for safe area
-      decoration: const BoxDecoration(
-        color: Colors.transparent,
-      ),
+      padding: const EdgeInsets.only(bottom: 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -429,17 +462,17 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               onPressed: () {
                 BookingHelper.onBookNowClicked(context, widget.doctor);
               },
-              icon: const Icon(Icons.calendar_today_outlined, size: 18),
+              icon: Icon(Icons.calendar_today_outlined, size: 18),
               label: Text(
                 AppLocalizations.of(context)!.bookAppointment,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               style: ElevatedButton.styleFrom(
                 elevation: 0,
-                backgroundColor: AppColors.primary,
+                backgroundColor: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
                 foregroundColor: AppColors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(999), // Fully rounded
@@ -467,17 +500,17 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 );
                 Get.to(() => PatientChatScreen(doctor: uiDoctor));
               },
-              icon: const Icon(Icons.chat_bubble_outline, size: 18),
+              icon: Icon(Icons.chat_bubble_outline, size: 18),
               label: Text(
                 AppLocalizations.of(context)!.chatMessage,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: AppColors.primary, width: 1.5),
-                foregroundColor: AppColors.primary,
+                side: BorderSide(color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary), width: 1.5),
+                foregroundColor: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(999), // Fully rounded
                 ),
@@ -492,10 +525,15 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   // ===================== STYLES =====================
 
   TextStyle _bodyStyle() => TextStyle(
-        fontSize: 14,
-        height: 1.6,
-        color: AppColors.textSecondary.withOpacity(0.9),
-        fontWeight: FontWeight.w500,
-      );
+    fontSize: 14,
+    height: 1.6,
+    color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withOpacity(0.9)),
+    fontWeight: FontWeight.w500,
+  );
 }
+
+
+
+
+
 

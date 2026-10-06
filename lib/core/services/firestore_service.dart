@@ -288,12 +288,22 @@ class FirestoreService {
       titleEn: data['title_en'] ?? data['title'] ?? '',
       titleAr: data['title_ar'] ?? data['title'] ?? '',
       image: data['image'] ?? '',
-      itemsEn: (data['descriptions_en'] as List?)?.map((e) => e.toString()).toList() ??
-          (data['items'] as List?)?.map((e) => e.toString()).toList() ?? [],
-      itemsAr: (data['descriptions_ar'] as List?)?.map((e) => e.toString()).toList() ??
-          (data['items'] as List?)?.map((e) => e.toString()).toList() ?? [],
-      buttonTextEn: data['buttonText_en'] ?? data['buttonText'] ?? 'View Services',
-      buttonTextAr: data['buttonText_ar'] ?? data['buttonText'] ?? 'عرض الخدمات',
+      itemsEn:
+          (data['descriptions_en'] as List?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          (data['items'] as List?)?.map((e) => e.toString()).toList() ??
+          [],
+      itemsAr:
+          (data['descriptions_ar'] as List?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          (data['items'] as List?)?.map((e) => e.toString()).toList() ??
+          [],
+      buttonTextEn:
+          data['buttonText_en'] ?? data['buttonText'] ?? 'View Services',
+      buttonTextAr:
+          data['buttonText_ar'] ?? data['buttonText'] ?? 'عرض الخدمات',
       price: (data['price'] ?? 0.0).toDouble(),
       isActive: data['isActive'] ?? true,
     );
@@ -655,18 +665,22 @@ class FirestoreService {
         titleEn: data['title_en'] ?? data['title'] ?? '',
         titleAr: data['title_ar'] ?? data['title'] ?? '',
         image: data['image'] ?? '',
-        itemsEn: (data['descriptions_en'] as List?)
+        itemsEn:
+            (data['descriptions_en'] as List?)
                 ?.map((e) => e.toString())
                 .toList() ??
             (data['items'] as List?)?.map((e) => e.toString()).toList() ??
             [],
-        itemsAr: (data['descriptions_ar'] as List?)
+        itemsAr:
+            (data['descriptions_ar'] as List?)
                 ?.map((e) => e.toString())
                 .toList() ??
             (data['items'] as List?)?.map((e) => e.toString()).toList() ??
             [],
-        buttonTextEn: data['buttonText_en'] ?? data['buttonText'] ?? 'View Services',
-        buttonTextAr: data['buttonText_ar'] ?? data['buttonText'] ?? 'عرض الخدمات',
+        buttonTextEn:
+            data['buttonText_en'] ?? data['buttonText'] ?? 'View Services',
+        buttonTextAr:
+            data['buttonText_ar'] ?? data['buttonText'] ?? 'عرض الخدمات',
         price: (data['price'] ?? 0.0).toDouble(),
         isActive: data['isActive'] ?? true,
         availabilityDay: (() {

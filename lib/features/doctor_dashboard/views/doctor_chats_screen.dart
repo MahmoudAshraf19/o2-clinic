@@ -18,10 +18,10 @@ class DoctorChatsScreen extends StatelessWidget {
     final controller = Get.put(DoctorChatsListController(DoctorChatService()));
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Colors.transparent,
         title: Text(
           AppLocalizations.of(context)!.doctorChats,
@@ -49,21 +49,29 @@ class DoctorChatsScreen extends StatelessWidget {
                 if (index == 1) {
                   return _buildSupportChatTile(context);
                 }
-                
+
                 final room = controller.chatRooms[index - 2];
                 return FutureBuilder<DocumentSnapshot>(
-                  future: FirebaseFirestore.instance.collection('users').doc(room.customerId).get(),
+                  future: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(room.customerId)
+                      .get(),
                   builder: (context, snapshot) {
-                    String displayName = room.customerName.isNotEmpty ? room.customerName : 'Patient';
+                    String displayName = room.customerName.isNotEmpty
+                        ? room.customerName
+                        : 'Patient';
                     String displayImage = room.customerProfileImage;
 
                     if (snapshot.hasData && snapshot.data!.exists) {
-                      final data = snapshot.data!.data() as Map<String, dynamic>?;
+                      final data =
+                          snapshot.data!.data() as Map<String, dynamic>?;
                       if (data != null) {
-                        if (data['name'] != null && data['name'].toString().isNotEmpty) {
+                        if (data['name'] != null &&
+                            data['name'].toString().isNotEmpty) {
                           displayName = data['name'].toString();
                         }
-                        if (data['image'] != null && data['image'].toString().isNotEmpty) {
+                        if (data['image'] != null &&
+                            data['image'].toString().isNotEmpty) {
                           displayImage = data['image'].toString();
                         }
                       }
@@ -71,7 +79,9 @@ class DoctorChatsScreen extends StatelessWidget {
 
                     return SupportChatTile(
                       title: displayName,
-                      avatar: displayImage.isNotEmpty ? NetworkImage(displayImage) : null,
+                      avatar: displayImage.isNotEmpty
+                          ? NetworkImage(displayImage)
+                          : null,
                       showOnlineIndicator: false,
                       lastMessage: room.displayLastMessage,
                       lastMessageTime: _formatTime(room.updatedAt),
@@ -101,9 +111,12 @@ class DoctorChatsScreen extends StatelessWidget {
   }
 
   String _formatTime(DateTime time) {
-    final hour = time.hour > 12 ? time.hour - 12 : (time.hour == 0 ? 12 : time.hour);
+    final hour = time.hour > 12
+        ? time.hour - 12
+        : (time.hour == 0 ? 12 : time.hour);
     final minute = time.minute.toString().padLeft(2, '0');
     final period = time.hour >= 12 ? 'PM' : 'AM';
     return '$hour:$minute $period';
   }
 }
+

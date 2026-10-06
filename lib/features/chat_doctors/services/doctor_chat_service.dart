@@ -27,8 +27,11 @@ class DoctorChatService {
         .where('doctorId', isEqualTo: doctorId)
         .orderBy('updatedAt', descending: true)
         .snapshots()
-        .map((snapshot) =>
-            snapshot.docs.map((doc) => DoctorChatRoom.fromDoc(doc.id, doc.data())).toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => DoctorChatRoom.fromDoc(doc.id, doc.data()))
+              .toList(),
+        );
   }
 
   Stream<List<DoctorChatRoom>> watchPatientChatRooms(String patientId) {
@@ -37,8 +40,11 @@ class DoctorChatService {
         .where('customerId', isEqualTo: patientId)
         .orderBy('updatedAt', descending: true)
         .snapshots()
-        .map((snapshot) =>
-            snapshot.docs.map((doc) => DoctorChatRoom.fromDoc(doc.id, doc.data())).toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => DoctorChatRoom.fromDoc(doc.id, doc.data()))
+              .toList(),
+        );
   }
 
   Stream<List<DoctorChatMessage>> watchMessages(String roomId) {
@@ -48,8 +54,11 @@ class DoctorChatService {
         .collection('thread')
         .orderBy('createdAt', descending: false)
         .snapshots(includeMetadataChanges: true)
-        .map((snapshot) =>
-            snapshot.docs.map((doc) => DoctorChatMessage.fromMap(doc.data())).toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => DoctorChatMessage.fromMap(doc.data()))
+              .toList(),
+        );
   }
 
   Future<void> _ensureRoomExists({
@@ -65,7 +74,7 @@ class DoctorChatService {
     required String lastSenderId,
   }) async {
     final docRef = _db.collection('chat_doctors').doc(roomId);
-    
+
     // We use set with merge: true to avoid overwriting creation dates if it exists
     await docRef.set({
       'customerId': patientId,
@@ -164,9 +173,15 @@ class DoctorChatService {
   }) async {
     final roomId = _getChatRoomId(patientId, doctorId);
     final msgId = _uuid.v4();
-    final ext = p.extension(localPath).isNotEmpty ? p.extension(localPath) : '.bin';
+    final ext = p.extension(localPath).isNotEmpty
+        ? p.extension(localPath)
+        : '.bin';
     final name = fileName ?? '${DateTime.now().millisecondsSinceEpoch}$ext';
-    final storageRef = _storage.ref().child('chat_doctors').child(roomId).child(name);
+    final storageRef = _storage
+        .ref()
+        .child('chat_doctors')
+        .child(roomId)
+        .child(name);
 
     UploadTask uploadTask;
     if (kIsWeb && bytes != null) {

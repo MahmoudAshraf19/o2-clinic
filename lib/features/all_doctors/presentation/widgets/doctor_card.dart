@@ -56,15 +56,9 @@ class DoctorCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(28),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 24,
-              offset: const Offset(0, 8),
-            ),
-          ],
+          border: Border.all(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1)),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,9 +68,9 @@ class DoctorCard extends StatelessWidget {
               child: Container(
                 width: 96,
                 height: 96,
-                color: AppColors.surfaceContainer,
-                child: CachedImageWidget(imageUrl: 
-                  doctor.image,
+                color: Theme.of(context).brightness == Brightness.dark ? Colors.transparent : AppColors.surfaceContainer,
+                child: CachedImageWidget(
+                  imageUrl: doctor.image,
                   fit: BoxFit.cover,
                   errorBuilder: (_, __, ___) =>
                       const Icon(Icons.person, size: 44, color: AppColors.grey),
@@ -100,11 +94,11 @@ class DoctorCard extends StatelessWidget {
                               _getDoctorName(context),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontFamily: AppFonts.poppins,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
-                                color: AppColors.textPrimary,
+                                color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -114,7 +108,7 @@ class DoctorCard extends StatelessWidget {
                                   : (localizedSpecialty ?? doctor.specialty),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontFamily: AppFonts.inter,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
@@ -133,18 +127,18 @@ class DoctorCard extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceContainer.withOpacity(0.45),
+                      color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF2A3A39) : AppColors.surfaceContainer.withOpacity(0.45),
                       borderRadius: BorderRadius.circular(999),
                     ),
                     child: Text(
                       '${doctor.yearsExperience} ${AppLocalizations.of(context)!.years}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: AppFonts.inter,
                         fontSize: 11.5,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.textSecondary,
+                        color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary),
                       ),
                     ),
                   ),
@@ -155,13 +149,9 @@ class DoctorCard extends StatelessWidget {
                         child: OutlinedButton(
                           onPressed: onViewProfile,
                           style: OutlinedButton.styleFrom(
-                            side: const BorderSide(
-                              color: AppColors.primary,
-                            ),
+                            side: const BorderSide(color: AppColors.primary),
                             foregroundColor: AppColors.primary,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 11,
-                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 11),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(999),
                             ),
@@ -200,7 +190,7 @@ class DoctorCard extends StatelessWidget {
                             AppLocalizations.of(context)!.chatMessage,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: AppFonts.poppins,
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -228,4 +218,5 @@ class DoctorCard extends StatelessWidget {
     );
   }
 }
+
 

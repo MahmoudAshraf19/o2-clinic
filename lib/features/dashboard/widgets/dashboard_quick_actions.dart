@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_fonts.dart';
@@ -51,7 +52,7 @@ class _QuickActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.cardBackground,
+      color: Theme.of(context).cardColor,
       borderRadius: BorderRadius.circular(28),
       child: InkWell(
         borderRadius: BorderRadius.circular(28),
@@ -72,7 +73,7 @@ class _QuickActionCard extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.cardBackground,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(28),
             border: Border.all(color: AppColors.border.withValues(alpha: 0.22)),
             boxShadow: [
@@ -90,10 +91,13 @@ class _QuickActionCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Image.asset(
+                    padding: const EdgeInsets.all(16.0),
+                    child: SvgPicture.asset(
                       data.imagePath,
                       fit: BoxFit.contain,
+                      colorFilter: Theme.of(context).brightness == Brightness.dark
+                          ? const ColorFilter.mode(Colors.white, BlendMode.srcIn)
+                          : const ColorFilter.mode(Color(0xFF0F766E), BlendMode.srcIn),
                     ),
                   ),
                 ),
@@ -103,8 +107,7 @@ class _QuickActionCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Color(0xFF181C1C),
+                  style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181C1C),
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
                     height: 1.12,
@@ -120,3 +123,5 @@ class _QuickActionCard extends StatelessWidget {
     );
   }
 }
+
+

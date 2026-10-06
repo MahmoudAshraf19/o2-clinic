@@ -15,7 +15,7 @@ class DoctorProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -31,9 +31,15 @@ class DoctorProfileScreen extends StatelessWidget {
                         ? Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(flex: 1, child: _LeftSection(doctor: doctor)),
+                              Expanded(
+                                flex: 1,
+                                child: _LeftSection(doctor: doctor),
+                              ),
                               const SizedBox(width: 20),
-                              Expanded(flex: 2, child: _RightSection(doctor: doctor)),
+                              Expanded(
+                                flex: 2,
+                                child: _RightSection(doctor: doctor),
+                              ),
                             ],
                           )
                         : Column(
@@ -61,24 +67,22 @@ class _AppBar extends StatelessWidget {
       height: 70,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: AppColors.white.withValues(alpha: .95),
-        border: Border(
-          bottom: BorderSide(color: AppColors.border),
-        ),
+        color: (Theme.of(context).brightness == Brightness.dark ? Theme.of(context).scaffoldBackgroundColor : AppColors.white.withValues(alpha: .95)),
+        border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: AppColors.primary,
+            color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
             onPressed: () => Navigator.pop(context),
           ),
           Text(
             AppLocalizations.of(context)!.doctorProfile,
-            style: AppTextStyles.textTheme.titleMedium!.copyWith(
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),
             ),
           ),
           const SizedBox(width: 48), // Balance the back button
@@ -124,13 +128,10 @@ class _MessageButton extends StatelessWidget {
         icon: const Icon(Icons.chat_bubble_rounded),
         label: Text(
           AppLocalizations.of(context)!.chatMessage,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
+          backgroundColor: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -150,7 +151,7 @@ class _ProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: _cardDecoration(),
+      decoration: _cardDecoration(context),
       child: Column(
         children: [
           Container(
@@ -173,9 +174,9 @@ class _ProfileCard extends StatelessWidget {
 
           Text(
             doctor.name,
-            style: AppTextStyles.textTheme.titleLarge!.copyWith(
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),
             ),
           ),
 
@@ -183,8 +184,8 @@ class _ProfileCard extends StatelessWidget {
 
           Text(
             doctor.title,
-            style: AppTextStyles.textTheme.bodyLarge!.copyWith(
-              color: AppColors.primary,
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -194,12 +195,11 @@ class _ProfileCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.location_on,
-                  size: 18, color: AppColors.textSecondary),
+              Icon(Icons.location_on, size: 18, color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary)),
               const SizedBox(width: 6),
               Text(
                 AppLocalizations.of(context)!.cityMedicalCenter,
-                style: AppTextStyles.textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),
@@ -217,7 +217,7 @@ class _StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: _cardDecoration(),
+      decoration: _cardDecoration(context),
       child: Row(
         children: [
           _StatItem("15+", "Years Exp."),
@@ -250,8 +250,8 @@ class _StatItem extends StatelessWidget {
               children: [
                 Text(
                   value,
-                  style: AppTextStyles.textTheme.titleLarge!.copyWith(
-                    color: AppColors.primary,
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -260,10 +260,7 @@ class _StatItem extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 4),
-            Text(
-              label,
-              style: AppTextStyles.textTheme.bodyMedium,
-            ),
+            Text(label, style: Theme.of(context).textTheme.bodyMedium),
           ],
         ),
       ),
@@ -274,11 +271,7 @@ class _StatItem extends StatelessWidget {
 class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 1,
-      height: 60,
-      color: AppColors.outlineVariant,
-    );
+    return Container(width: 1, height: 60, color: AppColors.outlineVariant);
   }
 }
 
@@ -309,21 +302,21 @@ class _AboutCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: _cardDecoration(),
+      decoration: _cardDecoration(context),
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             AppLocalizations.of(context)!.about,
-            style: AppTextStyles.textTheme.titleLarge!.copyWith(
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(height: 10),
           Text(
             "Dr. ${doctor.name.split(' ').last} is a specialist in ${doctor.title}.",
-            style: AppTextStyles.textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],
       ),
@@ -335,14 +328,14 @@ class _Specializations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: _cardDecoration(),
+      decoration: _cardDecoration(context),
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             AppLocalizations.of(context)!.specializations,
-            style: AppTextStyles.textTheme.titleLarge!.copyWith(
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -358,7 +351,7 @@ class _Specializations extends StatelessWidget {
               _SpecItem(Icons.health_and_safety, "COPD"),
               _SpecItem(Icons.bed, "Sleep"),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -375,7 +368,7 @@ class _SpecItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainer,
+        color: (Theme.of(context).brightness == Brightness.dark ? Colors.transparent : AppColors.surfaceContainer),
         borderRadius: BorderRadius.circular(16),
       ),
       padding: const EdgeInsets.all(12),
@@ -386,7 +379,7 @@ class _SpecItem extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             title,
-            style: AppTextStyles.textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
         ],
@@ -399,7 +392,7 @@ class _Credentials extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: _cardDecoration(),
+      decoration: _cardDecoration(context),
       padding: const EdgeInsets.all(20),
       child: Column(
         children: const [
@@ -428,27 +421,31 @@ class _CredentialItem extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: AppTextStyles.textTheme.bodyLarge),
-            Text(subtitle, style: AppTextStyles.textTheme.bodyMedium),
+            Text(title, style: Theme.of(context).textTheme.bodyLarge),
+            Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),
           ],
-        )
+        ),
       ],
     );
   }
 }
 
-
-BoxDecoration _cardDecoration() {
+BoxDecoration _cardDecoration(BuildContext context) {
   return BoxDecoration(
-    color: AppColors.white,
+    color: Theme.of(context).cardColor,
     borderRadius: BorderRadius.circular(24),
     border: Border.all(color: AppColors.border),
     boxShadow: [
       BoxShadow(
-        color: AppColors.primary.withValues(alpha: 0.06),
+        color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA).withValues(alpha: 0.1) : AppColors.primary.withValues(alpha: 0.06)),
         blurRadius: 30,
         offset: const Offset(0, 10),
-      )
+      ),
     ],
   );
 }
+
+
+
+
+

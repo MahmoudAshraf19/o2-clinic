@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:o2_clinic/l10n/app_localizations.dart';
+import '../../../core/theme/app_colors.dart';
 import '../controllers/splash_controller.dart';
-import '../widgets/splash_background.dart';
-import '../widgets/splash_logo.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -12,24 +12,60 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // The controller is registered through SplashBinding.
     Get.find<SplashController>();
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
+        fit: StackFit.expand,
         children: [
-          const SplashBackground(),
+          // Bottom image with fade-in
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 0.0, end: 1.0),
+              duration: const Duration(milliseconds: 800),
+              builder: (context, value, child) {
+                return Opacity(
+                  opacity: value,
+                  child: child,
+                );
+              },
+              child: Image.asset(
+                'assets/images/onboarding/splash.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          
+          // Center content (Logo + Text)
           SafeArea(
             child: Center(
               child: TweenAnimationBuilder<double>(
-                tween: Tween<double>(begin: 0.85, end: 1.0),
-                duration: const Duration(milliseconds: 700),
+                tween: Tween<double>(begin: 0.0, end: 1.0),
+                duration: const Duration(milliseconds: 1000),
                 curve: Curves.easeOutCubic,
                 builder: (context, value, child) {
                   return Opacity(
                     opacity: value,
-                    child: Transform.scale(scale: value, child: child),
+                    // scale goes from 0.85 to 1.0
+                    child: Transform.scale(scale: 0.85 + (value * 0.15), child: child),
                   );
                 },
-                child: const SplashLogo(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      'assets/images/logos/O₂_Clinic_Logo_without_background.png',
+                      width: 220,
+                    ),
+
+                    // Push content up slightly to match screenshot
+                    const SizedBox(height: 100),
+                  ],
+                ),
               ),
             ),
           ),
@@ -38,3 +74,4 @@ class SplashScreen extends StatelessWidget {
     );
   }
 }
+

@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../core/routes/app_routes.dart';
 import '../models/onboarding_slide_model.dart';
@@ -17,60 +16,53 @@ class OnboardingController extends GetxController {
   final RxInt currentIndex = 0.obs;
   final RxBool isLoading = true.obs;
 
-  StreamSubscription<List<OnboardingSlideModel>>? _subscription;
-
   @override
   void onInit() {
     super.onInit();
-    _listenToSlides();
+    _loadStaticSlides();
   }
 
-  void _listenToSlides() {
-    print('🔄 ONBOARDING: Starting to listen to slides from Firestore...');
-    bool hasReceivedData = false;
-    
-    _subscription = service.watchSlides().listen(
-      (data) {
-        print('✅ ONBOARDING: Successfully received ${data.length} slides from Firestore');
-        if (data.isNotEmpty) {
-          for (int i = 0; i < data.length; i++) {
-            print('   📄 Slide ${i + 1}: ${data[i].title}');
-          }
-        }
-        hasReceivedData = true;
-        slides.assignAll(data);
+  void _loadStaticSlides() {
+    // Note: We need a context to access translations. Since GetX controllers
+    // don't have context in onInit reliably, we can initialize them when the view is built
+    // or just use Get.context! if available. But since we need translations,
+    // let's just initialize them lazily in a getter or passing context.
+    // For now, we will wait until the next frame to safely access Get.context.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (Get.context != null) {
+        final l10n = AppLocalizations.of(Get.context!)!;
+        slides.assignAll([
+          OnboardingSlideModel(
+            id: '1',
+            title: l10n.onboarding1Title,
+            description: l10n.onboarding1Desc,
+            imageUrl: 'assets/images/onboarding/onboarding1.png',
+            order: 1,
+            isActive: true,
+          ),
+          // We can add more slides here if needed, but for now we have slide 1.
+          // To make the dots work as in the screenshot, I'll add placeholder slides
+          // or just 3 identical slides until the user provides the rest.
+          OnboardingSlideModel(
+            id: '2',
+            title: 'Second Screen',
+            description: 'This is the second screen.',
+            imageUrl: 'assets/images/onboarding/onboarding1.png',
+            order: 2,
+            isActive: true,
+          ),
+          OnboardingSlideModel(
+            id: '3',
+            title: 'Third Screen',
+            description: 'This is the third screen.',
+            imageUrl: 'assets/images/onboarding/onboarding1.png',
+            order: 3,
+            isActive: true,
+          ),
+        ]);
         isLoading.value = false;
-      },
-      onError: (error) {
-        print('❌ ONBOARDING: Stream error - $error');
-        if (!hasReceivedData) {
-          print('🔄 ONBOARDING: Trying fallback method...');
-          _fetchSlidesAsFallback();
-        }
-      },
-    );
-
-    // Fallback: if no data received within 3 seconds, try direct fetch
-    Future.delayed(const Duration(seconds: 3), () {
-      if (!hasReceivedData && isLoading.value) {
-        print('⏰ ONBOARDING: Stream timeout (3 seconds), trying direct fetch...');
-        _fetchSlidesAsFallback();
       }
     });
-  }
-
-  void _fetchSlidesAsFallback() async {
-    print('🔄 ONBOARDING: Fetching slides directly (fallback method)...');
-    try {
-      final data = await service.getSlides();
-      print('✅ ONBOARDING: Fallback successful - got ${data.length} slides');
-      slides.assignAll(data);
-      isLoading.value = false;
-    } catch (e) {
-      print('❌ ONBOARDING: Fallback fetch failed - $e');
-      slides.clear();
-      isLoading.value = false;
-    }
   }
 
   bool get isLastPage =>
@@ -99,12 +91,11 @@ class OnboardingController extends GetxController {
   }
 
   void finishOnboarding() {
-    Get.offAllNamed(AppRoutes.welcome);
+    Get.offAllNamed(AppRoutes.login);
   }
 
   @override
   void onClose() {
-    _subscription?.cancel();
     pageController.dispose();
     super.onClose();
   }

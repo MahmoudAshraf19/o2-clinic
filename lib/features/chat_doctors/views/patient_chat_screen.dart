@@ -25,17 +25,23 @@ class PatientChatScreen extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Colors.transparent,
         titleSpacing: 0,
         title: GestureDetector(
           onTap: () async {
-            Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
+            Get.dialog(
+              const Center(child: CircularProgressIndicator()),
+              barrierDismissible: false,
+            );
             try {
-              final doc = await FirebaseFirestore.instance.collection('Doctors').doc(doctor.id).get();
+              final doc = await FirebaseFirestore.instance
+                  .collection('Doctors')
+                  .doc(doctor.id)
+                  .get();
               Get.back();
               if (doc.exists && doc.data() != null) {
                 final fsDoctor = fs_doctor.DoctorModel.fromMap(
@@ -91,7 +97,8 @@ class PatientChatScreen extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
 
-                if (controller.messages.isEmpty && controller.uploadingItems.isEmpty) {
+                if (controller.messages.isEmpty &&
+                    controller.uploadingItems.isEmpty) {
                   return Center(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -111,14 +118,19 @@ class PatientChatScreen extends StatelessWidget {
                   controller: controller.scrollController,
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
-                  reverse: true, // we assume messages are newest first like SupportChat
-                  itemCount: controller.messages.length + 1 + controller.uploadingItems.length,
+                  reverse:
+                      true, // we assume messages are newest first like SupportChat
+                  itemCount:
+                      controller.messages.length +
+                      1 +
+                      controller.uploadingItems.length,
                   itemBuilder: (context, index) {
                     final uploadingCount = controller.uploadingItems.length;
                     final messagesCount = controller.messages.length;
 
                     if (index < uploadingCount) {
-                      final draftMsg = controller.uploadingItems[uploadingCount - 1 - index];
+                      final draftMsg =
+                          controller.uploadingItems[uploadingCount - 1 - index];
                       return Padding(
                         padding: const EdgeInsets.only(top: 14),
                         child: Opacity(
@@ -127,7 +139,9 @@ class PatientChatScreen extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             children: [
                               ChatMessageBubble(
-                                message: draftMsg.toChatMessage(controller.patientId),
+                                message: draftMsg.toChatMessage(
+                                  controller.patientId,
+                                ),
                                 agentAvatarUrl: doctor.image,
                               ),
                               const Positioned(
@@ -150,7 +164,8 @@ class PatientChatScreen extends StatelessWidget {
 
                     final msgIndex = index - uploadingCount;
                     if (msgIndex < messagesCount) {
-                      final msg = controller.messages[messagesCount - 1 - msgIndex];
+                      final msg =
+                          controller.messages[messagesCount - 1 - msgIndex];
                       return Padding(
                         padding: const EdgeInsets.only(top: 14),
                         child: ChatMessageBubble(
@@ -162,7 +177,9 @@ class PatientChatScreen extends StatelessWidget {
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 18, top: 18),
-                      child: ChatDateDivider(label: AppLocalizations.of(context)!.today ?? "Today"),
+                      child: ChatDateDivider(
+                        label: AppLocalizations.of(context)!.today ?? "Today",
+                      ),
                     );
                   },
                 );
@@ -186,3 +203,4 @@ class PatientChatScreen extends StatelessWidget {
     }
   }
 }
+

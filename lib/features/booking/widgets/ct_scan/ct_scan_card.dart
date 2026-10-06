@@ -56,7 +56,9 @@ class CTScanCard extends StatelessWidget {
                 height: 64,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: selected ? Colors.white.withValues(alpha: .2) : AppColors.surface,
+                  color: selected
+                      ? Colors.white.withValues(alpha: .2)
+                      : AppColors.surface,
                 ),
                 child: Icon(
                   card.icon,
@@ -77,10 +79,7 @@ class CTScanCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
-                        color: selected
-                            ? Colors.white
-                            : AppColors.textPrimary,
-                        
+                        color: selected ? Colors.white : AppColors.textPrimary,
                       ),
                       child: Text(card.title),
                     ),
@@ -96,7 +95,6 @@ class CTScanCard extends StatelessWidget {
                         color: selected
                             ? Colors.white.withValues(alpha: .8)
                             : AppColors.textSecondary,
-                        
                       ),
                       child: Text(
                         card.description,
@@ -116,9 +114,7 @@ class CTScanCard extends StatelessWidget {
                 width: 34,
                 height: 34,
                 decoration: BoxDecoration(
-                  color: selected
-                      ? Colors.white
-                      : AppColors.surface,
+                  color: selected ? Colors.white : AppColors.surface,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(

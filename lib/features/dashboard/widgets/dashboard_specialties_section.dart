@@ -248,7 +248,7 @@ class _InactiveSpecialtyCard extends StatelessWidget {
       width: 260,
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(28),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.22)),
         boxShadow: [
@@ -312,7 +312,7 @@ class _InactiveSpecialtyCard extends StatelessWidget {
           Text(
             model.name,
             style: TextStyle(
-              color: Color(0xFF181C1C),
+              color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181C1C),
               fontSize: 18,
               fontWeight: FontWeight.w800,
               
@@ -349,8 +349,7 @@ class _InactiveSpecialtyCard extends StatelessWidget {
                 ),
                 Text(
                   model.nextSlotLabel ?? '-',
-                  style: const TextStyle(
-                    color: Color(0xFF181C1C),
+                  style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181C1C),
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
                     
@@ -364,3 +363,5 @@ class _InactiveSpecialtyCard extends StatelessWidget {
     );
   }
 }
+
+

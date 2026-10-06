@@ -21,7 +21,7 @@ class CTScanScreen extends StatelessWidget {
     final isNarrow = size.width < 360;
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Obx(() {
         if (c.loading.value) {
           return const Center(child: CircularProgressIndicator());
@@ -104,7 +104,6 @@ class CTScanScreen extends StatelessWidget {
                                 alpha: .75,
                               ),
                               fontWeight: FontWeight.w500,
-                              
                             ),
                           ),
                         ],
@@ -123,42 +122,49 @@ class CTScanScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            _SectionHeader(
+                              title: AppLocalizations.of(
+                                context,
+                              )!.coreDiagnostics,
+                            ),
+                            const SizedBox(height: 12),
 
-                      _SectionHeader(title: AppLocalizations.of(context)!.coreDiagnostics),
-                      const SizedBox(height: 12),
+                            Obx(() {
+                              final cards = mapToCards(core);
+                              return CTScanCardColumn(
+                                cards: cards,
+                                selectedIds: c.selectedIds.toSet(),
+                                onTap: c.toggleSelection,
+                              );
+                            }),
 
-                      Obx(() {
-                        final cards = mapToCards(core);
-                        return CTScanCardColumn(
-                          cards: cards,
-                          selectedIds: c.selectedIds.toSet(),
-                          onTap: c.toggleSelection,
-                        );
-                      }),
+                            const SizedBox(height: 22),
 
-                      const SizedBox(height: 22),
+                            _SectionHeader(
+                              title: AppLocalizations.of(
+                                context,
+                              )!.specializedImaging,
+                            ),
+                            const SizedBox(height: 12),
 
-                      _SectionHeader(title: AppLocalizations.of(context)!.specializedImaging),
-                      const SizedBox(height: 12),
-
-                      Obx(() {
-                        final cards = mapToCards(specialized);
-                        return CTScanCardColumn(
-                          cards: cards,
-                          selectedIds: c.selectedIds.toSet(),
-                          onTap: c.toggleSelection,
-                        );
-                      }),
-                    ],
-                  ),
+                            Obx(() {
+                              final cards = mapToCards(specialized);
+                              return CTScanCardColumn(
+                                cards: cards,
+                                selectedIds: c.selectedIds.toSet(),
+                                onTap: c.toggleSelection,
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-        ),
-      ],
-    ),
-  );
+        );
       }),
 
       bottomNavigationBar: Obx(() {
@@ -180,7 +186,9 @@ class CTScanScreen extends StatelessWidget {
                 .fold(0.0, (sum, item) => sum + item.price);
 
             Get.to(
-              () => ImagingBookingPage(title: AppLocalizations.of(context)!.ctScan),
+              () => ImagingBookingPage(
+                title: AppLocalizations.of(context)!.ctScan,
+              ),
               arguments: {
                 "selectedCtIds": selectedIds,
                 "totalPrice": totalPrice,
@@ -202,7 +210,6 @@ class _SectionHeader extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
-        
         fontSize: 16,
         fontWeight: FontWeight.w700,
         color: AppColors.textPrimary,
@@ -260,7 +267,6 @@ class CTScanBottomBar extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       color: AppColors.grey,
                       letterSpacing: 1,
-                      
                     ),
                   ),
                   const SizedBox(height: 3),
@@ -270,7 +276,6 @@ class CTScanBottomBar extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w800,
                       color: AppColors.primary,
-                      
                     ),
                   ),
                 ],
@@ -298,7 +303,6 @@ class CTScanBottomBar extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w700,
-                          
                         ),
                       ),
                       const SizedBox(width: 8),

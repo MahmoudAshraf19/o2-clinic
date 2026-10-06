@@ -13,9 +13,12 @@ class NotificationTimeHelper {
       final l = AppLocalizations.of(context);
       if (l != null) {
         if (difference.inSeconds < 60) return l.notifTimeJustNow;
-        if (difference.inMinutes < 60) return l.notifTimeMinutesAgo(difference.inMinutes);
-        if (difference.inHours < 24) return l.notifTimeHoursAgo(difference.inHours);
-        if (difference.inDays == 1 && now.day != dateTime.day) return l.notifTimeYesterday;
+        if (difference.inMinutes < 60)
+          return l.notifTimeMinutesAgo(difference.inMinutes);
+        if (difference.inHours < 24)
+          return l.notifTimeHoursAgo(difference.inHours);
+        if (difference.inDays == 1 && now.day != dateTime.day)
+          return l.notifTimeYesterday;
         if (difference.inDays < 7) return l.notifTimeDaysAgo(difference.inDays);
       }
     }
@@ -37,7 +40,10 @@ class NotificationTimeHelper {
 
     if (context != null) {
       final l = AppLocalizations.of(context);
-      if (l != null && difference.inDays >= 1 && now.day != dateTime.day && difference.inDays < 2) {
+      if (l != null &&
+          difference.inDays >= 1 &&
+          now.day != dateTime.day &&
+          difference.inDays < 2) {
         // "Yesterday at HH:mm"
         return '${l.notifTimeYesterday} ${DateFormat('h:mm a').format(dateTime)}';
       }

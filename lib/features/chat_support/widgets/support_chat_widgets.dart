@@ -77,7 +77,9 @@ class SupportChatTile extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: AppColors.outlineVariant.withOpacity(.25)),
+            border: Border.all(
+              color: AppColors.outlineVariant.withOpacity(.25),
+            ),
           ),
           child: Row(
             children: [
@@ -86,7 +88,9 @@ class SupportChatTile extends StatelessWidget {
                   CircleAvatar(
                     radius: 28,
                     backgroundColor: AppColors.surfaceContainerHigh,
-                    backgroundImage: avatar ?? const AssetImage('assets/images/logos/logo.png'),
+                    backgroundImage:
+                        avatar ??
+                        const AssetImage('assets/images/logos/logo.png'),
                   ),
                   if (showOnlineIndicator)
                     Positioned(
@@ -118,13 +122,19 @@ class SupportChatTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      lastMessage == '__WELCOME_MESSAGE_SHORT__' ? AppLocalizations.of(context)!.welcomeToSupportShort :
-                      lastMessage == '__WELCOME_MESSAGE_FULL__' ? AppLocalizations.of(context)!.welcomeToSupportFull :
-                      lastMessage == '__ATTACHMENT_PHOTO__' ? AppLocalizations.of(context)!.photo :
-                      lastMessage == '__ATTACHMENT_VIDEO__' ? AppLocalizations.of(context)!.video :
-                      lastMessage == '__ATTACHMENT_VOICE__' ? AppLocalizations.of(context)!.voiceNote :
-                      lastMessage == '__ATTACHMENT_MESSAGE__' ? AppLocalizations.of(context)!.chatMessage :
-                      lastMessage,
+                      lastMessage == '__WELCOME_MESSAGE_SHORT__'
+                          ? AppLocalizations.of(context)!.welcomeToSupportShort
+                          : lastMessage == '__WELCOME_MESSAGE_FULL__'
+                          ? AppLocalizations.of(context)!.welcomeToSupportFull
+                          : lastMessage == '__ATTACHMENT_PHOTO__'
+                          ? AppLocalizations.of(context)!.photo
+                          : lastMessage == '__ATTACHMENT_VIDEO__'
+                          ? AppLocalizations.of(context)!.video
+                          : lastMessage == '__ATTACHMENT_VOICE__'
+                          ? AppLocalizations.of(context)!.voiceNote
+                          : lastMessage == '__ATTACHMENT_MESSAGE__'
+                          ? AppLocalizations.of(context)!.chatMessage
+                          : lastMessage,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -331,11 +341,16 @@ class ChatComposer extends StatelessWidget {
               if (controller.isCompressing.value)
                 Container(
                   margin: const EdgeInsets.only(bottom: 10),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.surfaceLowest,
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppColors.primary.withOpacity(.2)),
+                    border: Border.all(
+                      color: AppColors.primary.withOpacity(.2),
+                    ),
                   ),
                   child: Row(
                     children: [
@@ -370,87 +385,111 @@ class ChatComposer extends StatelessWidget {
                 ),
               ],
               const SizedBox(height: 10),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(28),
-                  border:
-                      Border.all(color: AppColors.outlineVariant.withOpacity(.3)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(.06),
-                      blurRadius: 25,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    _ActionCircle(
-                      icon: Icons.add_rounded,
-                      onTap: () => _showAttachmentSheet(context),
-                    ),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: TextField(
-                        controller: controller.textController,
-                        focusNode: controller.focusNode,
-                        minLines: 1,
-                        maxLines: 5,
-                        textInputAction: TextInputAction.newline,
-                        decoration: InputDecoration(
-                          hintText: AppLocalizations.of(context)!.typeAMessage,
-                          border: InputBorder.none,
-                          isCollapsed: true,
-                        ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(26),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: controller.textController,
+                              focusNode: controller.focusNode,
+                              minLines: 1,
+                              maxLines: 5,
+                              textInputAction: TextInputAction.newline,
+                              decoration: InputDecoration(
+                                hintText: AppLocalizations.of(
+                                  context,
+                                )!.typeAMessage,
+                                hintStyle: const TextStyle(
+                                  color: Color(0xFF94A3B8),
+                                  fontSize: 15,
+                                ),
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                isCollapsed: true,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.attach_file_rounded,
+                              color: Color(0xFF64748B),
+                              size: 24,
+                            ),
+                            onPressed: () => _showAttachmentSheet(context),
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 6),
-                    _ActionCircle(
-                      icon: recording ? Icons.stop_rounded : Icons.mic_rounded,
-                      color: recording ? Colors.red : null,
-                      onTap: controller.startOrStopVoiceRecording,
-                    ),
-                    const SizedBox(width: 6),
-                    Obx(() {
-                      final hasText = controller.currentText.value.trim().isNotEmpty;
-                      final hasDraft = controller.pendingAttachment.value != null;
-                      final busy = controller.isSending.value;
+                  ),
+                  const SizedBox(width: 8),
+                  Obx(() {
+                    final hasText = controller.currentText.value
+                        .trim()
+                        .isNotEmpty;
+                    final hasDraft = controller.pendingAttachment.value != null;
+                    final busy = controller.isSending.value;
 
-                      return GestureDetector(
-                        onTap: busy || (!hasText && !hasDraft)
-                            ? null
-                            : controller.sendMessage,
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 180),
-                          width: 44,
-                          height: 44,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: (hasText || hasDraft)
-                                ? AppColors.primary
-                                : AppColors.primary.withOpacity(.35),
-                          ),
-                          child: busy
-                              ? const Padding(
-                                  padding: EdgeInsets.all(11),
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2.2,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : const Icon(
-                                  Icons.send_rounded,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
+                    final isTyping = hasText || hasDraft;
+
+                    return GestureDetector(
+                      onTap: () {
+                        if (busy) return;
+                        if (isTyping) {
+                          controller.sendMessage();
+                        } else {
+                          controller.startOrStopVoiceRecording();
+                        }
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 180),
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.primary,
                         ),
-                      );
-                    }),
-                  ],
-                ),
+                        child: busy
+                            ? const Padding(
+                                padding: EdgeInsets.all(14),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Icon(
+                                isTyping
+                                    ? Icons.send_rounded
+                                    : (recording
+                                          ? Icons.stop_rounded
+                                          : Icons.mic_rounded),
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                      ),
+                    );
+                  }),
+                ],
               ),
             ],
           );
@@ -513,18 +552,29 @@ class _AgentBubble extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(14),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerHigh,
-                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(18),
+                    topRight: Radius.circular(18),
+                    bottomLeft: Radius.circular(4),
+                    bottomRight: Radius.circular(18),
+                  ),
                 ),
                 child: Text(
-                  message.text == '__WELCOME_MESSAGE_FULL__' ? AppLocalizations.of(context)!.welcomeToSupportFull :
-                  message.text == '__WELCOME_MESSAGE_SHORT__' ? AppLocalizations.of(context)!.welcomeToSupportShort :
-                  message.text,
+                  message.text == '__WELCOME_MESSAGE_FULL__'
+                      ? AppLocalizations.of(context)!.welcomeToSupportFull
+                      : message.text == '__WELCOME_MESSAGE_SHORT__'
+                      ? AppLocalizations.of(context)!.welcomeToSupportShort
+                      : message.text,
                   style: const TextStyle(
                     height: 1.5,
                     fontSize: 14,
+                    color: Color(0xFF1E293B),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -560,15 +610,20 @@ class _UserBubble extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(20),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              decoration: const BoxDecoration(
+                color: AppColors.chatUserBubble,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(18),
+                  topRight: Radius.circular(18),
+                  bottomLeft: Radius.circular(18),
+                  bottomRight: Radius.circular(4),
+                ),
               ),
               child: Text(
                 message.text,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.pureWhite,
                   height: 1.5,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -584,7 +639,11 @@ class _UserBubble extends StatelessWidget {
                   style: TextStyle(fontSize: 10, color: Colors.grey.shade600),
                 ),
                 const SizedBox(width: 4),
-                const Icon(Icons.done_all_rounded, size: 14, color: Colors.green),
+                const Icon(
+                  Icons.done_all_rounded,
+                  size: 14,
+                  color: Colors.green,
+                ),
               ],
             ),
           ],
@@ -685,8 +744,9 @@ class _MediaCard extends StatelessWidget {
         borderRadius: borderRadius,
       ),
       child: Column(
-        crossAxisAlignment:
-            isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isUser
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
         children: [
           if (message.kind == ChatMessageKind.image && attachment != null)
             _ImagePreview(url: attachment.url),
@@ -719,7 +779,11 @@ class _MediaCard extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               if (isUser)
-                const Icon(Icons.done_all_rounded, size: 14, color: Colors.green)
+                const Icon(
+                  Icons.done_all_rounded,
+                  size: 14,
+                  color: Colors.green,
+                )
               else
                 const SizedBox.shrink(),
             ],
@@ -741,8 +805,8 @@ class _ImagePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget _buildImage(BoxFit fit) {
       if (_isNetwork) {
-        return CachedImageWidget(imageUrl: 
-          url,
+        return CachedImageWidget(
+          imageUrl: url,
           fit: fit,
           errorBuilder: (_, __, ___) {
             return Container(
@@ -783,9 +847,7 @@ class _ImagePreview extends StatelessWidget {
           onTap: () => Get.dialog(
             Dialog(
               insetPadding: const EdgeInsets.all(16),
-              child: InteractiveViewer(
-                child: _buildImage(BoxFit.contain),
-              ),
+              child: InteractiveViewer(child: _buildImage(BoxFit.contain)),
             ),
           ),
           child: _buildImage(BoxFit.cover),
@@ -861,7 +923,8 @@ class _VideoViewerState extends State<_VideoViewer> {
   @override
   void initState() {
     super.initState();
-    final bool isNetwork = widget.url.startsWith('http') || widget.url.startsWith('blob:');
+    final bool isNetwork =
+        widget.url.startsWith('http') || widget.url.startsWith('blob:');
     _controller = isNetwork
         ? VideoPlayerController.networkUrl(Uri.parse(widget.url))
         : VideoPlayerController.file(File(widget.url));
@@ -952,7 +1015,8 @@ class _VoicePlayerState extends State<_VoicePlayer> {
 
   Future<void> _setup() async {
     try {
-      final bool isNetwork = widget.url.startsWith('http') || widget.url.startsWith('blob:');
+      final bool isNetwork =
+          widget.url.startsWith('http') || widget.url.startsWith('blob:');
       if (isNetwork) {
         await _player.setUrl(widget.url);
       } else {
@@ -982,7 +1046,6 @@ class _VoicePlayerState extends State<_VoicePlayer> {
         try {
           playing = (snapshot.data as dynamic)?.playing ?? false;
         } catch (_) {}
-
 
         return Container(
           padding: const EdgeInsets.all(12),
@@ -1018,7 +1081,9 @@ class _VoicePlayerState extends State<_VoicePlayer> {
                           ),
                         )
                       : Icon(
-                          playing ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                          playing
+                              ? Icons.pause_rounded
+                              : Icons.play_arrow_rounded,
                           color: Colors.white,
                           size: 28,
                         ),
@@ -1087,7 +1152,10 @@ class _AttachmentAction extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
+                    Text(
+                      title,
+                      style: const TextStyle(fontWeight: FontWeight.w800),
+                    ),
                     const SizedBox(height: 4),
                     Text(
                       subtitle,
@@ -1114,11 +1182,7 @@ class _ActionCircle extends StatelessWidget {
   final VoidCallback onTap;
   final Color? color;
 
-  const _ActionCircle({
-    required this.icon,
-    required this.onTap,
-    this.color,
-  });
+  const _ActionCircle({required this.icon, required this.onTap, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -1142,10 +1206,7 @@ class _AttachmentPreview extends StatelessWidget {
   final PendingAttachment attachment;
   final VoidCallback onRemove;
 
-  const _AttachmentPreview({
-    required this.attachment,
-    required this.onRemove,
-  });
+  const _AttachmentPreview({required this.attachment, required this.onRemove});
 
   @override
   Widget build(BuildContext context) {
@@ -1168,12 +1229,22 @@ class _AttachmentPreview extends StatelessWidget {
               height: 64,
               color: AppColors.surfaceContainerHigh,
               child: switch (attachment.kind) {
-                ChatMessageKind.image when kIsWeb =>
-                  CachedImageWidget(imageUrl: attachment.localPath, fit: BoxFit.cover),
-                ChatMessageKind.image when exists =>
-                  Image.file(File(attachment.localPath), fit: BoxFit.cover),
-                ChatMessageKind.video => const Icon(Icons.videocam_rounded, size: 30),
-                ChatMessageKind.voice => const Icon(Icons.mic_rounded, size: 30),
+                ChatMessageKind.image when kIsWeb => CachedImageWidget(
+                  imageUrl: attachment.localPath,
+                  fit: BoxFit.cover,
+                ),
+                ChatMessageKind.image when exists => Image.file(
+                  File(attachment.localPath),
+                  fit: BoxFit.cover,
+                ),
+                ChatMessageKind.video => const Icon(
+                  Icons.videocam_rounded,
+                  size: 30,
+                ),
+                ChatMessageKind.voice => const Icon(
+                  Icons.mic_rounded,
+                  size: 30,
+                ),
                 _ => const Icon(Icons.insert_drive_file_rounded),
               },
             ),
@@ -1183,18 +1254,16 @@ class _AttachmentPreview extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  switch (attachment.kind) {
-                    ChatMessageKind.image => 'Photo',
-                    ChatMessageKind.video => 'Video',
-                    ChatMessageKind.voice => 'Voice note',
-                    _ => 'Attachment',
-                  },
-                  style: const TextStyle(fontWeight: FontWeight.w800),
-                ),
+                Text(switch (attachment.kind) {
+                  ChatMessageKind.image => 'Photo',
+                  ChatMessageKind.video => 'Video',
+                  ChatMessageKind.voice => 'Voice note',
+                  _ => 'Attachment',
+                }, style: const TextStyle(fontWeight: FontWeight.w800)),
                 const SizedBox(height: 4),
                 Text(
-                  attachment.fileName ?? attachment.localPath.split(Platform.pathSeparator).last,
+                  attachment.fileName ??
+                      attachment.localPath.split(Platform.pathSeparator).last,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 12.5),
@@ -1244,7 +1313,11 @@ class _RecordingBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.fiber_manual_record_rounded, color: Colors.red, size: 16),
+          const Icon(
+            Icons.fiber_manual_record_rounded,
+            color: Colors.red,
+            size: 16,
+          ),
           const SizedBox(width: 8),
           Text(
             AppLocalizations.of(context)!.recording,
@@ -1253,10 +1326,7 @@ class _RecordingBar extends StatelessWidget {
           const SizedBox(width: 10),
           Text(duration, style: TextStyle(color: Colors.grey.shade700)),
           const Spacer(),
-          TextButton(
-            onPressed: onCancel,
-            child: const Text('Cancel'),
-          ),
+          TextButton(onPressed: onCancel, child: const Text('Cancel')),
           const SizedBox(width: 6),
           ElevatedButton(
             onPressed: onStop,

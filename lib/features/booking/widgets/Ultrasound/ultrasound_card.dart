@@ -51,7 +51,10 @@ class UltrasoundCard extends StatelessWidget {
                 tag: card.id,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(28),
-                  child: CachedImageWidget(imageUrl: card.image, fit: BoxFit.cover),
+                  child: CachedImageWidget(
+                    imageUrl: card.image,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -86,7 +89,6 @@ class UltrasoundCard extends StatelessWidget {
                       fontSize: 22,
                       fontWeight: FontWeight.w800,
                       color: Colors.white,
-                      
                     ),
                   ),
 
@@ -102,7 +104,6 @@ class UltrasoundCard extends StatelessWidget {
                       height: 1.5,
                       color: Colors.white.withValues(alpha: .92),
                       fontWeight: FontWeight.w500,
-                      
                     ),
                   ),
                 ],

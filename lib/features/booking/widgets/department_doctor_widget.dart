@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_fonts.dart';
 import '../../../core/utils/booking_helper.dart';
@@ -18,8 +19,7 @@ import '../../services_firestore/models/doctor_model.dart';
 import '../../services_firestore/models/specialized_service_model.dart';
 import '../../services_firestore/services/doctors_cache_service.dart';
 import '../../services_firestore/services/specialized_cache.dart';
-import '../../welcome/bindings/welcome_binding.dart';
-import '../../welcome/views/welcome_screen.dart';
+
 import '../presentation/pages/booking_page.dart';
 import '../views/ct_scan_screen.dart';
 
@@ -65,10 +65,10 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
   Future<void> _loadSpecialized() async {
     try {
       final data = await SpecializedCache.getData();
-      
+
       final filtered = data.where((e) => e.isEnabled).toList();
       filtered.sort((a, b) => a.order.compareTo(b.order));
-      
+
       if (mounted) {
         setState(() {
           specializedServices = filtered;
@@ -168,43 +168,41 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                 shape: BoxShape.circle,
                 color: AppColors.primary.withValues(alpha: 0.10),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.lock_rounded,
                 color: AppColors.primary,
                 size: 26,
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Text(
               AppLocalizations.of(context)!.loginRequired,
               textAlign: TextAlign.center,
               style: TextStyle(
-                
                 fontWeight: FontWeight.w900,
                 fontSize: 18,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text(
               AppLocalizations.of(context)!.youMustLogInFirst,
               textAlign: TextAlign.center,
               style: TextStyle(
-                
                 fontWeight: FontWeight.w600,
                 fontSize: 13,
                 color: AppColors.textSecondary.withValues(alpha: 0.85),
                 height: 1.35,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () => Get.back(),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.textPrimary,
+                      foregroundColor: Theme.of(context).textTheme.bodyLarge?.color,
                       side: BorderSide(
                         color: AppColors.border.withValues(alpha: 0.9),
                       ),
@@ -215,37 +213,28 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                     ),
                     child: Text(
                       AppLocalizations.of(context)!.notNow,
-                      style: TextStyle(
-                        
-                        fontWeight: FontWeight.w800,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.w800),
                     ),
                   ),
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
                       Get.back(); // close dialog
-                      Get.to(
-                        () => const WelcomeScreen(),
-                        binding: WelcomeBinding(),
-                        transition: Transition.downToUp,
-                        duration: const Duration(milliseconds: 350),
-                      );
+                      Get.toNamed(AppRoutes.login);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
-                        ),
+                      ),
                       elevation: 0,
                     ),
                     child: Text(
                       AppLocalizations.of(context)!.login,
                       style: TextStyle(
-                        
                         fontWeight: FontWeight.w900,
                         color: Colors.white,
                       ),
@@ -267,7 +256,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -297,14 +286,14 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(color: AppColors.border),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back_ios_new_rounded,
                 size: 18,
                 color: AppColors.primary,
               ),
             ),
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -319,14 +308,13 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                     height: 1,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   subtitle,
                   style: TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary.withValues(alpha: 0.75),
                     fontWeight: FontWeight.w500,
-                    
                   ),
                 ),
               ],
@@ -391,10 +379,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
       itemBuilder: (context, index) {
         final specializedService = specializedServices[index];
 
-        return _buildSpecializedTile(
-          index: index,
-          service: specializedService,
-        );
+        return _buildSpecializedTile(index: index, service: specializedService);
       },
     );
   }
@@ -410,7 +395,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
       duration: const Duration(milliseconds: 300),
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isOpen
@@ -425,8 +410,8 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
             leading: CircleAvatar(
               backgroundColor: AppColors.primary.withValues(alpha: 0.1),
               child: ClipOval(
-                child: CachedImageWidget(imageUrl: 
-                  service.image,
+                child: CachedImageWidget(
+                  imageUrl: service.image,
                   width: 40,
                   height: 40,
                   fit: BoxFit.cover,
@@ -445,13 +430,13 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
               service.getLocalizedName(Get.locale?.languageCode ?? 'en'),
               style: TextStyle(
                 fontWeight: FontWeight.w700,
-                
-                color: isOpen ? AppColors.primary : AppColors.textPrimary,
+
+                color: isOpen ? AppColors.primary : Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
             subtitle: Text(
               service.getLocalizedSubtitle(Get.locale?.languageCode ?? 'en'),
-              style: const TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: 12),
             ),
             trailing: Icon(
               isOpen ? Icons.expand_less : Icons.expand_more,
@@ -500,7 +485,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
       duration: const Duration(milliseconds: 300),
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isOpen
@@ -515,8 +500,8 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
             leading: CircleAvatar(
               backgroundColor: AppColors.primary.withValues(alpha: 0.1),
               child: ClipOval(
-                child: CachedImageWidget(imageUrl: 
-                  service.image,
+                child: CachedImageWidget(
+                  imageUrl: service.image,
                   width: 40,
                   height: 40,
                   fit: BoxFit.cover,
@@ -532,7 +517,9 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
               ),
             ),
             title: Text(service.getName('en')),
-            subtitle: Text("Available ${service.availabilityDay.length} days a week"),
+            subtitle: Text(
+              "Available ${service.availabilityDay.length} days a week",
+            ),
             trailing: Icon(
               isOpen ? Icons.expand_less : Icons.expand_more,
               color: AppColors.primary,
@@ -545,13 +532,13 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(service.getDesc('en')),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
                   if (service.id == "ct_scan")
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () => Get.to(() => CTScanScreen()),
-                        child: const Text("Book CT Scan"),
+                        child: Text("Book CT Scan"),
                       ),
                     ),
                 ],
@@ -586,7 +573,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
       duration: const Duration(milliseconds: 300),
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: ListTile(
@@ -594,8 +581,8 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
         leading: CircleAvatar(
           backgroundColor: AppColors.primary.withValues(alpha: 0.1),
           child: ClipOval(
-            child: CachedImageWidget(imageUrl: 
-              cosmetic.image,
+            child: CachedImageWidget(
+              imageUrl: cosmetic.image,
               width: 40,
               height: 40,
               fit: BoxFit.cover,
@@ -645,8 +632,8 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
           Row(
             children: [
               ClipOval(
-                child: CachedImageWidget(imageUrl: 
-                  doctor.image,
+                child: CachedImageWidget(
+                  imageUrl: doctor.image,
                   width: 56,
                   height: 56,
                   fit: BoxFit.cover,
@@ -660,19 +647,19 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                   },
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       doctorName,
-                      style: const TextStyle(fontWeight: FontWeight.w700),
+                      style: TextStyle(fontWeight: FontWeight.w700),
                     ),
-                    const SizedBox(height: 2),
+                    SizedBox(height: 2),
                     Text(
                       doctorTitle,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppColors.grey,
                       ),
@@ -682,7 +669,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             children: [
               Expanded(
@@ -692,7 +679,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                   child: Text(AppLocalizations.of(context)!.viewProfile),
                 ),
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: 10),
               Expanded(
                 child: ElevatedButton(
                   onPressed: () async {
@@ -713,4 +700,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
     );
   }
 }
+
+
+
 

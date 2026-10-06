@@ -7,7 +7,9 @@ class XRayData {
   static Map<String, List<XrayServiceModel>> servicesByCategory = {};
 
   static Future<void> loadCategories({bool forceRefresh = false}) async {
-    final catalog = await XrayDataCacheService.getCatalog(forceRefresh: forceRefresh);
+    final catalog = await XrayDataCacheService.getCatalog(
+      forceRefresh: forceRefresh,
+    );
     categories = catalog.categories;
     services = catalog.services;
     servicesByCategory = catalog.servicesByCategory;

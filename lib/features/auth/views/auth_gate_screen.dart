@@ -26,7 +26,7 @@ class _AuthGateScreenState extends State<AuthGateScreen> {
 
     // ✅ لو مفيش user -> Welcome
     if (FirebaseAuth.instance.currentUser == null) {
-      Get.offAllNamed(AppRoutes.welcome);
+      Get.offAllNamed(AppRoutes.login);
     }
   }
 

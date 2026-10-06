@@ -15,17 +15,19 @@ import '../../doctor_dashboard/controllers/doctor_navigation_controller.dart';
 import '../../doctor_dashboard/controllers/doctor_appointments_controller.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/services/notification_router.dart';
+import '../../../core/theme/app_colors.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
 
-  static const _colors = _O2Colors();
+  
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { final _colors = _O2Colors(context);
     final textTheme = Theme.of(context).textTheme;
-    final NotificationsController controller = Get.isRegistered<NotificationsController>() 
-        ? Get.find<NotificationsController>() 
+    final NotificationsController controller =
+        Get.isRegistered<NotificationsController>()
+        ? Get.find<NotificationsController>()
         : Get.put(NotificationsController(), permanent: true);
 
     return Scaffold(
@@ -34,9 +36,41 @@ class NotificationsScreen extends StatelessWidget {
         backgroundColor: _colors.surface,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF181D1C)),
+          icon: Icon(Icons.arrow_back, color: _colors.onSurface),
           onPressed: () => Get.back(),
         ),
+        title: Text(
+          AppLocalizations.of(context)!.notifications,
+          style: textTheme.headlineMedium?.copyWith(
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            color: _colors.onSurface,
+            letterSpacing: -0.4,
+          ),
+        ),
+        actions: [
+          Obx(() {
+            if (controller.unreadCount > 0) {
+              return TextButton(
+                onPressed: () => controller.markAllAsRead(),
+                style: TextButton.styleFrom(
+                  foregroundColor: _colors.primary,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                ),
+                child: Text(
+                  AppLocalizations.of(context)!.markAllAsRead,
+                  style: GoogleFonts.manrope(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.6,
+                    color: _colors.primary,
+                  ),
+                ),
+              );
+            }
+            return const SizedBox();
+          }),
+        ],
       ),
       body: SafeArea(
         child: Center(
@@ -63,59 +97,34 @@ class NotificationsScreen extends StatelessWidget {
               return ListView(
                 padding: const EdgeInsets.only(bottom: 20),
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.notifications,
-                          style: textTheme.headlineMedium?.copyWith(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                            color: _colors.onSurface,
-                            letterSpacing: -0.4,
-                          ),
-                        ),
-                        if (controller.unreadCount > 0)
-                          TextButton(
-                            onPressed: () => controller.markAllAsRead(),
-                            style: TextButton.styleFrom(
-                              foregroundColor: _colors.primary,
-                              padding: EdgeInsets.zero,
-                              minimumSize: Size.zero,
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            child: Text(
-                              AppLocalizations.of(context)!.markAllAsRead,
-                              style: GoogleFonts.manrope(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 0.6,
-                                color: _colors.primary,
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
+
                   if (newNotes.isNotEmpty) ...[
-                  _SectionTitle(title: AppLocalizations.of(context)!.notifSectionNew),
-                  ...newNotes.map((n) => _buildTile(n, context)),
+                    _SectionTitle(
+                      title: AppLocalizations.of(context)!.notifSectionNew,
+                    ),
+                    ...newNotes.map((n) => _buildTile(n, context)),
+                  ],
+                  if (todayNotes.isNotEmpty) ...[
+                    _SectionTitle(
+                      title: AppLocalizations.of(context)!.notifSectionToday,
+                    ),
+                    ...todayNotes.map((n) => _buildTile(n, context)),
+                  ],
+                  if (yesterdayNotes.isNotEmpty) ...[
+                    _SectionTitle(
+                      title: AppLocalizations.of(
+                        context,
+                      )!.notifSectionYesterday,
+                    ),
+                    ...yesterdayNotes.map((n) => _buildTile(n, context)),
+                  ],
+                  if (earlierNotes.isNotEmpty) ...[
+                    _SectionTitle(
+                      title: AppLocalizations.of(context)!.notifSectionEarlier,
+                    ),
+                    ...earlierNotes.map((n) => _buildTile(n, context)),
+                  ],
                 ],
-                if (todayNotes.isNotEmpty) ...[
-                  _SectionTitle(title: AppLocalizations.of(context)!.notifSectionToday),
-                  ...todayNotes.map((n) => _buildTile(n, context)),
-                ],
-                if (yesterdayNotes.isNotEmpty) ...[
-                  _SectionTitle(title: AppLocalizations.of(context)!.notifSectionYesterday),
-                  ...yesterdayNotes.map((n) => _buildTile(n, context)),
-                ],
-                if (earlierNotes.isNotEmpty) ...[
-                  _SectionTitle(title: AppLocalizations.of(context)!.notifSectionEarlier),
-                  ...earlierNotes.map((n) => _buildTile(n, context)),
-                ],
-              ],
               );
             }),
           ),
@@ -124,7 +133,7 @@ class NotificationsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTile(NotificationModel n, BuildContext context) {
+  Widget _buildTile(NotificationModel n, BuildContext context) { final _colors = _O2Colors(context);
     IconData icon;
     Color iconBg = _colors.surfaceContainerHigh;
     Color iconFg = _colors.onSurface;
@@ -164,7 +173,9 @@ class NotificationsScreen extends StatelessWidget {
       iconBg: iconBg,
       iconFg: iconFg,
       unread: !n.isRead,
-      bgColor: !n.isRead ? _colors.surfaceContainerLow : _colors.surfaceContainerLowest,
+      bgColor: !n.isRead
+          ? _colors.surfaceContainerLow
+          : _colors.surfaceContainerLowest,
       message: TextSpan(
         style: const TextStyle(height: 1.25),
         children: [
@@ -172,7 +183,10 @@ class NotificationsScreen extends StatelessWidget {
           TextSpan(text: body),
         ],
       ),
-      time: NotificationTimeHelper.getFullDateTime(n.createdAt, context: context),
+      time: NotificationTimeHelper.getFullDateTime(
+        n.createdAt,
+        context: context,
+      ),
       timeColor: !n.isRead ? _colors.primary : _colors.onSurfaceVariant,
       bodyOpacity: !n.isRead ? 1.0 : 0.8,
       onTap: () async {
@@ -180,7 +194,10 @@ class NotificationsScreen extends StatelessWidget {
           Get.find<NotificationsController>().markAsRead(n.id);
         }
         if (n.type == 'review' && n.data['reviewId'] != null) {
-          Get.to(() => const DoctorReviewsScreen(), arguments: {'highlightReviewId': n.data['reviewId'].toString()});
+          Get.to(
+            () => const DoctorReviewsScreen(),
+            arguments: {'highlightReviewId': n.data['reviewId'].toString()},
+          );
           return;
         }
 
@@ -188,20 +205,35 @@ class NotificationsScreen extends StatelessWidget {
           NotificationRouter.handleNotificationTap(n.data);
           return;
         }
-        
-        if (n.data.isNotEmpty && n.data['bookingId'] != null && n.data['bookingId'].toString().isNotEmpty) {
-          Get.dialog(const Center(child: CircularProgressIndicator(color: Color(0xFF00685F))), barrierDismissible: false, barrierColor: Colors.black12);
-          
+
+        if (n.data.isNotEmpty &&
+            n.data['bookingId'] != null &&
+            n.data['bookingId'].toString().isNotEmpty) {
+          Get.dialog(
+            const Center(
+              child: CircularProgressIndicator(color: AppColors.brandBlue),
+            ),
+            barrierDismissible: false,
+            barrierColor: Colors.black12,
+          );
+
           try {
-            final doc = await FirebaseFirestore.instance.collection('bookings').doc(n.data['bookingId'].toString()).get();
+            final doc = await FirebaseFirestore.instance
+                .collection('bookings')
+                .doc(n.data['bookingId'].toString())
+                .get();
             Get.back(); // close loading
-            
+
             if (doc.exists) {
               if (Get.isRegistered<DoctorNavigationController>()) {
                 final navCtrl = Get.find<DoctorNavigationController>();
                 navCtrl.changeIndex(1); // Appts tab
-                Get.until((route) => route.settings.name == AppRoutes.doctorNavigation || route.isFirst);
-                
+                Get.until(
+                  (route) =>
+                      route.settings.name == AppRoutes.doctorNavigation ||
+                      route.isFirst,
+                );
+
                 if (Get.isRegistered<DoctorAppointmentsController>()) {
                   final apptsCtrl = Get.find<DoctorAppointmentsController>();
                   final bookingData = doc.data() as Map<String, dynamic>?;
@@ -218,7 +250,10 @@ class NotificationsScreen extends StatelessWidget {
                   }
                 }
               } else {
-                Get.to(() => const MyAppointmentsScreen(), arguments: {'showBookingId': doc.id});
+                Get.to(
+                  () => const MyAppointmentsScreen(),
+                  arguments: {'showBookingId': doc.id},
+                );
               }
             } else {
               Get.snackbar('Error', 'Booking not found');
@@ -246,7 +281,7 @@ class _SectionTitle extends StatelessWidget {
   final String title;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { final _colors = _O2Colors(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
       child: Text(
@@ -254,7 +289,7 @@ class _SectionTitle extends StatelessWidget {
         style: GoogleFonts.manrope(
           fontSize: 16,
           fontWeight: FontWeight.w700,
-          color: const Color(0xFF3E4947),
+          color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF3E4947),
         ),
       ),
     );
@@ -270,7 +305,7 @@ class _NotificationTile extends StatelessWidget {
     required this.bgColor,
     required this.message,
     required this.time,
-    this.timeColor = const Color(0xFF00685F),
+    this.timeColor = AppColors.brandBlue,
     this.bodyOpacity = 1,
     required this.onTap,
   });
@@ -287,8 +322,8 @@ class _NotificationTile extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    const colors = _O2Colors();
+  Widget build(BuildContext context) { final _colors = _O2Colors(context);
+    final colors = _O2Colors(context);
 
     return InkWell(
       onTap: onTap,
@@ -300,15 +335,8 @@ class _NotificationTile extends StatelessWidget {
             Container(
               width: 56,
               height: 56,
-              decoration: BoxDecoration(
-                color: iconBg,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                icon,
-                size: 28,
-                color: iconFg,
-              ),
+              decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle),
+              child: Icon(icon, size: 28, color: iconFg),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -350,7 +378,7 @@ class _NotificationTile extends StatelessWidget {
                 width: 12,
                 height: 12,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF00685F),
+                  color: AppColors.brandBlue,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -363,22 +391,25 @@ class _NotificationTile extends StatelessWidget {
 }
 
 class _O2Colors {
-  const _O2Colors();
+  final BuildContext context;
+  const _O2Colors(this.context);
 
-  Color get surface => const Color(0xFFF6FAF8);
-  Color get surfaceContainerLow => const Color(0xFFF0F4F2);
-  Color get surfaceContainerLowest => const Color(0xFFFFFFFF);
-  Color get surfaceContainerHigh => const Color(0xFFE5E9E7);
-  Color get primary => const Color(0xFF00685F);
-  Color get primaryContainer => const Color(0xFF158278);
-  Color get onPrimaryContainer => const Color(0xFFF4FFFC);
-  Color get secondaryContainer => const Color(0xFF8CF5E6);
-  Color get onSecondaryContainer => const Color(0xFF007167);
-  Color get tertiaryContainer => const Color(0xFF008379);
-  Color get onTertiaryContainer => const Color(0xFFF4FFFC);
-  Color get errorContainer => const Color(0xFFFFDAD6);
-  Color get onErrorContainer => const Color(0xFF93000A);
-  Color get onSurface => const Color(0xFF181D1C);
-  Color get onSurfaceVariant => const Color(0xFF3E4947);
+  bool get isDark => Theme.of(context).brightness == Brightness.dark;
+
+  Color get surface => isDark ? Theme.of(context).scaffoldBackgroundColor : const Color(0xFFF6FAF8);
+  Color get surfaceContainerLow => isDark ? Theme.of(context).scaffoldBackgroundColor : const Color(0xFFF0F4F2);
+  Color get surfaceContainerLowest => isDark ? Theme.of(context).cardColor : const Color(0xFFFFFFFF);
+  Color get surfaceContainerHigh => isDark ? Colors.white24 : const Color(0xFFE5E9E7);
+  Color get primary => isDark ? const Color(0xFF60A5FA) : AppColors.brandBlue;
+  Color get primaryContainer => isDark ? AppColors.brandBlue.withOpacity(0.5) : AppColors.brandBlue;
+  Color get onPrimaryContainer => AppColors.pureWhite;
+  Color get secondaryContainer => AppColors.softCyan;
+  Color get onSecondaryContainer => isDark ? Colors.white : AppColors.brandBlue;
+  Color get tertiaryContainer => isDark ? AppColors.vibrantCyan.withOpacity(0.5) : AppColors.vibrantCyan;
+  Color get onTertiaryContainer => AppColors.pureWhite;
+  Color get errorContainer => isDark ? const Color(0xFF93000A) : const Color(0xFFFFDAD6);
+  Color get onErrorContainer => isDark ? const Color(0xFFFFDAD6) : const Color(0xFF93000A);
+  Color get onSurface => isDark ? Colors.white : const Color(0xFF181D1C);
+  Color get onSurfaceVariant => isDark ? Colors.white70 : const Color(0xFF3E4947);
 }
 

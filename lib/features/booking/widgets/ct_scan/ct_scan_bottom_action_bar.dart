@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 
-class CTScanBottomActionBar
-    extends StatelessWidget {
+class CTScanBottomActionBar extends StatelessWidget {
   const CTScanBottomActionBar({
     super.key,
     required this.selectedCount,
@@ -20,38 +19,25 @@ class CTScanBottomActionBar
     return SafeArea(
       top: false,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(
-          18,
-          12,
-          18,
-          16,
-        ),
+        padding: const EdgeInsets.fromLTRB(18, 12, 18, 16),
         decoration: BoxDecoration(
           color: AppColors.white,
           border: Border(
-            top: BorderSide(
-              color: AppColors.border.withValues(alpha: .7),
-            ),
+            top: BorderSide(color: AppColors.border.withValues(alpha: .7)),
           ),
         ),
         child: Row(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 10,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
                 color: AppColors.surface,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(
-                  color: AppColors.border,
-                ),
+                border: Border.all(color: AppColors.border),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     AppLocalizations.of(context)!.selected,
@@ -59,7 +45,6 @@ class CTScanBottomActionBar
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textSecondary,
-                      
                     ),
                   ),
 
@@ -71,7 +56,6 @@ class CTScanBottomActionBar
                       fontSize: 15,
                       fontWeight: FontWeight.w800,
                       color: AppColors.primary,
-                      
                     ),
                   ),
                 ],
@@ -87,35 +71,26 @@ class CTScanBottomActionBar
                   onPressed: onContinue,
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    backgroundColor:
-                        AppColors.primary,
-                    foregroundColor:
-                        AppColors.white,
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                   child: Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         AppLocalizations.of(context)!.continueAction,
                         style: TextStyle(
                           fontSize: 14,
-                          fontWeight:
-                              FontWeight.w700,
-                          
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
 
                       const SizedBox(width: 6),
 
-                      const Icon(
-                        Icons.arrow_forward_rounded,
-                        size: 18,
-                      ),
+                      const Icon(Icons.arrow_forward_rounded, size: 18),
                     ],
                   ),
                 ),

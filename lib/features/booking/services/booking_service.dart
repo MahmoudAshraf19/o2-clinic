@@ -9,7 +9,9 @@ class BookingService {
   /// 🧠 MEMORY CACHE (instant load)
   static List<BookingServiceModel>? _cache;
 
-  static Future<List<BookingServiceModel>> getServices({bool forceRefresh = false}) async {
+  static Future<List<BookingServiceModel>> getServices({
+    bool forceRefresh = false,
+  }) async {
     try {
       print("🚀 [BookingService] REQUEST SERVICES");
 
@@ -21,7 +23,9 @@ class BookingService {
 
       print("🌐 FETCHING FROM FIREBASE...");
 
-      final firestoreServices = await _service.getAllServices(forceRefresh: forceRefresh);
+      final firestoreServices = await _service.getAllServices(
+        forceRefresh: forceRefresh,
+      );
 
       final result = firestoreServices.map((e) {
         return BookingServiceModel(

@@ -73,10 +73,7 @@ class ContactUsContact {
   final String phone;
   final String email;
 
-  ContactUsContact({
-    required this.phone,
-    required this.email,
-  });
+  ContactUsContact({required this.phone, required this.email});
 
   factory ContactUsContact.fromMap(Map<String, dynamic> map) {
     return ContactUsContact(
@@ -90,10 +87,7 @@ class ContactUsSocial {
   final String facebook;
   final String instagram;
 
-  ContactUsSocial({
-    required this.facebook,
-    required this.instagram,
-  });
+  ContactUsSocial({required this.facebook, required this.instagram});
 
   factory ContactUsSocial.fromMap(Map<String, dynamic> map) {
     return ContactUsSocial(
@@ -108,17 +102,19 @@ class ContactUsModel {
   final ContactUsContact? contact;
   final ContactUsSocial? social;
 
-  ContactUsModel({
-    this.location,
-    this.contact,
-    this.social,
-  });
+  ContactUsModel({this.location, this.contact, this.social});
 
   factory ContactUsModel.fromMap(Map<String, dynamic> map) {
     return ContactUsModel(
-      location: map['location'] != null ? ContactUsLocation.fromMap(map['location']) : null,
-      contact: map['contact'] != null ? ContactUsContact.fromMap(map['contact']) : null,
-      social: map['social'] != null ? ContactUsSocial.fromMap(map['social']) : null,
+      location: map['location'] != null
+          ? ContactUsLocation.fromMap(map['location'])
+          : null,
+      contact: map['contact'] != null
+          ? ContactUsContact.fromMap(map['contact'])
+          : null,
+      social: map['social'] != null
+          ? ContactUsSocial.fromMap(map['social'])
+          : null,
     );
   }
 }

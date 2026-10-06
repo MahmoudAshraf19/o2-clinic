@@ -4,6 +4,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../../core/theme/app_colors.dart';
+
 import '../models/booking_service_model.dart';
 
 class ServiceCard extends StatelessWidget {
@@ -33,7 +35,10 @@ class ServiceCard extends StatelessWidget {
           child: Stack(
             children: [
               Positioned.fill(
-                child: CachedImageWidget(imageUrl: model.image, fit: BoxFit.cover),
+                child: CachedImageWidget(
+                  imageUrl: model.image,
+                  fit: BoxFit.cover,
+                ),
               ),
 
               Positioned.fill(
@@ -97,7 +102,11 @@ class ServiceCard extends StatelessWidget {
                     const SizedBox(height: 3),
 
                     Text(
-                      model.description.isNotEmpty ? model.description : AppLocalizations.of(context)!.highQualityMedicalService,
+                      model.description.isNotEmpty
+                          ? model.description
+                          : AppLocalizations.of(
+                              context,
+                            )!.highQualityMedicalService,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -115,7 +124,7 @@ class ServiceCard extends StatelessWidget {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF00685f),
+                        color: AppColors.brandBlue,
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Row(
@@ -150,4 +159,3 @@ class ServiceCard extends StatelessWidget {
     );
   }
 }
-

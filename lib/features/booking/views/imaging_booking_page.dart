@@ -33,7 +33,7 @@ class ImagingBookingPage extends StatelessWidget {
     final isAuth = FirebaseAuth.instance.currentUser != null;
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -110,7 +110,7 @@ class ImagingBookingPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: AppColors.border),
         boxShadow: [
@@ -146,7 +146,6 @@ class ImagingBookingPage extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                    
                     fontWeight: FontWeight.w800,
                     fontSize: 17,
                     color: AppColors.textPrimary,
@@ -156,7 +155,6 @@ class ImagingBookingPage extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.chooseYourPreferredDateAnd,
                   style: TextStyle(
-                    
                     color: AppColors.textSecondary.withValues(alpha: .8),
                     fontSize: 13,
                     height: 1.3,
@@ -170,7 +168,10 @@ class ImagingBookingPage extends StatelessWidget {
     );
   }
 
-  Widget _daysSection(BuildContext context, ImagingBookingController controller) {
+  Widget _daysSection(
+    BuildContext context,
+    ImagingBookingController controller,
+  ) {
     return Obx(() {
       if (controller.isLoading.value) {
         return const Center(child: CircularProgressIndicator());
@@ -238,9 +239,11 @@ class ImagingBookingPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            DateFormat('E', Get.locale?.languageCode ?? 'en').format(day.date).toUpperCase(),
+                            DateFormat(
+                              'E',
+                              Get.locale?.languageCode ?? 'en',
+                            ).format(day.date).toUpperCase(),
                             style: TextStyle(
-                              
                               fontSize: 11,
                               letterSpacing: 1.4,
                               color: isSelected ? Colors.white : AppColors.grey,
@@ -250,7 +253,6 @@ class ImagingBookingPage extends StatelessWidget {
                           Text(
                             "${day.date.day}",
                             style: TextStyle(
-                              
                               fontSize: 19,
                               fontWeight: FontWeight.w800,
                               color: isSelected
@@ -271,20 +273,26 @@ class ImagingBookingPage extends StatelessWidget {
     });
   }
 
-  Widget _timeSection(BuildContext context, ImagingBookingController controller) {
+  Widget _timeSection(
+    BuildContext context,
+    ImagingBookingController controller,
+  ) {
     if (controller.selectedDay.value == null) {
       return const SizedBox();
     }
 
     final selectedSlot = controller.selectedSlot.value;
     final lang = Get.locale?.languageCode ?? 'en';
-    
+
     String selectedTime = selectedSlot?.time ?? "";
     if (selectedTime.isNotEmpty) {
       selectedTime = selectedTime
           .replaceAll('AM', AppLocalizations.of(context)!.am)
           .replaceAll('PM', AppLocalizations.of(context)!.pm);
-      final dateStr = DateFormat('d MMM', lang).format(controller.selectedDay.value!.date);
+      final dateStr = DateFormat(
+        'd MMM',
+        lang,
+      ).format(controller.selectedDay.value!.date);
       selectedTime = "$selectedTime - $dateStr";
     }
 
@@ -347,7 +355,6 @@ class ImagingBookingPage extends StatelessWidget {
                   child: Text(
                     slot.time,
                     style: TextStyle(
-                      
                       fontWeight: FontWeight.w700,
                       color: isSelected ? Colors.white : AppColors.textPrimary,
                     ),
@@ -422,7 +429,6 @@ class ImagingBookingPage extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 15,
                                   color: Colors.white70,
-                                  
                                 ),
                               ),
                             ],
@@ -460,7 +466,6 @@ class ImagingBookingPage extends StatelessWidget {
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
-                                        
                                       ),
                                     ),
                                   ],
@@ -472,11 +477,13 @@ class ImagingBookingPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        AppLocalizations.of(context)!.yourImagingAppointmentHasBeen,
+                        AppLocalizations.of(
+                          context,
+                        )!.yourImagingAppointmentHasBeen,
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.white.withValues(alpha: .82),
-                          
+
                           height: 1.4,
                         ),
                       ),
@@ -541,13 +548,11 @@ class ImagingBookingPage extends StatelessWidget {
         ),
         child: Text(
           AppLocalizations.of(context)!.continueBooking,
-          style: TextStyle(
-            
-            fontWeight: FontWeight.w800,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w800),
         ),
       ),
     );
   }
 }
+
 

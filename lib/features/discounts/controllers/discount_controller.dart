@@ -8,7 +8,7 @@ class DiscountController extends GetxController {
 
   var discountTypes = <DiscountTypeModel>[].obs;
   var discountCodes = <DiscountCodeModel>[].obs;
-  
+
   var isLoadingTypes = false.obs;
   var isLoadingCodes = false.obs;
   var isVerifyingCode = false.obs;
@@ -78,14 +78,16 @@ class DiscountController extends GetxController {
 
   Future<void> verifyDiscountCode(String codeText) async {
     if (codeText.trim().isEmpty) return;
-    
+
     try {
       isVerifyingCode(true);
       verificationError('');
       currentValidCode.value = null;
 
-      final code = await _discountService.getDiscountCodeByCode(codeText.trim());
-      
+      final code = await _discountService.getDiscountCodeByCode(
+        codeText.trim(),
+      );
+
       if (code == null) {
         verificationError(_getErrorMessage('invalid'));
         return;
@@ -96,7 +98,7 @@ class DiscountController extends GetxController {
         verificationError(_getErrorMessage('not_started'));
         return;
       }
-      
+
       if (code.endDate != null && now.isAfter(code.endDate!)) {
         verificationError(_getErrorMessage('expired'));
         return;
@@ -116,7 +118,7 @@ class DiscountController extends GetxController {
       isVerifyingCode(false);
     }
   }
-  
+
   void removeDiscountCode() {
     currentValidCode.value = null;
     verificationError('');

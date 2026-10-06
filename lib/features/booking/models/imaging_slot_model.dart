@@ -11,8 +11,7 @@ class ImagingSlotModel {
 
   bool get isFull => booked >= maxBookings;
 
-  double get progress =>
-      maxBookings == 0 ? 0 : booked / maxBookings;
+  double get progress => maxBookings == 0 ? 0 : booked / maxBookings;
 
   @override
   bool operator ==(Object other) {

@@ -17,16 +17,19 @@ class DoctorAppointmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userMap = bookingData['user'] as Map<String, dynamic>? ?? {};
-    final userId = userMap['auth_uid'] as String? ?? userMap['userId'] as String? ?? '';
+    final userId =
+        userMap['auth_uid'] as String? ?? userMap['userId'] as String? ?? '';
     final name = userMap['name'] as String? ?? 'Patient';
-    final userImage = userMap['image'] as String? ?? ''; // We'll try to get it from Firestore below if empty
+    final userImage =
+        userMap['image'] as String? ??
+        ''; // We'll try to get it from Firestore below if empty
 
     final bookingId = bookingData['id'] as String? ?? '';
 
     final schedule = bookingData['schedule'] as Map<String, dynamic>? ?? {};
     final timeStr = schedule['time'] as String? ?? '';
     final dateStr = schedule['date'] as String? ?? '';
-    
+
     // Extract start time if it's a range like "09:00 AM - 12:00 PM"
     final timeParts = timeStr.split(' - ');
     final startTime = timeParts.isNotEmpty ? timeParts[0] : timeStr;
@@ -42,16 +45,25 @@ class DoctorAppointmentCard extends StatelessWidget {
         displayDate = dateStr;
       }
     }
-    
-    final timeDisplay = displayDate.isNotEmpty ? '$displayDate • $startTime' : startTime;
 
-    final type = bookingData['type'] as String? ?? 'clinical'; // online or clinical
+    final timeDisplay = displayDate.isNotEmpty
+        ? '$displayDate • $startTime'
+        : startTime;
+
+    final type =
+        bookingData['type'] as String? ?? 'clinical'; // online or clinical
     final isOnline = type == 'online';
 
     final service = bookingData['service'] as Map<String, dynamic>? ?? {};
     final doctorMap = bookingData['doctor'] as Map<String, dynamic>? ?? {};
-    final serviceNameEn = service['serviceName_en'] as String? ?? doctorMap['specialty'] as String? ?? '';
-    final serviceNameAr = service['serviceName_ar'] as String? ?? doctorMap['specialty'] as String? ?? '';
+    final serviceNameEn =
+        service['serviceName_en'] as String? ??
+        doctorMap['specialty'] as String? ??
+        '';
+    final serviceNameAr =
+        service['serviceName_ar'] as String? ??
+        doctorMap['specialty'] as String? ??
+        '';
     final isAr = Get.locale?.languageCode == 'ar';
     final serviceName = isAr ? serviceNameAr : serviceNameEn;
 
@@ -68,18 +80,23 @@ class DoctorAppointmentCard extends StatelessWidget {
         // NO SHADOWS
       ),
       child: FutureBuilder<DocumentSnapshot>(
-        future: FirebaseFirestore.instance.collection('users').doc(userId).get(),
+        future: FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .get(),
         builder: (context, snapshot) {
           String? imageUrl;
           String gender = '';
           String age = '';
 
-          if (snapshot.hasData && snapshot.data != null && snapshot.data!.exists) {
+          if (snapshot.hasData &&
+              snapshot.data != null &&
+              snapshot.data!.exists) {
             final data = snapshot.data!.data() as Map<String, dynamic>?;
             if (data != null) {
               imageUrl = data['image'] as String?;
               gender = data['gender'] as String? ?? '';
-              age = data['age']?.toString() ?? ''; 
+              age = data['age']?.toString() ?? '';
             }
           }
 
@@ -98,11 +115,20 @@ class DoctorAppointmentCard extends StatelessWidget {
                   CircleAvatar(
                     radius: 28,
                     backgroundColor: AppColors.grey.withValues(alpha: 0.2),
-                    backgroundImage: (imageUrl != null && imageUrl.trim().isNotEmpty) 
-                        ? NetworkImage(imageUrl.trim()) 
-                        : (userImage.trim().isNotEmpty ? NetworkImage(userImage.trim()) : null),
-                    child: (imageUrl == null || imageUrl.trim().isEmpty) && userImage.trim().isEmpty
-                        ? const Icon(Icons.person, color: AppColors.grey, size: 30)
+                    backgroundImage:
+                        (imageUrl != null && imageUrl.trim().isNotEmpty)
+                        ? NetworkImage(imageUrl.trim())
+                        : (userImage.trim().isNotEmpty
+                              ? NetworkImage(userImage.trim())
+                              : null),
+                    child:
+                        (imageUrl == null || imageUrl.trim().isEmpty) &&
+                            userImage.trim().isEmpty
+                        ? const Icon(
+                            Icons.person,
+                            color: AppColors.grey,
+                            size: 30,
+                          )
                         : null,
                   ),
                   const SizedBox(width: 12),
@@ -138,7 +164,7 @@ class DoctorAppointmentCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               // Row 2: Icons/Info on Left, Buttons on Right
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -151,13 +177,18 @@ class DoctorAppointmentCard extends StatelessWidget {
                         _buildInfoRow(Icons.access_time_rounded, timeDisplay),
                         const SizedBox(height: 8),
                         _buildInfoRow(
-                          isOnline ? Icons.videocam_outlined : Icons.medical_services_outlined,
-                          isOnline 
-                              ? AppLocalizations.of(context)!.onlineConsultation 
+                          isOnline
+                              ? Icons.videocam_outlined
+                              : Icons.medical_services_outlined,
+                          isOnline
+                              ? AppLocalizations.of(context)!.onlineConsultation
                               : (isAr ? 'حضور شخصي' : 'In Person'),
                         ),
                         const SizedBox(height: 8),
-                        _buildInfoRow(Icons.assignment_outlined, serviceName.isNotEmpty ? serviceName : 'Check-up'),
+                        _buildInfoRow(
+                          Icons.assignment_outlined,
+                          serviceName.isNotEmpty ? serviceName : 'Check-up',
+                        ),
                         if (bookingId.isNotEmpty) ...[
                           const SizedBox(height: 8),
                           _buildInfoRow(Icons.tag_rounded, 'ID: $bookingId'),
@@ -175,17 +206,33 @@ class DoctorAppointmentCard extends StatelessWidget {
                           color: AppColors.primary.withValues(alpha: 0.1),
                           textColor: AppColors.primary,
                           onTap: () {
-                            Get.to(() => DoctorBookingDetailsScreen(bookingData: bookingData));
+                            Get.to(
+                              () => DoctorBookingDetailsScreen(
+                                bookingData: bookingData,
+                              ),
+                            );
                           },
                         ),
                         const SizedBox(height: 8),
                         _buildActionButton(
                           text: isAr ? 'بدء الاستشارة' : 'Start Consultation',
-                          color: _isActionEnabled(currentStatus) ? AppColors.primary : AppColors.grey.withValues(alpha: 0.1),
-                          textColor: _isActionEnabled(currentStatus) ? Colors.white : AppColors.grey,
-                          onTap: _isActionEnabled(currentStatus) ? () {
-                            _startConsultation(context, userId, name, userImage, doctorMap);
-                          } : null,
+                          color: _isActionEnabled(currentStatus)
+                              ? AppColors.primary
+                              : AppColors.grey.withValues(alpha: 0.1),
+                          textColor: _isActionEnabled(currentStatus)
+                              ? Colors.white
+                              : AppColors.grey,
+                          onTap: _isActionEnabled(currentStatus)
+                              ? () {
+                                  _startConsultation(
+                                    context,
+                                    userId,
+                                    name,
+                                    userImage,
+                                    doctorMap,
+                                  );
+                                }
+                              : null,
                         ),
                       ],
                     ),
@@ -203,11 +250,17 @@ class DoctorAppointmentCard extends StatelessWidget {
     return status == 'pending' || status == 'upcoming' || status == 'confirmed';
   }
 
-  void _startConsultation(BuildContext context, String patientId, String patientName, String patientImage, Map<String, dynamic> doctorMap) {
+  void _startConsultation(
+    BuildContext context,
+    String patientId,
+    String patientName,
+    String patientImage,
+    Map<String, dynamic> doctorMap,
+  ) {
     final doctorId = doctorMap['doctorId'] as String? ?? '';
     final doctorName = doctorMap['name_en'] as String? ?? '';
     final doctorImage = doctorMap['image'] as String? ?? '';
-    
+
     // Sort IDs to create consistent room ID
     final ids = [patientId, doctorId];
     ids.sort();

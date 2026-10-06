@@ -14,10 +14,12 @@ class DoctorBookingDetailsScreen extends StatefulWidget {
   const DoctorBookingDetailsScreen({super.key, required this.bookingData});
 
   @override
-  State<DoctorBookingDetailsScreen> createState() => _DoctorBookingDetailsScreenState();
+  State<DoctorBookingDetailsScreen> createState() =>
+      _DoctorBookingDetailsScreenState();
 }
 
-class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen> {
+class _DoctorBookingDetailsScreenState
+    extends State<DoctorBookingDetailsScreen> {
   bool _isLoading = false;
   String? _patientImageUrl;
   String _patientGender = '';
@@ -30,11 +32,17 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
   }
 
   Future<void> _fetchPatientData() async {
-    final userId = (widget.bookingData['user'] as Map<String, dynamic>?)?['userId'] as String? ?? '';
+    final userId =
+        (widget.bookingData['user'] as Map<String, dynamic>?)?['userId']
+            as String? ??
+        '';
     if (userId.isEmpty) return;
 
     try {
-      final doc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
       if (doc.exists && doc.data() != null) {
         if (mounted) {
           setState(() {
@@ -52,7 +60,7 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
   @override
   Widget build(BuildContext context) {
     final isAr = Get.locale?.languageCode == 'ar';
-    
+
     // User Data
     final bookingId = widget.bookingData['id'] as String? ?? '';
     final userMap = widget.bookingData['user'] as Map<String, dynamic>? ?? {};
@@ -62,34 +70,49 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
     final phoneFull = phoneMap['full'] as String? ?? '';
 
     // Schedule Data
-    final schedule = widget.bookingData['schedule'] as Map<String, dynamic>? ?? {};
+    final schedule =
+        widget.bookingData['schedule'] as Map<String, dynamic>? ?? {};
     final timeStr = schedule['time'] as String? ?? '';
     final dateStr = schedule['date'] as String? ?? '';
     final duration = schedule['duration_minutes'] as int? ?? 30;
 
     // Timeline Data
-    final timeline = widget.bookingData['timeline'] as Map<String, dynamic>? ?? {};
+    final timeline =
+        widget.bookingData['timeline'] as Map<String, dynamic>? ?? {};
     final createdAtTs = timeline['createdAt'] as Timestamp?;
     String createdAtStr = '';
     if (createdAtTs != null) {
-      createdAtStr = DateFormat('dd MMM yyyy, hh:mm a', isAr ? 'ar' : 'en').format(createdAtTs.toDate());
+      createdAtStr = DateFormat(
+        'dd MMM yyyy, hh:mm a',
+        isAr ? 'ar' : 'en',
+      ).format(createdAtTs.toDate());
     }
 
     // Status Data
-    final statusMap = widget.bookingData['status'] as Map<String, dynamic>? ?? {};
+    final statusMap =
+        widget.bookingData['status'] as Map<String, dynamic>? ?? {};
     final currentStatus = statusMap['current'] as String? ?? 'pending';
-    
+
     // Type and Service
     final type = widget.bookingData['type'] as String? ?? 'clinical';
     final isOnline = type == 'online';
-    final service = widget.bookingData['service'] as Map<String, dynamic>? ?? {};
-    final doctorMap = widget.bookingData['doctor'] as Map<String, dynamic>? ?? {};
-    final serviceNameEn = service['serviceName_en'] as String? ?? doctorMap['specialty'] as String? ?? '';
-    final serviceNameAr = service['serviceName_ar'] as String? ?? doctorMap['specialty'] as String? ?? '';
+    final service =
+        widget.bookingData['service'] as Map<String, dynamic>? ?? {};
+    final doctorMap =
+        widget.bookingData['doctor'] as Map<String, dynamic>? ?? {};
+    final serviceNameEn =
+        service['serviceName_en'] as String? ??
+        doctorMap['specialty'] as String? ??
+        '';
+    final serviceNameAr =
+        service['serviceName_ar'] as String? ??
+        doctorMap['specialty'] as String? ??
+        '';
     final serviceName = isAr ? serviceNameAr : serviceNameEn;
 
     // Payment Data
-    final payment = widget.bookingData['payment'] as Map<String, dynamic>? ?? {};
+    final payment =
+        widget.bookingData['payment'] as Map<String, dynamic>? ?? {};
     final amount = payment['amount']?.toString() ?? '0';
     final currency = payment['currency'] as String? ?? '';
     final payMethod = payment['method'] as String? ?? '';
@@ -106,9 +129,12 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
     }
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(isAr ? 'تفاصيل الحجز' : 'Booking Details', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+        title: Text(
+          isAr ? 'تفاصيل الحجز' : 'Booking Details',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -117,11 +143,20 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
       body: Stack(
         children: [
           SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 120), // padding for bottom bar
+            padding: const EdgeInsets.only(
+              bottom: 120,
+            ), // padding for bottom bar
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _buildTopProfileSection(name, phoneFull, isAr, currentStatus, userId, doctorMap),
+                _buildTopProfileSection(
+                  name,
+                  phoneFull,
+                  isAr,
+                  currentStatus,
+                  userId,
+                  doctorMap,
+                ),
                 const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -130,33 +165,80 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
                     children: [
                       Text(
                         isAr ? 'معلومات الموعد' : 'Appointment Info',
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
                       ),
                       const SizedBox(height: 12),
                       _buildInfoCard([
                         if (bookingId.isNotEmpty)
-                          _InfoItem(icon: Icons.tag_rounded, title: isAr ? 'رقم الحجز' : 'Booking ID', value: bookingId),
-                        _InfoItem(icon: Icons.calendar_today_rounded, title: isAr ? 'تاريخ الموعد' : 'Date', value: displayDate),
-                        _InfoItem(icon: Icons.access_time_rounded, title: isAr ? 'الوقت' : 'Time', value: timeStr),
-                        _InfoItem(icon: Icons.hourglass_bottom_rounded, title: isAr ? 'المدة' : 'Duration', value: '$duration ${isAr ? 'دقيقة' : 'min'}'),
-                        _InfoItem(icon: Icons.history_rounded, title: isAr ? 'تاريخ الحجز' : 'Booked On', value: createdAtStr.isNotEmpty ? createdAtStr : 'N/A'),
+                          _InfoItem(
+                            icon: Icons.tag_rounded,
+                            title: isAr ? 'رقم الحجز' : 'Booking ID',
+                            value: bookingId,
+                          ),
+                        _InfoItem(
+                          icon: Icons.calendar_today_rounded,
+                          title: isAr ? 'تاريخ الموعد' : 'Date',
+                          value: displayDate,
+                        ),
+                        _InfoItem(
+                          icon: Icons.access_time_rounded,
+                          title: isAr ? 'الوقت' : 'Time',
+                          value: timeStr,
+                        ),
+                        _InfoItem(
+                          icon: Icons.hourglass_bottom_rounded,
+                          title: isAr ? 'المدة' : 'Duration',
+                          value: '$duration ${isAr ? 'دقيقة' : 'min'}',
+                        ),
+                        _InfoItem(
+                          icon: Icons.history_rounded,
+                          title: isAr ? 'تاريخ الحجز' : 'Booked On',
+                          value: createdAtStr.isNotEmpty ? createdAtStr : 'N/A',
+                        ),
                       ]),
 
                       const SizedBox(height: 24),
                       Text(
                         isAr ? 'تفاصيل الخدمة' : 'Service Details',
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
                       ),
                       const SizedBox(height: 12),
                       _buildInfoCard([
-                        _InfoItem(icon: isOnline ? Icons.videocam_rounded : Icons.business_rounded, title: isAr ? 'نوع الحجز' : 'Type', value: isOnline ? (isAr ? 'استشارة أونلاين' : 'Online Consultation') : (isAr ? 'حضور شخصي' : 'In Clinic')),
-                        _InfoItem(icon: Icons.medical_services_rounded, title: isAr ? 'الخدمة' : 'Service', value: serviceName),
-                        _InfoItem(icon: Icons.payment_rounded, title: isAr ? 'الدفع' : 'Payment', value: '$amount $currency (${payMethod.toUpperCase()})'),
                         _InfoItem(
-                          icon: Icons.info_rounded, 
-                          title: isAr ? 'حالة الحجز' : 'Status', 
-                          value: _getStatusLabel(currentStatus, isAr), 
-                          valueColor: _getStatusColor(currentStatus)
+                          icon: isOnline
+                              ? Icons.videocam_rounded
+                              : Icons.business_rounded,
+                          title: isAr ? 'نوع الحجز' : 'Type',
+                          value: isOnline
+                              ? (isAr
+                                    ? 'استشارة أونلاين'
+                                    : 'Online Consultation')
+                              : (isAr ? 'حضور شخصي' : 'In Clinic'),
+                        ),
+                        _InfoItem(
+                          icon: Icons.medical_services_rounded,
+                          title: isAr ? 'الخدمة' : 'Service',
+                          value: serviceName,
+                        ),
+                        _InfoItem(
+                          icon: Icons.payment_rounded,
+                          title: isAr ? 'الدفع' : 'Payment',
+                          value:
+                              '$amount $currency (${payMethod.toUpperCase()})',
+                        ),
+                        _InfoItem(
+                          icon: Icons.info_rounded,
+                          title: isAr ? 'حالة الحجز' : 'Status',
+                          value: _getStatusLabel(currentStatus, isAr),
+                          valueColor: _getStatusColor(currentStatus),
                         ),
                       ]),
                     ],
@@ -173,10 +255,17 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
               left: 0,
               right: 0,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border(top: BorderSide(color: AppColors.grey.withValues(alpha: 0.1))),
+                  border: Border(
+                    top: BorderSide(
+                      color: AppColors.grey.withValues(alpha: 0.1),
+                    ),
+                  ),
                 ),
                 child: SafeArea(
                   child: Row(
@@ -208,16 +297,26 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
           if (_isLoading)
             Container(
               color: Colors.black.withValues(alpha: 0.2),
-              child: const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+              child: const Center(
+                child: CircularProgressIndicator(color: AppColors.primary),
+              ),
             ),
         ],
       ),
     );
   }
 
-  Widget _buildTopProfileSection(String name, String phone, bool isAr, String status, String patientId, Map<String, dynamic> doctorMap) {
+  Widget _buildTopProfileSection(
+    String name,
+    String phone,
+    bool isAr,
+    String status,
+    String patientId,
+    Map<String, dynamic> doctorMap,
+  ) {
     String subtitle = '';
-    if (_patientAge.isNotEmpty) subtitle += '$_patientAge ${isAr ? 'سنة' : 'yrs'}';
+    if (_patientAge.isNotEmpty)
+      subtitle += '$_patientAge ${isAr ? 'سنة' : 'yrs'}';
     if (_patientAge.isNotEmpty && _patientGender.isNotEmpty) subtitle += ' • ';
     if (_patientGender.isNotEmpty) subtitle += _patientGender;
 
@@ -231,7 +330,10 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
           CircleAvatar(
             radius: 32,
             backgroundColor: AppColors.grey.withValues(alpha: 0.1),
-            backgroundImage: (_patientImageUrl != null && _patientImageUrl!.isNotEmpty) ? NetworkImage(_patientImageUrl!) : null,
+            backgroundImage:
+                (_patientImageUrl != null && _patientImageUrl!.isNotEmpty)
+                ? NetworkImage(_patientImageUrl!)
+                : null,
             child: (_patientImageUrl == null || _patientImageUrl!.isEmpty)
                 ? const Icon(Icons.person, color: AppColors.grey, size: 30)
                 : null,
@@ -243,22 +345,42 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
               children: [
                 Text(
                   name,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
                 if (subtitle.isNotEmpty) ...[
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
-                    style: const TextStyle(fontSize: 14, color: AppColors.grey, fontWeight: FontWeight.w500),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppColors.grey,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
                 const SizedBox(height: 6),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.phone_rounded, size: 14, color: AppColors.grey),
+                    const Icon(
+                      Icons.phone_rounded,
+                      size: 14,
+                      color: AppColors.grey,
+                    ),
                     const SizedBox(width: 6),
-                    Text(phone, style: const TextStyle(color: AppColors.grey, fontWeight: FontWeight.w600, fontSize: 13, letterSpacing: 0.5)),
+                    Text(
+                      phone,
+                      style: const TextStyle(
+                        color: AppColors.grey,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -271,7 +393,10 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
                 shape: BoxShape.circle,
               ),
               child: IconButton(
-                icon: const Icon(Icons.chat_bubble_rounded, color: AppColors.primary),
+                icon: const Icon(
+                  Icons.chat_bubble_rounded,
+                  color: AppColors.primary,
+                ),
                 onPressed: () => _startConsultation(patientId, name, doctorMap),
               ),
             ),
@@ -291,7 +416,8 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: items.length,
-        separatorBuilder: (context, index) => Divider(color: AppColors.grey.withValues(alpha: 0.1), height: 1),
+        separatorBuilder: (context, index) =>
+            Divider(color: AppColors.grey.withValues(alpha: 0.1), height: 1),
         itemBuilder: (context, index) {
           final item = items[index];
           return Padding(
@@ -309,7 +435,11 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
                 const SizedBox(width: 16),
                 Text(
                   item.title,
-                  style: const TextStyle(fontSize: 14, color: AppColors.grey, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.grey,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -317,8 +447,8 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
                     item.value,
                     textAlign: TextAlign.end,
                     style: TextStyle(
-                      fontSize: 14, 
-                      fontWeight: FontWeight.bold, 
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                       color: item.valueColor ?? AppColors.textPrimary,
                     ),
                   ),
@@ -331,13 +461,15 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
     );
   }
 
-
-
-  void _startConsultation(String patientId, String patientName, Map<String, dynamic> doctorMap) {
+  void _startConsultation(
+    String patientId,
+    String patientName,
+    Map<String, dynamic> doctorMap,
+  ) {
     final doctorId = doctorMap['doctorId'] as String? ?? '';
     final doctorNameEn = doctorMap['name_en'] as String? ?? '';
     final doctorImage = doctorMap['image'] as String? ?? '';
-    
+
     final ids = [patientId, doctorId];
     ids.sort();
     final roomId = ids.join('_');
@@ -362,10 +494,10 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
 
   Future<void> _handleStatusChange(String newStatus, bool isAr) async {
     final title = isAr ? 'تأكيد الإجراء' : 'Confirm Action';
-    final content = isAr 
-        ? 'هل أنت متأكد من ${newStatus == 'upcoming' ? 'قبول' : 'رفض'} هذا الموعد؟ لا يمكن التراجع عن هذا الإجراء لاحقاً.' 
+    final content = isAr
+        ? 'هل أنت متأكد من ${newStatus == 'upcoming' ? 'قبول' : 'رفض'} هذا الموعد؟ لا يمكن التراجع عن هذا الإجراء لاحقاً.'
         : 'Are you sure you want to ${newStatus == 'upcoming' ? 'accept' : 'reject'} this appointment? This action cannot be undone.';
-        
+
     final confirmBtn = isAr ? 'نعم، أؤكد' : 'Yes, Confirm';
     final cancelBtn = isAr ? 'تراجع' : 'Cancel';
 
@@ -378,16 +510,32 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
         actions: [
           TextButton(
             onPressed: () => Get.back(result: false),
-            child: Text(cancelBtn, style: const TextStyle(color: AppColors.grey, fontWeight: FontWeight.bold)),
+            child: Text(
+              cancelBtn,
+              style: const TextStyle(
+                color: AppColors.grey,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           ElevatedButton(
             onPressed: () => Get.back(result: true),
             style: ElevatedButton.styleFrom(
-              backgroundColor: newStatus == 'upcoming' ? AppColors.primary : Colors.red,
+              backgroundColor: newStatus == 'upcoming'
+                  ? AppColors.primary
+                  : Colors.red,
               elevation: 0,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
-            child: Text(confirmBtn, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            child: Text(
+              confirmBtn,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),
@@ -399,22 +547,29 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
 
     try {
       final bookingId = widget.bookingData['id'] as String;
-      final userId = (widget.bookingData['user'] as Map<String, dynamic>)['userId'] as String;
-      
-      await FirebaseFirestore.instance.collection('bookings').doc(bookingId).update({
-        'status.current': newStatus,
-        'status.label': newStatus == 'upcoming' ? 'Confirmed' : 'Cancelled',
-        'timeline.${newStatus == 'upcoming' ? 'confirmedAt' : 'cancelledAt'}': FieldValue.serverTimestamp(),
-      });
+      final userId =
+          (widget.bookingData['user'] as Map<String, dynamic>)['userId']
+              as String;
 
-      final notifTitle = {
-        'ar': 'تحديث حالة الحجز',
-        'en': 'Booking Update',
-      };
-      
+      await FirebaseFirestore.instance
+          .collection('bookings')
+          .doc(bookingId)
+          .update({
+            'status.current': newStatus,
+            'status.label': newStatus == 'upcoming' ? 'Confirmed' : 'Cancelled',
+            'timeline.${newStatus == 'upcoming' ? 'confirmedAt' : 'cancelledAt'}':
+                FieldValue.serverTimestamp(),
+          });
+
+      final notifTitle = {'ar': 'تحديث حالة الحجز', 'en': 'Booking Update'};
+
       final notifBody = {
-        'ar': newStatus == 'upcoming' ? 'تم تأكيد حجزك من قبل الطبيب.' : 'نعتذر، تم إلغاء حجزك من قبل الطبيب.',
-        'en': newStatus == 'upcoming' ? 'Your booking has been confirmed by the doctor.' : 'We apologize, your booking was cancelled by the doctor.',
+        'ar': newStatus == 'upcoming'
+            ? 'تم تأكيد حجزك من قبل الطبيب.'
+            : 'نعتذر، تم إلغاء حجزك من قبل الطبيب.',
+        'en': newStatus == 'upcoming'
+            ? 'Your booking has been confirmed by the doctor.'
+            : 'We apologize, your booking was cancelled by the doctor.',
       };
 
       await FirebaseFirestore.instance.collection('notifications').add({
@@ -431,7 +586,8 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
       // Schedule Doctor Reminder for Online Consultations
       final type = widget.bookingData['type'] as String? ?? 'clinical';
       if (newStatus == 'confirmed' && type == 'online') {
-        final scheduleMap = widget.bookingData['schedule'] as Map<String, dynamic>? ?? {};
+        final scheduleMap =
+            widget.bookingData['schedule'] as Map<String, dynamic>? ?? {};
         final ts = scheduleMap['timestamp'] as Timestamp?;
         if (ts != null) {
           final appointmentDate = ts.toDate();
@@ -446,7 +602,12 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
 
       Get.back(); // Go back to list
     } catch (e) {
-      Get.snackbar('Error', e.toString(), backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -455,22 +616,32 @@ class _DoctorBookingDetailsScreenState extends State<DoctorBookingDetailsScreen>
   String _getStatusLabel(String status, bool isAr) {
     switch (status) {
       case 'upcoming':
-      case 'confirmed': return isAr ? 'مؤكد' : 'CONFIRMED';
-      case 'pending': return isAr ? 'قيد الانتظار' : 'PENDING';
-      case 'cancelled': return isAr ? 'ملغي' : 'CANCELLED';
-      case 'completed': return isAr ? 'مكتمل' : 'COMPLETED';
-      default: return status.toUpperCase();
+      case 'confirmed':
+        return isAr ? 'مؤكد' : 'CONFIRMED';
+      case 'pending':
+        return isAr ? 'قيد الانتظار' : 'PENDING';
+      case 'cancelled':
+        return isAr ? 'ملغي' : 'CANCELLED';
+      case 'completed':
+        return isAr ? 'مكتمل' : 'COMPLETED';
+      default:
+        return status.toUpperCase();
     }
   }
 
   Color _getStatusColor(String status) {
     switch (status) {
       case 'upcoming':
-      case 'confirmed': return Colors.green[700]!;
-      case 'pending': return Colors.orange[800]!;
-      case 'cancelled': return Colors.red[700]!;
-      case 'completed': return AppColors.primary;
-      default: return AppColors.grey;
+      case 'confirmed':
+        return Colors.green[700]!;
+      case 'pending':
+        return Colors.orange[800]!;
+      case 'cancelled':
+        return Colors.red[700]!;
+      case 'completed':
+        return AppColors.primary;
+      default:
+        return AppColors.grey;
     }
   }
 }
@@ -481,7 +652,12 @@ class _InfoItem {
   final String value;
   final Color? valueColor;
 
-  _InfoItem({required this.icon, required this.title, required this.value, this.valueColor});
+  _InfoItem({
+    required this.icon,
+    required this.title,
+    required this.value,
+    this.valueColor,
+  });
 }
 
 class _CustomButton extends StatelessWidget {
@@ -531,3 +707,4 @@ class _CustomButton extends StatelessWidget {
     );
   }
 }
+

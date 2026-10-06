@@ -73,7 +73,7 @@ class DoctorModel {
     required Map<String, dynamic> map,
   }) {
     final rawAvailability = map['availability_day'];
-    
+
     final rawOnline = map['availability_day_online'];
     Map<String, List<Map<String, String>>> onlineMap = {};
     if (rawOnline is Map) {
@@ -90,10 +90,12 @@ class DoctorModel {
           }
           onlineMap[day.toString()] = list;
         } else if (times is Map) {
-          onlineMap[day.toString()] = [{
-            'from': times['from']?.toString() ?? '',
-            'to': times['to']?.toString() ?? '',
-          }];
+          onlineMap[day.toString()] = [
+            {
+              'from': times['from']?.toString() ?? '',
+              'to': times['to']?.toString() ?? '',
+            },
+          ];
         }
       });
     }
@@ -120,11 +122,13 @@ class DoctorModel {
       availabilityDayOnline: onlineMap,
       isTopRateEnable: map['is_top_rate_enable'] ?? false,
       theTop: map['the_top'] ?? false,
-      isOnlineConsultationAvailable: map['is_online_consultation_available'] ?? false,
+      isOnlineConsultationAvailable:
+          map['is_online_consultation_available'] ?? false,
       specialty: map['specialty'] ?? '',
       yearsExperience: (map['years_experience'] ?? 0) as int,
       price: (map['price'] ?? 0) as num,
-      priceForOnline: (map['price_for_online'] ?? map['pirce_for_online'] ?? 0) as num,
+      priceForOnline:
+          (map['price_for_online'] ?? map['pirce_for_online'] ?? 0) as num,
       scheduleType: map['schedule_type'] ?? 'weekly',
       monthlySchedule: map['monthly_schedule'] as Map<String, dynamic>?,
       reviewsCount: (map['reviews_count'] ?? 0) as int,

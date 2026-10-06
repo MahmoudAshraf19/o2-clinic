@@ -13,11 +13,7 @@ class CosmeticService {
         "Skin Resurfacing",
         "Pigmentation Correction",
       ],
-      itemsAr: [
-        "إزالة الشعر المتقدمة",
-        "تجديد سطح البشرة",
-        "تصحيح التصبغات",
-      ],
+      itemsAr: ["إزالة الشعر المتقدمة", "تجديد سطح البشرة", "تصحيح التصبغات"],
       buttonTextEn: "View Services",
       buttonTextAr: "عرض الخدمات",
       price: 0.0,

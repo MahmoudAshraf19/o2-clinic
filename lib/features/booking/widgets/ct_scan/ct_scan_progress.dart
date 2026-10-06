@@ -5,10 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 
 class CTScanProgress extends StatelessWidget {
-  const CTScanProgress({
-    super.key,
-    required this.currentStep,
-  });
+  const CTScanProgress({super.key, required this.currentStep});
 
   final int currentStep;
 
@@ -36,10 +33,7 @@ class CTScanProgress extends StatelessWidget {
     return Row(
       children: [
         for (var i = 0; i < items.length; i++) ...[
-          _StepNode(
-            meta: items[i],
-            active: currentStep >= i + 1,
-          ),
+          _StepNode(meta: items[i], active: currentStep >= i + 1),
           if (i != items.length - 1)
             Expanded(
               child: AnimatedContainer(
@@ -50,10 +44,7 @@ class CTScanProgress extends StatelessWidget {
                   borderRadius: BorderRadius.circular(100),
                   gradient: currentStep >= i + 2
                       ? LinearGradient(
-                          colors: [
-                            AppColors.primary,
-                            AppColors.secondary,
-                          ],
+                          colors: [AppColors.primary, AppColors.secondary],
                         )
                       : null,
                   color: currentStep >= i + 2 ? null : AppColors.border,
@@ -67,20 +58,14 @@ class CTScanProgress extends StatelessWidget {
 }
 
 class _StepMeta {
-  const _StepMeta({
-    required this.icon,
-    required this.label,
-  });
+  const _StepMeta({required this.icon, required this.label});
 
   final IconData icon;
   final String label;
 }
 
 class _StepNode extends StatelessWidget {
-  const _StepNode({
-    required this.meta,
-    required this.active,
-  });
+  const _StepNode({required this.meta, required this.active});
 
   final _StepMeta meta;
   final bool active;
@@ -98,10 +83,7 @@ class _StepNode extends StatelessWidget {
             shape: BoxShape.circle,
             gradient: active
                 ? const LinearGradient(
-                    colors: [
-                      AppColors.primary,
-                      AppColors.secondary,
-                    ],
+                    colors: [AppColors.primary, AppColors.secondary],
                   )
                 : null,
             color: active ? null : const Color(0xffF1F4FA),
@@ -133,11 +115,9 @@ class _StepNode extends StatelessWidget {
             fontSize: 11,
             fontWeight: FontWeight.w700,
             color: active ? AppColors.primary : AppColors.grey,
-            
           ),
         ),
       ],
     );
   }
 }
-

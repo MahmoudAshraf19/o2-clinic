@@ -21,25 +21,36 @@ class DoctorActiveChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Unique tag so if multiple chats open, controllers don't conflict
-    final controller = Get.put(DoctorChatController(DoctorChatService(), room), tag: room.id);
+    final controller = Get.put(
+      DoctorChatController(DoctorChatService(), room),
+      tag: room.id,
+    );
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Colors.transparent,
         titleSpacing: 0,
         title: GestureDetector(
           onTap: () async {
-            Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
+            Get.dialog(
+              const Center(child: CircularProgressIndicator()),
+              barrierDismissible: false,
+            );
             try {
-              final data = await UserFirestoreService.instance.getUser(room.customerId);
+              final data = await UserFirestoreService.instance.getUser(
+                room.customerId,
+              );
               Get.back();
               if (data != null) {
-                // Since we don't have doc id here directly without another fetch, 
+                // Since we don't have doc id here directly without another fetch,
                 // we can pass the uid, as fromMap uses it for uid field
-                final patient = DashboardProfileModel.fromMap(room.customerId, data);
+                final patient = DashboardProfileModel.fromMap(
+                  room.customerId,
+                  data,
+                );
                 Get.to(() => PatientProfileScreen(patient: patient));
               }
             } catch (e) {
@@ -89,7 +100,8 @@ class DoctorActiveChatScreen extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
 
-                if (controller.messages.isEmpty && controller.uploadingItems.isEmpty) {
+                if (controller.messages.isEmpty &&
+                    controller.uploadingItems.isEmpty) {
                   return const Center(child: Text("No messages yet."));
                 }
 
@@ -98,13 +110,17 @@ class DoctorActiveChatScreen extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
                   reverse: true,
-                  itemCount: controller.messages.length + 1 + controller.uploadingItems.length,
+                  itemCount:
+                      controller.messages.length +
+                      1 +
+                      controller.uploadingItems.length,
                   itemBuilder: (context, index) {
                     final uploadingCount = controller.uploadingItems.length;
                     final messagesCount = controller.messages.length;
 
                     if (index < uploadingCount) {
-                      final draftMsg = controller.uploadingItems[uploadingCount - 1 - index];
+                      final draftMsg =
+                          controller.uploadingItems[uploadingCount - 1 - index];
                       return Padding(
                         padding: const EdgeInsets.only(top: 14),
                         child: Opacity(
@@ -112,7 +128,11 @@ class DoctorActiveChatScreen extends StatelessWidget {
                           child: Stack(
                             alignment: Alignment.centerRight,
                             children: [
-                              ChatMessageBubble(message: draftMsg.toChatMessage(controller.doctorId)),
+                              ChatMessageBubble(
+                                message: draftMsg.toChatMessage(
+                                  controller.doctorId,
+                                ),
+                              ),
                               const Positioned(
                                 right: 20,
                                 bottom: 20,
@@ -133,16 +153,21 @@ class DoctorActiveChatScreen extends StatelessWidget {
 
                     final msgIndex = index - uploadingCount;
                     if (msgIndex < messagesCount) {
-                      final msg = controller.messages[messagesCount - 1 - msgIndex];
+                      final msg =
+                          controller.messages[messagesCount - 1 - msgIndex];
                       return Padding(
                         padding: const EdgeInsets.only(top: 14),
-                        child: ChatMessageBubble(message: msg.toChatMessage(controller.doctorId)),
+                        child: ChatMessageBubble(
+                          message: msg.toChatMessage(controller.doctorId),
+                        ),
                       );
                     }
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 18, top: 18),
-                      child: ChatDateDivider(label: AppLocalizations.of(context)!.today ?? "Today"),
+                      child: ChatDateDivider(
+                        label: AppLocalizations.of(context)!.today ?? "Today",
+                      ),
                     );
                   },
                 );
@@ -155,3 +180,4 @@ class DoctorActiveChatScreen extends StatelessWidget {
     );
   }
 }
+

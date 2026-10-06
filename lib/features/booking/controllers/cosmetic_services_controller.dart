@@ -24,17 +24,18 @@ class CosmeticServicesController extends GetxController {
       _error.value = '';
       _loading.value = true;
 
-      final data = await CosmeticCategoryService.instance.fetchCosmeticCategories(
-        forceRefresh: forceRefresh,
-      );
+      final data = await CosmeticCategoryService.instance
+          .fetchCosmeticCategories(forceRefresh: forceRefresh);
 
       _services.assignAll(data);
     } catch (e, st) {
-      debugPrint("❌ [CosmeticServicesController] Error fetching services: $e\n$st");
-      _error.value = "Failed to load cosmetic services. Please try again later.";
+      debugPrint(
+        "❌ [CosmeticServicesController] Error fetching services: $e\n$st",
+      );
+      _error.value =
+          "Failed to load cosmetic services. Please try again later.";
     } finally {
       _loading.value = false;
     }
   }
 }
-

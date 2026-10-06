@@ -9,8 +9,18 @@ class CachedImageWidget extends StatelessWidget {
   final BoxFit fit;
   final BorderRadius? borderRadius;
   final Widget? errorWidget;
-  final Widget Function(BuildContext context, Object error, StackTrace? stackTrace)? errorBuilder;
-  final Widget Function(BuildContext context, Widget child, ImageChunkEvent? loadingProgress)? loadingBuilder;
+  final Widget Function(
+    BuildContext context,
+    Object error,
+    StackTrace? stackTrace,
+  )?
+  errorBuilder;
+  final Widget Function(
+    BuildContext context,
+    Widget child,
+    ImageChunkEvent? loadingProgress,
+  )?
+  loadingBuilder;
 
   const CachedImageWidget({
     Key? key,
@@ -59,11 +69,7 @@ class CachedImageWidget extends StatelessWidget {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
-      child: Container(
-        width: width,
-        height: height,
-        color: Colors.white,
-      ),
+      child: Container(width: width, height: height, color: Colors.white),
     );
   }
 
@@ -73,10 +79,7 @@ class CachedImageWidget extends StatelessWidget {
           width: width,
           height: height,
           color: Colors.grey[200],
-          child: const Icon(
-            Icons.broken_image,
-            color: Colors.grey,
-          ),
+          child: const Icon(Icons.broken_image, color: Colors.grey),
         );
   }
 }

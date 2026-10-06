@@ -18,17 +18,23 @@ class GlobalSearchController extends GetxController {
   final TextEditingController textController = TextEditingController();
 
   final RxList<DoctorModel> _allDoctors = <DoctorModel>[].obs;
-  final RxList<SpecializedServiceModel> _allSpecialties = <SpecializedServiceModel>[].obs;
-  final RxList<RadiologyCategoryModel> _allRadiology = <RadiologyCategoryModel>[].obs;
-  final RxList<CosmeticCategoryModel> _allCosmetics = <CosmeticCategoryModel>[].obs;
+  final RxList<SpecializedServiceModel> _allSpecialties =
+      <SpecializedServiceModel>[].obs;
+  final RxList<RadiologyCategoryModel> _allRadiology =
+      <RadiologyCategoryModel>[].obs;
+  final RxList<CosmeticCategoryModel> _allCosmetics =
+      <CosmeticCategoryModel>[].obs;
 
   final RxList<DoctorModel> filteredDoctors = <DoctorModel>[].obs;
-  final RxList<SpecializedServiceModel> filteredSpecialties = <SpecializedServiceModel>[].obs;
-  final RxList<RadiologyCategoryModel> filteredRadiology = <RadiologyCategoryModel>[].obs;
-  final RxList<CosmeticCategoryModel> filteredCosmetics = <CosmeticCategoryModel>[].obs;
+  final RxList<SpecializedServiceModel> filteredSpecialties =
+      <SpecializedServiceModel>[].obs;
+  final RxList<RadiologyCategoryModel> filteredRadiology =
+      <RadiologyCategoryModel>[].obs;
+  final RxList<CosmeticCategoryModel> filteredCosmetics =
+      <CosmeticCategoryModel>[].obs;
 
   final RxList<String> recentSearches = <String>[].obs;
-  
+
   final RxBool isLoading = true.obs;
   final RxString query = ''.obs;
 
@@ -51,9 +57,10 @@ class GlobalSearchController extends GetxController {
   Future<void> _initData() async {
     isLoading.value = true;
     _prefs = await SharedPreferences.getInstance();
-    
+
     // Load recent searches
-    recentSearches.value = _prefs?.getStringList('global_recent_searches') ?? [];
+    recentSearches.value =
+        _prefs?.getStringList('global_recent_searches') ?? [];
 
     try {
       final results = await Future.wait([
@@ -67,7 +74,6 @@ class GlobalSearchController extends GetxController {
       _allSpecialties.value = results[1] as List<SpecializedServiceModel>;
       _allRadiology.value = results[2] as List<RadiologyCategoryModel>;
       _allCosmetics.value = results[3] as List<CosmeticCategoryModel>;
-      
     } catch (e) {
       debugPrint("💥 [GlobalSearch] Error loading data: $e");
     } finally {
@@ -77,7 +83,7 @@ class GlobalSearchController extends GetxController {
 
   void onSearchChanged(String val) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
-    
+
     _debounce = Timer(const Duration(milliseconds: 300), () {
       query.value = val.trim().toLowerCase();
       _filterResults();
@@ -87,7 +93,7 @@ class GlobalSearchController extends GetxController {
   void submitSearch(String val) {
     final term = val.trim();
     if (term.isEmpty) return;
-    
+
     if (!recentSearches.contains(term)) {
       recentSearches.insert(0, term);
       if (recentSearches.length > 8) {
@@ -95,7 +101,7 @@ class GlobalSearchController extends GetxController {
       }
       _prefs?.setStringList('global_recent_searches', recentSearches.toList());
     }
-    
+
     textController.text = term;
     query.value = term.toLowerCase();
     _filterResults();
@@ -123,27 +129,39 @@ class GlobalSearchController extends GetxController {
 
     final langCode = Get.locale?.languageCode ?? 'en';
 
-    filteredDoctors.value = _allDoctors.where((d) =>
-      d.nameEn.toLowerCase().contains(q) ||
-      d.nameAr.toLowerCase().contains(q) ||
-      d.specialty.toLowerCase().contains(q) ||
-      d.titleEn.toLowerCase().contains(q) ||
-      d.titleAr.toLowerCase().contains(q)
-    ).toList();
+    filteredDoctors.value = _allDoctors
+        .where(
+          (d) =>
+              d.nameEn.toLowerCase().contains(q) ||
+              d.nameAr.toLowerCase().contains(q) ||
+              d.specialty.toLowerCase().contains(q) ||
+              d.titleEn.toLowerCase().contains(q) ||
+              d.titleAr.toLowerCase().contains(q),
+        )
+        .toList();
 
-    filteredSpecialties.value = _allSpecialties.where((s) =>
-      (s.nameEn ?? '').toLowerCase().contains(q) ||
-      (s.nameAr ?? '').toLowerCase().contains(q)
-    ).toList();
+    filteredSpecialties.value = _allSpecialties
+        .where(
+          (s) =>
+              (s.nameEn ?? '').toLowerCase().contains(q) ||
+              (s.nameAr ?? '').toLowerCase().contains(q),
+        )
+        .toList();
 
-    filteredRadiology.value = _allRadiology.where((r) =>
-      r.getName(langCode).toLowerCase().contains(q) ||
-      r.getDesc(langCode).toLowerCase().contains(q)
-    ).toList();
+    filteredRadiology.value = _allRadiology
+        .where(
+          (r) =>
+              r.getName(langCode).toLowerCase().contains(q) ||
+              r.getDesc(langCode).toLowerCase().contains(q),
+        )
+        .toList();
 
-    filteredCosmetics.value = _allCosmetics.where((c) =>
-      c.getName(langCode).toLowerCase().contains(q) ||
-      c.getDesc(langCode).toLowerCase().contains(q)
-    ).toList();
+    filteredCosmetics.value = _allCosmetics
+        .where(
+          (c) =>
+              c.getName(langCode).toLowerCase().contains(q) ||
+              c.getDesc(langCode).toLowerCase().contains(q),
+        )
+        .toList();
   }
 }

@@ -18,30 +18,32 @@ class GlobalAuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _authSub = FirebaseAuth.instance.authStateChanges().listen(_onAuthStateChanged);
+    _authSub = FirebaseAuth.instance.authStateChanges().listen(
+      _onAuthStateChanged,
+    );
   }
 
   void _onAuthStateChanged(User? user) {
     _userDocSub?.cancel();
     if (user != null) {
       _updateFcmToken(user.uid);
-      
-      _userDocSub = UserFirestoreService.instance
-          .streamUser(user.uid)
-          .listen((data) {
-            if (data != null) {
-              print('GLOBAL_AUTH: Document found for uid -> ${user.uid}');
-              currentUserData.value = data;
-              
-              final isBlocked = data['isBlocked'] == true;
-              if (isBlocked) {
-                _handleBlockedUser();
-              }
-            } else {
-              print('GLOBAL_AUTH: Document NOT found yet for uid -> ${user.uid}');
-              currentUserData.value = null;
-            }
-          });
+
+      _userDocSub = UserFirestoreService.instance.streamUser(user.uid).listen((
+        data,
+      ) {
+        if (data != null) {
+          print('GLOBAL_AUTH: Document found for uid -> ${user.uid}');
+          currentUserData.value = data;
+
+          final isBlocked = data['isBlocked'] == true;
+          if (isBlocked) {
+            _handleBlockedUser();
+          }
+        } else {
+          print('GLOBAL_AUTH: Document NOT found yet for uid -> ${user.uid}');
+          currentUserData.value = null;
+        }
+      });
     } else {
       print('GLOBAL_AUTH: User is null');
       UserFirestoreService.instance.clearCache();
@@ -69,7 +71,7 @@ class GlobalAuthController extends GetxController {
 
   Future<void> _handleBlockedUser() async {
     await FirebaseAuth.instance.signOut();
-    
+
     // Redirect to main navigation (which will show the home page for guests)
     Get.offAllNamed(AppRoutes.mainNavigation);
 

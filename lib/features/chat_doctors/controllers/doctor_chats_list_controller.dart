@@ -8,7 +8,7 @@ import '../services/doctor_chat_service.dart';
 
 class DoctorChatsListController extends GetxController {
   final DoctorChatService service;
-  
+
   DoctorChatsListController(this.service);
 
   final RxList<DoctorChatRoom> chatRooms = <DoctorChatRoom>[].obs;
@@ -46,7 +46,7 @@ class DoctorChatsListController extends GetxController {
           .where('auth_uid', isEqualTo: authUid)
           .limit(1)
           .get();
-          
+
       if (snapshot.docs.isNotEmpty) {
         final docId = snapshot.docs.first.id;
         _bootstrap(docId);

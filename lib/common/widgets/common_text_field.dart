@@ -15,11 +15,7 @@ enum CommonTextFieldType {
   multiline,
 }
 
-enum CommonTextFieldSize {
-  small,
-  medium,
-  large,
-}
+enum CommonTextFieldSize { small, medium, large }
 
 class CommonTextField extends StatefulWidget {
   const CommonTextField({
@@ -222,10 +218,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (widget.label != null) ...[
-          Text(
-            widget.label!,
-            style: widget.labelStyle ?? _getLabelStyle(),
-          ),
+          Text(widget.label!, style: widget.labelStyle ?? _getLabelStyle()),
           const SizedBox(height: 8),
         ],
         TextField(
@@ -247,7 +240,8 @@ class _CommonTextFieldState extends State<CommonTextField> {
           minLines: widget.minLines,
           textAlign: widget.textAlign ?? TextAlign.start,
           textAlignVertical: widget.textAlignVertical,
-          textCapitalization: widget.textCapitalization ?? TextCapitalization.sentences,
+          textCapitalization:
+              widget.textCapitalization ?? TextCapitalization.sentences,
           style: widget.style ?? _getTextStyle(),
           cursorColor: widget.cursorColor ?? AppColors.primary,
           cursorWidth: widget.cursorWidth,
@@ -274,10 +268,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
         ),
         if (widget.errorText != null) ...[
           const SizedBox(height: 4),
-          Text(
-            widget.errorText!,
-            style: widget.errorStyle ?? _getErrorStyle(),
-          ),
+          Text(widget.errorText!, style: widget.errorStyle ?? _getErrorStyle()),
         ],
         if (widget.helperText != null) ...[
           const SizedBox(height: 4),
@@ -315,8 +306,12 @@ class _CommonTextFieldState extends State<CommonTextField> {
       enabledBorder: widget.showBorder ? _getEnabledBorder() : InputBorder.none,
       focusedBorder: widget.showBorder ? _getFocusedBorder() : InputBorder.none,
       errorBorder: widget.showBorder ? _getErrorBorder() : InputBorder.none,
-      focusedErrorBorder: widget.showBorder ? _getFocusedErrorBorder() : InputBorder.none,
-      disabledBorder: widget.showBorder ? _getDisabledBorder() : InputBorder.none,
+      focusedErrorBorder: widget.showBorder
+          ? _getFocusedErrorBorder()
+          : InputBorder.none,
+      disabledBorder: widget.showBorder
+          ? _getDisabledBorder()
+          : InputBorder.none,
       isDense: widget.dense,
     );
   }
@@ -375,19 +370,14 @@ class _CommonTextFieldState extends State<CommonTextField> {
     final fontWeight = _getFontWeight();
     final color = widget.enabled ? AppColors.black : AppColors.grey;
 
-    return TextStyle(
-      fontSize: fontSize,
-      fontWeight: fontWeight,
-      
-      color: color,
-    );
+    return TextStyle(fontSize: fontSize, fontWeight: fontWeight, color: color);
   }
 
   TextStyle _getLabelStyle() {
     return const TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w600,
-      
+
       color: AppColors.black,
     );
   }
@@ -396,7 +386,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
     return const TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w500,
-      
+
       color: Color(0xFF9CA3AF),
     );
   }
@@ -405,7 +395,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
     return const TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.w500,
-      
+
       color: Color(0xFFEF4444),
     );
   }
@@ -414,7 +404,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
     return const TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.w500,
-      
+
       color: Color(0xFF6B7280),
     );
   }

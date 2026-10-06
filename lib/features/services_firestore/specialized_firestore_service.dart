@@ -4,7 +4,8 @@ import 'firestore_paths.dart';
 /// [SpecializedFirestoreService] with professional caching to reduce reads.
 class SpecializedFirestoreService {
   SpecializedFirestoreService._();
-  static final SpecializedFirestoreService instance = SpecializedFirestoreService._();
+  static final SpecializedFirestoreService instance =
+      SpecializedFirestoreService._();
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -13,7 +14,9 @@ class SpecializedFirestoreService {
   DateTime? _lastFetch;
   static const _ttl = Duration(minutes: 30);
 
-  Future<List<Map<String, dynamic>>> getAllSpecialized({bool forceRefresh = false}) async {
+  Future<List<Map<String, dynamic>>> getAllSpecialized({
+    bool forceRefresh = false,
+  }) async {
     // 1. Memory Cache
     if (!forceRefresh && _cachedList != null && _lastFetch != null) {
       if (DateTime.now().difference(_lastFetch!) < _ttl) {

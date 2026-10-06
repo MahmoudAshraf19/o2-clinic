@@ -12,7 +12,8 @@ class DoctorBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DoctorNavigationController controller = Get.find<DoctorNavigationController>();
+    final DoctorNavigationController controller =
+        Get.find<DoctorNavigationController>();
 
     return SafeArea(
       top: false,
@@ -24,13 +25,12 @@ class DoctorBottomNavigationBar extends StatelessWidget {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
             child: Container(
-              constraints: const BoxConstraints(
-                minHeight: 76,
-                maxHeight: 80,
-              ),
+              constraints: const BoxConstraints(minHeight: 76, maxHeight: 80),
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.90),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(32),
+                ),
                 border: Border.all(
                   color: Colors.white.withValues(alpha: 0.50),
                   width: 1,
@@ -44,10 +44,7 @@ class DoctorBottomNavigationBar extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 8,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 child: Obx(() {
                   final int index = controller.currentIndex.value;
 
@@ -65,7 +62,9 @@ class DoctorBottomNavigationBar extends StatelessWidget {
                       Expanded(
                         child: NavigationTabItem(
                           icon: Icons.calendar_month_rounded,
-                          label: AppLocalizations.of(context)!.doctorAppointments,
+                          label: AppLocalizations.of(
+                            context,
+                          )!.doctorAppointments,
                           isActive: index == 1,
                           onTap: () => controller.changeIndex(1),
                         ),

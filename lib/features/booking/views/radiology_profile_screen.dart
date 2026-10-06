@@ -33,7 +33,10 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
 
   Future<void> _fetchRadiologist() async {
     try {
-      final doc = await FirebaseFirestore.instance.collection('Radiologist').doc('Radiologist').get();
+      final doc = await FirebaseFirestore.instance
+          .collection('Radiologist')
+          .doc('Radiologist')
+          .get();
       if (doc.exists && doc.data() != null) {
         setState(() {
           _radiologist = RadiologistModel.fromMap(doc.id, doc.data()!);
@@ -50,7 +53,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -139,7 +142,6 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                     fontSize: 12,
                     color: AppColors.textSecondary.withValues(alpha: 0.78),
                     fontWeight: FontWeight.w600,
-                    
                   ),
                 ),
               ],
@@ -163,11 +165,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.verified_rounded,
-            size: 16,
-            color: AppColors.primary,
-          ),
+          Icon(Icons.verified_rounded, size: 16, color: AppColors.primary),
           const SizedBox(width: 6),
           Text(
             AppLocalizations.of(context)!.available,
@@ -175,7 +173,6 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
               fontSize: 11,
               fontWeight: FontWeight.w800,
               color: AppColors.primary,
-              
             ),
           ),
         ],
@@ -229,9 +226,12 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                         ),
                       ],
                       image: DecorationImage(
-                        image: service.image.isNotEmpty 
-                            ? CachedNetworkImageProvider(service.image) 
-                            : const AssetImage('assets/images/common/placeholder.jpg') as ImageProvider,
+                        image: service.image.isNotEmpty
+                            ? CachedNetworkImageProvider(service.image)
+                            : const AssetImage(
+                                    'assets/images/common/placeholder.jpg',
+                                  )
+                                  as ImageProvider,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -258,7 +258,6 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                             fontWeight: FontWeight.w800,
                             color: AppColors.primary,
                             letterSpacing: 0.4,
-                            
                           ),
                         ),
                       ),
@@ -271,7 +270,6 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                           fontSize: 18,
                           fontWeight: FontWeight.w900,
                           color: AppColors.textPrimary,
-                          
                         ),
                       ),
                       const SizedBox(height: 6),
@@ -284,7 +282,6 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                           height: 1.35,
                           color: AppColors.textSecondary,
                           fontWeight: FontWeight.w600,
-                          
                         ),
                       ),
                     ],
@@ -298,16 +295,16 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
     );
   }
 
-
-
   // ===================== DOCTOR CARD =====================
-  
+
   Widget _buildDoctorCard() {
     if (_isLoadingDoctor) {
       return Container(
         height: 80,
         decoration: _cardDecoration(),
-        child: const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        child: const Center(
+          child: CircularProgressIndicator(color: AppColors.primary),
+        ),
       );
     }
 
@@ -330,9 +327,15 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
             height: 55,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.primary.withValues(alpha: 0.15), width: 1.5),
+              border: Border.all(
+                color: AppColors.primary.withValues(alpha: 0.15),
+                width: 1.5,
+              ),
               image: DecorationImage(
-                image: doctor.image.isNotEmpty ? CachedNetworkImageProvider(doctor.image) : const AssetImage('assets/images/common/Doctor_avatar.jpg') as ImageProvider,
+                image: doctor.image.isNotEmpty
+                    ? CachedNetworkImageProvider(doctor.image)
+                    : const AssetImage('assets/images/common/Doctor_avatar.jpg')
+                          as ImageProvider,
                 fit: BoxFit.cover,
               ),
             ),
@@ -347,7 +350,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
-                    
+
                     color: AppColors.textPrimary,
                   ),
                 ),
@@ -357,7 +360,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    
+
                     color: AppColors.primary,
                   ),
                 ),
@@ -371,7 +374,9 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
             style: TextButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               backgroundColor: AppColors.primary.withValues(alpha: 0.08),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
             child: Text(
               langCode == 'ar' ? "التفاصيل" : "View Profile",
@@ -379,7 +384,6 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                 fontSize: 12,
                 fontWeight: FontWeight.w800,
                 color: AppColors.primary,
-                
               ),
             ),
           ),
@@ -401,7 +405,10 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _sectionHeader(icon: Icons.info_rounded, title: AppLocalizations.of(context)!.aboutThisService),
+          _sectionHeader(
+            icon: Icons.info_rounded,
+            title: AppLocalizations.of(context)!.aboutThisService,
+          ),
           const SizedBox(height: 10),
 
           AnimatedCrossFade(
@@ -410,13 +417,17 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                 ? CrossFadeState.showSecond
                 : CrossFadeState.showFirst,
             firstChild: Text(
-              about.isEmpty ? AppLocalizations.of(context)!.noDescriptionAvailable : about,
+              about.isEmpty
+                  ? AppLocalizations.of(context)!.noDescriptionAvailable
+                  : about,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: _bodyStyle(),
             ),
             secondChild: Text(
-              about.isEmpty ? AppLocalizations.of(context)!.noDescriptionAvailable : about,
+              about.isEmpty
+                  ? AppLocalizations.of(context)!.noDescriptionAvailable
+                  : about,
               style: _bodyStyle(),
             ),
           ),
@@ -425,17 +436,19 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
             Align(
               alignment: Alignment.centerLeft,
               child: TextButton(
-                onPressed: () => setState(() => _aboutExpanded = !_aboutExpanded),
+                onPressed: () =>
+                    setState(() => _aboutExpanded = !_aboutExpanded),
                 style: TextButton.styleFrom(
                   padding: const EdgeInsets.only(top: 8, left: 0, right: 0),
                   foregroundColor: AppColors.primary,
                 ),
                 child: Text(
-                  _aboutExpanded ? AppLocalizations.of(context)!.showLess : AppLocalizations.of(context)!.readMore,
+                  _aboutExpanded
+                      ? AppLocalizations.of(context)!.showLess
+                      : AppLocalizations.of(context)!.readMore,
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w800,
-                    
                   ),
                 ),
               ),
@@ -451,23 +464,37 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
     day = day.toLowerCase().trim();
     if (langCode == 'ar') {
       switch (day) {
-        case 'monday': return 'الإثنين';
-        case 'tuesday': return 'الثلاثاء';
-        case 'wednesday': return 'الأربعاء';
-        case 'thursday': return 'الخميس';
-        case 'friday': return 'الجمعة';
-        case 'saturday': return 'السبت';
-        case 'sunday': return 'الأحد';
+        case 'monday':
+          return 'الإثنين';
+        case 'tuesday':
+          return 'الثلاثاء';
+        case 'wednesday':
+          return 'الأربعاء';
+        case 'thursday':
+          return 'الخميس';
+        case 'friday':
+          return 'الجمعة';
+        case 'saturday':
+          return 'السبت';
+        case 'sunday':
+          return 'الأحد';
       }
     } else if (langCode == 'he') {
       switch (day) {
-        case 'monday': return 'שני';
-        case 'tuesday': return 'שלישי';
-        case 'wednesday': return 'רביעי';
-        case 'thursday': return 'חמישי';
-        case 'friday': return 'שישי';
-        case 'saturday': return 'שבת';
-        case 'sunday': return 'ראשון';
+        case 'monday':
+          return 'שני';
+        case 'tuesday':
+          return 'שלישי';
+        case 'wednesday':
+          return 'רביעי';
+        case 'thursday':
+          return 'חמישי';
+        case 'friday':
+          return 'שישי';
+        case 'saturday':
+          return 'שבת';
+        case 'sunday':
+          return 'ראשון';
       }
     }
     return day;
@@ -477,7 +504,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
     try {
       final parts = range.split('-');
       if (parts.length != 2) return range;
-      
+
       String formatTime(String time24) {
         final tParts = time24.split(':');
         int h = int.parse(tParts[0]);
@@ -488,10 +515,12 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
           if (h > 12) h -= 12;
         }
         if (h == 0) h = 12;
-        String localizedAmPm = amPm == "AM" ? AppLocalizations.of(context)!.am : AppLocalizations.of(context)!.pm;
+        String localizedAmPm = amPm == "AM"
+            ? AppLocalizations.of(context)!.am
+            : AppLocalizations.of(context)!.pm;
         return "${h.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')} $localizedAmPm";
       }
-      
+
       return "${formatTime(parts[0].trim())} - ${formatTime(parts[1].trim())}";
     } catch (e) {
       return range;
@@ -507,11 +536,17 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _sectionHeader(icon: Icons.schedule_rounded, title: AppLocalizations.of(context)!.availableDays),
+          _sectionHeader(
+            icon: Icons.schedule_rounded,
+            title: AppLocalizations.of(context)!.availableDays,
+          ),
           const SizedBox(height: 12),
 
           if (service.availabilityDay.isEmpty)
-            Text(AppLocalizations.of(context)!.noAvailabilityProvided, style: _bodyStyle())
+            Text(
+              AppLocalizations.of(context)!.noAvailabilityProvided,
+              style: _bodyStyle(),
+            )
           else
             Column(
               children: service.availabilityDay.entries.map((e) {
@@ -544,11 +579,13 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                       const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          _translateDay(e.key, Get.locale?.languageCode ?? 'en').toUpperCase(),
+                          _translateDay(
+                            e.key,
+                            Get.locale?.languageCode ?? 'en',
+                          ).toUpperCase(),
                           style: const TextStyle(
                             fontWeight: FontWeight.w900,
                             color: AppColors.textPrimary,
-                            
                           ),
                         ),
                       ),
@@ -557,7 +594,6 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                         style: const TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w800,
-                          
                         ),
                       ),
                     ],
@@ -589,7 +625,6 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
             fontSize: 15,
             fontWeight: FontWeight.w900,
             color: AppColors.textPrimary,
-            
           ),
         ),
       ],
@@ -630,10 +665,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
               SizedBox(width: 8),
               Text(
                 AppLocalizations.of(context)!.bookAppointment,
-                style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  
-                ),
+                style: TextStyle(fontWeight: FontWeight.w900),
               ),
             ],
           ),
@@ -664,7 +696,6 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
     height: 1.8,
     color: AppColors.textSecondary.withValues(alpha: 0.88),
     fontWeight: FontWeight.w600,
-    
   );
 }
 

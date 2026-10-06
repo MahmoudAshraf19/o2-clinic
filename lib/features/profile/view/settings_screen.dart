@@ -24,11 +24,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 0,
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Colors.transparent,
         toolbarHeight: 60,
         automaticallyImplyLeading: false,
@@ -42,7 +42,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(width: 16),
             Text(
               AppLocalizations.of(context)?.settings ?? 'Settings',
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: AppFonts.dancingScript,
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -60,13 +60,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AppLocalizations.of(context)?.manageYourClinicPreferences ?? 'Manage your clinic preferences.',
-              style: const TextStyle(
-                
+              AppLocalizations.of(context)?.manageYourClinicPreferences ??
+                  'Manage your clinic preferences.',
+              style: TextStyle(
                 fontSize: 14,
                 height: 1.5,
                 fontWeight: FontWeight.w400,
-                color: AppColors.textSecondary,
+                color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? AppColors.textSecondary,
               ),
             ),
             const SizedBox(height: 20),
@@ -93,8 +93,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: _QuickOptionCard(
                       icon: Icons.dark_mode_rounded,
                       title: AppLocalizations.of(context)?.theme ?? 'Theme',
-                      value: AppLocalizations.of(context)?.lightTheme ?? 'Light',
-                      onTap: () {},
+                      value:
+                          AppLocalizations.of(context)?.lightTheme ?? 'Light',
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          backgroundColor: Theme.of(context).cardColor,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                          ),
+                          builder: (context) => const _ThemeSelectionBottomSheet(),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -115,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               padding: const EdgeInsets.only(left: 4, right: 4),
               child: Text(
                 AppLocalizations.of(context)?.notifications ?? 'Notifications',
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: AppFonts.dancingScript,
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
@@ -129,8 +139,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
             _ToggleTile(
               icon: Icons.event_available_rounded,
-              title: AppLocalizations.of(context)?.appointments ?? 'Appointments',
-              subtitle: AppLocalizations.of(context)?.alertsForBookings ?? 'Alerts for bookings',
+              title:
+                  AppLocalizations.of(context)?.appointments ?? 'Appointments',
+              subtitle:
+                  AppLocalizations.of(context)?.alertsForBookings ??
+                  'Alerts for bookings',
               value: appointmentsEnabled,
               onChanged: (v) => setState(() => appointmentsEnabled = v),
             ),
@@ -139,8 +152,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
             _ToggleTile(
               icon: Icons.science_rounded,
-              title: AppLocalizations.of(context)?.labAnalysis ?? 'Lab Analysis',
-              subtitle: AppLocalizations.of(context)?.resultNotifications ?? 'Result notifications',
+              title:
+                  AppLocalizations.of(context)?.labAnalysis ?? 'Lab Analysis',
+              subtitle:
+                  AppLocalizations.of(context)?.resultNotifications ??
+                  'Result notifications',
               value: labAnalysisEnabled,
               onChanged: (v) => setState(() => labAnalysisEnabled = v),
             ),
@@ -150,37 +166,52 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(height: 16),
 
             _PrimaryActionButton(
-              title: AppLocalizations.of(context)?.privacyPolicy ?? 'Privacy Policy',
+              title:
+                  AppLocalizations.of(context)?.privacyPolicy ??
+                  'Privacy Policy',
               icon: Icons.privacy_tip_rounded,
               onTap: () {
-                Get.to(() => HtmlContentScreen(
-                  title: AppLocalizations.of(context)?.privacyPolicy ?? 'Privacy Policy',
-                  collection: 'app_constants',
-                  docId: 'privacyPolicy',
-                  fieldName: 'privacyPolicy',
-                ));
+                Get.to(
+                  () => HtmlContentScreen(
+                    title:
+                        AppLocalizations.of(context)?.privacyPolicy ??
+                        'Privacy Policy',
+                    collection: 'app_constants',
+                    docId: 'privacyPolicy',
+                    fieldName: 'privacyPolicy',
+                  ),
+                );
               },
             ),
 
             const SizedBox(height: 12),
 
             _PrimaryActionButton(
-              title: AppLocalizations.of(context)?.termsAndConditions ?? 'Terms and Conditions',
+              title:
+                  AppLocalizations.of(context)?.termsAndConditions ??
+                  'Terms and Conditions',
               icon: Icons.gavel_rounded,
               onTap: () {
-                Get.to(() => HtmlContentScreen(
-                  title: AppLocalizations.of(context)?.termsAndConditions ?? 'Terms and Conditions',
-                  collection: 'app_constants',
-                  docId: 'termsAndConditions',
-                  fieldName: 'termsAndConditions',
-                ));
+                Get.to(
+                  () => HtmlContentScreen(
+                    title:
+                        AppLocalizations.of(context)?.termsAndConditions ??
+                        'Terms and Conditions',
+                    collection: 'app_constants',
+                    docId: 'termsAndConditions',
+                    fieldName: 'termsAndConditions',
+                  ),
+                );
               },
             ),
 
             const SizedBox(height: 32),
             Center(
               child: FutureBuilder<DocumentSnapshot>(
-                future: FirebaseFirestore.instance.collection('app_constants').doc('version').get(),
+                future: FirebaseFirestore.instance
+                    .collection('app_constants')
+                    .doc('version')
+                    .get(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const SizedBox(
@@ -189,7 +220,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: CircularProgressIndicator(strokeWidth: 2),
                     );
                   }
-                  
+
                   String version = '1.0';
                   if (snapshot.hasData && snapshot.data!.exists) {
                     final data = snapshot.data!.data() as Map<String, dynamic>?;
@@ -200,11 +231,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                   return Text(
                     'Version $version',
-                    style: const TextStyle(
-                      
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.textSecondary,
+                      color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? AppColors.textSecondary,
                     ),
                   );
                 },
@@ -234,9 +264,9 @@ class _TopIconButton extends StatelessWidget {
           width: 42,
           height: 42,
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: AppColors.borderSoft),
+            border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : AppColors.borderSoft),
           ),
           child: Icon(icon, size: 22, color: AppColors.primary),
         ),
@@ -252,9 +282,9 @@ class _AvatarBubble extends StatelessWidget {
       width: 42,
       height: 42,
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: Theme.of(context).cardColor,
         shape: BoxShape.circle,
-        border: Border.all(color: AppColors.borderSoft),
+        border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : AppColors.borderSoft),
       ),
       child: const Icon(
         Icons.person_rounded,
@@ -288,9 +318,9 @@ class _MiniCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: AppColors.borderSoft),
+            border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : AppColors.borderSoft),
             boxShadow: [
               BoxShadow(
                 color: AppColors.shadowSoft,
@@ -305,8 +335,8 @@ class _MiniCard extends StatelessWidget {
               Container(
                 width: 42,
                 height: 42,
-                decoration: const BoxDecoration(
-                  color: AppColors.primarySoft,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.15),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -322,11 +352,10 @@ class _MiniCard extends StatelessWidget {
                 title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.0,
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? AppColors.textSecondary,
                 ),
               ),
               const SizedBox(height: 4),
@@ -334,10 +363,9 @@ class _MiniCard extends StatelessWidget {
                 value,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.textPrimary,
                 ),
               ),
             ],
@@ -383,9 +411,9 @@ class _AssistanceBanner extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      AppLocalizations.of(context)?.needAssistance ?? 'Need assistance?',
-                      style: const TextStyle(
-                        
+                      AppLocalizations.of(context)?.needAssistance ??
+                          'Need assistance?',
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: AppColors.white,
@@ -393,9 +421,9 @@ class _AssistanceBanner extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      AppLocalizations.of(context)?.text247DigitalConcierge ?? '24/7 Digital Concierge',
+                      AppLocalizations.of(context)?.text247DigitalConcierge ??
+                          '24/7 Digital Concierge',
                       style: TextStyle(
-                        
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                         color: AppColors.white.withOpacity(0.78),
@@ -451,17 +479,17 @@ class _ToggleTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.borderSoft),
+        border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : AppColors.borderSoft),
       ),
       child: Row(
         children: [
           Container(
             width: 42,
             height: 42,
-            decoration: const BoxDecoration(
-              color: AppColors.primarySoft,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor.withOpacity(0.15),
               shape: BoxShape.circle,
             ),
             child: Icon(icon, size: 22, color: AppColors.primary),
@@ -474,20 +502,18 @@ class _ToggleTile extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   subtitle,
                   style: TextStyle(
-                    
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? AppColors.textSecondary,
                   ),
                 ),
               ],
@@ -516,7 +542,7 @@ class _SoftSwitch extends StatelessWidget {
         height: 28,
         padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
-          color: value ? AppColors.primary : AppColors.toggleTrack,
+          color: value ? AppColors.primary : (Theme.of(context).brightness == Brightness.dark ? Colors.white24 : AppColors.toggleTrack),
           borderRadius: BorderRadius.circular(999),
         ),
         child: AnimatedAlign(
@@ -525,8 +551,8 @@ class _SoftSwitch extends StatelessWidget {
           child: Container(
             width: 22,
             height: 22,
-            decoration: const BoxDecoration(
-              color: AppColors.toggleThumb,
+            decoration: BoxDecoration(
+              color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.toggleThumb,
               shape: BoxShape.circle,
             ),
           ),
@@ -576,7 +602,6 @@ class _PrimaryActionButton extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                   color: AppColors.white,
@@ -606,7 +631,7 @@ class _QuickOptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.surface,
+      color: Theme.of(context).cardColor,
       borderRadius: BorderRadius.circular(18),
       child: InkWell(
         onTap: onTap,
@@ -615,7 +640,7 @@ class _QuickOptionCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: AppColors.borderSoft),
+            border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : AppColors.borderSoft),
           ),
           child: Row(
             children: [
@@ -623,7 +648,7 @@ class _QuickOptionCard extends StatelessWidget {
                 width: 38,
                 height: 38,
                 decoration: BoxDecoration(
-                  color: AppColors.primarySoft,
+                  color: Theme.of(context).primaryColor.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, size: 20, color: AppColors.primary),
@@ -637,20 +662,18 @@ class _QuickOptionCard extends StatelessWidget {
                     Text(
                       title,
                       style: TextStyle(
-                        
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.textSecondary,
+                        color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? AppColors.textSecondary,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       value,
                       style: TextStyle(
-                        
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                        color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.textPrimary,
                       ),
                     ),
                   ],
@@ -668,3 +691,59 @@ class _QuickOptionCard extends StatelessWidget {
     );
   }
 }
+
+class _ThemeSelectionBottomSheet extends StatelessWidget {
+  const _ThemeSelectionBottomSheet();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            AppLocalizations.of(context)?.theme ?? 'Theme',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: AppColors.primary,
+            ),
+          ),
+          const SizedBox(height: 20),
+          ListTile(
+            leading: const Icon(Icons.light_mode, color: AppColors.vibrantCyan),
+            title: Text(
+              AppLocalizations.of(context)?.lightTheme ?? 'Light',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            trailing: const Icon(Icons.check, color: AppColors.brandBlue),
+            onTap: () {
+              Get.changeThemeMode(ThemeMode.light);
+              Navigator.pop(context);
+            },
+          ),
+          const Divider(height: 1, color: AppColors.borderSoft),
+          ListTile(
+            leading: const Icon(Icons.dark_mode, color: AppColors.muted),
+            title: Text(
+              'Dark',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            onTap: () {
+              Get.changeThemeMode(ThemeMode.dark);
+              Navigator.pop(context);
+            },
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+

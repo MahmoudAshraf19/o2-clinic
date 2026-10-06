@@ -7,7 +7,9 @@ class RadiologyCategoryService {
 
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<List<RadiologyCategoryModel>> fetchRadiologyCategories({bool forceRefresh = false}) async {
+  Future<List<RadiologyCategoryModel>> fetchRadiologyCategories({
+    bool forceRefresh = false,
+  }) async {
     // Basic implementation for fetching radiology categories
     final snap = await _db.collection('radiology').get();
 

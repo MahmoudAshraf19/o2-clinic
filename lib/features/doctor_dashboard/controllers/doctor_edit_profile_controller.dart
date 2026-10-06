@@ -15,8 +15,9 @@ import '../../services_firestore/models/doctor_model.dart';
 import 'doctor_profile_controller.dart';
 
 class DoctorEditProfileController extends GetxController {
-  final DoctorProfileController _profileController = Get.find<DoctorProfileController>();
-  
+  final DoctorProfileController _profileController =
+      Get.find<DoctorProfileController>();
+
   final formKey = GlobalKey<FormState>();
 
   final nameArController = TextEditingController();
@@ -35,18 +36,19 @@ class DoctorEditProfileController extends GetxController {
   final onlinePriceController = TextEditingController();
 
   final isOnlineAvailable = false.obs;
-  
+
   final Rx<XFile?> selectedImage = Rx<XFile?>(null);
   Uint8List? webImageBytes;
   String existingImageUrl = '';
-  
+
   // Hardcoded locked variables for UI display
   String specialty = '';
   int yearsExperience = 0;
   String regularPrice = '';
   Map<String, String> availabilityDay = {};
-  final RxMap<String, List<Map<String, String>>> onlineSchedule = <String, List<Map<String, String>>>{}.obs;
-  
+  final RxMap<String, List<Map<String, String>>> onlineSchedule =
+      <String, List<Map<String, String>>>{}.obs;
+
   final activeLanguages = <String>['ar', 'en', 'he'].obs;
 
   @override
@@ -81,10 +83,12 @@ class DoctorEditProfileController extends GetxController {
       regularPrice = doctor.price.toString();
       availabilityDay = doctor.availabilityDay;
       onlineSchedule.value = Map<String, List<Map<String, String>>>.from(
-        doctor.availabilityDayOnline.map((k, v) => MapEntry(k, List<Map<String, String>>.from(v)))
+        doctor.availabilityDayOnline.map(
+          (k, v) => MapEntry(k, List<Map<String, String>>.from(v)),
+        ),
       );
     }
-    
+
     _fetchActiveLanguages();
   }
 
@@ -95,7 +99,9 @@ class DoctorEditProfileController extends GetxController {
           .where('isActive', isEqualTo: true)
           .get();
       if (snapshot.docs.isNotEmpty) {
-        activeLanguages.value = snapshot.docs.map((doc) => doc.data()['slug'] as String).toList();
+        activeLanguages.value = snapshot.docs
+            .map((doc) => doc.data()['slug'] as String)
+            .toList();
       }
     } catch (e) {
       debugPrint('Error fetching languages: $e');
@@ -105,7 +111,7 @@ class DoctorEditProfileController extends GetxController {
   void addOnlineSchedule(String day, String from, String to) {
     final fromTime = int.tryParse(from) ?? 0;
     final toTime = int.tryParse(to) ?? 0;
-    
+
     if (fromTime >= toTime) {
       Get.snackbar(
         'Invalid Time',
@@ -117,18 +123,18 @@ class DoctorEditProfileController extends GetxController {
     }
 
     final currentDaySchedules = onlineSchedule[day] ?? [];
-    
+
     bool hasOverlap = false;
     for (var schedule in currentDaySchedules) {
       final existingFrom = int.tryParse(schedule['from']!) ?? 0;
       final existingTo = int.tryParse(schedule['to']!) ?? 0;
-      
+
       if (fromTime < existingTo && toTime > existingFrom) {
         hasOverlap = true;
         break;
       }
     }
-    
+
     if (hasOverlap) {
       Get.snackbar(
         'Conflict',
@@ -140,13 +146,13 @@ class DoctorEditProfileController extends GetxController {
     }
 
     currentDaySchedules.add({'from': from, 'to': to});
-    
+
     currentDaySchedules.sort((a, b) {
       final aFrom = int.tryParse(a['from']!) ?? 0;
       final bFrom = int.tryParse(b['from']!) ?? 0;
       return aFrom.compareTo(bFrom);
     });
-    
+
     onlineSchedule[day] = currentDaySchedules;
     Get.back();
   }
@@ -158,7 +164,7 @@ class DoctorEditProfileController extends GetxController {
       if (list.isEmpty) {
         onlineSchedule.remove(day);
       } else {
-        onlineSchedule[day] = list; 
+        onlineSchedule[day] = list;
       }
     }
   }
@@ -193,19 +199,19 @@ class DoctorEditProfileController extends GetxController {
 
   Future<void> saveProfile() async {
     if (!formKey.currentState!.validate()) return;
-    
+
     _profileController.isLoading.value = true;
-    
+
     try {
       String finalImageUrl = existingImageUrl;
-      
+
       // 1. Upload image if selectedImage != null
       if (selectedImage.value != null) {
         final ref = FirebaseStorage.instance
             .ref()
             .child('doctors_profiles')
             .child('${DateTime.now().millisecondsSinceEpoch}.jpg');
-            
+
         if (kIsWeb) {
           // Image compression via flutter_image_compress is not supported on web natively
           // We bypass it on Web and upload bytes directly
@@ -215,22 +221,22 @@ class DoctorEditProfileController extends GetxController {
             }
             await ref.putData(webImageBytes!);
           } catch (e) {
-             debugPrint('Image upload failed on web: $e');
-             throw Exception('File upload failed on Web: $e');
+            debugPrint('Image upload failed on web: $e');
+            throw Exception('File upload failed on Web: $e');
           }
         } else {
           final bytes = await FlutterImageCompress.compressWithFile(
             selectedImage.value!.path,
             quality: 60,
           );
-          
+
           if (bytes != null) {
             await ref.putData(bytes);
           } else {
             await ref.putFile(File(selectedImage.value!.path));
           }
         }
-        
+
         finalImageUrl = await ref.getDownloadURL();
       }
 
@@ -257,17 +263,22 @@ class DoctorEditProfileController extends GetxController {
         }
         data['availability_day_online'] = onlineSchedule;
       }
-      
+
       // 3. Call _profileController.updateProfile(data)
       final success = await _profileController.updateProfile(data);
       if (success) {
         Get.back();
-        Get.snackbar('Success', 'Profile updated successfully', backgroundColor: Colors.green, colorText: Colors.white);
+        Get.snackbar(
+          'Success',
+          'Profile updated successfully',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
       }
     } catch (e, stackTrace) {
       debugPrint('Error saving profile: $e');
       debugPrint('Stacktrace: $stackTrace');
-      
+
       Get.snackbar(
         'Error',
         'Failed to save profile: ${e.toString()}',

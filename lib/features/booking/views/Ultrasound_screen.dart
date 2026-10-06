@@ -30,7 +30,9 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
     super.initState();
     try {
       final currency = Get.find<AppConstantsController>().currencySymbol.value;
-      print("🖨️ [UltrasoundScreen] Screen initialized. Current Currency: '$currency'");
+      print(
+        "🖨️ [UltrasoundScreen] Screen initialized. Current Currency: '$currency'",
+      );
     } catch (e) {
       print("🖨️ [UltrasoundScreen] Could not read currency: $e");
     }
@@ -71,10 +73,7 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
     });
   }
 
-  void _showTopSnack({
-    required String title,
-    required String message,
-  }) {
+  void _showTopSnack({required String title, required String message}) {
     Get.snackbar(
       title,
       message,
@@ -91,7 +90,7 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
     final isNarrow = size.width < 360;
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           const UltrasoundBackground(),
@@ -136,14 +135,15 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
                             ),
                             const SizedBox(height: 3),
                             Text(
-                              AppLocalizations.of(context)!.selectUltrasoundType,
+                              AppLocalizations.of(
+                                context,
+                              )!.selectUltrasoundType,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: AppColors.textSecondary.withValues(
                                   alpha: .75,
                                 ),
                                 fontWeight: FontWeight.w500,
-                                
                               ),
                             ),
                           ],
@@ -161,8 +161,8 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
                             child: CircularProgressIndicator(),
                           )
                         : _errorMessage != null
-                            ? _buildErrorState()
-                            : _buildContent(),
+                        ? _buildErrorState()
+                        : _buildContent(),
                   ),
                 ),
               ],
@@ -215,18 +215,20 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
                     fontSize: 24,
                     fontWeight: FontWeight.w800,
                     color: AppColors.primary,
-                    
+
                     height: 1.1,
                   ),
                 ),
                 const SizedBox(height: 7),
                 Text(
-                  AppLocalizations.of(context)!.chooseTheRequiredDiagnosticProcedure,
+                  AppLocalizations.of(
+                    context,
+                  )!.chooseTheRequiredDiagnosticProcedure,
                   style: TextStyle(
                     fontSize: 12,
                     color: AppColors.grey,
                     fontWeight: FontWeight.w500,
-                    
+
                     height: 1.7,
                   ),
                 ),
@@ -264,18 +266,13 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
-                
               ),
             ),
             const SizedBox(height: 6),
             Text(
               _errorMessage ?? '',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.textSecondary,
-                
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -308,18 +305,13 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
-                
               ),
             ),
             const SizedBox(height: 6),
             Text(
               subtitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.textSecondary,
-                
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
             ),
           ],
         ),
@@ -327,3 +319,4 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
     );
   }
 }
+
