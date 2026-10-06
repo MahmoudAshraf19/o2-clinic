@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-import '../../../core/services/notification_service.dart';
 import '../../services_firestore/models/doctor_model.dart';
 
 class BookingResult {
