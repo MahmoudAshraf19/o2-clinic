@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -418,37 +419,24 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                             const SizedBox(height: 24),
                             SizedBox(
                               width: double.infinity,
-                              child: ElevatedButton.icon(
+                              child: CommonButton(
                                 onPressed: _isDrawingRoute
                                     ? null
                                     : () => _drawRoute(center),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primary,
-                                  foregroundColor: AppColors.white,
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 16,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  elevation: 0,
+                                text: AppLocalizations.of(context)!.takeMeThere,
+                                type: CommonButtonType.primary,
+                                backgroundColor: AppColors.primary,
+                                foregroundColor: AppColors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
                                 ),
-                                icon: _isDrawingRoute
-                                    ? const SizedBox(
-                                        width: 20,
-                                        height: 20,
-                                        child: CircularProgressIndicator(
-                                          color: AppColors.white,
-                                          strokeWidth: 2,
-                                        ),
-                                      )
-                                    : const Icon(Icons.directions_rounded),
-                                label: Text(
-                                  AppLocalizations.of(context)!.takeMeThere,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                elevation: 0,
+                                isLoading: _isDrawingRoute,
+                                icon: Icons.directions_rounded,
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),

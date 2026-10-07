@@ -1,5 +1,6 @@
 import '../../../../common/widgets/common_text_field.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import '../controllers/discount_controller.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -80,14 +81,7 @@ class DiscountInputWidget {
                 width: double.infinity,
                 height: 52,
                 child: Obx(() {
-                  return ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                    ),
+                  return CommonButton(
                     onPressed: discountController.isVerifyingCode.value
                         ? null
                         : () async {
@@ -100,26 +94,20 @@ class DiscountInputWidget {
                               Get.back();
                             }
                           },
-                    child: discountController.isVerifyingCode.value
-                        ? const SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(
-                              color: AppColors.white,
-                              strokeWidth: 2,
-                            ),
-                          )
-                        : Text(
-                            _getTranslatedString(
-                              'apply',
-                              Get.locale?.languageCode,
-                            ),
-                            style: const TextStyle(
-                              color: AppColors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                    text: _getTranslatedString(
+                      'apply',
+                      Get.locale?.languageCode,
+                    ),
+                    type: CommonButtonType.primary,
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.white,
+                    borderRadius: BorderRadius.circular(14),
+                    elevation: 0,
+                    isLoading: discountController.isVerifyingCode.value,
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   );
                 }),
               ),

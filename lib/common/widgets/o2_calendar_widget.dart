@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'common_button.dart';
 import 'package:intl/intl.dart';
 import 'package:o2_clinic/core/theme/app_colors.dart';
 
@@ -268,12 +269,11 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
                       ),
                     ],
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.colorFF00685F,
-                    ),
+                  CommonButton(
                     onPressed: () {},
-                    child: const Text("Continue"),
+                    text: "Continue",
+                    type: CommonButtonType.primary,
+                    backgroundColor: AppColors.colorFF00685F,
                   ),
                 ],
               ),

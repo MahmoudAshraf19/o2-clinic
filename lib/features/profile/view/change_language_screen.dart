@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -81,11 +82,12 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  ElevatedButton(
+                  CommonButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text(AppLocalizations.of(context)!.goBack),
+                    text: AppLocalizations.of(context)!.goBack,
+                    type: CommonButtonType.primary,
                   ),
                 ],
               ),
