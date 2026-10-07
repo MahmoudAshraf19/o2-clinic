@@ -439,9 +439,12 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 ),
               ],
             ),
-            TextButton(
+            CommonButton(
               onPressed: () => discountController.removeDiscountCode(),
-              child: Icon(Icons.close, color: AppColors.red, size: 20),
+              text: '',
+              type: CommonButtonType.text,
+              icon: Icons.close,
+              foregroundColor: AppColors.red,
             ),
           ],
         );

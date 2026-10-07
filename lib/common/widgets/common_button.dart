@@ -12,12 +12,14 @@ class CommonButton extends StatelessWidget {
     this.type = CommonButtonType.primary,
     this.size = CommonButtonSize.medium,
     this.icon,
+    this.customIconWidget,
     this.iconPosition = IconPosition.left,
     this.isLoading = false,
     this.disabled = false,
     this.backgroundColor,
     this.foregroundColor,
     this.borderColor,
+    this.borderWidth = 1.0,
     this.gradient,
     this.borderRadius,
     this.padding,
@@ -33,12 +35,14 @@ class CommonButton extends StatelessWidget {
   final CommonButtonType type;
   final CommonButtonSize size;
   final IconData? icon;
+  final Widget? customIconWidget;
   final IconPosition iconPosition;
   final bool isLoading;
   final bool disabled;
   final Color? backgroundColor;
   final Color? foregroundColor;
   final Color? borderColor;
+  final double borderWidth;
   final Gradient? gradient;
   final BorderRadius? borderRadius;
   final EdgeInsets? padding;
@@ -97,7 +101,7 @@ class CommonButton extends StatelessWidget {
             minimumSize: Size(width ?? 0, height ?? _getDefaultHeight()),
             side: BorderSide(
               color: borderColor ?? _getDefaultBorderColor(),
-              width: 1,
+              width: borderWidth,
             ),
             shape: RoundedRectangleBorder(
               borderRadius: borderRadius ?? _getDefaultBorderRadius(),
@@ -128,15 +132,19 @@ class CommonButton extends StatelessWidget {
   }
 
   Widget _buildButtonContent(TextStyle textStyle) {
-    if (icon == null) {
+    if (icon == null && customIconWidget == null) {
       return Text(text, style: textStyle);
     }
 
-    final iconWidget = Icon(
+    final Widget iconWidget = customIconWidget ?? Icon(
       icon,
       size: textStyle.fontSize ?? 14,
       color: textStyle.color,
     );
+
+    if (text.isEmpty) {
+      return iconWidget;
+    }
 
     switch (iconPosition) {
       case IconPosition.left:
