@@ -3,29 +3,30 @@ import 'package:get/get.dart';
 
 import '../../core/navigation/bindings/navigation_binding.dart';
 import '../../core/navigation/views/navigation_shell.dart';
-import '../../features/all_doctors/presentation/pages/all_doctors_page.dart';
-import '../../features/auth/bindings/login_binding.dart';
-import '../../features/auth/bindings/register_binding.dart';
-import '../../features/auth/views/login_screen.dart';
-import '../../features/auth/views/register_screen.dart';
-import '../../features/doctors/bindings/doctor_profile_binding.dart';
-import '../../features/doctors/bindings/doctors_binding.dart';
-import '../../features/doctors/models/doctor_model.dart';
-import '../../features/doctors/views/doctor_profile_screen.dart';
-import '../../features/doctors/views/doctors_screen.dart';
-import '../../features/onboarding/bindings/onboarding_binding.dart';
-import '../../features/onboarding/views/onboarding_screen.dart';
-import '../../features/services_firestore/models/specialized_service_model.dart';
-import '../../features/services/views/department_doctor_screen.dart';
-import '../../features/splash/bindings/splash_binding.dart';
-import '../../features/splash/views/splash_screen.dart';
+import '../../features/doctors/presentation/screens/all_doctors_page.dart';
+import '../../features/auth/presentation/bindings/login_binding.dart';
+import '../../features/auth/presentation/bindings/register_binding.dart';
+import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/auth/presentation/screens/register_screen.dart';
+import '../../features/doctors/presentation/bindings/doctor_profile_binding.dart';
+import '../../features/doctors/presentation/bindings/doctors_binding.dart';
+import '../../features/doctors/data/models/doctor_model.dart';
+import '../../features/doctors/presentation/screens/doctor_profile_screen.dart';
+import '../../features/doctors/presentation/screens/doctors_screen.dart';
+import '../../features/onboarding/presentation/bindings/onboarding_binding.dart';
+import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
+import '../../features/services/data/models/fs_specialized_service_model.dart';
+import '../../features/services/presentation/screens/department_doctor_screen.dart';
+import '../../features/splash/presentation/bindings/splash_binding.dart';
+import '../../features/splash/presentation/screens/splash_screen.dart';
 
-import '../../features/auth/bindings/doctor_login_binding.dart';
-import '../../features/auth/views/doctor_login_screen.dart';
+import '../../features/auth/presentation/bindings/doctor_login_binding.dart';
+import '../../features/auth/presentation/screens/doctor_login_screen.dart';
 import '../../features/doctor_dashboard/bindings/doctor_navigation_binding.dart';
 import '../../features/doctor_dashboard/views/doctor_navigation_shell.dart';
 import '../../features/chat_support/screens/radiology_chat_screen.dart';
 import 'app_routes.dart';
+import 'package:o2_clinic/common/widgets/common_empty_state.dart';
 
 class AppPages {
   AppPages._();
@@ -80,7 +81,7 @@ class AppPages {
           // Return a placeholder if no doctor data is passed
           return Scaffold(
             appBar: AppBar(title: const Text('Doctor Profile')),
-            body: const Center(child: Text('Doctor data not found')),
+            body: const CommonEmptyState(title: 'Doctor data not found'),
           );
         }
         return DoctorProfileScreen(doctor: doctor);
@@ -96,7 +97,7 @@ class AppPages {
           // Return a placeholder if no department data is passed
           return Scaffold(
             appBar: AppBar(title: const Text('Department Doctors')),
-            body: const Center(child: Text('Department data not found')),
+            body: const CommonEmptyState(title: 'Department data not found'),
           );
         }
         return DepartmentDoctorScreen(department: department);

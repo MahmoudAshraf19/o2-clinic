@@ -10,6 +10,7 @@ import '../../../features/notifications/controllers/notifications_controller.dar
 import '../../../features/notifications/widgets/notification_dropdown_widget.dart';
 import '../../../l10n/app_localizations.dart';
 import 'package:o2_clinic/core/theme/app_colors.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DoctorAppBar({super.key, this.onNotificationTap});
@@ -90,7 +91,7 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                                           return child;
                                         }
                                         return Center(
-                                          child: CircularProgressIndicator(
+                                          child: CommonLoadingIndicator(
                                             strokeWidth: 2,
                                             value:
                                                 loadingProgress

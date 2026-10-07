@@ -3,19 +3,21 @@ import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/common_button.dart';
+import '../../../common/widgets/common_snackbar.dart';
 import '../../services_firestore/models/banner_model.dart';
 import '../../services_firestore/services/banner_service.dart';
-import '../../booking/views/lab_tests_screen.dart';
-import '../../booking/views/radiology_profile_screen.dart';
-import '../../booking/views/cosmetic_booking_page.dart';
-import '../../booking/controllers/cosmetic_booking_controller.dart';
-import '../../booking/controllers/radiology_booking_controller.dart';
-import '../../all_doctors/presentation/pages/all_doctors_page.dart';
-import '../../services/models/radiology_category_model.dart';
-import '../../services/models/cosmetic_category_model.dart';
+import '../../booking/presentation/screens/lab_tests_screen.dart';
+import '../../booking/presentation/screens/radiology_profile_screen.dart';
+import '../../booking/presentation/screens/cosmetic_booking_page.dart';
+import '../../booking/presentation/controllers/cosmetic_booking_controller.dart';
+import '../../booking/presentation/controllers/radiology_booking_controller.dart';
+import '../../doctors/presentation/screens/all_doctors_page.dart';
+import '../../services/data/models/radiology_category_model.dart';
+import '../../services/data/models/cosmetic_category_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/core/theme/app_colors.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class DiscountBannersSection extends StatelessWidget {
   const DiscountBannersSection({super.key});
@@ -148,7 +150,7 @@ class _BannerCard extends StatelessWidget {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
+      builder: (context) => const Center(child: CommonLoadingIndicator()),
     );
 
     try {
@@ -192,10 +194,8 @@ class _BannerCard extends StatelessWidget {
         );
       }
       Get.to(() => targetScreen!);
-    } else if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Service not found or unavailable")),
-      );
+    } else {
+      CommonSnackbar.showError(title: 'Error', message: 'Service not found or unavailable');
     }
   }
 

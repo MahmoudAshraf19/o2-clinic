@@ -1,3 +1,4 @@
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,7 @@ class DoctorProfileController extends GetxController {
         doctor.value = DoctorModel.fromMap(id: _docId!, map: doc.data());
       }
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load profile data');
+      CommonSnackbar.showError(title: 'Error', message: 'Failed to load profile data');
     } finally {
       isLoading.value = false;
     }
@@ -56,7 +57,7 @@ class DoctorProfileController extends GetxController {
       await fetchDoctorData();
       return true;
     } catch (e) {
-      Get.snackbar('Error', 'Failed to update profile');
+      CommonSnackbar.showError(title: 'Error', message: 'Failed to update profile');
       return false;
     } finally {
       isLoading.value = false;

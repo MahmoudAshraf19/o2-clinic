@@ -2,6 +2,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -10,8 +11,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../../common/controllers/global_auth_controller.dart';
 import '../../../../common/app_constants.dart';
-import '../../../services/models/radiology_category_model.dart';
-import '../../controllers/radiology_booking_controller.dart';
+import '../../../services/data/models/radiology_category_model.dart';
+import '../controllers/radiology_booking_controller.dart';
 import '../../../discounts/controllers/discount_controller.dart';
 import '../../../discounts/widgets/discount_input_widget.dart';
 import 'radiology_booking_success_screen.dart';
@@ -647,11 +648,7 @@ class _RadiologyConfirmBookingScreenState
                       controller.selectTime(widget.selectedTime);
 
                       if (widget.selectedTime.trim().isEmpty) {
-                        Get.snackbar(
-                          'Error',
-                          'Time is not available',
-                          snackPosition: SnackPosition.TOP,
-                        );
+                        CommonSnackbar.showError(title: 'Error', message: 'Time is not available');
                         return;
                       }
 
@@ -712,11 +709,7 @@ class _RadiologyConfirmBookingScreenState
                               'Could not complete your booking at this time. Please try again.';
                         }
 
-                        Get.snackbar(
-                          'Booking Failed',
-                          userMessage,
-                          snackPosition: SnackPosition.TOP,
-                        );
+                        CommonSnackbar.showError(title: 'Booking Failed', message: userMessage);
                         return;
                       }
 
@@ -745,11 +738,7 @@ class _RadiologyConfirmBookingScreenState
                       debugPrint(
                         "❌ [RadiologyConfirmBookingScreen] StackTrace: $st",
                       );
-                      Get.snackbar(
-                        'Booking Failed',
-                        'An unexpected error occurred. Please try again.',
-                        snackPosition: SnackPosition.TOP,
-                      );
+                      CommonSnackbar.showError(title: 'Booking Failed', message: 'An unexpected error occurred. Please try again.');
                     } finally {
                       if (mounted) setState(() => _isBooking = false);
                     }

@@ -1,3 +1,4 @@
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -140,18 +141,10 @@ class DashboardProfileController extends GetxController {
 
       debugPrint('[PROFILE] Sign out completed');
 
-      Get.snackbar(
-        'Signed Out',
-        'You have been logged out',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      CommonSnackbar.showSuccess(title: 'Signed Out', message: 'You have been logged out');
     } catch (e) {
       debugPrint('[PROFILE ERROR] Logout failed -> $e');
-      Get.snackbar(
-        'Error',
-        'Could not sign out',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      CommonSnackbar.showError(title: 'Error', message: 'Could not sign out');
     }
   }
 }

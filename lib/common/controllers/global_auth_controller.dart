@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
-import '../../features/services_firestore/user_firestore_service.dart';
+import '../../features/auth/data/services/user_firestore_service.dart';
 import '../../core/routes/app_routes.dart';
-import '../../features/chat_support/screens/support_chat_screen.dart';
-import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class GlobalAuthController extends GetxController {
   StreamSubscription<User?>? _authSub;
@@ -71,23 +70,7 @@ class GlobalAuthController extends GetxController {
     // Redirect to main navigation (which will show the home page for guests)
     Get.offAllNamed(AppRoutes.mainNavigation);
 
-    Get.snackbar(
-      'Account Blocked',
-      'Your account has been blocked. Please contact the administration.',
-      snackPosition: SnackPosition.TOP,
-      backgroundColor: AppColors.red.withValues(alpha: 0.9),
-      colorText: AppColors.white,
-      duration: const Duration(seconds: 8),
-      mainButton: TextButton(
-        onPressed: () {
-          if (Get.isSnackbarOpen) {
-            Get.closeCurrentSnackbar();
-          }
-          Get.to(() => const SupportChatScreen());
-        },
-        child: const Text('Contact Support', style: TextStyle(color: AppColors.white)),
-      ),
-    );
+    CommonSnackbar.showSuccess(title: 'Account Blocked', message: 'Your account has been blocked. Please contact the administration.');
   }
 
   @override

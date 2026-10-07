@@ -1,6 +1,7 @@
 import '../../../../common/widgets/common_text_field.dart';
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
@@ -10,7 +11,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart'; // For kIsWeb
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../services_firestore/models/booking_model.dart';
+import '../../../booking/data/models/fs_booking_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReportIssueScreen extends StatefulWidget {
@@ -97,19 +98,9 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
           .update(updateData);
 
       Get.back();
-      Get.snackbar(
-        AppLocalizations.of(context)!.reportIssue,
-        'Submitted successfully',
-        backgroundColor: AppColors.success,
-        colorText: AppColors.white,
-      );
+      CommonSnackbar.showSuccess(title: AppLocalizations.of(context)!.reportIssue, message: 'Submitted successfully');
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Failed to submit report',
-        backgroundColor: AppColors.error,
-        colorText: AppColors.white,
-      );
+      CommonSnackbar.showError(title: 'Error', message: 'Failed to submit report');
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
     }

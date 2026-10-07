@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'confirm_booking_screen.dart';
-import '../../controllers/booking.dart';
+import '../controllers/booking.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
@@ -427,7 +428,7 @@ class _OnlineConsultationBookingPageState
   Future<void> _processBooking() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      Get.snackbar('Error', 'Please login first');
+      CommonSnackbar.showError(title: 'Error', message: 'Please login first');
       return;
     }
 

@@ -2,6 +2,7 @@ import '../../../../common/widgets/common_text_field.dart';
 import '../../../../common/widgets/common_dropdown.dart';
 
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../common/widgets/common_avatar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -968,12 +969,7 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
                       toHour.toString(),
                     );
                   } else {
-                    Get.snackbar(
-                      'Missing Info',
-                      'Please select both start and end times.',
-                      backgroundColor: AppColors.orange,
-                      colorText: AppColors.white,
-                    );
+                    CommonSnackbar.showSuccess(title: 'Missing Info', message: 'Please select both start and end times.');
                   }
                 },
                 text: 'Add Schedule',

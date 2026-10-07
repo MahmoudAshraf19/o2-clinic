@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,6 +13,8 @@ import 'package:flutter/foundation.dart';
 import '../../../../common/controllers/contact_us_controller.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../l10n/app_localizations.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
+import 'package:o2_clinic/common/widgets/common_empty_state.dart';
 
 class OurLocationScreen extends StatefulWidget {
   const OurLocationScreen({super.key});
@@ -84,7 +87,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                 : 'We cannot proceed until we get location permissions from you.');
 
       if (!serviceEnabled) {
-        Get.snackbar(errorTitle, servicesDisabledMsg);
+        CommonSnackbar.showError(title: errorTitle, message: servicesDisabledMsg);
         await Geolocator.openLocationSettings();
         setState(() => _isDrawingRoute = false);
         return;
@@ -94,14 +97,14 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          Get.snackbar(errorTitle, permissionDeniedMsg);
+          CommonSnackbar.showError(title: errorTitle, message: permissionDeniedMsg);
           setState(() => _isDrawingRoute = false);
           return;
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
-        Get.snackbar(errorTitle, permissionDeniedMsg);
+        CommonSnackbar.showError(title: errorTitle, message: permissionDeniedMsg);
         await Geolocator.openAppSettings();
         setState(() => _isDrawingRoute = false);
         return;
@@ -220,25 +223,22 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
             mapController?.animateCamera(
               CameraUpdate.newLatLngBounds(bounds, 100),
             );
-            Get.snackbar(
-              'Route Info',
-              'No roads found between your location and the clinic. Showing direct distance.',
-            );
+            CommonSnackbar.showSuccess(title: 'Route Info', message: 'No roads found between your location and the clinic. Showing direct distance.');
           } else if (status == 'REQUEST_DENIED' ||
               status == 'OVER_QUERY_LIMIT') {
             _launchMapsUrl(clinicLocation.latitude, clinicLocation.longitude);
           } else {
-            Get.snackbar('API Error', 'Directions API: $status. $errorMessage');
+            CommonSnackbar.showError(title: 'API Error', message: 'Directions API: $status. $errorMessage');
           }
         }
       } else {
-        Get.snackbar('Error', 'Failed to fetch directions.');
+        CommonSnackbar.showError(title: 'Error', message: 'Failed to fetch directions.');
       }
     } catch (e) {
       if (kIsWeb) {
         _launchMapsUrl(clinicLocation.latitude, clinicLocation.longitude);
       } else {
-        Get.snackbar('Error', 'An error occurred while drawing the route.');
+        CommonSnackbar.showError(title: 'Error', message: 'An error occurred while drawing the route.');
       }
     }
 
@@ -283,7 +283,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
+            child: CommonLoadingIndicator(color: AppColors.primary),
           );
         }
         if (controller.error.value.isNotEmpty) {
@@ -292,7 +292,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
 
         final data = controller.contactUsData.value;
         if (data == null || data.location == null) {
-          return const Center(child: Text("Location data not available"));
+          return const CommonEmptyState(title: "Location data not available");
         }
 
         final loc = data.location!;
@@ -486,7 +486,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
   Future<void> _launchUrl(String urlString) async {
     final Uri url = Uri.parse(urlString);
     if (!await launchUrl(url)) {
-      Get.snackbar('Error', 'Could not launch action');
+      CommonSnackbar.showError(title: 'Error', message: 'Could not launch action');
     }
   }
 
@@ -495,7 +495,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
         'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng';
     final Uri url = Uri.parse(googleMapsUrl);
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      Get.snackbar('Error', 'Could not open maps');
+      CommonSnackbar.showError(title: 'Error', message: 'Could not open maps');
     }
   }
 }

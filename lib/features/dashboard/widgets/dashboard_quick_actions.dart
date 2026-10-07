@@ -8,9 +8,9 @@ import '../models/dashboard_quick_action_model.dart';
 
 import '../../appointments/presentation/screens/my_appointments_screen.dart';
 import '../../../core/routes/app_routes.dart';
-import '../../booking/views/radiology_services_screen.dart';
-import '../../booking/views/cosmetic_services_screen.dart';
-import '../../booking/views/lab_tests_screen.dart';
+import '../../booking/presentation/screens/radiology_services_screen.dart';
+import '../../booking/presentation/screens/cosmetic_services_screen.dart';
+import '../../booking/presentation/screens/lab_tests_screen.dart';
 import '../../contact_us/presentation/screens/our_location_screen.dart';
 
 class DashboardQuickActions extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../features/services_firestore/user_firestore_service.dart';
+import '../../features/auth/data/services/user_firestore_service.dart';
 
 class LocaleController extends GetxController {
   LocaleController(String initialCode) {

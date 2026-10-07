@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_dialogs.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/core/localization/locale_controller.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
@@ -9,6 +10,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_fonts.dart';
 import '../../chat_support/screens/support_chat_screen.dart';
 import 'html_content_screen.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -100,16 +102,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       value:
                           AppLocalizations.of(context)?.lightTheme ?? 'Light',
                       onTap: () {
-                        showModalBottomSheet(
-                          context: context,
+                        CommonDialogs.showBottomSheet(
+                          context,
                           backgroundColor: Theme.of(context).cardColor,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(24),
-                            ),
-                          ),
-                          builder: (context) =>
-                              const _ThemeSelectionBottomSheet(),
+                          child: const _ThemeSelectionBottomSheet(),
                         );
                       },
                     ),
@@ -224,7 +220,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     return const SizedBox(
                       height: 20,
                       width: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
+                      child: CommonLoadingIndicator(strokeWidth: 2),
                     );
                   }
 

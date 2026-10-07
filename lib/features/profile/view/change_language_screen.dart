@@ -7,6 +7,7 @@ import '../../../../core/theme/app_fonts.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/localization/locale_controller.dart';
 import '../controllers/change_language_controller.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class ChangeLanguageScreen extends StatefulWidget {
   const ChangeLanguageScreen({super.key});
@@ -59,7 +60,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
         builder: (context, _) {
           if (_controller.isLoading) {
             return const Center(
-              child: CircularProgressIndicator(color: AppColors.primary),
+              child: CommonLoadingIndicator(color: AppColors.primary),
             );
           }
 
@@ -194,7 +195,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                         width: 80,
                                         height: 80,
                                         child: Center(
-                                          child: CircularProgressIndicator(
+                                          child: CommonLoadingIndicator(
                                             color: AppColors.primary,
                                             value:
                                                 loadingProgress

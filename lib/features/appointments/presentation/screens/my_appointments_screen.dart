@@ -3,18 +3,21 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
+import 'package:o2_clinic/common/widgets/common_dialogs.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
-import '../../../services_firestore/models/booking_model.dart';
-import '../../../services_firestore/services/bookings_firestore_service.dart';
+import '../../../booking/data/models/fs_booking_model.dart';
+import '../../../booking/data/services/fs_bookings_firestore_service.dart';
 import '../../../dashboard/controllers/dashboard_pending_actions_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../services/models/radiology_category_model.dart';
+import '../../../services/data/models/radiology_category_model.dart';
 import '../../../booking/presentation/pages/radiology_confirm_booking_screen.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 enum AppointmentStatusFilter {
   all,
@@ -99,7 +102,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
-                      child: CircularProgressIndicator(
+                      child: CommonLoadingIndicator(
                         color: AppColors.primary,
                       ),
                     );
@@ -1335,7 +1338,7 @@ class _BookingDetailsSheet extends StatelessWidget {
                 onPressed: () async {
                   Get.dialog(
                     const Center(
-                      child: CircularProgressIndicator(
+                      child: CommonLoadingIndicator(
                         color: AppColors.primary,
                       ),
                     ),
@@ -1366,11 +1369,11 @@ class _BookingDetailsSheet extends StatelessWidget {
                         ),
                       );
                     } else {
-                      Get.snackbar('Error', 'Service not found');
+                      CommonSnackbar.showError(title: 'Error', message: 'Service not found');
                     }
                   } catch (e) {
                     Get.back(); // close loading
-                    Get.snackbar('Error', 'Failed to load details');
+                    CommonSnackbar.showError(title: 'Error', message: 'Failed to load details');
                   }
                 },
                 text: AppLocalizations.of(context)!.continueBookingOrChat,
@@ -1424,49 +1427,21 @@ class _BookingDetailsSheet extends StatelessWidget {
               width: double.infinity,
               child: CommonButton(
                 onPressed: () async {
-                  final confirm = await Get.dialog<bool>(
-                    AlertDialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      title: Text(
-                        isAr ? 'إلغاء الحجز' : 'Cancel Booking',
-                        style: const TextStyle(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      content: Text(
-                        isAr
-                            ? 'هل أنت متأكد من إلغاء حجزك؟'
-                            : 'Are you sure you want to cancel your booking?',
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      actions: [
-                        CommonButton(
-                          onPressed: () => Get.back(result: false),
-                          text: isAr ? 'لا' : 'No',
-                          type: CommonButtonType.text,
-                          foregroundColor: AppColors.grey600,
-                          textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        CommonButton(
-                          onPressed: () => Get.back(result: true),
-                          text: isAr ? 'نعم' : 'Yes',
-                          type: CommonButtonType.primary,
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: AppColors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+                  final confirm = await CommonDialogs.showConfirmationDialog(
+                    context,
+                    title: isAr ? 'إلغاء الحجز' : 'Cancel Booking',
+                    message: isAr
+                        ? 'هل أنت متأكد من إلغاء حجزك؟'
+                        : 'Are you sure you want to cancel your booking?',
+                    confirmText: isAr ? 'نعم' : 'Yes',
+                    cancelText: isAr ? 'لا' : 'No',
+                    isDestructive: true,
                   );
 
                   if (confirm == true) {
                     Get.dialog(
                       const Center(
-                        child: CircularProgressIndicator(
+                        child: CommonLoadingIndicator(
                           color: AppColors.primary,
                         ),
                       ),
@@ -1477,17 +1452,12 @@ class _BookingDetailsSheet extends StatelessWidget {
                       await service.cancelBooking(booking);
                       Get.back(); // close loading
                       Get.back(); // close sheet
-                      Get.snackbar(
-                        isAr ? 'تم الإلغاء' : 'Cancelled',
-                        isAr
+                      CommonSnackbar.showSuccess(title: isAr ? 'تم الإلغاء' : 'Cancelled', message: isAr
                             ? 'تم إلغاء حجزك بنجاح.'
-                            : 'Your booking has been cancelled successfully.',
-                        backgroundColor: AppColors.green,
-                        colorText: AppColors.white,
-                      );
+                            : 'Your booking has been cancelled successfully.');
                     } catch (e) {
                       Get.back(); // close loading
-                      Get.snackbar('Error', 'Failed to cancel booking');
+                      CommonSnackbar.showError(title: 'Error', message: 'Failed to cancel booking');
                     }
                   }
                 },

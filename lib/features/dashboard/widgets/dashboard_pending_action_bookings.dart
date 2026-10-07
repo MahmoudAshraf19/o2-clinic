@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_fonts.dart';
-import '../../services_firestore/models/booking_model.dart';
+import '../../booking/data/models/fs_booking_model.dart';
 import '../controllers/dashboard_pending_actions_controller.dart';
 import '../../appointments/presentation/screens/my_appointments_screen.dart';
 import '../../booking/presentation/pages/radiology_confirm_booking_screen.dart';
-import '../../services/models/radiology_category_model.dart';
+import '../../services/data/models/radiology_category_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class DashboardPendingActionBookings extends StatelessWidget {
   const DashboardPendingActionBookings({super.key});
@@ -179,7 +181,7 @@ class DashboardPendingActionBookings extends StatelessWidget {
     }
 
     Get.dialog(
-      const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+      const Center(child: CommonLoadingIndicator(color: AppColors.primary)),
       barrierDismissible: false,
     );
     try {
@@ -204,11 +206,11 @@ class DashboardPendingActionBookings extends StatelessWidget {
           ),
         );
       } else {
-        Get.snackbar('Error', 'Service not found');
+        CommonSnackbar.showError(title: 'Error', message: 'Service not found');
       }
     } catch (e) {
       Get.back(); // close loading
-      Get.snackbar('Error', 'Failed to load details');
+      CommonSnackbar.showError(title: 'Error', message: 'Failed to load details');
     }
   }
 }

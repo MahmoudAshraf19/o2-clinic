@@ -13,6 +13,7 @@ import '../../../core/constants/app_firestore.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../services_firestore/models/review_model.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class DoctorReviewsScreen extends StatefulWidget {
   const DoctorReviewsScreen({super.key});
@@ -258,7 +259,7 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
       body: SafeArea(
         child: _isLoading
             ? const Center(
-                child: CircularProgressIndicator(color: AppColors.primary),
+                child: CommonLoadingIndicator(color: AppColors.primary),
               )
             : SingleChildScrollView(
                 controller: _scrollController,

@@ -2,6 +2,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,8 +10,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../chat_support/widgets/support_chat_widgets.dart';
-import '../../../services/models/radiology_category_model.dart';
-import '../../controllers/radiology_booking_controller.dart';
+import '../../../services/data/models/radiology_category_model.dart';
+import '../controllers/radiology_booking_controller.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 import 'radiology_confirm_booking_screen.dart'; // To be created
 
 class RadiologyBookingPage extends StatelessWidget {
@@ -388,27 +390,19 @@ class RadiologyBookingPage extends StatelessWidget {
         onPressed: () async {
           final date = controller.selectedDate.value;
           if (date == null) {
-            Get.snackbar(
-              'Selection Required',
-              'Please select a date first',
-              snackPosition: SnackPosition.TOP,
-            );
+            CommonSnackbar.showError(title: 'Selection Required', message: 'Please select a date first');
             return;
           }
 
           final time = controller.selectedTime.value;
           if (time.isEmpty) {
-            Get.snackbar(
-              'Selection Required',
-              'Please select a time first',
-              snackPosition: SnackPosition.TOP,
-            );
+            CommonSnackbar.showError(title: 'Selection Required', message: 'Please select a time first');
             return;
           }
 
           Get.dialog(
             const Center(
-              child: CircularProgressIndicator(color: AppColors.primary),
+              child: CommonLoadingIndicator(color: AppColors.primary),
             ),
             barrierDismissible: false,
           );
@@ -428,13 +422,7 @@ class RadiologyBookingPage extends StatelessWidget {
               ),
             );
           } else {
-            Get.snackbar(
-              'Error',
-              result.message,
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: AppColors.red,
-              colorText: AppColors.white,
-            );
+            CommonSnackbar.showError(title: 'Error', message: result.message);
           }
         },
         text: AppLocalizations.of(context)!.bookAppointment,

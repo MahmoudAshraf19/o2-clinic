@@ -12,6 +12,7 @@ import '../../profile/models/dashboard_profile_model.dart';
 import '../../profile/widgets/profile_detail_card.dart';
 import '../../profile/widgets/profile_header_section.dart';
 import '../../profile/widgets/profile_settings_card.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class DashboardProfileScreen extends StatelessWidget {
   const DashboardProfileScreen({super.key});
@@ -61,7 +62,7 @@ class DashboardProfileScreen extends StatelessWidget {
                                 const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 80),
                                   child: Center(
-                                    child: CircularProgressIndicator(),
+                                    child: CommonLoadingIndicator(),
                                   ),
                                 )
                               else ...[

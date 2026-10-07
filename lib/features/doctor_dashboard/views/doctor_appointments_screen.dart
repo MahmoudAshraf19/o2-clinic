@@ -6,6 +6,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/doctor_appointments_controller.dart';
 import '../widgets/doctor_appointment_card.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class DoctorAppointmentsScreen extends StatefulWidget {
   const DoctorAppointmentsScreen({super.key});
@@ -378,7 +379,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
   Widget _buildAppointmentsPlaceholder() {
     return Obx(() {
       if (_controller.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: CommonLoadingIndicator());
       }
 
       // Filter bookings

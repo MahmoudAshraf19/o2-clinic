@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
+import 'package:o2_clinic/common/widgets/common_dialogs.dart';
 import 'package:o2_clinic/common/widgets/common_avatar.dart';
 import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../chat_doctors/models/doctor_chat_model.dart';
 import '../../chat_doctors/views/doctor_active_chat_screen.dart';
 import '../../../core/services/notification_service.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class DoctorBookingDetailsScreen extends StatefulWidget {
   final Map<String, dynamic> bookingData;
@@ -299,7 +302,7 @@ class _DoctorBookingDetailsScreenState
             Container(
               color: AppColors.black.withValues(alpha: 0.2),
               child: const Center(
-                child: CircularProgressIndicator(color: AppColors.primary),
+                child: CommonLoadingIndicator(color: AppColors.primary),
               ),
             ),
         ],
@@ -496,34 +499,13 @@ class _DoctorBookingDetailsScreenState
     final confirmBtn = isAr ? 'نعم، أؤكد' : 'Yes, Confirm';
     final cancelBtn = isAr ? 'تراجع' : 'Cancel';
 
-    final bool? confirm = await Get.dialog<bool>(
-      AlertDialog(
-        backgroundColor: AppColors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        content: Text(content, style: const TextStyle(height: 1.5)),
-        actions: [
-          CommonButton(
-            onPressed: () => Get.back(result: false),
-            text: cancelBtn,
-            type: CommonButtonType.text,
-            foregroundColor: AppColors.grey,
-            textStyle: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          CommonButton(
-            onPressed: () => Get.back(result: true),
-            text: confirmBtn,
-            type: CommonButtonType.primary,
-            backgroundColor: newStatus == 'upcoming'
-                ? AppColors.primary
-                : AppColors.red,
-            foregroundColor: AppColors.white,
-            borderRadius: BorderRadius.circular(10),
-            elevation: 0,
-            textStyle: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
+    final bool? confirm = await CommonDialogs.showConfirmationDialog(
+      context,
+      title: title,
+      message: content,
+      confirmText: confirmBtn,
+      cancelText: cancelBtn,
+      isDestructive: newStatus != 'upcoming',
     );
 
     if (confirm != true) return;
@@ -587,12 +569,7 @@ class _DoctorBookingDetailsScreenState
 
       Get.back(); // Go back to list
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        backgroundColor: AppColors.red,
-        colorText: AppColors.white,
-      );
+      CommonSnackbar.showError(title: 'Error', message: e.toString());
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }

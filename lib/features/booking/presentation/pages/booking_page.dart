@@ -4,13 +4,14 @@ import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../services_firestore/models/doctor_model.dart';
-import '../../controllers/booking.dart';
+import '../controllers/booking.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../chat_support/widgets/support_chat_widgets.dart';
 import 'confirm_booking_screen.dart';
@@ -584,21 +585,13 @@ class BookingPage extends StatelessWidget {
           try {
             final date = controller.selectedDate.value;
             if (date == null) {
-              Get.snackbar(
-                AppLocalizations.of(context)!.selectionRequired,
-                AppLocalizations.of(context)!.pleaseSelectDateFirst,
-                snackPosition: SnackPosition.TOP,
-              );
+              CommonSnackbar.showError(title: AppLocalizations.of(context)!.selectionRequired, message: AppLocalizations.of(context)!.pleaseSelectDateFirst);
               return;
             }
 
             final time = controller.selectedTime.value ?? '';
             if (time.isEmpty) {
-              Get.snackbar(
-                AppLocalizations.of(context)!.selectionRequired,
-                AppLocalizations.of(context)!.pleaseSelectTimeFirst,
-                snackPosition: SnackPosition.TOP,
-              );
+              CommonSnackbar.showError(title: AppLocalizations.of(context)!.selectionRequired, message: AppLocalizations.of(context)!.pleaseSelectTimeFirst);
               return;
             }
 
@@ -607,13 +600,9 @@ class BookingPage extends StatelessWidget {
                 : true;
 
             if (!isAvailable) {
-              Get.snackbar(
-                AppLocalizations.of(context)!.slotFull,
-                AppLocalizations.of(
+              CommonSnackbar.showSuccess(title: AppLocalizations.of(context)!.slotFull, message: AppLocalizations.of(
                   context,
-                )!.thisSlotHasReachedItsMaximumCapacity,
-                snackPosition: SnackPosition.TOP,
-              );
+                )!.thisSlotHasReachedItsMaximumCapacity);
               return;
             }
 
@@ -628,11 +617,7 @@ class BookingPage extends StatelessWidget {
           } catch (e, st) {
             debugPrint("❌ [BookingPage] Error: $e");
             debugPrint("❌ [BookingPage] StackTrace: $st");
-            Get.snackbar(
-              AppLocalizations.of(context)!.error,
-              AppLocalizations.of(context)!.anUnexpectedErrorOccurred,
-              snackPosition: SnackPosition.TOP,
-            );
+            CommonSnackbar.showError(title: AppLocalizations.of(context)!.error, message: AppLocalizations.of(context)!.anUnexpectedErrorOccurred);
           }
         },
         text: AppLocalizations.of(context)!.bookAppointment,

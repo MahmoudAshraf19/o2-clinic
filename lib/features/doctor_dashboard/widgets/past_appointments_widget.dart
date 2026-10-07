@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import 'package:o2_clinic/common/widgets/common_avatar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../controllers/doctor_appointments_controller.dart';
-import '../../services_firestore/services/bookings_firestore_service.dart';
+import '../../booking/data/services/fs_bookings_firestore_service.dart';
 import '../../appointments/presentation/screens/report_issue_screen.dart';
 
 class PastAppointmentsWidget extends StatelessWidget {
@@ -96,9 +97,9 @@ class PastAppointmentsWidget extends StatelessWidget {
         bookingId,
         'completed',
       );
-      Get.snackbar('Success', l10n.markAsCompleted);
+      CommonSnackbar.showSuccess(title: 'Success', message: l10n.markAsCompleted);
     } catch (e) {
-      Get.snackbar('Error', l10n.error);
+      CommonSnackbar.showError(title: 'Error', message: l10n.error);
     }
   }
 

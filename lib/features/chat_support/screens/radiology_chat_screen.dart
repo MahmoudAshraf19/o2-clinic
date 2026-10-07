@@ -6,6 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../controllers/radiology_chat_controller.dart';
 import '../services/radiology_chat_service.dart';
 import '../widgets/support_chat_widgets.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class RadiologyChatScreen extends StatefulWidget {
   final String bookingId;
@@ -108,7 +109,7 @@ class _RadiologyChatScreenState extends State<RadiologyChatScreen> {
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CommonLoadingIndicator());
                 }
 
                 if (!controller.isAuthenticated) {
@@ -145,7 +146,7 @@ class _RadiologyChatScreenState extends State<RadiologyChatScreen> {
                                 child: SizedBox(
                                   width: 14,
                                   height: 14,
-                                  child: CircularProgressIndicator(
+                                  child: CommonLoadingIndicator(
                                     strokeWidth: 2,
                                     color: AppColors.white,
                                   ),

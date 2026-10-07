@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../../features/dashboard/bindings/dashboard_binding.dart';
-import '../../../features/services/bindings/services_binding.dart';
+import '../../../features/services/presentation/bindings/services_binding.dart';
 import '../controllers/navigation_controller.dart';
 
 class NavigationBinding extends Bindings {

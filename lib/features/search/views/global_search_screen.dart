@@ -7,12 +7,13 @@ import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 
-import '../../all_doctors/presentation/pages/doctor_profile_page.dart';
-import '../../booking/views/cosmetic_booking_page.dart';
-import '../../booking/views/radiology_profile_screen.dart';
+import '../../doctors/presentation/screens/all_doctor_profile_page.dart';
+import '../../booking/presentation/screens/cosmetic_booking_page.dart';
+import '../../booking/presentation/screens/radiology_profile_screen.dart';
 
 import '../controllers/global_search_controller.dart';
 import '../widgets/search_result_tile.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class GlobalSearchScreen extends StatelessWidget {
   const GlobalSearchScreen({super.key});
@@ -73,7 +74,7 @@ class GlobalSearchScreen extends StatelessWidget {
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
+            child: CommonLoadingIndicator(color: AppColors.primary),
           );
         }
 

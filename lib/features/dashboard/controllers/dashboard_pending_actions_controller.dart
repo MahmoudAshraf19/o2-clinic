@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import '../../services_firestore/models/booking_model.dart';
+import '../../booking/data/models/fs_booking_model.dart';
 
 class DashboardPendingActionsController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

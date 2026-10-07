@@ -1,11 +1,11 @@
-import '../../services_firestore/models/radiology_ct_model.dart';
-import '../../services_firestore/models/radiology_ultrasound_model.dart';
-import '../../services_firestore/models/xray_data_model.dart';
-import '../../services_firestore/services/radiology_cache_service.dart';
-import '../../services_firestore/services/xray_data_cache_service.dart';
-import '../models/imaging_day_model.dart';
-import '../models/imaging_slot_model.dart';
-import '../models/imaging_type_model.dart';
+import '../../services/data/models/fs_radiology_ct_model.dart';
+import '../../services/data/models/fs_radiology_ultrasound_model.dart';
+import '../../services/data/models/fs_xray_data_model.dart';
+import '../../services/data/services/fs_radiology_cache_service.dart';
+import '../../services/data/services/fs_xray_data_cache_service.dart';
+import 'models/imaging_day_model.dart';
+import 'models/imaging_slot_model.dart';
+import 'models/imaging_type_model.dart';
 
 class ImagingBookingData {
   static Future<List<ImagingTypeModel>> getCtScanTypes() async {

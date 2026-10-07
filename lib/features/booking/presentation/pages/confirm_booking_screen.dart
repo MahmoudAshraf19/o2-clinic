@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,7 +13,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../../common/controllers/global_auth_controller.dart';
 import '../../../services_firestore/models/doctor_model.dart';
-import '../../controllers/booking.dart';
+import '../controllers/booking.dart';
 import '../../../../common/controllers/app_constants_controller.dart';
 import '../../../discounts/controllers/discount_controller.dart';
 import '../../../discounts/widgets/discount_input_widget.dart';
@@ -541,11 +542,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
 
                       // ✅ لازم الوقت يبقى موجود
                       if (widget.selectedTime.trim().isEmpty) {
-                        Get.snackbar(
-                          AppLocalizations.of(context)!.error,
-                          AppLocalizations.of(context)!.timeIsNotAvailable,
-                          snackPosition: SnackPosition.TOP,
-                        );
+                        CommonSnackbar.showError(title: AppLocalizations.of(context)!.error, message: AppLocalizations.of(context)!.timeIsNotAvailable);
                         return;
                       }
 
@@ -662,11 +659,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                           )!.couldNotCompleteYourBooking;
                         }
 
-                        Get.snackbar(
-                          AppLocalizations.of(context)!.bookingFailed,
-                          userMessage,
-                          snackPosition: SnackPosition.TOP,
-                        );
+                        CommonSnackbar.showError(title: AppLocalizations.of(context)!.bookingFailed, message: userMessage);
                         return;
                       }
 
@@ -727,11 +720,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                     } catch (e, st) {
                       debugPrint("❌ [ConfirmBookingScreen] Error: $e");
                       debugPrint("❌ [ConfirmBookingScreen] StackTrace: $st");
-                      Get.snackbar(
-                        AppLocalizations.of(context)!.bookingFailed,
-                        AppLocalizations.of(context)!.anUnexpectedErrorOccurred,
-                        snackPosition: SnackPosition.TOP,
-                      );
+                      CommonSnackbar.showError(title: AppLocalizations.of(context)!.bookingFailed, message: AppLocalizations.of(context)!.anUnexpectedErrorOccurred);
                     } finally {
                       if (mounted) setState(() => _isBooking = false);
                     }

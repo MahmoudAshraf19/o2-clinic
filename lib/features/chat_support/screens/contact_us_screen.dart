@@ -8,7 +8,8 @@ import '../services/chat_support_service.dart';
 import '../widgets/support_chat_widgets.dart';
 import 'chat_room_screen.dart';
 import '../../chat_doctors/views/patient_chat_screen.dart';
-import '../../doctors/models/doctor_model.dart';
+import '../../doctors/data/models/doctor_model.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key});
@@ -40,7 +41,7 @@ class ContactUsScreen extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
           child: Obx(() {
             if (controller.isLoading.value) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CommonLoadingIndicator());
             }
 
             final summary = controller.summary.value;

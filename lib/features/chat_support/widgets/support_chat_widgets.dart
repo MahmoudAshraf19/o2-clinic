@@ -15,6 +15,7 @@ import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/support_chat_controller.dart';
 import '../models/chat_support_model.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class ContactUsIntro extends StatelessWidget {
   const ContactUsIntro({super.key});
@@ -356,7 +357,7 @@ class ChatComposer extends StatelessWidget {
                       const SizedBox(
                         width: 20,
                         height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
+                        child: CommonLoadingIndicator(strokeWidth: 2),
                       ),
                       const SizedBox(width: 12),
                       Text(
@@ -460,7 +461,7 @@ class ChatComposer extends StatelessWidget {
                         child: busy
                             ? const Padding(
                                 padding: EdgeInsets.all(14),
-                                child: CircularProgressIndicator(
+                                child: CommonLoadingIndicator(
                                   strokeWidth: 2.2,
                                   color: AppColors.white,
                                 ),
@@ -816,7 +817,7 @@ class _ImagePreview extends StatelessWidget {
           return Container(
             color: AppColors.black12,
             alignment: Alignment.center,
-            child: const CircularProgressIndicator(),
+            child: CommonLoadingIndicator(),
           );
         }
         return Image.file(
@@ -941,7 +942,7 @@ class _VideoViewerState extends State<_VideoViewer> {
         if (snap.connectionState != ConnectionState.done) {
           return const SizedBox(
             height: 240,
-            child: Center(child: CircularProgressIndicator()),
+            child: Center(child: CommonLoadingIndicator()),
           );
         }
 
@@ -1071,7 +1072,7 @@ class _VoicePlayerState extends State<_VoicePlayer> {
                   child: _loading
                       ? const Padding(
                           padding: EdgeInsets.all(11),
-                          child: CircularProgressIndicator(
+                          child: CommonLoadingIndicator(
                             strokeWidth: 2,
                             color: AppColors.white,
                           ),

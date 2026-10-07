@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 enum CommonButtonType { primary, secondary, outline, text, gradient }
 
@@ -72,9 +73,9 @@ class CommonButton extends StatelessWidget {
           SizedBox(
             width: 16,
             height: 16,
-            child: CircularProgressIndicator(
+            child: CommonLoadingIndicator(
               strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(_getLoadingColor()),
+              color: _getLoadingColor(),
             ),
           ),
           if (text.isNotEmpty) ...[

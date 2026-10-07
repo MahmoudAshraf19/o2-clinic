@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../features/all_doctors/presentation/pages/all_doctors_page.dart';
-import '../../../features/booking/views/booking_screen.dart';
+import '../../../features/doctors/presentation/screens/all_doctors_page.dart';
+import '../../../features/booking/presentation/screens/booking_screen.dart';
 import '../../../features/chat_support/screens/contact_us_screen.dart';
 import '../../../features/dashboard/views/dashboard_home_screen.dart';
 import '../../../features/dashboard/views/dashboard_profile_screen.dart';

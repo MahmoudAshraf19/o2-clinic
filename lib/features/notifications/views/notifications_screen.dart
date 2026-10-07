@@ -1,5 +1,6 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +16,7 @@ import '../../doctor_dashboard/controllers/doctor_appointments_controller.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/services/notification_router.dart';
 import '../../../core/theme/app_colors.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -206,7 +208,7 @@ class NotificationsScreen extends StatelessWidget {
             n.data['bookingId'].toString().isNotEmpty) {
           Get.dialog(
             const Center(
-              child: CircularProgressIndicator(color: AppColors.brandBlue),
+              child: CommonLoadingIndicator(color: AppColors.brandBlue),
             ),
             barrierDismissible: false,
             barrierColor: AppColors.black12,
@@ -251,11 +253,11 @@ class NotificationsScreen extends StatelessWidget {
                 );
               }
             } else {
-              Get.snackbar('Error', 'Booking not found');
+              CommonSnackbar.showError(title: 'Error', message: 'Booking not found');
             }
           } catch (e) {
             Get.back(); // close loading
-            Get.snackbar('Error', 'Could not load booking details');
+            CommonSnackbar.showError(title: 'Error', message: 'Could not load booking details');
           }
         }
       },

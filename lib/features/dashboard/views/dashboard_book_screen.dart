@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../booking/views/booking_screen.dart';
-import 'package:o2_clinic/features/booking/controllers/booking_controller.dart';
+import '../../booking/presentation/screens/booking_screen.dart';
+import 'package:o2_clinic/features/booking/presentation/controllers/booking_controller.dart';
 
 class DashboardBookScreen extends StatelessWidget {
   const DashboardBookScreen({super.key});

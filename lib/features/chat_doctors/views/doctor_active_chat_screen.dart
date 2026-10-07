@@ -9,7 +9,9 @@ import '../../chat_doctors/controllers/doctor_chat_controller.dart';
 import '../../chat_doctors/services/doctor_chat_service.dart';
 import '../../profile/models/dashboard_profile_model.dart';
 import '../../doctor_dashboard/views/patient_profile_screen.dart';
-import '../../services_firestore/user_firestore_service.dart';
+import '../../auth/data/services/user_firestore_service.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
+import 'package:o2_clinic/common/widgets/common_empty_state.dart';
 
 class DoctorActiveChatScreen extends StatelessWidget {
   final DoctorChatRoom room;
@@ -34,7 +36,7 @@ class DoctorActiveChatScreen extends StatelessWidget {
         title: GestureDetector(
           onTap: () async {
             Get.dialog(
-              const Center(child: CircularProgressIndicator()),
+              const Center(child: CommonLoadingIndicator()),
               barrierDismissible: false,
             );
             try {
@@ -95,12 +97,12 @@ class DoctorActiveChatScreen extends StatelessWidget {
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CommonLoadingIndicator());
                 }
 
                 if (controller.messages.isEmpty &&
                     controller.uploadingItems.isEmpty) {
-                  return const Center(child: Text("No messages yet."));
+                  return const CommonEmptyState(title: "No messages yet.");
                 }
 
                 return ListView.builder(
@@ -137,7 +139,7 @@ class DoctorActiveChatScreen extends StatelessWidget {
                                 child: SizedBox(
                                   width: 14,
                                   height: 14,
-                                  child: CircularProgressIndicator(
+                                  child: CommonLoadingIndicator(
                                     strokeWidth: 2,
                                     color: AppColors.white,
                                   ),

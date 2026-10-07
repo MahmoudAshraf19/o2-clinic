@@ -3,6 +3,7 @@ import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/common_button.dart';
+import '../../../common/widgets/common_snackbar.dart';
 import '../../services_firestore/models/banner_model.dart';
 import '../../services_firestore/services/banner_service.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -131,11 +132,7 @@ class _BannerCard extends StatelessWidget {
     try {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Could not open the link")),
-        );
-      }
+      CommonSnackbar.showError(title: 'Error', message: 'Could not open the link');
     }
   }
 

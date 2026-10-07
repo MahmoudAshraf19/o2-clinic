@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/patient_bookings_controller.dart';
 import '../widgets/patient_appointment_card.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class PatientBookingsScreen extends StatefulWidget {
   const PatientBookingsScreen({super.key});
@@ -87,7 +88,7 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
           Expanded(
             child: Obx(() {
               if (_controller.isLoading.value) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: CommonLoadingIndicator());
               }
 
               final filteredBookings = _controller.bookings.where((doc) {

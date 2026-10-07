@@ -11,6 +11,7 @@ import '../../../features/notifications/widgets/notification_dropdown_widget.dar
 import '../../../l10n/app_localizations.dart';
 import '../../routes/app_routes.dart';
 import 'package:o2_clinic/core/theme/app_colors.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
   const O2AppBar({super.key, this.onNotificationTap});
@@ -90,7 +91,7 @@ class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
                                     (context, child, loadingProgress) {
                                       if (loadingProgress == null) return child;
                                       return Center(
-                                        child: CircularProgressIndicator(
+                                        child: CommonLoadingIndicator(
                                           strokeWidth: 2,
                                           value:
                                               loadingProgress

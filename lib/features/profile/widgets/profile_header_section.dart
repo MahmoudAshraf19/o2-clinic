@@ -1,12 +1,13 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../common/widgets/common_avatar.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../auth/controllers/register_controller.dart';
+import '../../auth/presentation/controllers/register_controller.dart';
 import '../controllers/dashboard_profile_controller.dart';
 import '../models/dashboard_profile_model.dart';
 
@@ -24,11 +25,7 @@ class ProfileHeaderSection extends StatelessWidget {
 
   Future<void> _openEditProfile() async {
     if (user.uid.trim().isEmpty) {
-      Get.snackbar(
-        'Error',
-        'User ID is missing.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      CommonSnackbar.showError(title: 'Error', message: 'User ID is missing.');
       return;
     }
 

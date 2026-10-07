@@ -9,6 +9,8 @@ import '../../../../core/routes/app_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../controllers/doctor_profile_controller.dart';
 import 'doctor_edit_profile_screen.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
+import 'package:o2_clinic/common/widgets/common_empty_state.dart';
 
 class DoctorProfileScreen extends GetView<DoctorProfileController> {
   const DoctorProfileScreen({super.key});
@@ -20,12 +22,12 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
       body: SafeArea(
         child: Obx(() {
           if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CommonLoadingIndicator());
           }
 
           final doctor = controller.doctor.value;
           if (doctor == null) {
-            return const Center(child: Text('Profile not found'));
+            return const CommonEmptyState(title: 'Profile not found');
           }
 
           final isArabic = Localizations.localeOf(context).languageCode == 'ar';

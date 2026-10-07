@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_dialogs.dart';
 import 'package:get/get.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
@@ -7,6 +8,7 @@ import '../../features/booking/presentation/pages/booking_page.dart';
 import '../../features/booking/presentation/pages/online_consultation_booking_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class BookingHelper {
   /// Navigates to the booking page or shows a bottom sheet for online consultation choice.
@@ -16,7 +18,7 @@ class BookingHelper {
     dynamic doctor,
   ) async {
     Get.dialog(
-      const Center(child: CircularProgressIndicator()),
+      const Center(child: CommonLoadingIndicator()),
       barrierDismissible: false,
     );
 
@@ -45,11 +47,10 @@ class BookingHelper {
     Get.back(); // Close loading dialog
 
     if (isOnline) {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: AppColors.transparent,
-        builder: (context) => _buildBookingOptionsSheet(context, doctor),
+      CommonDialogs.showBottomSheet(
+        context,
+        backgroundColor: AppColors.white,
+        child: _buildBookingOptionsSheet(context, doctor),
       );
     } else {
       Get.to(() => BookingPage(doctor: doctor));
@@ -70,19 +71,6 @@ class BookingHelper {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Drag Handle
-          Center(
-            child: Container(
-              width: 50,
-              height: 5,
-              decoration: BoxDecoration(
-                color: AppColors.grey300,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-          const SizedBox(height: 32),
-
           Text(
             AppLocalizations.of(context)?.chooseConsultationType ??
                 'Choose Consultation Type',

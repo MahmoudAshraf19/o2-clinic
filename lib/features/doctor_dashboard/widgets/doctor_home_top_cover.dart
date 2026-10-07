@@ -11,6 +11,7 @@ import '../widgets/doctor_app_bar.dart';
 import '../../notifications/controllers/notifications_controller.dart';
 import '../../notifications/widgets/notification_dropdown_widget.dart';
 import 'package:get/get.dart';
+import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class DoctorHomeTopCover extends StatefulWidget {
   const DoctorHomeTopCover({super.key});
@@ -131,7 +132,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                           Container(
                             color: AppColors.grey200,
                             child: const Center(
-                              child: CircularProgressIndicator(),
+                              child: CommonLoadingIndicator(),
                             ),
                           )
                         else if (_doctorImage.isEmpty)

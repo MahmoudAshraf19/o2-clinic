@@ -1,5 +1,7 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
+
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import 'package:get/get.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -10,7 +12,6 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import 'doctor_profile_controller.dart';
-import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class DoctorEditProfileController extends GetxController {
   final DoctorProfileController _profileController =
@@ -111,12 +112,7 @@ class DoctorEditProfileController extends GetxController {
     final toTime = int.tryParse(to) ?? 0;
 
     if (fromTime >= toTime) {
-      Get.snackbar(
-        'Invalid Time',
-        'Start time must be before end time.',
-        backgroundColor: AppColors.redAccent,
-        colorText: AppColors.white,
-      );
+      CommonSnackbar.showError(title: 'Invalid Time', message: 'Start time must be before end time.');
       return;
     }
 
@@ -134,12 +130,7 @@ class DoctorEditProfileController extends GetxController {
     }
 
     if (hasOverlap) {
-      Get.snackbar(
-        'Conflict',
-        'This time slot overlaps with an existing schedule for ${day.capitalizeFirst}.',
-        backgroundColor: AppColors.redAccent,
-        colorText: AppColors.white,
-      );
+      CommonSnackbar.showSuccess(title: 'Conflict', message: 'This time slot overlaps with an existing schedule for ${day.capitalizeFirst}.');
       return;
     }
 
@@ -183,16 +174,7 @@ class DoctorEditProfileController extends GetxController {
   }
 
   void showLockedFieldAlert(BuildContext context) {
-    Get.snackbar(
-      AppLocalizations.of(context)!.warning,
-      AppLocalizations.of(context)!.contactAdminToEdit,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: AppColors.black87,
-      colorText: AppColors.white,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 8,
-      duration: const Duration(seconds: 3),
-    );
+    CommonSnackbar.showError(title: AppLocalizations.of(context)!.warning, message: AppLocalizations.of(context)!.contactAdminToEdit);
   }
 
   Future<void> saveProfile() async {
@@ -264,25 +246,13 @@ class DoctorEditProfileController extends GetxController {
       final success = await _profileController.updateProfile(data);
       if (success) {
         Get.back();
-        Get.snackbar(
-          'Success',
-          'Profile updated successfully',
-          backgroundColor: AppColors.green,
-          colorText: AppColors.white,
-        );
+        CommonSnackbar.showSuccess(title: 'Success', message: 'Profile updated successfully');
       }
     } catch (e, stackTrace) {
       debugPrint('Error saving profile: $e');
       debugPrint('Stacktrace: $stackTrace');
 
-      Get.snackbar(
-        'Error',
-        'Failed to save profile: ${e.toString()}',
-        backgroundColor: AppColors.redAccent,
-        colorText: AppColors.white,
-        duration: const Duration(seconds: 5),
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      CommonSnackbar.showError(title: 'Error', message: 'Failed to save profile: ${e.toString()}');
     } finally {
       _profileController.isLoading.value = false;
     }

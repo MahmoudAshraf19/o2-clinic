@@ -4,15 +4,15 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../services_firestore/models/doctor_model.dart';
-import '../../services_firestore/models/specialized_service_model.dart';
-import '../../services_firestore/services/doctors_cache_service.dart';
-import '../../services_firestore/services/specialized_cache.dart';
+import '../../services/data/models/fs_specialized_service_model.dart';
+import '../../doctors/data/services/doctors_cache_service.dart';
+import '../../services/data/services/fs_specialized_cache.dart';
 
-import '../../services/models/radiology_category_model.dart';
-import '../../services/services/radiology_category_service.dart';
+import '../../services/data/models/radiology_category_model.dart';
+import '../../services/data/services/radiology_category_service.dart';
 
-import '../../services/models/cosmetic_category_model.dart';
-import '../../services/services/cosmetic_category_service.dart';
+import '../../services/data/models/cosmetic_category_model.dart';
+import '../../services/data/services/cosmetic_category_service.dart';
 
 class GlobalSearchController extends GetxController {
   final TextEditingController textController = TextEditingController();

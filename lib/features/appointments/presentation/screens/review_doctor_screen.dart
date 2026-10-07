@@ -1,6 +1,7 @@
 import '../../../../common/widgets/common_text_field.dart';
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
@@ -100,19 +101,9 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
       });
 
       Get.back();
-      Get.snackbar(
-        AppLocalizations.of(context)!.submitReview,
-        'Review submitted successfully',
-        backgroundColor: AppColors.success,
-        colorText: AppColors.white,
-      );
+      CommonSnackbar.showSuccess(title: AppLocalizations.of(context)!.submitReview, message: 'Review submitted successfully');
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Failed to submit review',
-        backgroundColor: AppColors.error,
-        colorText: AppColors.white,
-      );
+      CommonSnackbar.showError(title: 'Error', message: 'Failed to submit review');
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
     }
