@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_avatar.dart';
 import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -328,14 +329,7 @@ class _DoctorBookingDetailsScreenState
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: 32,
-            backgroundColor: AppColors.grey.withValues(alpha: 0.1),
-            backgroundImage:
-                (_patientImageUrl != null && _patientImageUrl!.isNotEmpty)
-                ? NetworkImage(_patientImageUrl!)
-                : null,
-            child: (_patientImageUrl == null || _patientImageUrl!.isEmpty)
+          CommonAvatar(size: 32 * 2, backgroundColor: AppColors.grey.withValues(alpha: 0.1), imageUrl: (_patientImageUrl != null && _patientImageUrl!.isNotEmpty) ? _patientImageUrl! : null, fallbackWidget: (_patientImageUrl == null || _patientImageUrl!.isEmpty)
                 ? const Icon(Icons.person, color: AppColors.grey, size: 30)
                 : null,
           ),

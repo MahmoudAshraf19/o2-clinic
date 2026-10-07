@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:o2_clinic/l10n/app_localizations.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_avatar.dart';
 import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
@@ -65,12 +65,7 @@ class DoctorCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      CircleAvatar(
-                        radius: 42,
-                        backgroundImage: CachedNetworkImageProvider(
-                          doctor.image,
-                        ),
-                      ),
+                      CommonAvatar(size: 42 * 2, imageUrl: doctor.image,),
                     ],
                   ),
                   if (doctor.isTopRated)

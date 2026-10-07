@@ -3,6 +3,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_avatar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
@@ -100,7 +101,7 @@ class ImagingBookingPage extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        const CircleAvatar(radius: 20, backgroundColor: AppColors.transparent),
+        const CommonAvatar(size: 40, backgroundColor: AppColors.transparent),
       ],
     );
   }

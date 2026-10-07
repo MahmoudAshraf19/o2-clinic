@@ -2,6 +2,9 @@ import '../../../../common/widgets/common_text_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_dropdown.dart';
+
+import 'package:o2_clinic/common/widgets/common_avatar.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 
@@ -298,50 +301,47 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        Container(
+                        SizedBox(
                           height: 52,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
+                          child: CommonDropdown<String>(
+                            value: _sortType,
+                            fillColor: AppColors.primary,
+                            dropdownColor: AppColors.primary,
                             borderRadius: BorderRadius.circular(26),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: _sortType,
-                              icon: const Icon(
-                                Icons.filter_list,
-                                color: AppColors.white,
-                                size: 20,
-                              ),
-                              dropdownColor: AppColors.primary,
-                              style: const TextStyle(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              items: [
-                                DropdownMenuItem(
-                                  value: 'newest',
-                                  child: Text(l10n.sortNewest),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'oldest',
-                                  child: Text(l10n.sortOldest),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'highest',
-                                  child: Text(l10n.sortHighest),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'lowest',
-                                  child: Text(l10n.sortLowest),
-                                ),
-                              ],
-                              onChanged: (val) {
-                                if (val != null) {
-                                  setState(() => _sortType = val);
-                                }
-                              },
+                            borderColor: Colors.transparent,
+                            focusBorderColor: Colors.transparent,
+                            icon: const Icon(
+                              Icons.filter_list,
+                              color: AppColors.white,
+                              size: 20,
                             ),
+                            textStyle: const TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            items: [
+                              DropdownMenuItem(
+                                value: 'newest',
+                                child: Text(l10n.sortNewest),
+                              ),
+                              DropdownMenuItem(
+                                value: 'oldest',
+                                child: Text(l10n.sortOldest),
+                              ),
+                              DropdownMenuItem(
+                                value: 'highest',
+                                child: Text(l10n.sortHighest),
+                              ),
+                              DropdownMenuItem(
+                                value: 'lowest',
+                                child: Text(l10n.sortLowest),
+                              ),
+                            ],
+                            onChanged: (val) {
+                              if (val != null) {
+                                setState(() => _sortType = val);
+                              }
+                            },
                           ),
                         ),
                       ],
@@ -638,13 +638,7 @@ class _ReviewCardWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-                backgroundImage: review.patientImage.isNotEmpty
-                    ? NetworkImage(review.patientImage)
-                    : null,
-                child: review.patientImage.isEmpty
+              CommonAvatar(size: 20 * 2, backgroundColor: AppColors.primary.withValues(alpha: 0.1), imageUrl: review.patientImage.isNotEmpty ? review.patientImage : null, fallbackWidget: review.patientImage.isEmpty
                     ? const Icon(Icons.person, color: AppColors.primary)
                     : null,
               ),

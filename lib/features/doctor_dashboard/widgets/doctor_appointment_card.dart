@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_avatar.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
@@ -112,24 +113,19 @@ class DoctorAppointmentCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    radius: 28,
+                  CommonAvatar(
+                    size: 56,
                     backgroundColor: AppColors.grey.withValues(alpha: 0.2),
-                    backgroundImage:
-                        (imageUrl != null && imageUrl.trim().isNotEmpty)
-                        ? NetworkImage(imageUrl.trim())
+                    imageUrl: (imageUrl != null && imageUrl.trim().isNotEmpty)
+                        ? imageUrl.trim()
                         : (userImage.trim().isNotEmpty
-                              ? NetworkImage(userImage.trim())
+                              ? userImage.trim()
                               : null),
-                    child:
-                        (imageUrl == null || imageUrl.trim().isEmpty) &&
-                            userImage.trim().isEmpty
-                        ? const Icon(
-                            Icons.person,
-                            color: AppColors.grey,
-                            size: 30,
-                          )
-                        : null,
+                    fallbackWidget: const Icon(
+                      Icons.person,
+                      color: AppColors.grey,
+                      size: 30,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(

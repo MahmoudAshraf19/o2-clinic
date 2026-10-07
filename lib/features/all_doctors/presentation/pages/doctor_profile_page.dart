@@ -1,7 +1,7 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
-import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_avatar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
@@ -191,19 +191,10 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               ),
             ),
             // Avatar
-            ClipOval(
-              child: SizedBox(
-                width: 110,
-                height: 110,
-                child: CachedImageWidget(
-                  imageUrl: doctor.image,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, _, _) => Image.asset(
-                    'assets/images/common/Doctor_avatar.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+            CommonAvatar(
+              size: 110,
+              imageUrl: doctor.image,
+              assetPath: 'assets/images/common/Doctor_avatar.jpg',
             ),
             // Verified Tick
             if (doctor.isTopRateEnable)

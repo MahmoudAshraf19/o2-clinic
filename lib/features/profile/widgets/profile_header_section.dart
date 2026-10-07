@@ -1,6 +1,6 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
-import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_avatar.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -232,24 +232,11 @@ class _ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final url = imageUrl.trim();
-
-    if (url.isEmpty) {
-      return _fallback(context);
-    }
-
-    return Container(
-      color: Theme.of(context).cardColor,
-      child: CachedImageWidget(
-        imageUrl: url,
-        key: ValueKey(url),
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => _fallback(context),
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) return child;
-          return _fallback(context);
-        },
-      ),
+    return CommonAvatar(
+      size: double.infinity,
+      imageUrl: imageUrl.trim().isEmpty ? null : imageUrl.trim(),
+      fallbackWidget: _fallback(context),
+      backgroundColor: Theme.of(context).cardColor,
     );
   }
 
@@ -259,10 +246,7 @@ class _ProfileAvatar extends StatelessWidget {
       alignment: Alignment.center,
       child: Image.asset(
         fallbackAsset,
-        fit: BoxFit.contain,
-        errorBuilder: (context, error, stackTrace) {
-          return const Icon(Icons.person, size: 42, color: AppColors.primary);
-        },
+        fit: BoxFit.cover,
       ),
     );
   }

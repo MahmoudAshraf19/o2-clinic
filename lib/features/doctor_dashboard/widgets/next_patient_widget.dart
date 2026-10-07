@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_avatar.dart';
 import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -267,11 +268,7 @@ class NextPatientWidget extends StatelessWidget {
               child: Row(
                 children: [
                   if (customerImage.trim().isNotEmpty)
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-                      backgroundImage: NetworkImage(customerImage.trim()),
-                    )
+                    CommonAvatar(size: 30 * 2, backgroundColor: AppColors.primary.withValues(alpha: 0.1), imageUrl: customerImage.trim())
                   else if (userId.trim().isNotEmpty)
                     FutureBuilder<DocumentSnapshot>(
                       future: FirebaseFirestore.instance
@@ -289,15 +286,9 @@ class NextPatientWidget extends StatelessWidget {
                             fetchedImage = data['image'] as String? ?? '';
                           }
                         }
-                        return CircleAvatar(
-                          radius: 30,
-                          backgroundColor: AppColors.primary.withValues(
+                        return CommonAvatar(size: 30 * 2, backgroundColor: AppColors.primary.withValues(
                             alpha: 0.1,
-                          ),
-                          backgroundImage: fetchedImage.trim().isNotEmpty
-                              ? NetworkImage(fetchedImage.trim())
-                              : null,
-                          child: fetchedImage.trim().isEmpty
+                          ), imageUrl: fetchedImage.trim().isNotEmpty ? fetchedImage.trim() : null, fallbackWidget: fetchedImage.trim().isEmpty
                               ? const Icon(
                                   Icons.person,
                                   color: AppColors.primary,
@@ -307,11 +298,7 @@ class NextPatientWidget extends StatelessWidget {
                       },
                     )
                   else
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-                      child: const Icon(Icons.person, color: AppColors.primary),
-                    ),
+                    CommonAvatar(size: 30 * 2, backgroundColor: AppColors.primary.withValues(alpha: 0.1), fallbackWidget: const Icon(Icons.person, color: AppColors.primary)),
                   const SizedBox(width: 16),
                   Expanded(
                     child: Column(

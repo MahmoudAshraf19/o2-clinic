@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_avatar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -107,54 +107,18 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                     Stack(
                       alignment: Alignment.bottomRight,
                       children: [
-                        Container(
-                          width: 120,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppColors.white,
-                              width: 4,
+                        CommonAvatar(
+                          size: 120,
+                          imageUrl: doctor.image,
+                          borderWidth: 4,
+                          borderColor: AppColors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.black.withValues(alpha: 0.05),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.black.withValues(alpha: 0.05),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(60),
-                            child: doctor.image.isNotEmpty
-                                ? CachedNetworkImage(
-                                    imageUrl: doctor.image,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => Container(
-                                      color: AppColors.lightGrey,
-                                      child: const Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        Container(
-                                          color: AppColors.lightGrey,
-                                          child: const Icon(
-                                            Icons.person,
-                                            size: 50,
-                                            color: AppColors.grey,
-                                          ),
-                                        ),
-                                  )
-                                : Container(
-                                    color: AppColors.lightGrey,
-                                    child: const Icon(
-                                      Icons.person,
-                                      size: 50,
-                                      color: AppColors.grey,
-                                    ),
-                                  ),
-                          ),
+                          ],
                         ),
                         Container(
                           margin: const EdgeInsets.only(right: 4, bottom: 4),
@@ -428,7 +392,6 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                             backgroundColor: AppColors.red400,
                             foregroundColor: AppColors.white,
                             borderRadius: BorderRadius.circular(16),
-                            minimumSize: const Size(double.infinity, 50),
                             elevation: 0,
                             textStyle: TextStyle(
                               fontSize: 16,

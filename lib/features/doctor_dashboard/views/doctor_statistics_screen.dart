@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_dropdown.dart';
+
 import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import '../../../core/theme/app_colors.dart';
@@ -59,145 +61,136 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
   }
 
   Widget _buildFilterDropdown(AppLocalizations l10n) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.grey.withValues(alpha: 0.2)),
-      ),
-      child: Obx(() {
-        return DropdownButtonHideUnderline(
-          child: DropdownButton<StatFilter>(
-            value: _controller.selectedFilter.value,
-            isExpanded: true,
-            icon: const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              color: AppColors.primary,
+    return Obx(() {
+        return CommonDropdown<StatFilter>(
+          value: _controller.selectedFilter.value,
+          fillColor: AppColors.white,
+          borderRadius: BorderRadius.circular(12),
+          borderColor: AppColors.grey.withValues(alpha: 0.2),
+          focusBorderColor: AppColors.primary,
+          iconColor: AppColors.primary,
+          isExpanded: true,
+          items: [
+            DropdownMenuItem(
+              value: StatFilter.allTime,
+              child: Text(
+                l10n.allTime,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
             ),
-            items: [
-              DropdownMenuItem(
-                value: StatFilter.allTime,
-                child: Text(
-                  l10n.allTime,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+            DropdownMenuItem(
+              value: StatFilter.thisYear,
+              child: Text(
+                l10n.thisYear,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
                 ),
               ),
-              DropdownMenuItem(
-                value: StatFilter.thisYear,
-                child: Text(
-                  l10n.thisYear,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+            ),
+            DropdownMenuItem(
+              value: StatFilter.thisMonth,
+              child: Text(
+                l10n.thisMonth,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
                 ),
               ),
-              DropdownMenuItem(
-                value: StatFilter.thisMonth,
-                child: Text(
-                  l10n.thisMonth,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+            ),
+            DropdownMenuItem(
+              value: StatFilter.thisWeek,
+              child: Text(
+                l10n.thisWeek,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
                 ),
               ),
-              DropdownMenuItem(
-                value: StatFilter.thisWeek,
-                child: Text(
-                  l10n.thisWeek,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+            ),
+            DropdownMenuItem(
+              value: StatFilter.today,
+              child: Text(
+                l10n.today,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
                 ),
               ),
-              DropdownMenuItem(
-                value: StatFilter.today,
-                child: Text(
-                  l10n.today,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+            ),
+            DropdownMenuItem(
+              value: StatFilter.customDay,
+              child: Text(
+                l10n.customDay,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
                 ),
               ),
-              DropdownMenuItem(
-                value: StatFilter.customDay,
-                child: Text(
-                  l10n.customDay,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+            ),
+            DropdownMenuItem(
+              value: StatFilter.customRange,
+              child: Text(
+                l10n.customRange,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
                 ),
               ),
-              DropdownMenuItem(
-                value: StatFilter.customRange,
-                child: Text(
-                  l10n.customRange,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ),
-            ],
-            onChanged: (val) async {
-              if (val == null) return;
-              if (val == StatFilter.customDay) {
-                final date = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2020),
-                  lastDate: DateTime(2030),
-                  builder: (context, child) {
-                    return Theme(
-                      data: Theme.of(context).copyWith(
-                        colorScheme: const ColorScheme.light(
-                          primary: AppColors.primary,
-                        ),
+            ),
+          ],
+          onChanged: (val) async {
+            if (val == null) return;
+            if (val == StatFilter.customDay) {
+              final date = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2020),
+                lastDate: DateTime(2030),
+                builder: (context, child) {
+                  return Theme(
+                    data: Theme.of(context).copyWith(
+                      colorScheme: const ColorScheme.light(
+                        primary: AppColors.primary,
                       ),
-                      child: child!,
-                    );
-                  },
-                );
-                if (date != null) {
-                  _controller.customSelectedDate.value = date;
-                  _controller.setFilter(val);
-                }
-              } else if (val == StatFilter.customRange) {
-                final range = await showDateRangePicker(
-                  context: context,
-                  firstDate: DateTime(2020),
-                  lastDate: DateTime(2030),
-                  builder: (context, child) {
-                    return Theme(
-                      data: Theme.of(context).copyWith(
-                        colorScheme: const ColorScheme.light(
-                          primary: AppColors.primary,
-                        ),
-                      ),
-                      child: child!,
-                    );
-                  },
-                );
-                if (range != null) {
-                  _controller.customSelectedDateRange.value = range;
-                  _controller.setFilter(val);
-                }
-              } else {
+                    ),
+                    child: child!,
+                  );
+                },
+              );
+              if (date != null) {
+                _controller.customSelectedDate.value = date;
                 _controller.setFilter(val);
               }
-            },
-          ),
+            } else if (val == StatFilter.customRange) {
+              final range = await showDateRangePicker(
+                context: context,
+                firstDate: DateTime(2020),
+                lastDate: DateTime(2030),
+                builder: (context, child) {
+                  return Theme(
+                    data: Theme.of(context).copyWith(
+                      colorScheme: const ColorScheme.light(
+                        primary: AppColors.primary,
+                      ),
+                    ),
+                    child: child!,
+                  );
+                },
+              );
+              if (range != null) {
+                _controller.customSelectedDateRange.value = range;
+                _controller.setFilter(val);
+              }
+            } else {
+              _controller.setFilter(val);
+            }
+          },
         );
-      }),
-    );
+      });
   }
 
   Widget _buildMainMetrics(AppLocalizations l10n) {

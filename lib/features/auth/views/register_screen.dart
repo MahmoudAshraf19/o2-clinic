@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
+import '../../../common/widgets/common_avatar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -346,18 +347,12 @@ class RegisterScreen extends GetView<RegisterController> {
         onTap: controller.pickImage,
         child: Stack(
           children: [
-            CircleAvatar(
-              radius: 56,
+            CommonAvatar(
+              size: 112,
               backgroundColor: isDarkMode
                   ? AppColors.colorFF1A2625
                   : AppColors.white,
-              child: ClipOval(
-                child: SizedBox(
-                  width: 112,
-                  height: 112,
-                  child: _avatarContent(value, isDarkMode),
-                ),
-              ),
+              fallbackWidget: _avatarContent(value, isDarkMode),
             ),
             Positioned(
               bottom: 4,

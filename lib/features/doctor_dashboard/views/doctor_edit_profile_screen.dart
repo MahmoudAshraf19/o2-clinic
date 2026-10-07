@@ -1,10 +1,12 @@
 import '../../../../common/widgets/common_text_field.dart';
+import '../../../../common/widgets/common_dropdown.dart';
+
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_avatar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io';
 import 'package:get/get.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -391,43 +393,29 @@ class DoctorEditProfileScreen extends StatelessWidget {
           alignment: Alignment.bottomRight,
           children: [
             Obx(
-              () => Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.hover,
-                  border: Border.all(color: AppColors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.black.withValues(alpha: 0.05),
-                      blurRadius: 10,
-                    ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(40),
-                  child: controller.selectedImage.value != null
-                      ? (kIsWeb
-                            ? Image.network(
-                                controller.selectedImage.value!.path,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.file(
-                                File(controller.selectedImage.value!.path),
-                                fit: BoxFit.cover,
-                              ))
-                      : (controller.existingImageUrl.isNotEmpty
-                            ? CachedNetworkImage(
-                                imageUrl: controller.existingImageUrl,
-                                fit: BoxFit.cover,
-                              )
-                            : const Icon(
-                                Icons.person,
-                                size: 40,
-                                color: AppColors.grey,
-                              )),
-                ),
+              () => CommonAvatar(
+                size: 80,
+                backgroundColor: AppColors.hover,
+                borderWidth: 3,
+                borderColor: AppColors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.black.withValues(alpha: 0.05),
+                    blurRadius: 10,
+                  ),
+                ],
+                imageUrl: controller.selectedImage.value == null && controller.existingImageUrl.isNotEmpty ? controller.existingImageUrl : null,
+                fallbackWidget: controller.selectedImage.value != null
+                    ? (kIsWeb
+                        ? Image.network(
+                            controller.selectedImage.value!.path,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.file(
+                            File(controller.selectedImage.value!.path),
+                            fit: BoxFit.cover,
+                          ))
+                    : null,
               ),
             ),
             Container(
@@ -886,14 +874,9 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
               ),
             ),
             const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              initialValue: selectedDay,
-              decoration: InputDecoration(
-                labelText: 'Day',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
+            CommonDropdown<String>(
+              value: selectedDay,
+              label: 'Day',
               items:
                   [
                         'saturday',

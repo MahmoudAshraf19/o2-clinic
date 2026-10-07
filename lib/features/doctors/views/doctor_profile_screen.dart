@@ -1,6 +1,6 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_avatar.dart';
 import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
@@ -168,10 +168,7 @@ class _ProfileCard extends StatelessWidget {
                 ],
               ),
             ),
-            child: CircleAvatar(
-              radius: 60,
-              backgroundImage: CachedNetworkImageProvider(doctor.image),
-            ),
+            child: CommonAvatar(size: 120, imageUrl: doctor.image),
           ),
           const SizedBox(height: 16),
 

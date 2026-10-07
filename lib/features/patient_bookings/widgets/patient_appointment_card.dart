@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/common/widgets/common_avatar.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -70,13 +71,7 @@ class PatientAppointmentCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                radius: 28,
-                backgroundColor: AppColors.grey.withValues(alpha: 0.2),
-                backgroundImage: doctorImage.isNotEmpty
-                    ? NetworkImage(doctorImage)
-                    : null,
-                child: doctorImage.isEmpty
+              CommonAvatar(size: 28 * 2, backgroundColor: AppColors.grey.withValues(alpha: 0.2), imageUrl: doctorImage.isNotEmpty ? doctorImage : null, fallbackWidget: doctorImage.isEmpty
                     ? const Icon(Icons.person, color: AppColors.grey, size: 30)
                     : null,
               ),
