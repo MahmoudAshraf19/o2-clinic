@@ -1,3 +1,4 @@
+import '../../../../common/widgets/common_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -37,27 +38,17 @@ class GlobalSearchScreen extends StatelessWidget {
             onPressed: () => Get.back(),
           ),
         ),
-        title: TextField(
+        title: CommonTextField(
           controller: controller.textController,
           autofocus: true,
-          style: const TextStyle(
-            fontFamily: AppFonts.inter,
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
           onChanged: controller.onSearchChanged,
           onSubmitted: controller.submitSearch,
-          decoration: InputDecoration(
-            hintText: isAr
-                ? 'ابحث عن طبيب، قسم، تجميل، أو أشعة...'
-                : 'Search doctors, specialties, cosmetics...',
-            hintStyle: TextStyle(
-              color: AppColors.textSecondary.withValues(alpha: 0.6),
-              fontSize: 14,
-            ),
-            border: InputBorder.none,
-          ),
+          hint: isAr
+              ? 'ابحث عن طبيب، قسم، تجميل، أو أشعة...'
+              : 'Search doctors, specialties, cosmetics...',
+          type: CommonTextFieldType.search,
+          showBorder: false,
+          filled: false,
         ),
         actions: [
           Obx(() {
@@ -350,4 +341,5 @@ class GlobalSearchScreen extends StatelessWidget {
     );
   }
 }
+
 

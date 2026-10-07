@@ -1,3 +1,4 @@
+import '../../../../common/widgets/common_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/discount_controller.dart';
@@ -51,31 +52,11 @@ class DiscountInputWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              TextField(
+              CommonTextField(
                 controller: textController,
-                decoration: InputDecoration(
-                  hintText: _getTranslatedString(
-                    'coupon_hint',
-                    Get.locale?.languageCode,
-                  ),
-                  filled: true,
-                  fillColor: AppColors.surface,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    borderSide: BorderSide(
-                      color: AppColors.border.withValues(alpha: 0.5),
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    borderSide: BorderSide(
-                      color: AppColors.border.withValues(alpha: 0.5),
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    borderSide: const BorderSide(color: AppColors.primary),
-                  ),
+                hint: _getTranslatedString(
+                  'coupon_hint',
+                  Get.locale?.languageCode,
                 ),
               ),
               const SizedBox(height: 12),
@@ -172,3 +153,4 @@ class DiscountInputWidget {
     }
   }
 }
+

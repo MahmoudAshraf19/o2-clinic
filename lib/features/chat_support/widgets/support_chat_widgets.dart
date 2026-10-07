@@ -1,3 +1,4 @@
+import '../../../../common/widgets/common_text_field.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'dart:io';
@@ -401,29 +402,20 @@ class ChatComposer extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: TextField(
+                            child: CommonTextField(
                               controller: controller.textController,
                               focusNode: controller.focusNode,
                               minLines: 1,
                               maxLines: 5,
                               textInputAction: TextInputAction.newline,
-                              decoration: InputDecoration(
-                                hintText: AppLocalizations.of(
-                                  context,
-                                )!.typeAMessage,
-                                hintStyle: const TextStyle(
-                                  color: Color(0xFF94A3B8),
-                                  fontSize: 15,
-                                ),
-                                border: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                isCollapsed: true,
-                                contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 14,
-                                ),
+                              hint: AppLocalizations.of(
+                                context,
+                              )!.typeAMessage,
+                              type: CommonTextFieldType.multiline,
+                              showBorder: false,
+                              filled: false,
+                              contentPadding: const EdgeInsets.symmetric(
+                                vertical: 14,
                               ),
                             ),
                           ),
@@ -1406,3 +1398,4 @@ String formatTime(DateTime time) {
   final period = time.hour >= 12 ? 'PM' : 'AM';
   return '$hour:$minute $period';
 }
+

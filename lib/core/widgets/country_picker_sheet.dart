@@ -1,3 +1,4 @@
+import '../../common/widgets/common_text_field.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -45,19 +46,13 @@ class _CountryPickerSheetState extends State<CountryPickerSheet> {
 
           const SizedBox(height: 10),
 
-          TextField(
+          CommonTextField(
             controller: search,
             onChanged: _filter,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.search),
-              hintText: AppLocalizations.of(context)!.searchCountry,
-              filled: true,
-              fillColor: Colors.grey.shade100,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide.none,
-              ),
-            ),
+            prefixIcon: Icons.search,
+            hint: AppLocalizations.of(context)!.searchCountry,
+            type: CommonTextFieldType.search,
+            showBorder: false,
           ),
 
           const SizedBox(height: 10),
@@ -93,3 +88,4 @@ class _CountryPickerSheetState extends State<CountryPickerSheet> {
     });
   }
 }
+

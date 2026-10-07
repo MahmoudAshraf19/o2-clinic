@@ -1,3 +1,4 @@
+import '../../../../common/widgets/common_text_field.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -20,59 +21,24 @@ class SearchBarWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       ),
-      child: TextField(
+      child: CommonTextField(
         controller: controller,
         onChanged: onChanged,
         textInputAction: TextInputAction.search,
-        cursorColor: AppColors.primary,
-        style: TextStyle(fontFamily: AppFonts.inter, fontSize: 14),
-        decoration: InputDecoration(
-          hintText: AppLocalizations.of(context)!.searchDoctorSpecialty,
-          hintStyle: TextStyle(
-            fontFamily: AppFonts.inter,
-            color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.grey,
-            fontSize: 14,
+        hint: AppLocalizations.of(context)!.searchDoctorSpecialty,
+        type: CommonTextFieldType.search,
+        prefixIcon: Icons.search,
+        suffixWidget: Container(
+          margin: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA).withValues(alpha: 0.15) : AppColors.primary.withValues(alpha: 0.10),
+            borderRadius: BorderRadius.circular(12),
           ),
-          prefixIcon: Icon(
-            Icons.search,
-            size: 22,
-            color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary,
-          ),
-          suffixIcon: Container(
-            margin: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA).withValues(alpha: 0.15) : AppColors.primary.withValues(alpha: 0.10),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(Icons.tune, color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary, size: 20),
-          ),
-          filled: true,
-          fillColor: Theme.of(context).cardColor,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 16,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
-              color: AppColors.primary.withValues(alpha: 0.22),
-              width: 1.2,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: AppColors.primary, width: 1.4),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
-              color: AppColors.primary.withValues(alpha: 0.22),
-              width: 1.2,
-            ),
-          ),
+          child: Icon(Icons.tune, color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary, size: 20),
         ),
       ),
     );
   }
 }
+
 

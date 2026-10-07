@@ -1,3 +1,4 @@
+import '../../../../common/widgets/common_text_field.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -477,24 +478,13 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
           ),
         ],
       ),
-      child: TextField(
+      child: CommonTextField(
         controller: _searchController,
-        decoration: InputDecoration(
-          hintText: AppLocalizations.of(context)!.searchDoctorServiceClinic,
-          hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
-          prefixIcon: const Icon(
-            Icons.search_rounded,
-            color: AppColors.primary,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide.none,
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 16,
-          ),
-        ),
+        hint: AppLocalizations.of(context)!.searchDoctorServiceClinic,
+        prefixIcon: Icons.search_rounded,
+        type: CommonTextFieldType.search,
+        showBorder: false,
+        filled: false,
       ),
     );
   }
@@ -1612,3 +1602,4 @@ class _BookingHelper {
     return isAr ? 'حجز' : 'Booking';
   }
 }
+
