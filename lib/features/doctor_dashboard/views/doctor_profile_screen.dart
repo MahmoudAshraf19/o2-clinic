@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -78,32 +79,24 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          ElevatedButton.icon(
+                          CommonButton(
                             onPressed: () =>
                                 Get.to(() => const DoctorEditProfileScreen()),
-                            icon: const Icon(
-                              Icons.edit_outlined,
-                              size: 16,
-                              color: AppColors.white,
+                            icon: Icons.edit_outlined,
+                            iconSize: 16,
+                            text: AppLocalizations.of(context)!.editProfile,
+                            type: CommonButtonType.primary,
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: AppColors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
                             ),
-                            label: Text(
-                              AppLocalizations.of(context)!.editProfile,
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.white,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              elevation: 0,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
+                            elevation: 0,
+                            textStyle: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -424,30 +417,22 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                           const SizedBox(height: 16),
 
                           // Logout Button
-                          ElevatedButton.icon(
+                          CommonButton(
                             onPressed: () async {
                               await FirebaseAuth.instance.signOut();
                               Get.offAllNamed(AppRoutes.login);
                             },
-                            icon: const Icon(
-                              Icons.logout,
-                              color: AppColors.white,
-                            ),
-                            label: Text(
-                              isArabic ? 'تسجيل الخروج' : 'Logout',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.white,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.red400,
-                              minimumSize: const Size(double.infinity, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              elevation: 0,
+                            icon: Icons.logout,
+                            text: isArabic ? 'تسجيل الخروج' : 'Logout',
+                            type: CommonButtonType.primary,
+                            backgroundColor: AppColors.red400,
+                            foregroundColor: AppColors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            minimumSize: const Size(double.infinity, 50),
+                            elevation: 0,
+                            textStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ],

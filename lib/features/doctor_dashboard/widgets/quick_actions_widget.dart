@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import '../../../core/theme/app_colors.dart';
@@ -78,7 +79,7 @@ class QuickActionsWidget extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: ElevatedButton(
+                  child: CommonButton(
                     onPressed: () {
                       final navCtrl = Get.find<DoctorNavigationController>();
                       navCtrl.changeIndex(1); // Go to APPTS tab
@@ -86,20 +87,15 @@ class QuickActionsWidget extends StatelessWidget {
                       apptCtrl.setSelectedTargetDate(DateTime.now());
                       apptCtrl.targetStatus.value = 'upcoming';
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.transparent,
-                      shadowColor: AppColors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.white,
-                      ),
+                    text: title,
+                    type: CommonButtonType.primary,
+                    backgroundColor: AppColors.transparent,
+                    foregroundColor: AppColors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    elevation: 0,
+                    textStyle: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 );
@@ -109,26 +105,19 @@ class QuickActionsWidget extends StatelessWidget {
               // Statistics (Outlined Button)
               SizedBox(
                 height: 52,
-                child: OutlinedButton(
+                child: CommonButton(
                   onPressed: () {
                     Get.to(() => const DoctorStatisticsScreen());
                   },
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.primary,
-                    side: BorderSide(
-                      color: AppColors.primary.withValues(alpha: 0.5),
-                      width: 1.5,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: Text(
-                    l10n.statistics,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  text: l10n.statistics,
+                  type: CommonButtonType.outline,
+                  foregroundColor: AppColors.primary,
+                  borderRadius: BorderRadius.circular(30),
+                  borderWidth: 1.5,
+                  borderColor: AppColors.primary.withValues(alpha: 0.5),
+                  textStyle: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -137,27 +126,20 @@ class QuickActionsWidget extends StatelessWidget {
               // Messages (Outlined Button)
               SizedBox(
                 height: 52,
-                child: OutlinedButton(
+                child: CommonButton(
                   onPressed: () {
                     final navCtrl = Get.find<DoctorNavigationController>();
                     navCtrl.changeIndex(2); // Go to Messages tab
                   },
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.primary,
-                    side: BorderSide(
-                      color: AppColors.primary.withValues(alpha: 0.5),
-                      width: 1.5,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: Text(
-                    l10n.messages,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  text: l10n.messages,
+                  type: CommonButtonType.outline,
+                  foregroundColor: AppColors.primary,
+                  borderRadius: BorderRadius.circular(30),
+                  borderWidth: 1.5,
+                  borderColor: AppColors.primary.withValues(alpha: 0.5),
+                  textStyle: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -166,27 +148,20 @@ class QuickActionsWidget extends StatelessWidget {
               // Reviews (Outlined Button)
               SizedBox(
                 height: 52,
-                child: OutlinedButton(
+                child: CommonButton(
                   onPressed: () {
                     // Navigate to DoctorReviewsScreen
                     Get.to(() => const DoctorReviewsScreen());
                   },
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.primary,
-                    side: BorderSide(
-                      color: AppColors.primary.withValues(alpha: 0.5),
-                      width: 1.5,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: Text(
-                    l10n.reviewTitle,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  text: l10n.reviewTitle,
+                  type: CommonButtonType.outline,
+                  foregroundColor: AppColors.primary,
+                  borderRadius: BorderRadius.circular(30),
+                  borderWidth: 1.5,
+                  borderColor: AppColors.primary.withValues(alpha: 0.5),
+                  textStyle: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
@@ -387,40 +388,16 @@ class NextPatientWidget extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 8),
-                            OutlinedButton(
+                            CommonButton(
                               onPressed: () => _openChat(nextPatient),
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: AppColors.primary,
-                                side: const BorderSide(
-                                  color: AppColors.primary,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 8,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                minimumSize: Size.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              text: l10n.openChat,
+                              type: CommonButtonType.outline,
+                              foregroundColor: AppColors.primary,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
                               ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    l10n.openChat,
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  const Icon(
-                                    Icons.arrow_forward_rounded,
-                                    size: 14,
-                                  ),
-                                ],
-                              ),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ],
                         ),

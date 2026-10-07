@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
@@ -272,7 +273,7 @@ class PastAppointmentsWidget extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: OutlinedButton(
+                child: CommonButton(
                   onPressed: () {
                     Get.to(
                       () => ReportIssueScreen(
@@ -281,31 +282,24 @@ class PastAppointmentsWidget extends StatelessWidget {
                       ),
                     );
                   },
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.error,
-                    side: const BorderSide(color: AppColors.error),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  child: Text(
-                    l10n.reportIssue,
-                    style: const TextStyle(fontSize: 12),
-                  ),
+                  text: l10n.reportIssue,
+                  type: CommonButtonType.outline,
+                  foregroundColor: AppColors.error,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  textStyle: const TextStyle(fontSize: 12),
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: ElevatedButton(
+                child: CommonButton(
                   onPressed: () => _markAsCompleted(context, bookingId),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    elevation: 0,
-                  ),
-                  child: Text(
-                    l10n.markAsCompleted,
-                    style: const TextStyle(fontSize: 12),
-                  ),
+                  text: l10n.markAsCompleted,
+                  type: CommonButtonType.primary,
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  elevation: 0,
+                  textStyle: const TextStyle(fontSize: 12),
                 ),
               ),
             ],

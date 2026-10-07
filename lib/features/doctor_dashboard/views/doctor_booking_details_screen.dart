@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
@@ -508,34 +509,24 @@ class _DoctorBookingDetailsScreenState
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         content: Text(content, style: const TextStyle(height: 1.5)),
         actions: [
-          TextButton(
+          CommonButton(
             onPressed: () => Get.back(result: false),
-            child: Text(
-              cancelBtn,
-              style: const TextStyle(
-                color: AppColors.grey,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            text: cancelBtn,
+            type: CommonButtonType.text,
+            foregroundColor: AppColors.grey,
+            textStyle: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          ElevatedButton(
+          CommonButton(
             onPressed: () => Get.back(result: true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: newStatus == 'upcoming'
-                  ? AppColors.primary
-                  : AppColors.red,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            child: Text(
-              confirmBtn,
-              style: const TextStyle(
-                color: AppColors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            text: confirmBtn,
+            type: CommonButtonType.primary,
+            backgroundColor: newStatus == 'upcoming'
+                ? AppColors.primary
+                : AppColors.red,
+            foregroundColor: AppColors.white,
+            borderRadius: BorderRadius.circular(10),
+            elevation: 0,
+            textStyle: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -676,31 +667,21 @@ class _CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 54,
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (icon != null) ...[
-              Icon(icon, color: textColor, size: 20),
-              const SizedBox(width: 8),
-            ],
-            Text(
-              title,
-              style: TextStyle(
-                color: textColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
-            ),
-          ],
+    return SizedBox(
+      height: 54,
+      child: CommonButton(
+        onPressed: onTap,
+        text: title,
+        icon: icon,
+        iconSize: 20,
+        type: CommonButtonType.primary,
+        backgroundColor: bgColor,
+        foregroundColor: textColor,
+        borderRadius: BorderRadius.circular(14),
+        elevation: 0,
+        textStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 15,
         ),
       ),
     );

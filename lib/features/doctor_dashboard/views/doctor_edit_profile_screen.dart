@@ -1,5 +1,6 @@
 import '../../../../common/widgets/common_text_field.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io';
 import 'package:get/get.dart';
@@ -40,23 +41,18 @@ class DoctorEditProfileScreen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: ElevatedButton(
+            child: CommonButton(
               onPressed: controller.saveProfile,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                elevation: 0,
-              ),
-              child: Text(
-                AppLocalizations.of(context)!.save,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.white,
-                ),
+              text: AppLocalizations.of(context)!.save,
+              type: CommonButtonType.primary,
+              backgroundColor: AppColors.primary,
+              foregroundColor: AppColors.white,
+              borderRadius: BorderRadius.circular(20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              elevation: 0,
+              textStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -651,22 +647,17 @@ class DoctorEditProfileScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
+                child: CommonButton(
                   onPressed: () => Navigator.pop(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    'Done',
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  text: 'Done',
+                  type: CommonButtonType.primary,
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  borderRadius: BorderRadius.circular(12),
+                  textStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -985,7 +976,7 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
+              child: CommonButton(
                 onPressed: () {
                   if (fromHour != null && toHour != null) {
                     widget.controller.addOnlineSchedule(
@@ -1002,20 +993,15 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
                     );
                   }
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Text(
-                  'Add Schedule',
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                text: 'Add Schedule',
+                type: CommonButtonType.primary,
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.white,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                borderRadius: BorderRadius.circular(12),
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
