@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
@@ -356,20 +357,19 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 16,
                                   ),
-                                  child: OutlinedButton(
+                                  child: CommonButton(
                                     onPressed: () {
                                       setState(() {
                                         _displayCount += 10;
                                       });
                                     },
-                                    child: Text(
-                                      Localizations.localeOf(
-                                                context,
-                                              ).languageCode ==
-                                              'ar'
-                                          ? 'عرض المزيد'
-                                          : 'Load More',
-                                    ),
+                                    text: Localizations.localeOf(
+                                              context,
+                                            ).languageCode ==
+                                            'ar'
+                                        ? 'عرض المزيد'
+                                        : 'Load More',
+                                    type: CommonButtonType.outline,
                                   ),
                                 );
                               }

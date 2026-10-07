@@ -1,6 +1,7 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../chat_doctors/views/patient_chat_screen.dart';
@@ -160,31 +161,23 @@ class DoctorCard extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: OutlinedButton(
+                        child: CommonButton(
                           onPressed: onViewProfile,
-                          style: OutlinedButton.styleFrom(
-                            side: const BorderSide(color: AppColors.primary),
-                            foregroundColor: AppColors.primary,
-                            padding: const EdgeInsets.symmetric(vertical: 11),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(999),
-                            ),
-                          ),
-                          child: Text(
-                            AppLocalizations.of(context)!.viewProfile,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppins,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                            ),
+                          text: AppLocalizations.of(context)!.viewProfile,
+                          type: CommonButtonType.outline,
+                          padding: const EdgeInsets.symmetric(vertical: 11),
+                          borderRadius: BorderRadius.circular(999),
+                          foregroundColor: AppColors.primary,
+                          textStyle: TextStyle(
+                            fontFamily: AppFonts.poppins,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: ElevatedButton.icon(
+                        child: CommonButton(
                           onPressed: () {
                             final uiDoctor = ui_model.DoctorModel(
                               id: doctor.id,
@@ -199,25 +192,19 @@ class DoctorCard extends StatelessWidget {
                             );
                             Get.to(() => PatientChatScreen(doctor: uiDoctor));
                           },
-                          icon: const Icon(Icons.chat_bubble_outline, size: 16),
-                          label: Text(
-                            AppLocalizations.of(context)!.chatMessage,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppins,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: AppColors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 11),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(999),
-                            ),
+                          icon: Icons.chat_bubble_outline,
+                          iconSize: 16,
+                          text: AppLocalizations.of(context)!.chatMessage,
+                          type: CommonButtonType.primary,
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: AppColors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 11),
+                          borderRadius: BorderRadius.circular(999),
+                          elevation: 0,
+                          textStyle: TextStyle(
+                            fontFamily: AppFonts.poppins,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),

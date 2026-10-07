@@ -2,6 +2,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -346,23 +347,20 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
         if (about.isNotEmpty)
           Align(
             alignment: Alignment.centerLeft,
-            child: TextButton(
+            child: CommonButton(
               onPressed: () => setState(() => _aboutExpanded = !_aboutExpanded),
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.only(top: 4, left: 4, right: 0),
-                foregroundColor:
-                    (Theme.of(context).brightness == Brightness.dark
-                    ? AppColors.colorFF60A5FA
-                    : AppColors.primary),
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: Text(
-                _aboutExpanded
-                    ? AppLocalizations.of(context)!.showLess
-                    : AppLocalizations.of(context)!.readMore,
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
-              ),
+              text: _aboutExpanded
+                  ? AppLocalizations.of(context)!.showLess
+                  : AppLocalizations.of(context)!.readMore,
+              type: CommonButtonType.text,
+              padding: const EdgeInsets.only(top: 4, left: 4, right: 0),
+              foregroundColor:
+                  (Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.colorFF60A5FA
+                  : AppColors.primary),
+              textStyle: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
+              width: 0,
+              height: 0,
             ),
           ),
       ],
@@ -499,26 +497,22 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
           SizedBox(
             width: double.infinity,
             height: 54,
-            child: ElevatedButton.icon(
+            child: CommonButton(
               onPressed: () {
                 BookingHelper.onBookNowClicked(context, widget.doctor);
               },
-              icon: Icon(Icons.calendar_today_outlined, size: 18),
-              label: Text(
-                AppLocalizations.of(context)!.bookAppointment,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                backgroundColor:
-                    (Theme.of(context).brightness == Brightness.dark
-                    ? AppColors.colorFF60A5FA
-                    : AppColors.primary),
-                foregroundColor: AppColors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(999), // Fully rounded
-                ),
-              ),
+              icon: Icons.calendar_today_outlined,
+              iconSize: 18,
+              text: AppLocalizations.of(context)!.bookAppointment,
+              textStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              type: CommonButtonType.primary,
+              backgroundColor:
+                  (Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.colorFF60A5FA
+                  : AppColors.primary),
+              foregroundColor: AppColors.white,
+              borderRadius: BorderRadius.circular(999), // Fully rounded
+              elevation: 0,
             ),
           ),
           const SizedBox(height: 12),
@@ -526,7 +520,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
           SizedBox(
             width: double.infinity,
             height: 54,
-            child: OutlinedButton.icon(
+            child: CommonButton(
               onPressed: () {
                 final uiDoctor = ui_model.DoctorModel(
                   id: widget.doctor.id,
@@ -541,26 +535,16 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 );
                 Get.to(() => PatientChatScreen(doctor: uiDoctor));
               },
-              icon: Icon(Icons.chat_bubble_outline, size: 18),
-              label: Text(
-                AppLocalizations.of(context)!.chatMessage,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(
-                  color: (Theme.of(context).brightness == Brightness.dark
-                      ? AppColors.colorFF60A5FA
-                      : AppColors.primary),
-                  width: 1.5,
-                ),
-                foregroundColor:
-                    (Theme.of(context).brightness == Brightness.dark
-                    ? AppColors.colorFF60A5FA
-                    : AppColors.primary),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(999), // Fully rounded
-                ),
-              ),
+              icon: Icons.chat_bubble_outline,
+              iconSize: 18,
+              text: AppLocalizations.of(context)!.chatMessage,
+              textStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              type: CommonButtonType.outline,
+              foregroundColor:
+                  (Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.colorFF60A5FA
+                  : AppColors.primary),
+              borderRadius: BorderRadius.circular(999), // Fully rounded
             ),
           ),
         ],

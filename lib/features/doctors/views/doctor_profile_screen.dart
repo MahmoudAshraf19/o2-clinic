@@ -1,6 +1,7 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../chat_doctors/views/patient_chat_screen.dart';
@@ -126,24 +127,19 @@ class _MessageButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: 56,
-      child: ElevatedButton.icon(
+      child: CommonButton(
         onPressed: () {
           Get.to(() => PatientChatScreen(doctor: doctor));
         },
-        icon: const Icon(Icons.chat_bubble_rounded),
-        label: Text(
-          AppLocalizations.of(context)!.chatMessage,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: (Theme.of(context).brightness == Brightness.dark
-              ? AppColors.colorFF60A5FA
-              : AppColors.primary),
-          foregroundColor: AppColors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
+        icon: Icons.chat_bubble_rounded,
+        text: AppLocalizations.of(context)!.chatMessage,
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        type: CommonButtonType.primary,
+        backgroundColor: (Theme.of(context).brightness == Brightness.dark
+            ? AppColors.colorFF60A5FA
+            : AppColors.primary),
+        foregroundColor: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
       ),
     );
   }
