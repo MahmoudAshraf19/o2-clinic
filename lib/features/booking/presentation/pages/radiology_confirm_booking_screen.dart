@@ -2,6 +2,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -530,9 +531,15 @@ class _RadiologyConfirmBookingScreenState
                 ),
               ],
             ),
-            TextButton(
+            CommonButton(
               onPressed: () => discountController.removeDiscountCode(),
-              child: Icon(Icons.close, color: AppColors.red, size: 20),
+              type: CommonButtonType.text,
+              padding: EdgeInsets.zero,
+              width: 0,
+              height: 0,
+              icon: Icons.close,
+              iconColor: AppColors.red,
+              iconSize: 20,
             ),
           ],
         );
@@ -609,13 +616,11 @@ class _RadiologyConfirmBookingScreenState
       child: SizedBox(
         height: 52,
         child: Obx(
-          () => ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
-            ),
+          () => CommonButton(
+            type: CommonButtonType.primary,
+            backgroundColor: AppColors.primary,
+            borderRadius: BorderRadius.circular(14),
+            isLoading: _isBooking,
             onPressed: (_isBooking || _determinedPrice.value < 0)
                 ? null
                 : () async {
@@ -749,23 +754,11 @@ class _RadiologyConfirmBookingScreenState
                       if (mounted) setState(() => _isBooking = false);
                     }
                   },
-            child: _isBooking
-                ? SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).cardColor,
-                      strokeWidth: 2,
-                    ),
-                  )
-                : Text(
-                    AppLocalizations.of(context)!.confirm,
-                    style: TextStyle(
-                      color: Theme.of(context).cardColor,
-
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
+            text: AppLocalizations.of(context)!.confirm,
+            textStyle: TextStyle(
+              color: Theme.of(context).cardColor,
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ),
       ),

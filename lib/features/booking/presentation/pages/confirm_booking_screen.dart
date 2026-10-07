@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -519,16 +520,12 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
       child: SafeArea(
         child: SizedBox(
           height: 52,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
-            ),
-            onPressed: _isBooking
-                ? null
-                : () async {
+          child: CommonButton(
+            type: CommonButtonType.primary,
+            backgroundColor: AppColors.primary,
+            borderRadius: BorderRadius.circular(14),
+            isLoading: _isBooking,
+            onPressed: () async {
                     setState(() => _isBooking = true);
                     try {
                       final controller = Get.find<AppointmentBookingController>(
@@ -736,23 +733,11 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                       if (mounted) setState(() => _isBooking = false);
                     }
                   },
-            child: _isBooking
-                ? SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).cardColor,
-                      strokeWidth: 2,
-                    ),
-                  )
-                : Text(
-                    AppLocalizations.of(context)!.confirm,
-                    style: TextStyle(
-                      color: Theme.of(context).cardColor,
-
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
+            text: AppLocalizations.of(context)!.confirm,
+            textStyle: TextStyle(
+              color: Theme.of(context).cardColor,
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -405,24 +406,19 @@ class _OnlineConsultationBookingPageState
   Widget _buildBookButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      child: ElevatedButton(
+      child: CommonButton(
         onPressed: (selectedDate != null && selectedTime != null)
             ? _processBooking
             : null,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          minimumSize: const Size(double.infinity, 55),
-        ),
-        child: Text(
-          AppLocalizations.of(context)!.bookAppointment,
-          style: const TextStyle(
-            fontWeight: FontWeight.w800,
-            color: AppColors.white,
-            fontSize: 16,
-          ),
+        text: AppLocalizations.of(context)!.bookAppointment,
+        type: CommonButtonType.primary,
+        backgroundColor: AppColors.primary,
+        borderRadius: BorderRadius.circular(30),
+        height: 55,
+        textStyle: const TextStyle(
+          fontWeight: FontWeight.w800,
+          color: AppColors.white,
+          fontSize: 16,
         ),
       ),
     );
