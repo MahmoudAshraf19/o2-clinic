@@ -68,8 +68,8 @@ class CachedImageWidget extends StatelessWidget {
 
   Widget _buildShimmer() {
     return Shimmer.fromColors(
-      baseColor: AppColors.grey300!,
-      highlightColor: AppColors.grey100!,
+      baseColor: AppColors.grey300,
+      highlightColor: AppColors.grey100,
       child: Container(width: width, height: height, color: AppColors.white),
     );
   }

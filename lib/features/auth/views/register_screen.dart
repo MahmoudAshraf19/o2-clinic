@@ -452,10 +452,7 @@ class RegisterScreen extends GetView<RegisterController> {
     Widget? suffix,
     bool readOnly = false,
   }) {
-    final iconColor = isDarkMode
-        ? AppColors.white54
-        : AppColors.brandBlue.withValues(alpha: 0.5);
-    return CommonTextField(
+return CommonTextField(
       controller: controller,
       maxLines: max,
       obscureText: obscure,
@@ -477,10 +474,7 @@ class RegisterScreen extends GetView<RegisterController> {
     bool isLocked = true,
     String? errorText,
   }) {
-    final iconColor = isDarkMode
-        ? AppColors.white54
-        : AppColors.brandBlue.withValues(alpha: 0.5);
-    return CommonTextField(
+return CommonTextField(
       controller: controller,
       readOnly: isLocked,
       enabled: !isLocked,

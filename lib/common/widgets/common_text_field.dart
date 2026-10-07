@@ -460,8 +460,9 @@ class _CommonTextFieldState extends State<CommonTextField> {
 
   Color _getFillColor() {
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
-    if (!widget.enabled)
+    if (!widget.enabled) {
       return isDark ? AppColors.colorFF333333 : AppColors.lightGrey;
+    }
     if (_isFocused) return Theme.of(context).cardColor;
     return isDark ? AppColors.colorFF1E1E1E : AppColors.cardBackground;
   }
