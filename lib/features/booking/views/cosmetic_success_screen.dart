@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -183,9 +184,10 @@ class CosmeticSuccessScreen extends StatelessWidget {
   Widget _actions(BuildContext context) {
     return Column(
       children: [
-        ElevatedButton(
+        CommonButton(
           onPressed: () => Get.offAllNamed('/main-navigation'),
-          child: Text(_t("Back to Home")),
+          text: _t("Back to Home"),
+          type: CommonButtonType.primary,
         ),
       ],
     );

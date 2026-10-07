@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -480,9 +481,15 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                 ),
               ],
             ),
-            TextButton(
+            CommonButton(
               onPressed: () => discountController.removeDiscountCode(),
-              child: Icon(Icons.close, color: AppColors.red, size: 20),
+              type: CommonButtonType.text,
+              padding: EdgeInsets.zero,
+              width: 0,
+              height: 0,
+              icon: Icons.close,
+              iconColor: AppColors.red,
+              iconSize: 20,
             ),
           ],
         );
@@ -586,32 +593,19 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           top: BorderSide(color: AppColors.border.withValues(alpha: 0.4)),
         ),
       ),
-      child: ElevatedButton(
-        onPressed: _isBooking ? null : _confirmBooking,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          minimumSize: const Size(double.infinity, 55),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
+      child: CommonButton(
+        onPressed: _confirmBooking,
+        isLoading: _isBooking,
+        text: _t("Confirm Booking"),
+        type: CommonButtonType.primary,
+        backgroundColor: AppColors.primary,
+        borderRadius: BorderRadius.circular(30),
+        height: 55,
+        textStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          color: Theme.of(context).cardColor,
         ),
-        child: _isBooking
-            ? SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).cardColor,
-                  strokeWidth: 2.5,
-                ),
-              )
-            : Text(
-                _t("Confirm Booking"),
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: Theme.of(context).cardColor,
-                ),
-              ),
       ),
     );
   }

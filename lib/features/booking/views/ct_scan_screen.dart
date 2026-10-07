@@ -1,5 +1,6 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -283,32 +284,19 @@ class CTScanBottomBar extends StatelessWidget {
             ),
             const SizedBox(width: 14),
             Expanded(
-              child: SizedBox(
+              child: CommonButton(
+                onPressed: onContinue,
+                text: AppLocalizations.of(context)!.continueAction,
+                type: CommonButtonType.primary,
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.white,
+                borderRadius: BorderRadius.circular(18),
                 height: 56,
-                child: ElevatedButton(
-                  onPressed: onContinue,
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.continueAction,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.arrow_forward_rounded, size: 18),
-                    ],
-                  ),
+                elevation: 0,
+                icon: Icons.arrow_forward_rounded,
+                textStyle: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:get/get.dart';
 
@@ -132,13 +133,12 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                   style: TextStyle(color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: 14),
-                ElevatedButton(
+                CommonButton(
                   onPressed: () => c.load(forceRefresh: true),
-                  child: Text(
-                    Get.locale?.languageCode == 'ar'
+                  type: CommonButtonType.primary,
+                  text: Get.locale?.languageCode == 'ar'
                         ? "إعادة المحاولة"
                         : "Try again",
-                  ),
                 ),
               ],
             ),
@@ -419,31 +419,16 @@ class _PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          elevation: 0,
-          backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.white,
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.calendar_month_rounded, size: 18),
-            const SizedBox(width: 8),
-            Text(
-              text,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-            ),
-          ],
-        ),
-      ),
+    return CommonButton(
+      onPressed: onPressed,
+      text: text,
+      type: CommonButtonType.primary,
+      backgroundColor: AppColors.primary,
+      foregroundColor: AppColors.white,
+      borderRadius: BorderRadius.circular(18),
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      icon: Icons.calendar_month_rounded,
+      textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
     );
   }
 }
