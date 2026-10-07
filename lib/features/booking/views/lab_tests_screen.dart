@@ -193,6 +193,7 @@ class _PrimaryButton extends StatelessWidget {
             offset: const Offset(0, 6),
           ),
         ],
+      ),
       child: CommonButton(
         onPressed: onPressed,
         text: text,
@@ -238,6 +239,7 @@ class _OutlinedButton extends StatelessWidget {
             offset: const Offset(0, 4),
           ),
         ],
+      ),
       child: CommonButton(
         onPressed: onPressed,
         text: text,

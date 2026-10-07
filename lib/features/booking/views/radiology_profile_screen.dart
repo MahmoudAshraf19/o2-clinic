@@ -367,24 +367,19 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
               ],
             ),
           ),
-          TextButton(
+          CommonButton(
             onPressed: () {
               Get.to(() => RadiologistProfileScreen(radiologist: doctor));
             },
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              backgroundColor: AppColors.primary.withValues(alpha: 0.08),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: Text(
-              langCode == 'ar' ? "التفاصيل" : "View Profile",
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w800,
-                color: AppColors.primary,
-              ),
+            text: langCode == 'ar' ? "التفاصيل" : "View Profile",
+            type: CommonButtonType.text,
+            backgroundColor: AppColors.primary.withValues(alpha: 0.08),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            borderRadius: BorderRadius.circular(8),
+            textStyle: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+              color: AppColors.primary,
             ),
           ),
         ],
@@ -435,21 +430,18 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
           if (about.isNotEmpty)
             Align(
               alignment: Alignment.centerLeft,
-              child: TextButton(
+              child: CommonButton(
                 onPressed: () =>
                     setState(() => _aboutExpanded = !_aboutExpanded),
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.only(top: 8, left: 0, right: 0),
-                  foregroundColor: AppColors.primary,
-                ),
-                child: Text(
-                  _aboutExpanded
-                      ? AppLocalizations.of(context)!.showLess
-                      : AppLocalizations.of(context)!.readMore,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w800,
-                  ),
+                text: _aboutExpanded
+                    ? AppLocalizations.of(context)!.showLess
+                    : AppLocalizations.of(context)!.readMore,
+                type: CommonButtonType.text,
+                foregroundColor: AppColors.primary,
+                padding: const EdgeInsets.only(top: 8, left: 0, right: 0),
+                textStyle: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),

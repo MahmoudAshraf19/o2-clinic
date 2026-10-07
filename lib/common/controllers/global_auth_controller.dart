@@ -79,19 +79,14 @@ class GlobalAuthController extends GetxController {
       backgroundColor: AppColors.red.withValues(alpha: 0.9),
       colorText: AppColors.white,
       duration: const Duration(seconds: 8),
-      mainButton: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: CommonButton(
-          onPressed: () {
-            if (Get.isSnackbarOpen) {
-              Get.closeCurrentSnackbar();
-            }
-            Get.to(() => const SupportChatScreen());
-          },
-          text: 'OK',
-          type: CommonButtonType.text,
-          foregroundColor: AppColors.white,
-        ),
+      mainButton: TextButton(
+        onPressed: () {
+          if (Get.isSnackbarOpen) {
+            Get.closeCurrentSnackbar();
+          }
+          Get.to(() => const SupportChatScreen());
+        },
+        child: const Text('Contact Support', style: TextStyle(color: AppColors.white)),
       ),
     );
   }

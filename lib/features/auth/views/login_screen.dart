@@ -158,7 +158,7 @@ class LoginScreen extends GetView<LoginController> {
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                         ),
-                      ),),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 24),

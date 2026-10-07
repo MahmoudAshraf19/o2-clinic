@@ -13,6 +13,8 @@ class CommonButton extends StatelessWidget {
     this.size = CommonButtonSize.medium,
     this.icon,
     this.customIconWidget,
+    this.iconSize,
+    this.iconColor,
     this.iconPosition = IconPosition.left,
     this.isLoading = false,
     this.disabled = false,
@@ -36,6 +38,8 @@ class CommonButton extends StatelessWidget {
   final CommonButtonSize size;
   final IconData? icon;
   final Widget? customIconWidget;
+  final double? iconSize;
+  final Color? iconColor;
   final IconPosition iconPosition;
   final bool isLoading;
   final bool disabled;
@@ -138,8 +142,8 @@ class CommonButton extends StatelessWidget {
 
     final Widget iconWidget = customIconWidget ?? Icon(
       icon,
-      size: textStyle.fontSize ?? 14,
-      color: textStyle.color,
+      size: iconSize ?? textStyle.fontSize ?? 14,
+      color: iconColor ?? textStyle.color,
     );
 
     if (text.isEmpty) {

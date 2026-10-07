@@ -436,6 +436,7 @@ class RadiologyBookingPage extends StatelessWidget {
               colorText: AppColors.white,
             );
           }
+        },
         text: AppLocalizations.of(context)!.bookAppointment,
         type: CommonButtonType.primary,
         backgroundColor: AppColors.primary,
