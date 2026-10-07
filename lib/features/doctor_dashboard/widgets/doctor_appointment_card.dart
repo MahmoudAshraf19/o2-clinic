@@ -293,17 +293,17 @@ class DoctorAppointmentCard extends StatelessWidget {
       case 'upcoming':
       case 'confirmed':
         bgColor = AppColors.green.withValues(alpha: 0.15);
-        textColor = AppColors.green700!;
+        textColor = AppColors.green700;
         text = AppLocalizations.of(context)!.upcoming; // or confirmed
         break;
       case 'pending':
         bgColor = AppColors.orange.withValues(alpha: 0.15);
-        textColor = AppColors.orange800!;
+        textColor = AppColors.orange800;
         text = AppLocalizations.of(context)!.pending;
         break;
       case 'cancelled':
         bgColor = AppColors.red.withValues(alpha: 0.15);
-        textColor = AppColors.red700!;
+        textColor = AppColors.red700;
         text = AppLocalizations.of(context)!.cancelled;
         break;
       case 'completed':

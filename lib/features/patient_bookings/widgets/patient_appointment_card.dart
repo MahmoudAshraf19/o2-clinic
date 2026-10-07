@@ -162,7 +162,7 @@ class PatientAppointmentCard extends StatelessWidget {
         break;
       case 'pending':
         bgColor = AppColors.orange.withValues(alpha: 0.15);
-        textColor = AppColors.orange800!;
+        textColor = AppColors.orange800;
         text = isAr ? 'قيد الانتظار' : 'Pending';
         break;
       case 'cancelled':

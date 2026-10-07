@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../core/routes/app_routes.dart';
@@ -61,19 +60,14 @@ class LoginController extends GetxController {
             backgroundColor: AppColors.red.withValues(alpha: 0.9),
             colorText: AppColors.white,
             duration: const Duration(seconds: 8),
-            mainButton: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: CommonButton(
-                onPressed: () {
-                  if (Get.isSnackbarOpen) {
-                    Get.closeCurrentSnackbar();
-                  }
-                  Get.to(() => const SupportChatScreen());
-                },
-                text: 'Contact Support',
-                type: CommonButtonType.text,
-                foregroundColor: AppColors.white,
-              ),
+            mainButton: TextButton(
+              onPressed: () {
+                if (Get.isSnackbarOpen) {
+                  Get.closeCurrentSnackbar();
+                }
+                Get.to(() => const SupportChatScreen());
+              },
+              child: const Text('Contact Support', style: TextStyle(color: AppColors.white)),
             ),
           );
           return;

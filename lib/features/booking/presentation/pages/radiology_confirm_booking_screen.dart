@@ -537,7 +537,7 @@ class _RadiologyConfirmBookingScreenState
               padding: EdgeInsets.zero,
               width: 0,
               height: 0,
-              icon: Icons.close,
+              text: '', icon: Icons.close,
               iconColor: AppColors.red,
               iconSize: 20,
             ),

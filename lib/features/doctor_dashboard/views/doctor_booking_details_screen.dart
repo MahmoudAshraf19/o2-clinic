@@ -273,7 +273,7 @@ class _DoctorBookingDetailsScreenState
                       Expanded(
                         child: _CustomButton(
                           title: isAr ? 'رفض' : 'Reject',
-                          textColor: AppColors.red700!,
+                          textColor: AppColors.red700,
                           bgColor: AppColors.red.withValues(alpha: 0.1),
                           onTap: () => _handleStatusChange('cancelled', isAr),
                         ),
@@ -624,11 +624,11 @@ class _DoctorBookingDetailsScreenState
     switch (status) {
       case 'upcoming':
       case 'confirmed':
-        return AppColors.green700!;
+        return AppColors.green700;
       case 'pending':
-        return AppColors.orange800!;
+        return AppColors.orange800;
       case 'cancelled':
-        return AppColors.red700!;
+        return AppColors.red700;
       case 'completed':
         return AppColors.primary;
       default:

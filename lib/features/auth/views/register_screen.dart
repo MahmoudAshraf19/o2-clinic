@@ -452,7 +452,8 @@ class RegisterScreen extends GetView<RegisterController> {
     Widget? suffix,
     bool readOnly = false,
   }) {
-return CommonTextField(
+    final iconColor = isDarkMode ? AppColors.white54 : AppColors.brandBlue.withValues(alpha: 0.5);
+    return CommonTextField(
       controller: controller,
       maxLines: max,
       obscureText: obscure,
