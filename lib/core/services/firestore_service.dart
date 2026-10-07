@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Model Imports
 import '../../features/chat_support/models/chat_support_model.dart';
-import '../../features/dashboard/models/dashboard_appointment_model.dart';
+import '../../features/dashboard/data/models/dashboard_appointment_model.dart';
 import '../../features/doctors/data/models/doctor_model.dart';
 import '../../features/onboarding/data/models/onboarding_slide_model.dart';
 import '../../features/profile/models/dashboard_profile_model.dart';

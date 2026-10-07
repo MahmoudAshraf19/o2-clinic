@@ -22,8 +22,8 @@ import '../../features/splash/presentation/screens/splash_screen.dart';
 
 import '../../features/auth/presentation/bindings/doctor_login_binding.dart';
 import '../../features/auth/presentation/screens/doctor_login_screen.dart';
-import '../../features/doctor_dashboard/bindings/doctor_navigation_binding.dart';
-import '../../features/doctor_dashboard/views/doctor_navigation_shell.dart';
+import '../../features/doctor_dashboard/presentation/bindings/doctor_navigation_binding.dart';
+import '../../features/doctor_dashboard/presentation/screens/doctor_navigation_shell.dart';
 import '../../features/chat_support/screens/radiology_chat_screen.dart';
 import 'app_routes.dart';
 import 'package:o2_clinic/common/widgets/common_empty_state.dart';
