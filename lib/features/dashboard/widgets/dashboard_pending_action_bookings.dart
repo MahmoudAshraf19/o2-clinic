@@ -45,18 +45,17 @@ class DashboardPendingActionBookings extends StatelessWidget {
                     fontFamily: AppFonts.dancingScript,
                   ),
                 ),
-                TextButton(
+                CommonButton(
                   onPressed: () {
                     // Navigate to appointments
                     Get.to(() => const MyAppointmentsScreen());
                   },
-                  child: Text(
-                    AppLocalizations.of(context)!.seeAll,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primary.withValues(alpha: 0.8),
-                    ),
+                  text: AppLocalizations.of(context)!.seeAll,
+                  type: CommonButtonType.text,
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary.withValues(alpha: 0.8),
                   ),
                 ),
               ],
@@ -154,14 +153,15 @@ class DashboardPendingActionBookings extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           CommonButton(
-            text: AppLocalizations.of(context)!.continueBooking,
             onPressed: () => _handleContinue(booking),
+            text: AppLocalizations.of(context)!.continueBooking,
             type: CommonButtonType.primary,
             backgroundColor: AppColors.primary,
             foregroundColor: Theme.of(context).cardColor,
+            elevation: 0,
             borderRadius: BorderRadius.circular(10),
-            width: double.infinity,
             height: 44,
+            width: double.infinity,
             textStyle: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
           ),
         ],

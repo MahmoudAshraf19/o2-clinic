@@ -1,6 +1,6 @@
 import '../../../../common/widgets/common_text_field.dart';
-import 'package:flutter/material.dart';
 import '../../../../common/widgets/common_button.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/routes/app_routes.dart';
@@ -265,11 +265,12 @@ class GlobalSearchScreen extends StatelessWidget {
               ),
             ),
             CommonButton(
-              text: isAr ? 'مسح الكل' : 'Clear All',
               onPressed: controller.clearRecentSearches,
+              text: isAr ? 'مسح الكل' : 'Clear All',
               type: CommonButtonType.text,
-              foregroundColor: AppColors.error,
               padding: EdgeInsets.zero,
+              width: 50,
+              height: 30,
               textStyle: const TextStyle(
                 fontFamily: AppFonts.inter,
                 fontSize: 13,

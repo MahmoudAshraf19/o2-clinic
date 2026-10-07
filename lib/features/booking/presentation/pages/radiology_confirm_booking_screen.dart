@@ -2,7 +2,6 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -531,12 +530,9 @@ class _RadiologyConfirmBookingScreenState
                 ),
               ],
             ),
-            CommonButton(
+            TextButton(
               onPressed: () => discountController.removeDiscountCode(),
-              icon: Icons.close,
-              iconPosition: IconPosition.left,
-              type: CommonButtonType.text,
-              foregroundColor: AppColors.red,
+              child: Icon(Icons.close, color: AppColors.red, size: 20),
             ),
           ],
         );
@@ -612,152 +608,165 @@ class _RadiologyConfirmBookingScreenState
     return SafeArea(
       child: SizedBox(
         height: 52,
-          child: Obx(
-            () => CommonButton(
-              text: AppLocalizations.of(context)!.confirm,
-              onPressed: (_isBooking || _determinedPrice.value < 0)
-                  ? null
-                  : () async {
-                      setState(() => _isBooking = true);
-                      try {
-                        RadiologyAppointmentBookingController controller;
-                        if (Get.isRegistered<
-                          RadiologyAppointmentBookingController
-                        >(tag: widget.controllerTag)) {
-                          controller =
-                              Get.find<RadiologyAppointmentBookingController>(
-                                tag: widget.controllerTag,
-                              );
-                        } else {
-                          controller = Get.put(
-                            RadiologyAppointmentBookingController(widget.service),
-                            tag: widget.controllerTag,
-                          );
-                        }
-
-                        // ✅ لو UI عدّل التاريخ/الوقت (احتياطي)
-                        controller.selectedDate.value = widget.selectedDate;
-                        controller.selectedTime.value = widget.selectedTime;
-                        controller.selectTime(widget.selectedTime);
-
-                        if (widget.selectedTime.trim().isEmpty) {
-                          Get.snackbar(
-                            'Error',
-                            'Time is not available',
-                            snackPosition: SnackPosition.TOP,
-                          );
-                          return;
-                        }
-
-                        Map<String, dynamic>? discountData;
-                        final code = discountController.currentValidCode.value;
-                        final type = discountController.discountTypes
-                            .firstWhereOrNull(
-                              (t) => t.id == code?.discountTypeId,
-                            );
-                        num finalAmount = _determinedPrice.value;
-                        num discountAmount = 0;
-
-                        if (code != null && type != null) {
-                          final num originalPrice = _determinedPrice.value;
-                          if (type.calculationMethod == 'percentage') {
-                            discountAmount = (originalPrice * (code.value / 100));
-                            if (code.maximumDiscountAmount != null &&
-                                discountAmount > code.maximumDiscountAmount!) {
-                              discountAmount = code.maximumDiscountAmount!;
-                            }
-                            finalAmount = originalPrice - discountAmount;
-                          } else if (type.calculationMethod == 'fixed') {
-                            discountAmount = code.value;
-                            finalAmount = originalPrice - discountAmount;
-                          } else if (type.calculationMethod == 'free') {
-                            discountAmount = originalPrice;
-                            finalAmount = 0;
-                          }
-                          if (finalAmount < 0) finalAmount = 0;
-
-                          discountData = {
-                            "code_id": code.id,
-                            "code": code.code,
-                            "type": type.calculationMethod,
-                            "discount_value": discountAmount,
-                            "original_amount": originalPrice,
-                          };
-                        }
-
-                        final res = await controller.confirmBooking(
-                          finalAmount: finalAmount,
-                          discountData: discountData,
-                          existingBookingId: widget.bookingId.isNotEmpty
-                              ? widget.bookingId
-                              : null,
-                        );
-
-                        if (!res.success) {
-                          debugPrint(
-                            "❌ [RadiologyConfirmBookingScreen] Booking unsuccessful: ${res.message}",
-                          );
-
-                          String userMessage = res.message;
-                          if (userMessage.toLowerCase().contains("failed:") ||
-                              userMessage.toLowerCase().contains("error") ||
-                              userMessage.toLowerCase().contains("exception")) {
-                            userMessage =
-                                'Could not complete your booking at this time. Please try again.';
-                          }
-
-                          Get.snackbar(
-                            'Booking Failed',
-                            userMessage,
-                            snackPosition: SnackPosition.TOP,
-                          );
-                          return;
-                        }
-
-                        // Reset the price so the next booking asks for the price again!
-                        final cUser = FirebaseAuth.instance.currentUser;
-                        if (cUser != null) {
-                          RadiologyChatService.instance.resetDeterminedPrice(
-                            widget.bookingId,
-                          );
-                        }
-
-                        final bookingId = res.bookingId ?? '';
-
-                        Get.to(
-                          () => RadiologyBookingSuccessScreen(
-                            service: widget.service,
-                            selectedDate: widget.selectedDate,
-                            selectedTime: widget.selectedTime,
-                            bookingId: bookingId,
-                          ),
-                          transition: Transition.rightToLeftWithFade,
-                          duration: const Duration(milliseconds: 350),
-                        );
-                      } catch (e, st) {
-                        debugPrint("❌ [RadiologyConfirmBookingScreen] Error: $e");
-                        debugPrint(
-                          "❌ [RadiologyConfirmBookingScreen] StackTrace: $st",
-                        );
-                        Get.snackbar(
-                          'Booking Failed',
-                          'An unexpected error occurred. Please try again.',
-                          snackPosition: SnackPosition.TOP,
-                        );
-                      } finally {
-                        if (mounted) setState(() => _isBooking = false);
-                      }
-                    },
-              isLoading: _isBooking,
-              type: CommonButtonType.primary,
+        child: Obx(
+          () => ElevatedButton(
+            style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
-              foregroundColor: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.circular(14),
-              textStyle: TextStyle(
-                color: Theme.of(context).cardColor,
-                fontWeight: FontWeight.w800,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
               ),
             ),
+            onPressed: (_isBooking || _determinedPrice.value < 0)
+                ? null
+                : () async {
+                    setState(() => _isBooking = true);
+                    try {
+                      RadiologyAppointmentBookingController controller;
+                      if (Get.isRegistered<
+                        RadiologyAppointmentBookingController
+                      >(tag: widget.controllerTag)) {
+                        controller =
+                            Get.find<RadiologyAppointmentBookingController>(
+                              tag: widget.controllerTag,
+                            );
+                      } else {
+                        controller = Get.put(
+                          RadiologyAppointmentBookingController(widget.service),
+                          tag: widget.controllerTag,
+                        );
+                      }
+
+                      // ✅ لو UI عدّل التاريخ/الوقت (احتياطي)
+                      controller.selectedDate.value = widget.selectedDate;
+                      controller.selectedTime.value = widget.selectedTime;
+                      controller.selectTime(widget.selectedTime);
+
+                      if (widget.selectedTime.trim().isEmpty) {
+                        Get.snackbar(
+                          'Error',
+                          'Time is not available',
+                          snackPosition: SnackPosition.TOP,
+                        );
+                        return;
+                      }
+
+                      Map<String, dynamic>? discountData;
+                      final code = discountController.currentValidCode.value;
+                      final type = discountController.discountTypes
+                          .firstWhereOrNull(
+                            (t) => t.id == code?.discountTypeId,
+                          );
+                      num finalAmount = _determinedPrice.value;
+                      num discountAmount = 0;
+
+                      if (code != null && type != null) {
+                        final num originalPrice = _determinedPrice.value;
+                        if (type.calculationMethod == 'percentage') {
+                          discountAmount = (originalPrice * (code.value / 100));
+                          if (code.maximumDiscountAmount != null &&
+                              discountAmount > code.maximumDiscountAmount!) {
+                            discountAmount = code.maximumDiscountAmount!;
+                          }
+                          finalAmount = originalPrice - discountAmount;
+                        } else if (type.calculationMethod == 'fixed') {
+                          discountAmount = code.value;
+                          finalAmount = originalPrice - discountAmount;
+                        } else if (type.calculationMethod == 'free') {
+                          discountAmount = originalPrice;
+                          finalAmount = 0;
+                        }
+                        if (finalAmount < 0) finalAmount = 0;
+
+                        discountData = {
+                          "code_id": code.id,
+                          "code": code.code,
+                          "type": type.calculationMethod,
+                          "discount_value": discountAmount,
+                          "original_amount": originalPrice,
+                        };
+                      }
+
+                      final res = await controller.confirmBooking(
+                        finalAmount: finalAmount,
+                        discountData: discountData,
+                        existingBookingId: widget.bookingId.isNotEmpty
+                            ? widget.bookingId
+                            : null,
+                      );
+
+                      if (!res.success) {
+                        debugPrint(
+                          "❌ [RadiologyConfirmBookingScreen] Booking unsuccessful: ${res.message}",
+                        );
+
+                        String userMessage = res.message;
+                        if (userMessage.toLowerCase().contains("failed:") ||
+                            userMessage.toLowerCase().contains("error") ||
+                            userMessage.toLowerCase().contains("exception")) {
+                          userMessage =
+                              'Could not complete your booking at this time. Please try again.';
+                        }
+
+                        Get.snackbar(
+                          'Booking Failed',
+                          userMessage,
+                          snackPosition: SnackPosition.TOP,
+                        );
+                        return;
+                      }
+
+                      // Reset the price so the next booking asks for the price again!
+                      final cUser = FirebaseAuth.instance.currentUser;
+                      if (cUser != null) {
+                        RadiologyChatService.instance.resetDeterminedPrice(
+                          widget.bookingId,
+                        );
+                      }
+
+                      final bookingId = res.bookingId ?? '';
+
+                      Get.to(
+                        () => RadiologyBookingSuccessScreen(
+                          service: widget.service,
+                          selectedDate: widget.selectedDate,
+                          selectedTime: widget.selectedTime,
+                          bookingId: bookingId,
+                        ),
+                        transition: Transition.rightToLeftWithFade,
+                        duration: const Duration(milliseconds: 350),
+                      );
+                    } catch (e, st) {
+                      debugPrint("❌ [RadiologyConfirmBookingScreen] Error: $e");
+                      debugPrint(
+                        "❌ [RadiologyConfirmBookingScreen] StackTrace: $st",
+                      );
+                      Get.snackbar(
+                        'Booking Failed',
+                        'An unexpected error occurred. Please try again.',
+                        snackPosition: SnackPosition.TOP,
+                      );
+                    } finally {
+                      if (mounted) setState(() => _isBooking = false);
+                    }
+                  },
+            child: _isBooking
+                ? SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).cardColor,
+                      strokeWidth: 2,
+                    ),
+                  )
+                : Text(
+                    AppLocalizations.of(context)!.confirm,
+                    style: TextStyle(
+                      color: Theme.of(context).cardColor,
+
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+          ),
         ),
       ),
     );

@@ -126,29 +126,32 @@ class DashboardProfileScreen extends StatelessWidget {
                                       ? Alignment.centerLeft
                                       : Alignment.center,
                                   child: CommonButton(
-                                    text: controller.isGuest
-                                        ? AppLocalizations.of(context)!.login
-                                        : AppLocalizations.of(context)!.signOut,
-                                    onPressed: controller.logout,
-                                    icon: controller.isGuest ? Icons.login : Icons.logout,
-                                    iconPosition: IconPosition.left,
-                                    type: CommonButtonType.text,
-                                    backgroundColor: (controller.isGuest
-                                            ? AppColors.primary
-                                            : AppColors.error)
-                                        .withValues(alpha: 0.08),
-                                    foregroundColor: controller.isGuest
-                                        ? AppColors.primary
-                                        : AppColors.error,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 18,
-                                      vertical: 12,
+                                      onPressed: controller.logout,
+                                      type: CommonButtonType.primary,
+                                      elevation: 0,
+                                      backgroundColor:
+                                          (controller.isGuest
+                                                  ? AppColors.primary
+                                                  : AppColors.error)
+                                              .withValues(alpha: 0.08),
+                                      foregroundColor: controller.isGuest
+                                          ? AppColors.primary
+                                          : AppColors.error,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 18,
+                                        vertical: 12,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                      icon: controller.isGuest
+                                          ? Icons.login
+                                          : Icons.logout,
+                                      text: controller.isGuest
+                                          ? AppLocalizations.of(context)!.login
+                                          : AppLocalizations.of(context)!.signOut,
+                                      textStyle: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                    borderRadius: BorderRadius.circular(12),
-                                    textStyle: const TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
                                 ),
                                 SizedBox(height: isDesktop ? 8 : 18),
                               ],

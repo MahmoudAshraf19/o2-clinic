@@ -50,8 +50,8 @@ class NotificationsScreen extends StatelessWidget {
           Obx(() {
             if (controller.unreadCount > 0) {
               return CommonButton(
-                text: AppLocalizations.of(context)!.markAllAsRead,
                 onPressed: () => controller.markAllAsRead(),
+                text: AppLocalizations.of(context)!.markAllAsRead,
                 type: CommonButtonType.text,
                 foregroundColor: colors.primary,
                 padding: const EdgeInsets.symmetric(horizontal: 16),

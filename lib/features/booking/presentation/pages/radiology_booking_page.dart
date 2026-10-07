@@ -2,7 +2,6 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 
 import 'package:flutter/material.dart';
-import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -384,8 +383,7 @@ class RadiologyBookingPage extends StatelessWidget {
   ) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: CommonButton(
-        text: AppLocalizations.of(context)!.bookAppointment,
+      child: ElevatedButton(
         onPressed: () async {
           final date = controller.selectedDate.value;
           if (date == null) {
@@ -438,11 +436,18 @@ class RadiologyBookingPage extends StatelessWidget {
             );
           }
         },
-        type: CommonButtonType.primary,
-        backgroundColor: AppColors.primary,
-        borderRadius: BorderRadius.circular(30),
-        height: 55,
-        textStyle: TextStyle(fontWeight: FontWeight.w800, color: AppColors.white),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          minimumSize: const Size(double.infinity, 55),
+          elevation: 8,
+        ),
+        child: Text(
+          AppLocalizations.of(context)!.bookAppointment,
+          style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.white),
+        ),
       ),
     );
   }

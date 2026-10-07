@@ -200,11 +200,13 @@ class NotificationDropdownWidget extends StatelessWidget {
           Obx(() {
             if (controller.unreadCount == 0) return const SizedBox.shrink();
             return CommonButton(
-              text: AppLocalizations.of(context)!.markAllRead,
               onPressed: () => controller.markAllAsRead(),
+              text: AppLocalizations.of(context)!.markAllRead,
               type: CommonButtonType.text,
-              foregroundColor: _primary(context),
               padding: EdgeInsets.zero,
+              width: 0,
+              height: 0,
+              foregroundColor: _primary(context),
               textStyle: GoogleFonts.manrope(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -236,17 +238,16 @@ class NotificationDropdownWidget extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: CommonButton(
-          text: AppLocalizations.of(context)!.viewAllNotifications,
           onPressed: () {
             Get.back();
             Get.to(() => const NotificationsScreen());
           },
-          icon: Icons.arrow_forward_rounded,
-          iconPosition: IconPosition.right,
+          text: AppLocalizations.of(context)!.viewAllNotifications,
           type: CommonButtonType.text,
           foregroundColor: _primary(context),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          borderRadius: BorderRadius.circular(999), // StadiumBorder equivalent
+          icon: Icons.arrow_forward_rounded,
+          iconPosition: IconPosition.right,
           textStyle: GoogleFonts.manrope(
             fontSize: 14,
             fontWeight: FontWeight.w500,

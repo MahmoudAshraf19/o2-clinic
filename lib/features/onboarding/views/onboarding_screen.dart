@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
@@ -214,22 +213,40 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const SizedBox(height: 32),
 
                   // Next Button
-                  CommonButton(
-                    text: _currentIndex == pages.length - 1
-                        ? l10n.getStarted
-                        : l10n.next,
-                    onPressed: _nextPage,
-                    icon: Icons.arrow_forward,
-                    iconPosition: IconPosition.right,
-                    type: CommonButtonType.primary,
-                    backgroundColor: AppColors.brandBlue,
-                    borderRadius: BorderRadius.circular(28),
+                  SizedBox(
                     width: double.infinity,
                     height: 56,
-                    textStyle: GoogleFonts.cairo(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.white,
+                    child: ElevatedButton(
+                      onPressed: _nextPage,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.brandBlue,
+                        foregroundColor: AppColors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            _currentIndex == pages.length - 1
+                                ? l10n.getStarted
+                                : l10n.next,
+                            style: GoogleFonts.cairo(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          const Icon(
+                            Icons.arrow_forward,
+                            size: 20,
+                            color: AppColors.white,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

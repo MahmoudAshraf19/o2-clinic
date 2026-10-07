@@ -5,7 +5,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:video_player/video_player.dart';
@@ -227,25 +226,31 @@ class SupportAuthPrompt extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: CommonButton(
-                  text: AppLocalizations.of(context)!.login,
+                child: OutlinedButton(
                   onPressed: () => Get.toNamed(AppRoutes.login),
-                  type: CommonButtonType.outline,
-                  borderColor: AppColors.primary,
-                  borderRadius: BorderRadius.circular(16),
-                  height: 50,
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: AppColors.primary),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    minimumSize: const Size.fromHeight(50),
+                  ),
+                  child: Text(AppLocalizations.of(context)!.login),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: CommonButton(
-                  text: AppLocalizations.of(context)!.createAccount,
+                child: ElevatedButton(
                   onPressed: () => Get.toNamed(AppRoutes.register),
-                  type: CommonButtonType.primary,
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  height: 50,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    minimumSize: const Size.fromHeight(50),
+                  ),
+                  child: Text(AppLocalizations.of(context)!.createAccount),
                 ),
               ),
             ],
@@ -1308,19 +1313,18 @@ class _RecordingBar extends StatelessWidget {
           const SizedBox(width: 10),
           Text(duration, style: TextStyle(color: AppColors.grey700)),
           const Spacer(),
-          CommonButton(
-            text: 'Cancel',
-            onPressed: onCancel,
-            type: CommonButtonType.text,
-          ),
+          TextButton(onPressed: onCancel, child: const Text('Cancel')),
           const SizedBox(width: 6),
-          CommonButton(
-            text: 'Stop',
+          ElevatedButton(
             onPressed: onStop,
-            type: CommonButtonType.primary,
-            backgroundColor: AppColors.red,
-            foregroundColor: AppColors.white,
-            borderRadius: BorderRadius.circular(14),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.red,
+              foregroundColor: AppColors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+            ),
+            child: const Text('Stop'),
           ),
         ],
       ),

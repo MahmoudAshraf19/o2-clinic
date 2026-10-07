@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -439,12 +438,9 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 ),
               ],
             ),
-            CommonButton(
+            TextButton(
               onPressed: () => discountController.removeDiscountCode(),
-              icon: Icons.close,
-              iconPosition: IconPosition.left,
-              type: CommonButtonType.text,
-              foregroundColor: AppColors.red,
+              child: Icon(Icons.close, color: AppColors.red, size: 20),
             ),
           ],
         );
@@ -523,8 +519,13 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
       child: SafeArea(
         child: SizedBox(
           height: 52,
-          child: CommonButton(
-            text: AppLocalizations.of(context)!.confirm,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+            ),
             onPressed: _isBooking
                 ? null
                 : () async {
@@ -735,15 +736,23 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                       if (mounted) setState(() => _isBooking = false);
                     }
                   },
-            isLoading: _isBooking,
-            type: CommonButtonType.primary,
-            backgroundColor: AppColors.primary,
-            foregroundColor: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(14),
-            textStyle: TextStyle(
-              color: Theme.of(context).cardColor,
-              fontWeight: FontWeight.w800,
-            ),
+            child: _isBooking
+                ? SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).cardColor,
+                      strokeWidth: 2,
+                    ),
+                  )
+                : Text(
+                    AppLocalizations.of(context)!.confirm,
+                    style: TextStyle(
+                      color: Theme.of(context).cardColor,
+
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
           ),
         ),
       ),

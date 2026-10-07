@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -141,23 +140,28 @@ class DoctorCard extends StatelessWidget {
                   Expanded(
                     child: SizedBox(
                       height: 52,
-                      child: CommonButton(
-                        text: AppLocalizations.of(context)!.fullProfile,
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: AppColors.border),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
                         onPressed: () {
                           Get.toNamed(
                             AppRoutes.doctorProfile,
                             arguments: doctor,
                           );
                         },
-                        type: CommonButtonType.outline,
-                        borderColor: AppColors.border,
-                        borderRadius: BorderRadius.circular(20),
-                        textStyle: AppTextStyles.textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color:
-                              (Theme.of(context).brightness == Brightness.dark
-                              ? AppColors.white70
-                              : AppColors.textSecondary),
+                        child: Text(
+                          AppLocalizations.of(context)!.fullProfile,
+                          style: AppTextStyles.textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color:
+                                (Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.white70
+                                : AppColors.textSecondary),
+                          ),
                         ),
                       ),
                     ),
@@ -166,15 +170,21 @@ class DoctorCard extends StatelessWidget {
                   Expanded(
                     child: SizedBox(
                       height: 52,
-                      child: CommonButton(
-                        text: AppLocalizations.of(context)!.bookNow,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          elevation: 4,
+                        ),
                         onPressed: () {
                           BookingHelper.onBookNowClicked(context, doctor);
                         },
-                        type: CommonButtonType.primary,
-                        backgroundColor: AppColors.primary,
-                        borderRadius: BorderRadius.circular(20),
-                        textStyle: AppTextStyles.textTheme.labelLarge,
+                        child: Text(
+                          AppLocalizations.of(context)!.bookNow,
+                          style: AppTextStyles.textTheme.labelLarge,
+                        ),
                       ),
                     ),
                   ),

@@ -1,6 +1,5 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -140,9 +139,9 @@ class RadiologyBookingSuccessScreen extends StatelessWidget {
   Widget _actions(BuildContext context) {
     return Column(
       children: [
-        CommonButton(
-          text: AppLocalizations.of(context)!.backToHome,
+        ElevatedButton(
           onPressed: () => Get.offAllNamed('/main-navigation'),
+          child: Text(AppLocalizations.of(context)!.backToHome),
         ),
       ],
     );
