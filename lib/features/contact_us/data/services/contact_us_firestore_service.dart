@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'firestore_paths.dart';
-import 'models/contact_us_model.dart';
+import '../../../services_firestore/firestore_paths.dart';
+import '../models/contact_us_model.dart';
 
 class ContactUsFirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
