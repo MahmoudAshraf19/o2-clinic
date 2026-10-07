@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -192,30 +193,17 @@ class _PrimaryButton extends StatelessWidget {
             offset: const Offset(0, 6),
           ),
         ],
-      ),
-      child: ElevatedButton(
+      child: CommonButton(
         onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          elevation: 0,
-          backgroundColor: AppColors.transparent,
-          shadowColor: AppColors.transparent,
-          foregroundColor: AppColors.white,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 20),
-            const SizedBox(width: 10),
-            Text(
-              text,
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-            ),
-          ],
-        ),
+        text: text,
+        type: CommonButtonType.primary,
+        icon: icon,
+        borderRadius: BorderRadius.circular(20),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+        backgroundColor: AppColors.transparent,
+        foregroundColor: AppColors.white,
+        elevation: 0,
       ),
     );
   }
@@ -250,30 +238,17 @@ class _OutlinedButton extends StatelessWidget {
             offset: const Offset(0, 4),
           ),
         ],
-      ),
-      child: ElevatedButton(
+      child: CommonButton(
         onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          elevation: 0,
-          backgroundColor: AppColors.transparent,
-          shadowColor: AppColors.transparent,
-          foregroundColor: AppColors.primary,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 20),
-            const SizedBox(width: 10),
-            Text(
-              text,
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-            ),
-          ],
-        ),
+        text: text,
+        type: CommonButtonType.outline,
+        icon: icon,
+        borderRadius: BorderRadius.circular(20),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+        backgroundColor: AppColors.transparent,
+        foregroundColor: AppColors.primary,
+        elevation: 0,
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -129,9 +130,10 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
                   style: TextStyle(color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: 14),
-                ElevatedButton(
+                CommonButton(
                   onPressed: () => c.load(forceRefresh: true),
-                  child: Text(AppLocalizations.of(context)!.retry),
+                  text: AppLocalizations.of(context)!.retry,
+                  type: CommonButtonType.primary,
                 ),
               ],
             ),

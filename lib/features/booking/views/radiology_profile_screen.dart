@@ -1,6 +1,7 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_fonts.dart';
@@ -641,7 +642,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
       ),
       child: SizedBox(
         height: 52,
-        child: ElevatedButton(
+        child: CommonButton(
           onPressed: () {
             Get.to(
               () => RadiologyBookingPage(service: widget.service),
@@ -649,25 +650,14 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
               duration: const Duration(milliseconds: 300),
             );
           },
-          style: ElevatedButton.styleFrom(
-            elevation: 0,
-            backgroundColor: AppColors.primary,
-            foregroundColor: AppColors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.calendar_month_rounded, size: 18),
-              SizedBox(width: 8),
-              Text(
-                AppLocalizations.of(context)!.bookAppointment,
-                style: TextStyle(fontWeight: FontWeight.w900),
-              ),
-            ],
-          ),
+          text: AppLocalizations.of(context)!.bookAppointment,
+          type: CommonButtonType.primary,
+          icon: Icons.calendar_month_rounded,
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.white,
+          borderRadius: BorderRadius.circular(18),
+          elevation: 0,
+          textStyle: TextStyle(fontWeight: FontWeight.w900),
         ),
       ),
     );

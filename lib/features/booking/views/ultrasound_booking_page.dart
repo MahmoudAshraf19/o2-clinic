@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 
@@ -198,7 +199,7 @@ class UltrasoundBookingPage extends StatelessWidget {
   Widget _continue(UltrasoundBookingController c, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: ElevatedButton(
+      child: CommonButton(
         onPressed: () {
           if (!c.canContinue()) {
             Get.snackbar(
@@ -217,19 +218,14 @@ class UltrasoundBookingPage extends StatelessWidget {
             ),
           );
         },
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(double.infinity, 50),
-          backgroundColor: AppColors.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        child: Text(
-          AppLocalizations.of(context)!.continueBooking,
-          style: const TextStyle(
-            color: AppColors.white,
-            fontWeight: FontWeight.bold,
-          ),
+        text: AppLocalizations.of(context)!.continueBooking,
+        type: CommonButtonType.primary,
+        backgroundColor: AppColors.primary,
+        borderRadius: BorderRadius.circular(12),
+        height: 50,
+        textStyle: const TextStyle(
+          color: AppColors.white,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
