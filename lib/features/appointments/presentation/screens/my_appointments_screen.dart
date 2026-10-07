@@ -3,6 +3,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/routes/app_routes.dart';
@@ -884,20 +885,15 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                 style: TextStyle(fontSize: 14, color: AppColors.grey600),
               ),
               const SizedBox(height: 24),
-              ElevatedButton(
+              CommonButton(
                 onPressed: () => Get.toNamed(AppRoutes.login),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.white,
-                  minimumSize: const Size.fromHeight(54),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                child: const Text(
-                  'Login',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
+                text: 'Login',
+                type: CommonButtonType.primary,
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.white,
+                height: 54,
+                borderRadius: BorderRadius.circular(16),
+                textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -927,9 +923,10 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
             style: TextStyle(color: AppColors.grey600),
           ),
           const SizedBox(height: 16),
-          ElevatedButton(
+          CommonButton(
             onPressed: () => setState(() {}),
-            child: const Text('Retry'),
+            text: 'Retry',
+            type: CommonButtonType.primary,
           ),
         ],
       ),
@@ -1334,7 +1331,7 @@ class _BookingDetailsSheet extends StatelessWidget {
                   booking.status.current == 'pending')) ...[
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
+              child: CommonButton(
                 onPressed: () async {
                   Get.dialog(
                     const Center(
@@ -1376,60 +1373,47 @@ class _BookingDetailsSheet extends StatelessWidget {
                     Get.snackbar('Error', 'Failed to load details');
                   }
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.continueBookingOrChat,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                text: AppLocalizations.of(context)!.continueBookingOrChat,
+                type: CommonButtonType.primary,
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                borderRadius: BorderRadius.circular(16),
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
-              child: TextButton(
+              child: CommonButton(
                 onPressed: () => Get.back(),
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: Text(
-                  isAr ? 'إغلاق' : 'Close',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.grey600,
-                  ),
+                text: isAr ? 'إغلاق' : 'Close',
+                type: CommonButtonType.text,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                foregroundColor: AppColors.grey600,
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ] else ...[
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
+              child: CommonButton(
                 onPressed: () => Get.back(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                child: Text(
-                  isAr ? 'إغلاق' : 'Close',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                text: isAr ? 'إغلاق' : 'Close',
+                type: CommonButtonType.primary,
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                borderRadius: BorderRadius.circular(16),
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -1438,7 +1422,7 @@ class _BookingDetailsSheet extends StatelessWidget {
             const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
-              child: TextButton(
+              child: CommonButton(
                 onPressed: () async {
                   final confirm = await Get.dialog<bool>(
                     AlertDialog(
@@ -1459,29 +1443,21 @@ class _BookingDetailsSheet extends StatelessWidget {
                         style: const TextStyle(fontSize: 16),
                       ),
                       actions: [
-                        TextButton(
+                        CommonButton(
                           onPressed: () => Get.back(result: false),
-                          style: TextButton.styleFrom(
-                            foregroundColor: AppColors.grey600,
-                          ),
-                          child: Text(
-                            isAr ? 'لا' : 'No',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                          text: isAr ? 'لا' : 'No',
+                          type: CommonButtonType.text,
+                          foregroundColor: AppColors.grey600,
+                          textStyle: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        ElevatedButton(
+                        CommonButton(
                           onPressed: () => Get.back(result: true),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: AppColors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Text(
-                            isAr ? 'نعم' : 'Yes',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                          text: isAr ? 'نعم' : 'Yes',
+                          type: CommonButtonType.primary,
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: AppColors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          textStyle: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -1515,20 +1491,16 @@ class _BookingDetailsSheet extends StatelessWidget {
                     }
                   }
                 },
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  side: const BorderSide(color: AppColors.primary, width: 1.5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                child: Text(
-                  isAr ? 'إلغاء الحجز' : 'Cancel Booking',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
-                  ),
+                type: CommonButtonType.outline,
+                text: isAr ? 'إلغاء الحجز' : 'Cancel Booking',
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                borderColor: AppColors.primary,
+                borderWidth: 1.5,
+                borderRadius: BorderRadius.circular(16),
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
                 ),
               ),
             ),

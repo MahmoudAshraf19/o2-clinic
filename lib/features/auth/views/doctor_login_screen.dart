@@ -1,5 +1,6 @@
 import '../../../../common/widgets/common_text_field.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 
@@ -121,46 +122,23 @@ class DoctorLoginScreen extends GetView<DoctorLoginController> {
                           () => SizedBox(
                             width: double.infinity,
                             height: 56,
-                            child: ElevatedButton(
+                            child: CommonButton(
                               onPressed: controller.isLoading.value
                                   ? null
                                   : controller.login,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: primary,
-                                foregroundColor: AppColors.white,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18),
-                                ),
+                              text: AppLocalizations.of(context)!.login,
+                              type: CommonButtonType.primary,
+                              backgroundColor: primary,
+                              foregroundColor: AppColors.white,
+                              elevation: 0,
+                              borderRadius: BorderRadius.circular(18),
+                              isLoading: controller.isLoading.value,
+                              icon: Icons.login_rounded,
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: 'Inter',
                               ),
-                              child: controller.isLoading.value
-                                  ? const SizedBox(
-                                      width: 24,
-                                      height: 24,
-                                      child: CircularProgressIndicator(
-                                        color: AppColors.white,
-                                        strokeWidth: 2.5,
-                                      ),
-                                    )
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.login_rounded,
-                                          size: 20,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Text(
-                                          AppLocalizations.of(context)!.login,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: 'Inter',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                             ),
                           ),
                         ),
