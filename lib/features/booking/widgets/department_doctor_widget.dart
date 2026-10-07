@@ -2,6 +2,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../core/routes/app_routes.dart';
@@ -198,47 +199,31 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
+                  child: CommonButton(
                     onPressed: () => Get.back(),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge?.color,
-                      side: BorderSide(
-                        color: AppColors.border.withValues(alpha: 0.9),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                    ),
-                    child: Text(
-                      AppLocalizations.of(context)!.notNow,
-                      style: TextStyle(fontWeight: FontWeight.w800),
-                    ),
+                    text: AppLocalizations.of(context)!.notNow,
+                    type: CommonButtonType.outline,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    borderRadius: BorderRadius.circular(14),
+                    textStyle: TextStyle(fontWeight: FontWeight.w800),
                   ),
                 ),
                 SizedBox(width: 10),
                 Expanded(
-                  child: ElevatedButton(
+                  child: CommonButton(
                     onPressed: () {
                       Get.back(); // close dialog
                       Get.toNamed(AppRoutes.login);
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: Text(
-                      AppLocalizations.of(context)!.login,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        color: AppColors.white,
-                      ),
+                    text: AppLocalizations.of(context)!.login,
+                    type: CommonButtonType.primary,
+                    backgroundColor: AppColors.primary,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    borderRadius: BorderRadius.circular(14),
+                    elevation: 0,
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.white,
                     ),
                   ),
                 ),
@@ -539,9 +524,10 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                   if (service.id == "ct_scan")
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
+                      child: CommonButton(
                         onPressed: () => Get.to(() => CTScanScreen()),
-                        child: Text("Book CT Scan"),
+                        text: "Book CT Scan",
+                        type: CommonButtonType.primary,
                       ),
                     ),
                 ],
@@ -673,24 +659,24 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
           Row(
             children: [
               Expanded(
-                child: OutlinedButton(
+                child: CommonButton(
                   onPressed: () =>
                       Get.to(() => DoctorProfilePage(doctor: doctor)),
-                  child: Text(AppLocalizations.of(context)!.viewProfile),
+                  text: AppLocalizations.of(context)!.viewProfile,
+                  type: CommonButtonType.outline,
                 ),
               ),
               SizedBox(width: 10),
               Expanded(
-                child: ElevatedButton(
+                child: CommonButton(
                   onPressed: () async {
                     await _ensureLoggedInThen(() {
                       BookingHelper.onBookNowClicked(context, doctor);
                     });
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                  ),
-                  child: Text(AppLocalizations.of(context)!.book.toUpperCase()),
+                  text: AppLocalizations.of(context)!.book.toUpperCase(),
+                  type: CommonButtonType.primary,
+                  backgroundColor: AppColors.primary,
                 ),
               ),
             ],

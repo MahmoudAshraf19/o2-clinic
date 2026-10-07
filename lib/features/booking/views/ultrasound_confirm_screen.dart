@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
@@ -356,9 +357,15 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
                 ),
               ],
             ),
-            TextButton(
+            CommonButton(
               onPressed: () => discountController.removeDiscountCode(),
-              child: const Icon(Icons.close, color: AppColors.red, size: 20),
+              type: CommonButtonType.text,
+              padding: EdgeInsets.zero,
+              width: 0,
+              height: 0,
+              icon: Icons.close,
+              iconColor: AppColors.red,
+              iconSize: 20,
             ),
           ],
         );
@@ -403,114 +410,99 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
       child: SafeArea(
         child: SizedBox(
           height: 52,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
-            ),
-            onPressed: _isBooking
-                ? null
-                : () async {
-                    setState(() => _isBooking = true);
-                    try {
-                      Map<String, dynamic>? discountData;
-                      final code = discountController.currentValidCode.value;
-                      final type = discountController.discountTypes
-                          .firstWhereOrNull(
-                            (t) => t.id == code?.discountTypeId,
-                          );
-                      num finalAmount = widget.model.price;
-                      num discountAmount = 0;
+          child: CommonButton(
+            type: CommonButtonType.primary,
+            backgroundColor: AppColors.primary,
+            borderRadius: BorderRadius.circular(14),
+            isLoading: _isBooking,
+            onPressed: () async {
+              setState(() => _isBooking = true);
+              try {
+                Map<String, dynamic>? discountData;
+                final code = discountController.currentValidCode.value;
+                final type = discountController.discountTypes
+                    .firstWhereOrNull(
+                      (t) => t.id == code?.discountTypeId,
+                    );
+                num finalAmount = widget.model.price;
+                num discountAmount = 0;
 
-                      if (code != null && type != null) {
-                        if (type.calculationMethod == 'percentage') {
-                          discountAmount =
-                              (widget.model.price * (code.value / 100));
-                          if (code.maximumDiscountAmount != null &&
-                              discountAmount > code.maximumDiscountAmount!) {
-                            discountAmount = code.maximumDiscountAmount!;
-                          }
-                          finalAmount = widget.model.price - discountAmount;
-                        } else if (type.calculationMethod == 'fixed') {
-                          discountAmount = code.value;
-                          finalAmount = widget.model.price - discountAmount;
-                        } else if (type.calculationMethod == 'free') {
-                          discountAmount = widget.model.price;
-                          finalAmount = 0;
-                        }
-                        if (finalAmount < 0) finalAmount = 0;
-
-                        discountData = {
-                          "code_id": code.id,
-                          "code": code.code,
-                          "type": type.calculationMethod,
-                          "discount_value": discountAmount,
-                          "original_amount": widget.model.price,
-                        };
-                      }
-
-                      final currentUser = FirebaseAuth.instance.currentUser;
-                      final bookingRes = await BookingFirestoreService()
-                          .createImagingBooking(
-                            user: BookingUserInfo(
-                              userId: currentUser?.uid ?? 'guest',
-                              name: currentUser?.displayName ?? 'Guest Patient',
-                              countryCode: '',
-                              number: currentUser?.phoneNumber ?? '',
-                            ),
-                            categoryId: widget.model.title,
-                            subcategoryId: '',
-                            nameEn: widget.model.title,
-                            nameAr: widget.model.title,
-                            selectedDate: widget.date,
-                            selectedTime: widget.time,
-                            amount: finalAmount,
-                            discountData: discountData,
-                          );
-
-                      if (bookingRes.success) {
-                        Get.offAll(
-                          () => UltrasoundSuccessScreen(
-                            model: widget.model,
-                            date: widget.date,
-                            time: widget.time,
-                            bookingId:
-                                bookingRes.bookingId ??
-                                "ULS_${DateTime.now().millisecondsSinceEpoch % 10000}",
-                          ),
-                        );
-                      } else {
-                        Get.snackbar(
-                          AppLocalizations.of(context)!.error,
-                          bookingRes.message,
-                          snackPosition: SnackPosition.TOP,
-                        );
-                      }
-                    } catch (e) {
-                      Get.snackbar(
-                        AppLocalizations.of(context)!.error,
-                        'Booking failed: $e',
-                        snackPosition: SnackPosition.TOP,
-                      );
-                    } finally {
-                      if (mounted) setState(() => _isBooking = false);
+                if (code != null && type != null) {
+                  if (type.calculationMethod == 'percentage') {
+                    discountAmount =
+                        (widget.model.price * (code.value / 100));
+                    if (code.maximumDiscountAmount != null &&
+                        discountAmount > code.maximumDiscountAmount!) {
+                      discountAmount = code.maximumDiscountAmount!;
                     }
-                  },
-            child: _isBooking
-                ? const SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      color: AppColors.white,
-                      strokeWidth: 2,
+                    finalAmount = widget.model.price - discountAmount;
+                  } else if (type.calculationMethod == 'fixed') {
+                    discountAmount = code.value;
+                    finalAmount = widget.model.price - discountAmount;
+                  } else if (type.calculationMethod == 'free') {
+                    discountAmount = widget.model.price;
+                    finalAmount = 0;
+                  }
+                  if (finalAmount < 0) finalAmount = 0;
+
+                  discountData = {
+                    "code_id": code.id,
+                    "code": code.code,
+                    "type": type.calculationMethod,
+                    "discount_value": discountAmount,
+                    "original_amount": widget.model.price,
+                  };
+                }
+
+                final currentUser = FirebaseAuth.instance.currentUser;
+                final bookingRes = await BookingFirestoreService()
+                    .createImagingBooking(
+                      user: BookingUserInfo(
+                        userId: currentUser?.uid ?? 'guest',
+                        name: currentUser?.displayName ?? 'Guest Patient',
+                        countryCode: '',
+                        number: currentUser?.phoneNumber ?? '',
+                      ),
+                      categoryId: widget.model.title,
+                      subcategoryId: '',
+                      nameEn: widget.model.title,
+                      nameAr: widget.model.title,
+                      selectedDate: widget.date,
+                      selectedTime: widget.time,
+                      amount: finalAmount,
+                      discountData: discountData,
+                    );
+
+                if (bookingRes.success) {
+                  Get.offAll(
+                    () => UltrasoundSuccessScreen(
+                      model: widget.model,
+                      date: widget.date,
+                      time: widget.time,
+                      bookingId:
+                          bookingRes.bookingId ??
+                          "ULS_${DateTime.now().millisecondsSinceEpoch % 10000}",
                     ),
-                  )
-                : Text(
-                    AppLocalizations.of(context)!.confirm,
-                    style: TextStyle(color: AppColors.white),
-                  ),
+                  );
+                } else {
+                  Get.snackbar(
+                    AppLocalizations.of(context)!.error,
+                    bookingRes.message,
+                    snackPosition: SnackPosition.TOP,
+                  );
+                }
+              } catch (e) {
+                Get.snackbar(
+                  AppLocalizations.of(context)!.error,
+                  'Booking failed: $e',
+                  snackPosition: SnackPosition.TOP,
+                );
+              } finally {
+                if (mounted) setState(() => _isBooking = false);
+              }
+            },
+            text: AppLocalizations.of(context)!.confirm,
+            textStyle: TextStyle(color: AppColors.white),
           ),
         ),
       ),

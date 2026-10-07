@@ -1,5 +1,6 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -130,9 +131,10 @@ class UltrasoundSuccessScreen extends StatelessWidget {
   Widget _actions(BuildContext context) {
     return Column(
       children: [
-        ElevatedButton(
+        CommonButton(
           onPressed: () => Get.offAllNamed('/main-navigation'),
-          child: Text(AppLocalizations.of(context)!.home),
+          text: AppLocalizations.of(context)!.home,
+          type: CommonButtonType.primary,
         ),
       ],
     );

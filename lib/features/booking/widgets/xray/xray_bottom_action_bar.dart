@@ -1,5 +1,6 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import '../../../../../common/widgets/common_button.dart';
 
 import '../../../../core/theme/app_colors.dart';
 
@@ -62,29 +63,18 @@ class XRayBottomActionBar extends StatelessWidget {
             Expanded(
               child: SizedBox(
                 height: 52,
-                child: ElevatedButton(
+                child: CommonButton(
                   onPressed: onContinue,
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.continueAction,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      const Icon(Icons.arrow_forward_rounded, size: 18),
-                    ],
+                  text: AppLocalizations.of(context)!.continueAction,
+                  type: CommonButtonType.primary,
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  elevation: 0,
+                  icon: Icons.arrow_forward_rounded,
+                  textStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),

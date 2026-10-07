@@ -1,5 +1,6 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -349,9 +350,10 @@ class _XRayScreenState extends State<XRayScreen> {
               style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
+            CommonButton(
               onPressed: () => _loadData(forceRefresh: true),
-              child: const Text('Try again'),
+              text: 'Try again',
+              type: CommonButtonType.primary,
             ),
           ],
         ),
