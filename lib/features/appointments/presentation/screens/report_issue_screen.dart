@@ -1,6 +1,7 @@
 import '../../../../common/widgets/common_text_field.dart';
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
@@ -172,44 +173,29 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                   ],
                 )
               else
-                OutlinedButton.icon(
+                CommonButton(
+                  text: l10n.attachImage,
                   onPressed: _pickImage,
-                  icon: const Icon(Icons.image),
-                  label: Text(l10n.attachImage),
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
+                  icon: Icons.image,
+                  iconPosition: IconPosition.left,
+                  type: CommonButtonType.outline,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  borderRadius: BorderRadius.circular(12),
                 ),
               const Spacer(),
-              ElevatedButton(
+              CommonButton(
+                text: l10n.submitReport,
                 onPressed: _isSubmitting ? null : _submitReport,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.error,
-                  foregroundColor: AppColors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                isLoading: _isSubmitting,
+                type: CommonButtonType.primary,
+                backgroundColor: AppColors.error,
+                foregroundColor: AppColors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                borderRadius: BorderRadius.circular(12),
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
-                child: _isSubmitting
-                    ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: AppColors.white,
-                        ),
-                      )
-                    : Text(
-                        l10n.submitReport,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
               ),
             ],
           ),

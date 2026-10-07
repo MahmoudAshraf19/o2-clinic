@@ -4,6 +4,7 @@ import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -578,7 +579,8 @@ class BookingPage extends StatelessWidget {
   ) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: ElevatedButton(
+      child: CommonButton(
+        text: AppLocalizations.of(context)!.bookAppointment,
         onPressed: () {
           try {
             final date = controller.selectedDate.value;
@@ -634,18 +636,11 @@ class BookingPage extends StatelessWidget {
             );
           }
         },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          minimumSize: const Size(double.infinity, 55),
-          elevation: 0,
-        ),
-        child: Text(
-          AppLocalizations.of(context)!.bookAppointment,
-          style: TextStyle(fontWeight: FontWeight.w800),
-        ),
+        type: CommonButtonType.primary,
+        backgroundColor: AppColors.primary,
+        borderRadius: BorderRadius.circular(30),
+        height: 55,
+        textStyle: TextStyle(fontWeight: FontWeight.w800),
       ),
     );
   }
