@@ -1,3 +1,4 @@
+import '../../../../common/widgets/common_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io';
@@ -700,20 +701,11 @@ class DoctorEditProfileScreen extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 4),
-          TextFormField(
+          CommonTextField(
             controller: controller,
             maxLines: maxLines,
-            style: const TextStyle(
-              fontSize: 13,
-              color: Color(0xFF13364A),
-              fontWeight: FontWeight.w600,
-            ),
-            decoration: const InputDecoration(
-              isDense: true,
-              contentPadding: EdgeInsets.zero,
-              border: InputBorder.none,
-            ),
+            showBorder: false,
+            contentPadding: EdgeInsets.zero,
           ),
         ],
       ),
@@ -730,22 +722,11 @@ class DoctorEditProfileScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFE5E7EB)),
       ),
-      child: TextFormField(
+      child: CommonTextField(
         controller: controller,
         keyboardType: keyboardType,
-        style: const TextStyle(
-          fontSize: 14,
-          color: Color(0xFF13364A),
-          fontWeight: FontWeight.w600,
-        ),
-        decoration: InputDecoration(
-          prefixIcon: Icon(icon, color: const Color(0xFF6B7280), size: 20),
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
-          ),
-        ),
+        prefixIcon: icon,
+        showBorder: false,
       ),
     );
   }
@@ -1048,3 +1029,4 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
     );
   }
 }
+

@@ -1,3 +1,4 @@
+import '../../../../common/widgets/common_text_field.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'dart:io' as io;
@@ -403,52 +404,23 @@ class RegisterScreen extends GetView<RegisterController> {
     Widget? suffix,
     bool readOnly = false,
   }) {
-    final borderColor = isDarkMode ? Colors.white24 : Colors.grey.shade300;
-    final fillColor = isDarkMode ? const Color(0xFF1A2625) : Colors.white;
     final iconColor = isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5);
-
-    return TextField(
+    return CommonTextField(
       controller: controller,
       maxLines: max,
       obscureText: obscure,
       readOnly: readOnly,
-      style: GoogleFonts.cairo(
-        fontSize: 15,
-        fontWeight: FontWeight.w500,
-        color: isDarkMode ? Colors.white : AppColors.brandBlue,
-      ),
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Image.asset(
-            iconPath,
-            width: 20,
-            height: 20,
-            color: iconColor,
-          ),
-        ),
-        suffixIcon: suffix,
-        hintText: hint,
-        hintStyle: GoogleFonts.cairo(
-          color: isDarkMode ? Colors.white38 : AppColors.brandBlue.withValues(alpha: 0.4),
-          fontWeight: FontWeight.w500,
-        ),
-        filled: true,
-        fillColor: readOnly ? (isDarkMode ? Colors.white10 : Colors.grey.shade50) : fillColor,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: borderColor, width: 1.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: borderColor, width: 1.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.vibrantCyan, width: 1.5),
+      hint: hint,
+      prefixWidget: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Image.asset(
+          iconPath,
+          width: 20,
+          height: 20,
+          color: iconColor,
         ),
       ),
+      suffixWidget: suffix,
     );
   }
 
@@ -460,49 +432,14 @@ class RegisterScreen extends GetView<RegisterController> {
     bool isLocked = true,
     String? errorText,
   }) {
-    final borderColor = isDarkMode ? Colors.white24 : Colors.grey.shade300;
     final iconColor = isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5);
-
-    return TextField(
+    return CommonTextField(
       controller: controller,
       readOnly: isLocked,
       enabled: !isLocked,
-      style: GoogleFonts.cairo(
-        fontSize: 15,
-        fontWeight: FontWeight.w500,
-        color: isDarkMode ? Colors.white : AppColors.brandBlue,
-      ),
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Icon(icon, color: iconColor, size: 22),
-        ),
-        hintText: label,
-        hintStyle: GoogleFonts.cairo(
-          color: isDarkMode ? Colors.white38 : AppColors.brandBlue.withValues(alpha: 0.4),
-          fontWeight: FontWeight.w500,
-        ),
-        errorText: errorText,
-        filled: true,
-        fillColor: isLocked ? (isDarkMode ? Colors.white10 : Colors.grey.shade50) : (isDarkMode ? const Color(0xFF1A2625) : Colors.white),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: borderColor, width: 1.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: borderColor, width: 1.0),
-        ),
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: isDarkMode ? Colors.white12 : Colors.grey.shade200, width: 1.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.vibrantCyan, width: 1.5),
-        ),
-      ),
+      hint: label,
+      errorText: errorText,
+      prefixIcon: icon,
     );
   }
 
@@ -756,3 +693,5 @@ class RegisterScreen extends GetView<RegisterController> {
     });
   }
 }
+
+

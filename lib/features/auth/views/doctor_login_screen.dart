@@ -1,3 +1,4 @@
+import '../../../../common/widgets/common_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
@@ -183,48 +184,13 @@ class DoctorLoginScreen extends GetView<DoctorLoginController> {
     bool obscure = false,
     Widget? suffix,
   }) {
-    return TextField(
+    return CommonTextField(
       controller: controller,
       obscureText: obscure,
-      style: const TextStyle(
-        fontSize: 15,
-        fontWeight: FontWeight.w500,
-        fontFamily: 'Inter',
-      ),
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: TextStyle(
-          color: Colors.grey.shade500,
-          fontWeight: FontWeight.w500,
-        ),
-
-        filled: true,
-        fillColor: const Color(0xFFF8FAFA),
-
-        prefixIcon: Icon(icon, color: primary, size: 22),
-
-        suffixIcon: suffix,
-
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 18,
-          vertical: 18,
-        ),
-
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide.none,
-        ),
-
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(color: Colors.grey.shade200, width: 1.2),
-        ),
-
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: const BorderSide(color: primary, width: 1.5),
-        ),
-      ),
+      hint: hint,
+      prefixIcon: icon,
+      suffixWidget: suffix,
     );
   }
 }
+

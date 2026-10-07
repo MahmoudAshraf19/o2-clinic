@@ -1,3 +1,4 @@
+import '../../../../common/widgets/common_text_field.dart';
 import 'package:flutter/foundation.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -279,50 +280,22 @@ class LoginScreen extends GetView<LoginController> {
     bool obscure = false,
     Widget? suffix,
   }) {
-    final borderColor = isDarkMode ? Colors.white24 : Colors.grey.shade300;
-    final fillColor = isDarkMode ? const Color(0xFF1A2625) : Colors.white;
     final iconColor = isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5);
 
-    return TextField(
+    return CommonTextField(
       controller: controller,
       obscureText: obscure,
-      style: GoogleFonts.cairo(
-        fontSize: 15,
-        fontWeight: FontWeight.w500,
-        color: isDarkMode ? Colors.white : AppColors.brandBlue,
-      ),
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: GoogleFonts.cairo(
-          color: isDarkMode ? Colors.white38 : AppColors.brandBlue.withValues(alpha: 0.4),
-          fontWeight: FontWeight.w500,
-        ),
-        filled: true,
-        fillColor: fillColor,
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: Image.asset(
-            iconPath,
-            width: 20,
-            height: 20,
-            color: iconColor,
-          ),
-        ),
-        suffixIcon: suffix,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: borderColor, width: 1.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: borderColor, width: 1.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.vibrantCyan, width: 1.5),
+      hint: hint,
+      prefixWidget: Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: Image.asset(
+          iconPath,
+          width: 20,
+          height: 20,
+          color: iconColor,
         ),
       ),
+      suffixWidget: suffix,
     );
   }
 
@@ -409,3 +382,4 @@ class LoginScreen extends GetView<LoginController> {
     );
   }
 }
+

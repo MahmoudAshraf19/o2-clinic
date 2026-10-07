@@ -1,3 +1,4 @@
+import '../../../../common/widgets/common_text_field.dart';
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -134,20 +135,11 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextField(
+              CommonTextField(
                 controller: _textController,
                 maxLines: 5,
-                decoration: InputDecoration(
-                  hintText: l10n.describeTheIssue,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.grey.withValues(alpha: 0.3),
-                    ),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
+                hint: l10n.describeTheIssue,
+                type: CommonTextFieldType.multiline,
               ),
               const SizedBox(height: 16),
               if (_selectedImage != null)
@@ -226,4 +218,5 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
     );
   }
 }
+
 

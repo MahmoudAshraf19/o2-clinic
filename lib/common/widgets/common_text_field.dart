@@ -35,6 +35,8 @@ class CommonTextField extends StatefulWidget {
     this.suffix,
     this.prefixIcon,
     this.suffixIcon,
+    this.prefixWidget,
+    this.suffixWidget,
     this.errorText,
     this.helperText,
     this.counterText,
@@ -112,6 +114,8 @@ class CommonTextField extends StatefulWidget {
   final String? suffix;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
+  final Widget? prefixWidget;
+  final Widget? suffixWidget;
   final String? errorText;
   final String? helperText;
   final String? counterText;
@@ -220,7 +224,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
           Text(widget.label!, style: widget.labelStyle ?? _getLabelStyle()),
           const SizedBox(height: 8),
         ],
-        TextField(
+        TextFormField(
           controller: widget.controller,
           focusNode: _focusNode,
           textInputAction: widget.textInputAction,
@@ -230,9 +234,11 @@ class _CommonTextFieldState extends State<CommonTextField> {
           readOnly: widget.readOnly,
           autofocus: widget.autofocus,
           onChanged: widget.onChanged,
-          onSubmitted: widget.onSubmitted,
+          onFieldSubmitted: widget.onSubmitted,
           onTap: widget.onTap,
           onEditingComplete: widget.onEditingComplete,
+          onSaved: widget.onSaved,
+          validator: widget.validator,
           inputFormatters: widget.inputFormatters ?? _getInputFormatters(),
           maxLength: widget.maxLength,
           maxLines: widget.maxLines,
@@ -289,14 +295,14 @@ class _CommonTextFieldState extends State<CommonTextField> {
       suffixText: widget.suffix,
       prefixStyle: widget.prefixStyle,
       suffixStyle: widget.suffixStyle,
-      prefixIcon: widget.prefixIcon != null
+      prefixIcon: widget.prefixWidget ?? (widget.prefixIcon != null
           ? Icon(
               widget.prefixIcon,
               color: _getIconColor(),
               size: _getIconSize(),
             )
-          : null,
-      suffixIcon: _buildSuffixIcon(),
+          : null),
+      suffixIcon: widget.suffixWidget ?? _buildSuffixIcon(),
       counterText: widget.counterText,
       counterStyle: widget.counterStyle,
       filled: widget.filled,
@@ -368,17 +374,17 @@ class _CommonTextFieldState extends State<CommonTextField> {
   TextStyle _getTextStyle() {
     final fontSize = _getFontSize();
     final fontWeight = _getFontWeight();
-    final color = widget.enabled ? AppColors.black : AppColors.grey;
+    final color = widget.enabled ? Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.black : AppColors.grey;
 
     return TextStyle(fontSize: fontSize, fontWeight: fontWeight, color: color);
   }
 
   TextStyle _getLabelStyle() {
-    return const TextStyle(
+    return TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w600,
 
-      color: AppColors.black,
+      color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.black,
     );
   }
 
@@ -449,9 +455,10 @@ class _CommonTextFieldState extends State<CommonTextField> {
   }
 
   Color _getFillColor() {
-    if (!widget.enabled) return AppColors.lightGrey;
-    if (_isFocused) return AppColors.white;
-    return AppColors.cardBackground;
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    if (!widget.enabled) return isDark ? const Color(0xFF333333) : AppColors.lightGrey;
+    if (_isFocused) return Theme.of(context).cardColor;
+    return isDark ? const Color(0xFF1E1E1E) : AppColors.cardBackground;
   }
 
   EdgeInsets _getContentPadding() {

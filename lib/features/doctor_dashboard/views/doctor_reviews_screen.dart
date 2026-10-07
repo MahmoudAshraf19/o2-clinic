@@ -1,3 +1,4 @@
+import '../../../../common/widgets/common_text_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -288,27 +289,11 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
                                 color: AppColors.grey.withValues(alpha: 0.2),
                               ),
                             ),
-                            child: TextField(
+                            child: CommonTextField(
                               controller: _searchController,
-                              style: const TextStyle(
-                                color: AppColors.textPrimary,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: 'Search...',
-                                hintStyle: const TextStyle(
-                                  color: AppColors.grey,
-                                ),
-                                prefixIcon: const Icon(
-                                  Icons.search,
-                                  color: AppColors.grey,
-                                  size: 22,
-                                ),
-                                border: InputBorder.none,
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 16,
-                                ),
-                              ),
+                              hint: 'Search...',
+                              prefixIcon: Icons.search,
+                              type: CommonTextFieldType.search,
                             ),
                           ),
                         ),
@@ -718,3 +703,4 @@ class _ReviewCardWidget extends StatelessWidget {
     );
   }
 }
+
