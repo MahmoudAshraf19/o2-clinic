@@ -1,211 +1,124 @@
-import '../../../../common/widgets/common_text_field.dart';
-import 'package:o2_clinic/l10n/app_localizations.dart';
-import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:o2_clinic/common/widgets/common_snackbar.dart';
-import 'package:o2_clinic/common/widgets/common_dialogs.dart';
-import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
+import 'package:o2_clinic/l10n/app_localizations.dart';
 
-import '../../../../core/routes/app_routes.dart';
+import '../../../../common/widgets/common_text_field.dart';
+import '../../../../common/widgets/common_loading_indicator.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
+import '../../../../core/routes/app_routes.dart';
+import '../../../../common/widgets/common_button.dart';
 import '../../../booking/data/models/fs_booking_model.dart';
-import '../../../booking/data/services/fs_bookings_firestore_service.dart';
-import '../../../dashboard/controllers/dashboard_pending_actions_controller.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../services/data/models/radiology_category_model.dart';
-import '../../../booking/presentation/pages/radiology_confirm_booking_screen.dart';
-import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
+import '../controllers/appointments_controller.dart';
+import '../widgets/appointment_card.dart';
+import '../widgets/booking_details_sheet.dart';
+import '../widgets/booking_helper.dart';
+import '../widgets/doctor_avatar.dart';
+import '../widgets/filter_chip_widget.dart';
+import '../widgets/action_button.dart';
 
-enum AppointmentStatusFilter {
-  all,
-  upcoming,
-  pending,
-  completed,
-  cancelled,
-  requiresAction,
-}
-
-enum AppointmentTypeFilter { all, doctor, online, imaging, cosmetic }
-
-enum AppointmentTimeFilter { all, thisWeek, thisMonth, last30Days }
-
-class MyAppointmentsScreen extends StatefulWidget {
+class MyAppointmentsScreen extends StatelessWidget {
   const MyAppointmentsScreen({super.key});
 
   @override
-  State<MyAppointmentsScreen> createState() => _MyAppointmentsScreenState();
-}
-
-class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
-  final TextEditingController _searchController = TextEditingController();
-  final BookingsFirestoreService _service = BookingsFirestoreService();
-
-  AppointmentStatusFilter _statusFilter = AppointmentStatusFilter.all;
-  AppointmentTypeFilter _typeFilter = AppointmentTypeFilter.all;
-  AppointmentTimeFilter _timeFilter = AppointmentTimeFilter.all;
-
-  String _searchText = '';
-  Stream<List<BookingModel>>? _bookingsStream;
-  String? _showBookingId;
-  bool _showFilters = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _searchController.addListener(() {
-      setState(() {
-        _searchText = _searchController.text.trim();
-      });
-    });
-
-    if (Get.arguments is Map) {
-      _showBookingId = Get.arguments['showBookingId']?.toString();
-
-      final filterArg = Get.arguments['filter']?.toString();
-      if (filterArg == 'requiresAction') {
-        _statusFilter = AppointmentStatusFilter.requiresAction;
-        _showFilters =
-            true; // Show filters so the user knows a filter is active
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  User? get _user => FirebaseAuth.instance.currentUser;
-
-  @override
   Widget build(BuildContext context) {
-    final user = _user;
-
-    if (user != null && _bookingsStream == null) {
-      _bookingsStream = _service.streamBookingsByUserId(user.uid);
-    }
+    final controller = Get.put(AppointmentsController());
 
     return Scaffold(
       backgroundColor: AppColors.colorFFF4F7F9,
       body: SafeArea(
-        child: user == null
+        child: controller.user == null
             ? _buildNotLoggedInView(context)
-            : StreamBuilder<List<BookingModel>>(
-                stream: _bookingsStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return _buildErrorView(context, snapshot.error.toString());
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CommonLoadingIndicator(
-                        color: AppColors.primary,
-                      ),
-                    );
-                  }
-
-                  final allBookings = snapshot.data ?? [];
-                  final filteredBookings = _applyFilters(allBookings);
-                  final nextAppointment = _getNextUpcomingBooking(allBookings);
-
-                  if (_showBookingId != null && allBookings.isNotEmpty) {
-                    final bookingId = _showBookingId;
-                    _showBookingId = null;
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      final booking = allBookings.firstWhereOrNull(
-                        (b) => b.id == bookingId,
-                      );
-                      if (booking != null && mounted) {
-                        _showBookingDetails(context, booking);
-                      }
-                    });
-                  }
-
-                  return RefreshIndicator(
-                    color: AppColors.primary,
-                    backgroundColor: AppColors.white,
-                    onRefresh: () async {
-                      setState(() {
-                        _bookingsStream = _service.streamBookingsByUserId(
-                          user.uid,
-                        );
-                      });
-                    },
-                    child: CustomScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(
-                        parent: BouncingScrollPhysics(),
-                      ),
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _buildHeader(context),
-                                const SizedBox(height: 20),
-                                _buildNextAppointmentCard(
-                                  context,
-                                  nextAppointment: nextAppointment,
-                                ),
-                                const SizedBox(height: 24),
-                                _buildSearchBar(),
-                                const SizedBox(height: 12),
-                                _buildFilterToggle(),
-                                if (_showFilters) ...[
-                                  const SizedBox(height: 16),
-                                  _buildAdvancedFilters(),
-                                ],
-                                const SizedBox(height: 24),
-                                _buildSectionTitle(
-                                  context,
-                                  filteredBookings.length,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        if (filteredBookings.isEmpty)
-                          SliverToBoxAdapter(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 40,
-                              ),
-                              child: _buildEmptyState(),
-                            ),
-                          )
-                        else
-                          SliverPadding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                            ).copyWith(bottom: 40),
-                            sliver: SliverList(
-                              delegate: SliverChildBuilderDelegate((
-                                context,
-                                index,
-                              ) {
-                                final booking = filteredBookings[index];
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 16),
-                                  child: _AppointmentCard(
-                                    booking: booking,
-                                    onTap: () =>
-                                        _showBookingDetails(context, booking),
-                                  ),
-                                );
-                              }, childCount: filteredBookings.length),
-                            ),
-                          ),
-                      ],
+            : Obx(() {
+                if (controller.error.value != null) {
+                  return _buildErrorView(controller.error.value!, controller);
+                }
+                if (controller.isLoading.value) {
+                  return const Center(
+                    child: CommonLoadingIndicator(
+                      color: AppColors.primary,
                     ),
                   );
-                },
-              ),
+                }
+
+                final filteredBookings = controller.filteredBookings;
+                final nextAppointment = controller.nextAppointment;
+
+                return RefreshIndicator(
+                  color: AppColors.primary,
+                  backgroundColor: AppColors.white,
+                  onRefresh: controller.refreshBookings,
+                  child: CustomScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(
+                      parent: BouncingScrollPhysics(),
+                    ),
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildHeader(context),
+                              const SizedBox(height: 20),
+                              _buildNextAppointmentCard(
+                                context,
+                                nextAppointment,
+                                controller,
+                              ),
+                              const SizedBox(height: 24),
+                              _buildSearchBar(controller, context),
+                              const SizedBox(height: 12),
+                              _buildFilterToggle(controller, context),
+                              if (controller.showFilters.value) ...[
+                                const SizedBox(height: 16),
+                                _buildAdvancedFilters(controller, context),
+                              ],
+                              const SizedBox(height: 24),
+                              _buildSectionTitle(
+                                context,
+                                filteredBookings.length,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      if (filteredBookings.isEmpty)
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 40,
+                            ),
+                            child: _buildEmptyState(context),
+                          ),
+                        )
+                      else
+                        SliverPadding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                          ).copyWith(bottom: 40),
+                          sliver: SliverList(
+                            delegate: SliverChildBuilderDelegate((
+                              context,
+                              index,
+                            ) {
+                              final booking = filteredBookings[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: AppointmentCard(
+                                  booking: booking,
+                                  onTap: () =>
+                                      _showBookingDetails(context, booking),
+                                ),
+                              );
+                            }, childCount: filteredBookings.length),
+                          ),
+                        ),
+                    ],
+                  ),
+                );
+              }),
       ),
     );
   }
@@ -266,14 +179,15 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
   }
 
   Widget _buildNextAppointmentCard(
-    BuildContext context, {
-    required BookingModel? nextAppointment,
-  }) {
+    BuildContext context,
+    BookingModel? nextAppointment,
+    AppointmentsController controller,
+  ) {
     if (nextAppointment == null) return const SizedBox.shrink();
 
     final date = nextAppointment.schedule.timestamp?.toDate();
-    final title = _BookingHelper.title(context, nextAppointment);
-    final subtitle = _BookingHelper.subtitle(context, nextAppointment);
+    final title = BookingHelper.title(context, nextAppointment);
+    final subtitle = BookingHelper.subtitle(context, nextAppointment);
     final whenText = date == null
         ? '${nextAppointment.schedule.date} • ${nextAppointment.schedule.time}'
         : '${MaterialLocalizations.of(context).formatMediumDate(date)} • '
@@ -332,7 +246,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      _DoctorAvatar(
+                      DoctorAvatar(
                         imageUrl: nextAppointment.doctor?.image,
                         fallbackIcon: Icons.calendar_month_rounded,
                         isHero: true,
@@ -420,7 +334,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                   Row(
                     children: [
                       Expanded(
-                        child: _ActionButton(
+                        child: ActionButton(
                           text: AppLocalizations.of(context)!.viewDetails,
                           icon: Icons.visibility_rounded,
                           filled: true,
@@ -431,7 +345,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                       if (nextAppointment.type == 'online') ...[
                         const SizedBox(width: 12),
                         Expanded(
-                          child: _ActionButton(
+                          child: ActionButton(
                             text: AppLocalizations.of(
                               context,
                             )!.onlineConsultation,
@@ -469,7 +383,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     return isAr ? 'بعد $diff أيام' : 'In $diff days';
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(AppointmentsController controller, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -483,7 +397,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         ],
       ),
       child: CommonTextField(
-        controller: _searchController,
+        controller: controller.searchController,
         hint: AppLocalizations.of(context)!.searchDoctorServiceClinic,
         prefixIcon: Icons.search_rounded,
         type: CommonTextFieldType.search,
@@ -493,16 +407,16 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     );
   }
 
-  Widget _buildFilterToggle() {
+  Widget _buildFilterToggle(AppointmentsController controller, BuildContext context) {
     return GestureDetector(
-      onTap: () => setState(() => _showFilters = !_showFilters),
+      onTap: controller.toggleFilters,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             Icons.filter_list_rounded,
             size: 20,
-            color: _showFilters ? AppColors.primary : AppColors.grey600,
+            color: controller.showFilters.value ? AppColors.primary : AppColors.grey600,
           ),
           const SizedBox(width: 6),
           Text(
@@ -512,23 +426,23 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: _showFilters ? AppColors.primary : AppColors.grey600,
+              color: controller.showFilters.value ? AppColors.primary : AppColors.grey600,
             ),
           ),
           const SizedBox(width: 4),
           Icon(
-            _showFilters
+            controller.showFilters.value
                 ? Icons.keyboard_arrow_up_rounded
                 : Icons.keyboard_arrow_down_rounded,
             size: 18,
-            color: _showFilters ? AppColors.primary : AppColors.grey600,
+            color: controller.showFilters.value ? AppColors.primary : AppColors.grey600,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildAdvancedFilters() {
+  Widget _buildAdvancedFilters(AppointmentsController controller, BuildContext context) {
     final isAr = Localizations.localeOf(context).languageCode == 'ar';
 
     return Container(
@@ -552,10 +466,10 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
               children: AppointmentStatusFilter.values.map((f) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: _FilterChipWidget(
+                  child: FilterChipWidget(
                     label: _statusLabel(context, f, isAr),
-                    isSelected: _statusFilter == f,
-                    onTap: () => setState(() => _statusFilter = f),
+                    isSelected: controller.statusFilter.value == f,
+                    onTap: () => controller.setStatusFilter(f),
                   ),
                 );
               }).toList(),
@@ -573,10 +487,10 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
               children: AppointmentTypeFilter.values.map((f) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: _FilterChipWidget(
+                  child: FilterChipWidget(
                     label: _typeLabel(f, isAr),
-                    isSelected: _typeFilter == f,
-                    onTap: () => setState(() => _typeFilter = f),
+                    isSelected: controller.typeFilter.value == f,
+                    onTap: () => controller.setTypeFilter(f),
                   ),
                 );
               }).toList(),
@@ -594,10 +508,10 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
               children: AppointmentTimeFilter.values.map((f) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: _FilterChipWidget(
+                  child: FilterChipWidget(
                     label: _timeLabel(f, isAr),
-                    isSelected: _timeFilter == f,
-                    onTap: () => setState(() => _timeFilter = f),
+                    isSelected: controller.timeFilter.value == f,
+                    onTap: () => controller.setTimeFilter(f),
                   ),
                 );
               }).toList(),
@@ -688,125 +602,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     );
   }
 
-  List<BookingModel> _applyFilters(List<BookingModel> bookings) {
-    final query = _searchText.toLowerCase().trim();
-
-    return bookings.where((booking) {
-      final matchesSearch = query.isEmpty || _matchesSearch(booking, query);
-      final matchesStatus = _matchesStatus(booking, _statusFilter);
-      final matchesType = _matchesType(booking, _typeFilter);
-      final matchesTime = _matchesTime(booking, _timeFilter);
-      return matchesSearch && matchesStatus && matchesType && matchesTime;
-    }).toList();
-  }
-
-  bool _matchesSearch(BookingModel booking, String query) {
-    final text = [
-      booking.user.name,
-      booking.user.phone.full,
-      booking.type,
-      booking.service?.serviceNameAr,
-      booking.service?.serviceNameEn,
-      booking.doctor?.nameAr,
-      booking.doctor?.nameEn,
-      booking.doctor?.specialty,
-      booking.imaging?.nameAr,
-      booking.imaging?.nameEn,
-      booking.cosmetic?.serviceName,
-      booking.location.clinic,
-      booking.status.current,
-      booking.status.label,
-    ].whereType<String>().join(' ').toLowerCase();
-
-    return text.contains(query);
-  }
-
-  bool _matchesStatus(BookingModel booking, AppointmentStatusFilter filter) {
-    final status = booking.status.current.toLowerCase();
-    switch (filter) {
-      case AppointmentStatusFilter.all:
-        return true;
-      case AppointmentStatusFilter.upcoming:
-        return _isUpcoming(booking);
-      case AppointmentStatusFilter.pending:
-        return status == 'pending' || status == 'pending_price';
-      case AppointmentStatusFilter.completed:
-        return status == 'completed';
-      case AppointmentStatusFilter.cancelled:
-        return status == 'cancelled';
-      case AppointmentStatusFilter.requiresAction:
-        if (Get.isRegistered<DashboardPendingActionsController>()) {
-          final pendingCtrl = Get.find<DashboardPendingActionsController>();
-          return pendingCtrl.pendingBookings.any((b) => b.id == booking.id);
-        }
-        return false;
-    }
-  }
-
-  bool _matchesType(BookingModel booking, AppointmentTypeFilter filter) {
-    final type = booking.type.toLowerCase();
-    switch (filter) {
-      case AppointmentTypeFilter.all:
-        return true;
-      case AppointmentTypeFilter.doctor:
-        return type == 'clinical';
-      case AppointmentTypeFilter.online:
-        return type == 'online';
-      case AppointmentTypeFilter.imaging:
-        return type == 'imaging';
-      case AppointmentTypeFilter.cosmetic:
-        return type == 'cosmetic';
-    }
-  }
-
-  bool _matchesTime(BookingModel booking, AppointmentTimeFilter filter) {
-    if (filter == AppointmentTimeFilter.all) return true;
-    final date =
-        booking.schedule.timestamp?.toDate() ??
-        booking.timeline.createdAt?.toDate();
-    if (date == null) return false;
-
-    final now = DateTime.now();
-    final diffDays = now.difference(date).inDays;
-
-    switch (filter) {
-      case AppointmentTimeFilter.all:
-        return true;
-      case AppointmentTimeFilter.thisWeek:
-        return date.isAfter(now.subtract(Duration(days: now.weekday - 1))) &&
-            date.isBefore(now.add(Duration(days: 7 - now.weekday + 1)));
-      case AppointmentTimeFilter.thisMonth:
-        return date.month == now.month && date.year == now.year;
-      case AppointmentTimeFilter.last30Days:
-        return diffDays >= 0 && diffDays <= 30;
-    }
-  }
-
-  BookingModel? _getNextUpcomingBooking(List<BookingModel> bookings) {
-    final upcomingBookings = bookings.where(_isUpcoming).toList();
-    upcomingBookings.sort((a, b) {
-      final aDate =
-          a.schedule.timestamp?.toDate() ??
-          DateTime.fromMillisecondsSinceEpoch(0);
-      final bDate =
-          b.schedule.timestamp?.toDate() ??
-          DateTime.fromMillisecondsSinceEpoch(0);
-      return aDate.compareTo(bDate);
-    });
-    return upcomingBookings.isEmpty ? null : upcomingBookings.first;
-  }
-
-  bool _isUpcoming(BookingModel booking) {
-    final status = booking.status.current.toLowerCase();
-    if (status == 'completed' || status == 'cancelled') return false;
-    final date = booking.schedule.timestamp?.toDate();
-    if (date == null) return status == 'confirmed' || status == 'upcoming';
-    return date.isAfter(DateTime.now().subtract(const Duration(hours: 1))) ||
-        status == 'confirmed' ||
-        status == 'upcoming';
-  }
-
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
@@ -905,7 +701,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     );
   }
 
-  Widget _buildErrorView(BuildContext context, String error) {
+  Widget _buildErrorView(String error, AppointmentsController controller) {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -916,9 +712,9 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
             color: AppColors.red,
           ),
           const SizedBox(height: 12),
-          Text(
-            AppLocalizations.of(context)!.somethingWentWrong,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          const Text(
+            'Something went wrong',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Text(
             error,
@@ -927,7 +723,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
           ),
           const SizedBox(height: 16),
           CommonButton(
-            onPressed: () => setState(() {}),
+            onPressed: controller.refreshBookings,
             text: 'Retry',
             type: CommonButtonType.primary,
           ),
@@ -941,622 +737,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
-      builder: (_) => _BookingDetailsSheet(booking: booking),
+      builder: (_) => BookingDetailsSheet(booking: booking),
     );
-  }
-}
-
-class _FilterChipWidget extends StatelessWidget {
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _FilterChipWidget({
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.grey100,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.grey300,
-          ),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? AppColors.white : AppColors.grey700,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-            fontSize: 13,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _AppointmentCard extends StatelessWidget {
-  final BookingModel booking;
-  final VoidCallback onTap;
-
-  const _AppointmentCard({required this.booking, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    final date = booking.schedule.timestamp?.toDate();
-    final status = booking.status.current.toLowerCase();
-
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.black.withValues(alpha: 0.03),
-              blurRadius: 15,
-              offset: const Offset(0, 5),
-            ),
-          ],
-          border: Border.all(color: AppColors.grey100),
-        ),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _DoctorAvatar(
-                  imageUrl: booking.doctor?.image,
-                  fallbackIcon: Icons.local_hospital_rounded,
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _BookingHelper.title(context, booking),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.black87,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        _BookingHelper.subtitle(context, booking),
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: AppColors.grey600,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-                _StatusBadge(
-                  status: status,
-                  isAr: Localizations.localeOf(context).languageCode == 'ar',
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: AppColors.colorFFF4F7F9,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.calendar_month_rounded,
-                    size: 18,
-                    color: AppColors.primary,
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      date == null
-                          ? '${booking.schedule.date} • ${booking.schedule.time}'
-                          : '${MaterialLocalizations.of(context).formatMediumDate(date)} • ${MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(date))}',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.black87,
-                      ),
-                    ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 14,
-                    color: AppColors.grey400,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _StatusBadge extends StatelessWidget {
-  final String status;
-  final bool isAr;
-
-  const _StatusBadge({required this.status, required this.isAr});
-
-  @override
-  Widget build(BuildContext context) {
-    Color bg, fg;
-    String label;
-    if (status == 'completed') {
-      bg = AppColors.green50;
-      fg = AppColors.green700;
-      label = isAr ? 'مكتمل' : 'Completed';
-    } else if (status == 'cancelled') {
-      bg = AppColors.red50;
-      fg = AppColors.red700;
-      label = isAr ? 'ملغي' : 'Cancelled';
-    } else if (status == 'pending' || status == 'pending_price') {
-      bg = AppColors.orange50;
-      fg = AppColors.orange700;
-      label = isAr ? 'معلق' : 'Pending';
-    } else {
-      bg = AppColors.primary.withValues(alpha: 0.1);
-      fg = AppColors.primary;
-      label = isAr ? 'قادم' : 'Upcoming';
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: bg,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: fg),
-      ),
-    );
-  }
-}
-
-class _DoctorAvatar extends StatelessWidget {
-  final String? imageUrl;
-  final IconData fallbackIcon;
-  final bool isHero;
-
-  const _DoctorAvatar({
-    this.imageUrl,
-    required this.fallbackIcon,
-    this.isHero = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final double size = isHero ? 60 : 50;
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: isHero
-            ? AppColors.white.withValues(alpha: 0.15)
-            : AppColors.primary.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: (imageUrl != null && imageUrl!.trim().isNotEmpty)
-          ? CachedImageWidget(
-              imageUrl: imageUrl!,
-              fit: BoxFit.cover,
-              errorBuilder: (_, _, _) => Icon(
-                fallbackIcon,
-                color: isHero ? AppColors.white : AppColors.primary,
-              ),
-            )
-          : Icon(
-              fallbackIcon,
-              color: isHero ? AppColors.white : AppColors.primary,
-            ),
-    );
-  }
-}
-
-class _ActionButton extends StatelessWidget {
-  final String text;
-  final IconData icon;
-  final bool filled;
-  final VoidCallback onTap;
-
-  const _ActionButton({
-    required this.text,
-    required this.icon,
-    required this.filled,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final bg = filled
-        ? AppColors.white
-        : AppColors.white.withValues(alpha: 0.15);
-    final fg = filled ? AppColors.primary : AppColors.white;
-
-    return Material(
-      color: bg,
-      borderRadius: BorderRadius.circular(14),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(14),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: fg, size: 18),
-              const SizedBox(width: 8),
-              Text(
-                text,
-                style: TextStyle(
-                  color: fg,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _BookingDetailsSheet extends StatelessWidget {
-  final BookingModel booking;
-  const _BookingDetailsSheet({required this.booking});
-
-  @override
-  Widget build(BuildContext context) {
-    final isAr = Localizations.localeOf(context).languageCode == 'ar';
-    final date = booking.schedule.timestamp?.toDate();
-
-    // Can cancel if status is not cancelled/completed/no_show
-    final currentStatus = booking.status.current.toLowerCase();
-    final bool canCancel =
-        currentStatus != 'cancelled' &&
-        currentStatus != 'completed' &&
-        currentStatus != 'no_show';
-
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: const BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(
-              width: 50,
-              height: 5,
-              decoration: BoxDecoration(
-                color: AppColors.grey300,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-          const SizedBox(height: 24),
-          Row(
-            children: [
-              _DoctorAvatar(
-                imageUrl: booking.doctor?.image,
-                fallbackIcon: Icons.medical_services_rounded,
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _BookingHelper.title(context, booking),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      _BookingHelper.subtitle(context, booking),
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: AppColors.grey600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              _StatusBadge(
-                status: booking.status.current.toLowerCase(),
-                isAr: isAr,
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          _buildDetailRow(
-            context,
-            Icons.calendar_today_rounded,
-            isAr ? 'التاريخ' : 'Date',
-            date == null
-                ? booking.schedule.date
-                : MaterialLocalizations.of(context).formatMediumDate(date),
-          ),
-          const SizedBox(height: 16),
-          _buildDetailRow(
-            context,
-            Icons.access_time_rounded,
-            isAr ? 'الوقت' : 'Time',
-            date == null
-                ? booking.schedule.time
-                : MaterialLocalizations.of(
-                    context,
-                  ).formatTimeOfDay(TimeOfDay.fromDateTime(date)),
-          ),
-          const SizedBox(height: 16),
-          _buildDetailRow(
-            context,
-            Icons.location_on_rounded,
-            isAr ? 'المكان' : 'Location',
-            '${booking.location.clinic} - ${isAr ? 'طابق' : 'Floor'} ${booking.location.floor} - ${isAr ? 'غرفة' : 'Room'} ${booking.location.room}',
-          ),
-          const SizedBox(height: 32),
-          if (booking.type == 'imaging' &&
-              (booking.status.current == 'pending_price' ||
-                  booking.status.current == 'pending')) ...[
-            SizedBox(
-              width: double.infinity,
-              child: CommonButton(
-                onPressed: () async {
-                  Get.dialog(
-                    const Center(
-                      child: CommonLoadingIndicator(
-                        color: AppColors.primary,
-                      ),
-                    ),
-                    barrierDismissible: false,
-                  );
-                  try {
-                    final catDoc = await FirebaseFirestore.instance
-                        .collection('radiology')
-                        .doc(booking.imaging!.categoryId)
-                        .get();
-                    Get.back(); // close loading
-                    if (catDoc.exists) {
-                      final service = RadiologyCategoryModel.fromMap(
-                        catDoc.id,
-                        catDoc.data()!,
-                      );
-                      Get.back(); // close bottom sheet
-
-                      Get.to(
-                        () => RadiologyConfirmBookingScreen(
-                          service: service,
-                          selectedDate:
-                              booking.schedule.timestamp?.toDate() ??
-                              DateTime.now(),
-                          selectedTime: booking.schedule.time,
-                          controllerTag: service.id,
-                          bookingId: booking.id,
-                        ),
-                      );
-                    } else {
-                      CommonSnackbar.showError(title: 'Error', message: 'Service not found');
-                    }
-                  } catch (e) {
-                    Get.back(); // close loading
-                    CommonSnackbar.showError(title: 'Error', message: 'Failed to load details');
-                  }
-                },
-                text: AppLocalizations.of(context)!.continueBookingOrChat,
-                type: CommonButtonType.primary,
-                backgroundColor: AppColors.primary,
-                foregroundColor: AppColors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                borderRadius: BorderRadius.circular(16),
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: CommonButton(
-                onPressed: () => Get.back(),
-                text: isAr ? 'إغلاق' : 'Close',
-                type: CommonButtonType.text,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                foregroundColor: AppColors.grey600,
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ] else ...[
-            SizedBox(
-              width: double.infinity,
-              child: CommonButton(
-                onPressed: () => Get.back(),
-                text: isAr ? 'إغلاق' : 'Close',
-                type: CommonButtonType.primary,
-                backgroundColor: AppColors.primary,
-                foregroundColor: AppColors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                borderRadius: BorderRadius.circular(16),
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-          if (canCancel) ...[
-            const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: CommonButton(
-                onPressed: () async {
-                  final confirm = await CommonDialogs.showConfirmationDialog(
-                    context,
-                    title: isAr ? 'إلغاء الحجز' : 'Cancel Booking',
-                    message: isAr
-                        ? 'هل أنت متأكد من إلغاء حجزك؟'
-                        : 'Are you sure you want to cancel your booking?',
-                    confirmText: isAr ? 'نعم' : 'Yes',
-                    cancelText: isAr ? 'لا' : 'No',
-                    isDestructive: true,
-                  );
-
-                  if (confirm == true) {
-                    Get.dialog(
-                      const Center(
-                        child: CommonLoadingIndicator(
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      barrierDismissible: false,
-                    );
-                    try {
-                      final service = BookingsFirestoreService();
-                      await service.cancelBooking(booking);
-                      Get.back(); // close loading
-                      Get.back(); // close sheet
-                      CommonSnackbar.showSuccess(title: isAr ? 'تم الإلغاء' : 'Cancelled', message: isAr
-                            ? 'تم إلغاء حجزك بنجاح.'
-                            : 'Your booking has been cancelled successfully.');
-                    } catch (e) {
-                      Get.back(); // close loading
-                      CommonSnackbar.showError(title: 'Error', message: 'Failed to cancel booking');
-                    }
-                  }
-                },
-                type: CommonButtonType.outline,
-                text: isAr ? 'إلغاء الحجز' : 'Cancel Booking',
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                borderColor: AppColors.primary,
-                borderWidth: 1.5,
-                borderRadius: BorderRadius.circular(16),
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
-                ),
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDetailRow(
-    BuildContext context,
-    IconData icon,
-    String label,
-    String value,
-  ) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.08),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(icon, size: 20, color: AppColors.primary),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: TextStyle(fontSize: 13, color: AppColors.grey500),
-              ),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.black87,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _BookingHelper {
-  static String title(BuildContext context, BookingModel booking) {
-    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
-    if (booking.doctor != null) {
-      return isArabic ? booking.doctor!.nameAr : booking.doctor!.nameEn;
-    }
-    if (booking.service != null) {
-      return isArabic
-          ? booking.service!.serviceNameAr
-          : booking.service!.serviceNameEn;
-    }
-    if (booking.imaging != null) {
-      return isArabic ? booking.imaging!.nameAr : booking.imaging!.nameEn;
-    }
-    if (booking.cosmetic != null && booking.cosmetic!.serviceName.isNotEmpty) {
-      return booking.cosmetic!.serviceName;
-    }
-    return AppLocalizations.of(context)!.appointmentOnly;
-  }
-
-  static String subtitle(BuildContext context, BookingModel booking) {
-    if (booking.doctor?.specialty.isNotEmpty == true) {
-      return booking.doctor!.specialty;
-    }
-    if (booking.location.clinic.isNotEmpty) return booking.location.clinic;
-    return typeFriendly(context, booking.type);
-  }
-
-  static String typeFriendly(BuildContext context, String type) {
-    final t = type.toLowerCase();
-    final isAr = Localizations.localeOf(context).languageCode == 'ar';
-    if (t.contains('doctor')) return isAr ? 'طبيب' : 'Doctor';
-    if (t.contains('service')) return isAr ? 'خدمة' : 'Service';
-    if (t.contains('imaging')) return isAr ? 'أشعة' : 'Imaging';
-    if (t.contains('cosmetic')) return isAr ? 'تجميل' : 'Cosmetic';
-    if (t == 'online') return isAr ? 'عن بعد' : 'Online';
-    return isAr ? 'حجز' : 'Booking';
   }
 }
