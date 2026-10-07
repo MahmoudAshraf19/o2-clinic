@@ -23,7 +23,7 @@ class RadiologyBookingSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6FAF8),
+      backgroundColor: AppColors.colorFFF6FAF8,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -47,18 +47,18 @@ class RadiologyBookingSuccessScreen extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 380),
       padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.black.withValues(alpha: 0.05),
             blurRadius: 18,
           ),
         ],
       ),
       child: Column(
         children: [
-          const Icon(Icons.check_circle, size: 70, color: Color(0xFF03458F)),
+          const Icon(Icons.check_circle, size: 70, color: AppColors.brandBlue),
           const SizedBox(height: 16),
           Text(
             AppLocalizations.of(context)!.bookingConfirmed,
@@ -68,7 +68,7 @@ class RadiologyBookingSuccessScreen extends StatelessWidget {
           Text(
             AppLocalizations.of(context)!.yourRadiologyAppointmentHasBeen,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey.shade600),
+            style: TextStyle(color: AppColors.grey600),
           ),
           _info(
             AppLocalizations.of(context)!.type,
@@ -90,20 +90,20 @@ class RadiologyBookingSuccessScreen extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: const Color(0xFF03458F),
+              color: AppColors.brandBlue,
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
               children: [
                 Text(
                   AppLocalizations.of(context)!.bookingId,
-                  style: TextStyle(color: Colors.white70),
+                  style: TextStyle(color: AppColors.white70),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   bookingId,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),

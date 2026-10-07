@@ -141,17 +141,17 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
 
   Widget _loginRequiredDialog() {
     return Dialog(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       insetPadding: const EdgeInsets.symmetric(horizontal: 18),
       child: Container(
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(22),
           border: Border.all(color: AppColors.border.withValues(alpha: 0.55)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
+              color: AppColors.black.withValues(alpha: 0.08),
               blurRadius: 26,
               offset: const Offset(0, 14),
             ),
@@ -201,7 +201,9 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                   child: OutlinedButton(
                     onPressed: () => Get.back(),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Theme.of(context).textTheme.bodyLarge?.color,
+                      foregroundColor: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge?.color,
                       side: BorderSide(
                         color: AppColors.border.withValues(alpha: 0.9),
                       ),
@@ -235,7 +237,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                       AppLocalizations.of(context)!.login,
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
-                        color: Colors.white,
+                        color: AppColors.white,
                       ),
                     ),
                   ),
@@ -430,7 +432,9 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
               style: TextStyle(
                 fontWeight: FontWeight.w700,
 
-                color: isOpen ? AppColors.primary : Theme.of(context).textTheme.bodyLarge?.color,
+                color: isOpen
+                    ? AppColors.primary
+                    : Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
             subtitle: Text(
@@ -622,7 +626,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.border),
       ),
@@ -658,10 +662,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
                     SizedBox(height: 2),
                     Text(
                       doctorTitle,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.grey,
-                      ),
+                      style: TextStyle(fontSize: 12, color: AppColors.grey),
                     ),
                   ],
                 ),
@@ -699,7 +700,3 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
     );
   }
 }
-
-
-
-

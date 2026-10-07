@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class CachedImageWidget extends StatelessWidget {
   final String imageUrl;
@@ -67,9 +68,9 @@ class CachedImageWidget extends StatelessWidget {
 
   Widget _buildShimmer() {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Container(width: width, height: height, color: Colors.white),
+      baseColor: AppColors.grey300!,
+      highlightColor: AppColors.grey100!,
+      child: Container(width: width, height: height, color: AppColors.white),
     );
   }
 
@@ -78,8 +79,8 @@ class CachedImageWidget extends StatelessWidget {
         Container(
           width: width,
           height: height,
-          color: Colors.grey[200],
-          child: const Icon(Icons.broken_image, color: Colors.grey),
+          color: AppColors.grey200,
+          child: const Icon(Icons.broken_image, color: AppColors.grey),
         );
   }
 }

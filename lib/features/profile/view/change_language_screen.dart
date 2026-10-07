@@ -39,7 +39,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
         toolbarHeight: 60,
         automaticallyImplyLeading: false,
         titleSpacing: 16,
@@ -248,7 +248,7 @@ class _TopIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(14),
@@ -266,4 +266,3 @@ class _TopIconButton extends StatelessWidget {
     );
   }
 }
-

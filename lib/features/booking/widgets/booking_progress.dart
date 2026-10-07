@@ -89,12 +89,12 @@ class BookingProgress extends StatelessWidget {
                             end: Alignment.bottomRight,
                           )
                         : null,
-                    color: active ? null : Colors.white,
+                    color: active ? null : AppColors.white,
                     boxShadow: [
                       BoxShadow(
                         color: active
                             ? AppColors.primary.withValues(alpha: 0.35)
-                            : Colors.black.withValues(alpha: 0.08),
+                            : AppColors.black.withValues(alpha: 0.08),
                         blurRadius: active ? 14 : 6,
                         offset: const Offset(0, 4),
                       ),
@@ -106,7 +106,7 @@ class BookingProgress extends StatelessWidget {
                       _getIcon(index),
                       key: ValueKey(active),
                       size: iconSize,
-                      color: active ? Colors.white : AppColors.grey,
+                      color: active ? AppColors.white : AppColors.grey,
                     ),
                   ),
                 ),

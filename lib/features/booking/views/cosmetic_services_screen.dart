@@ -370,7 +370,7 @@ class _ServiceImage extends StatelessWidget {
         border: Border.all(
           color: isHighlighted
               ? AppColors.primary.withValues(alpha: 0.15)
-              : Colors.transparent,
+              : AppColors.transparent,
         ),
       ),
       clipBehavior: Clip.antiAlias,
@@ -447,4 +447,3 @@ class _PrimaryButton extends StatelessWidget {
     );
   }
 }
-

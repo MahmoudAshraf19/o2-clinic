@@ -21,7 +21,11 @@ class NavigationTabItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color color = isActive ? AppColors.primary : (Theme.of(context).brightness == Brightness.dark ? Colors.white54 : AppColors.grey);
+    final Color color = isActive
+        ? AppColors.primary
+        : (Theme.of(context).brightness == Brightness.dark
+              ? AppColors.white54
+              : AppColors.grey);
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
@@ -80,4 +84,3 @@ class NavigationTabItem extends StatelessWidget {
     );
   }
 }
-

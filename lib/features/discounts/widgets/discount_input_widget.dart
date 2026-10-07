@@ -20,7 +20,7 @@ class DiscountInputWidget {
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24),
               topRight: Radius.circular(24),
@@ -66,7 +66,10 @@ class DiscountInputWidget {
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: Text(
                       discountController.verificationError.value,
-                      style: const TextStyle(color: Colors.red, fontSize: 13),
+                      style: const TextStyle(
+                        color: AppColors.red,
+                        fontSize: 13,
+                      ),
                     ),
                   );
                 }
@@ -102,7 +105,7 @@ class DiscountInputWidget {
                             width: 24,
                             height: 24,
                             child: CircularProgressIndicator(
-                              color: Colors.white,
+                              color: AppColors.white,
                               strokeWidth: 2,
                             ),
                           )
@@ -112,7 +115,7 @@ class DiscountInputWidget {
                               Get.locale?.languageCode,
                             ),
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: AppColors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -126,7 +129,7 @@ class DiscountInputWidget {
         ),
       ),
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
     );
   }
 
@@ -153,4 +156,3 @@ class DiscountInputWidget {
     }
   }
 }
-

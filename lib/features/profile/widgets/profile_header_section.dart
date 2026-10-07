@@ -95,7 +95,12 @@ class ProfileHeaderSection extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: Theme.of(context).brightness == Brightness.dark ? [Theme.of(context).scaffoldBackgroundColor, Theme.of(context).scaffoldBackgroundColor] : [const Color(0xffEAF8F6), Colors.white],
+                  colors: Theme.of(context).brightness == Brightness.dark
+                      ? [
+                          Theme.of(context).scaffoldBackgroundColor,
+                          Theme.of(context).scaffoldBackgroundColor,
+                        ]
+                      : [AppColors.colorFFEAF8F6, AppColors.white],
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -128,7 +133,10 @@ class ProfileHeaderSection extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColors.primary,
-                    border: Border.all(color: Theme.of(context).cardColor, width: 2),
+                    border: Border.all(
+                      color: Theme.of(context).cardColor,
+                      width: 2,
+                    ),
                   ),
                   child: Icon(
                     Icons.verified,
@@ -145,7 +153,7 @@ class ProfileHeaderSection extends StatelessWidget {
                   color: Theme.of(context).cardColor,
                   shape: const CircleBorder(),
                   elevation: 2,
-                  shadowColor: Colors.black26,
+                  shadowColor: AppColors.black26,
                   child: InkWell(
                     customBorder: const CircleBorder(),
                     onTap: _openEditProfile,
@@ -178,7 +186,9 @@ class ProfileHeaderSection extends StatelessWidget {
                 style: GoogleFonts.manrope(
                   fontSize: isDesktop ? 34 : 26,
                   fontWeight: FontWeight.w800,
-                  color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.textPrimary,
+                  color:
+                      Theme.of(context).textTheme.bodyLarge?.color ??
+                      AppColors.textPrimary,
                   height: 1.05,
                   letterSpacing: -0.4,
                 ),
@@ -257,8 +267,3 @@ class _ProfileAvatar extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

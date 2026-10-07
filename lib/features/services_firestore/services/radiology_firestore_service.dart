@@ -39,7 +39,6 @@ class RadiologyFirestoreService {
 
   Future<List<RadiologyCtModel>> getCtCategories() async {
     try {
-
       final data = await _getDocData("ct");
       if (data == null) return [];
 
@@ -50,7 +49,9 @@ class RadiologyFirestoreService {
         if (value is Map<String, dynamic>) {
           try {
             list.add(RadiologyCtModel.fromMap(id: key, map: value));
-          } catch (e) { /* ignore */ }
+          } catch (e) {
+            /* ignore */
+          }
         }
       });
 
@@ -66,7 +67,6 @@ class RadiologyFirestoreService {
 
   Future<List<CtIconModel>> getCtIcons() async {
     try {
-
       final snapshot = await _firestore
           .collection("icons") // ✅ collection مستقلة
           .get(const GetOptions(source: Source.serverAndCache));
@@ -81,7 +81,9 @@ class RadiologyFirestoreService {
         try {
           final data = doc.data();
           icons.add(CtIconModel.fromMap(id: doc.id, map: data));
-        } catch (e) { /* ignore */ }
+        } catch (e) {
+          /* ignore */
+        }
       }
 
       return icons;
@@ -96,7 +98,6 @@ class RadiologyFirestoreService {
 
   Future<List<RadiologyXrayModel>> getXrayCategories() async {
     try {
-
       final data = await _getDocData("x_ray");
       if (data == null) return [];
 
@@ -106,7 +107,9 @@ class RadiologyFirestoreService {
         if (value is Map<String, dynamic>) {
           try {
             list.add(RadiologyXrayModel.fromMap(id: key, map: value));
-          } catch (e) { /* ignore */ }
+          } catch (e) {
+            /* ignore */
+          }
         }
       });
 
@@ -122,7 +125,6 @@ class RadiologyFirestoreService {
 
   Future<List<RadiologyUltrasoundModel>> getUltrasoundCategories() async {
     try {
-
       final data = await _getDocData("ultrasound");
       if (data == null) return [];
 
@@ -132,7 +134,9 @@ class RadiologyFirestoreService {
         if (value is Map<String, dynamic>) {
           try {
             list.add(RadiologyUltrasoundModel.fromMap(id: key, map: value));
-          } catch (e) { /* ignore */ }
+          } catch (e) {
+            /* ignore */
+          }
         }
       });
 
@@ -150,7 +154,6 @@ class RadiologyFirestoreService {
 
   Future<List<RadiologyItemModel>> getAllRadiology() async {
     try {
-
       final ct = await _getDocData("ct");
       final xray = await _getDocData("x_ray");
       final us = await _getDocData("ultrasound");
@@ -169,7 +172,9 @@ class RadiologyFirestoreService {
                   category: categoryKey,
                 ),
               );
-            } catch (e) { /* ignore */ }
+            } catch (e) {
+              /* ignore */
+            }
           }
         });
       }

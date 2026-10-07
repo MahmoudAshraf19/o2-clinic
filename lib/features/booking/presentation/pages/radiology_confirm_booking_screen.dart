@@ -186,7 +186,9 @@ class _RadiologyConfirmBookingScreenState
                 AppLocalizations.of(context)!.reviewAppointmentDetails,
                 style: TextStyle(
                   fontSize: 13,
-                  color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7).withValues(alpha: 0.75),
+                  color: Theme.of(context).textTheme.bodyMedium?.color
+                      ?.withValues(alpha: 0.7)
+                      .withValues(alpha: 0.75),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -267,7 +269,7 @@ class _RadiologyConfirmBookingScreenState
                 ? CachedNetworkImageProvider(widget.service.image)
                 : null,
             child: widget.service.image.isEmpty
-                ? Icon(Icons.medical_services, color: Colors.white)
+                ? Icon(Icons.medical_services, color: AppColors.white)
                 : null,
           ),
           SizedBox(width: 12),
@@ -277,10 +279,7 @@ class _RadiologyConfirmBookingScreenState
               children: [
                 Text(
                   widget.service.getName('en'),
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                 ),
                 SizedBox(height: 4),
                 Text(
@@ -308,10 +307,7 @@ class _RadiologyConfirmBookingScreenState
             children: [
               Icon(Icons.calendar_month, color: AppColors.primary),
               SizedBox(width: 8),
-              Text(
-                dateKey,
-                style: TextStyle(fontWeight: FontWeight.w700),
-              ),
+              Text(dateKey, style: TextStyle(fontWeight: FontWeight.w700)),
             ],
           ),
           SizedBox(height: 10),
@@ -379,11 +375,7 @@ class _RadiologyConfirmBookingScreenState
             ),
             child: Row(
               children: [
-                Icon(
-                  Icons.support_agent,
-                  color: AppColors.primary,
-                  size: 28,
-                ),
+                Icon(Icons.support_agent, color: AppColors.primary, size: 28),
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -473,12 +465,12 @@ class _RadiologyConfirmBookingScreenState
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
 
-                      color: Colors.green,
+                      color: AppColors.green,
                     ),
                   ),
                   Text(
                     "-$discountAmount ${AppConstants.currencySymbol}",
-                    style: TextStyle(fontSize: 14, color: Colors.green),
+                    style: TextStyle(fontSize: 14, color: AppColors.green),
                   ),
                 ],
               ),
@@ -527,12 +519,12 @@ class _RadiologyConfirmBookingScreenState
           children: [
             Row(
               children: [
-                Icon(Icons.check_circle, color: Colors.green, size: 20),
+                Icon(Icons.check_circle, color: AppColors.green, size: 20),
                 SizedBox(width: 8),
                 Text(
                   discountController.currentValidCode.value!.code,
                   style: TextStyle(
-                    color: Colors.green,
+                    color: AppColors.green,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -540,7 +532,7 @@ class _RadiologyConfirmBookingScreenState
             ),
             TextButton(
               onPressed: () => discountController.removeDiscountCode(),
-              child: Icon(Icons.close, color: Colors.red, size: 20),
+              child: Icon(Icons.close, color: AppColors.red, size: 20),
             ),
           ],
         );
@@ -630,10 +622,18 @@ class _RadiologyConfirmBookingScreenState
                     setState(() => _isBooking = true);
                     try {
                       RadiologyAppointmentBookingController controller;
-                      if (Get.isRegistered<RadiologyAppointmentBookingController>(tag: widget.controllerTag)) {
-                        controller = Get.find<RadiologyAppointmentBookingController>(tag: widget.controllerTag);
+                      if (Get.isRegistered<
+                        RadiologyAppointmentBookingController
+                      >(tag: widget.controllerTag)) {
+                        controller =
+                            Get.find<RadiologyAppointmentBookingController>(
+                              tag: widget.controllerTag,
+                            );
                       } else {
-                        controller = Get.put(RadiologyAppointmentBookingController(widget.service), tag: widget.controllerTag);
+                        controller = Get.put(
+                          RadiologyAppointmentBookingController(widget.service),
+                          tag: widget.controllerTag,
+                        );
                       }
 
                       // ✅ لو UI عدّل التاريخ/الوقت (احتياطي)
@@ -689,7 +689,9 @@ class _RadiologyConfirmBookingScreenState
                       final res = await controller.confirmBooking(
                         finalAmount: finalAmount,
                         discountData: discountData,
-                        existingBookingId: widget.bookingId.isNotEmpty ? widget.bookingId : null,
+                        existingBookingId: widget.bookingId.isNotEmpty
+                            ? widget.bookingId
+                            : null,
                       );
 
                       if (!res.success) {
@@ -808,8 +810,3 @@ class _InfoRow extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

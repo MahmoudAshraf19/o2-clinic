@@ -35,15 +35,15 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
           ),
         ),
         centerTitle: false,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
       ),
       body: Column(
         children: [
           // 1. Type Tabs (Online vs Clinical)
           Container(
-            color: Colors.white,
+            color: AppColors.white,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               children: [
@@ -170,7 +170,7 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : Colors.white,
+          color: isSelected ? AppColors.primary : AppColors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected
@@ -184,13 +184,13 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
             Icon(
               icon,
               size: 20,
-              color: isSelected ? Colors.white : AppColors.grey,
+              color: isSelected ? AppColors.white : AppColors.grey,
             ),
             const SizedBox(width: 8),
             Text(
               title,
               style: TextStyle(
-                color: isSelected ? Colors.white : AppColors.grey,
+                color: isSelected ? AppColors.white : AppColors.grey,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -210,7 +210,7 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
         margin: const EdgeInsets.only(right: 8),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : Colors.white,
+          color: isSelected ? AppColors.primary : AppColors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected
@@ -222,7 +222,7 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : AppColors.grey,
+            color: isSelected ? AppColors.white : AppColors.grey,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
             fontSize: 13,
           ),
@@ -231,4 +231,3 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
     );
   }
 }
-

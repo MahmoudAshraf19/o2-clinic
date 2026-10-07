@@ -28,13 +28,11 @@ Future<void> main() async {
       usePathUrlStrategy();
     }
 
-
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
     await NotificationService.instance.init();
-
 
     final prefs = await SharedPreferences.getInstance();
     final String savedLanguageCode = prefs.getString('language_code') ?? 'en';
@@ -114,7 +112,9 @@ class O2ClinicApp extends StatelessWidget {
           useMaterial3: AppTheme.darkTheme.useMaterial3,
           fontFamily: activeFontFamily,
           colorScheme: AppTheme.darkTheme.colorScheme,
-          textTheme: AppTheme.darkTheme.textTheme.apply(fontFamily: activeFontFamily),
+          textTheme: AppTheme.darkTheme.textTheme.apply(
+            fontFamily: activeFontFamily,
+          ),
           scaffoldBackgroundColor: AppTheme.darkTheme.scaffoldBackgroundColor,
           primaryColor: AppTheme.darkTheme.primaryColor,
           appBarTheme: AppTheme.darkTheme.appBarTheme,

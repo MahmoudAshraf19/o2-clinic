@@ -25,10 +25,9 @@ class DashboardSpecialtiesSection extends StatelessWidget {
               Text(
                 AppLocalizations.of(context)!.specialtiesClinics,
                 style: TextStyle(
-                  color: Color(0xFF0F172A),
+                  color: AppColors.colorFF0F172A,
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
-                  
                 ),
               ),
               CommonButton(
@@ -43,30 +42,28 @@ class DashboardSpecialtiesSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 14),
-        Obx(
-          () {
-            final items = controller.specialties;
+        Obx(() {
+          final items = controller.specialties;
 
-            return SizedBox(
-              height: 246,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                itemCount: items.length,
-                separatorBuilder: (_, _) => const SizedBox(width: 14),
-                itemBuilder: (context, index) {
-                  final item = items[index];
+          return SizedBox(
+            height: 246,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              itemCount: items.length,
+              separatorBuilder: (_, _) => const SizedBox(width: 14),
+              itemBuilder: (context, index) {
+                final item = items[index];
 
-                  if (item.isAvailable) {
-                    return _ActiveSpecialtyCard(model: item);
-                  }
+                if (item.isAvailable) {
+                  return _ActiveSpecialtyCard(model: item);
+                }
 
-                  return _InactiveSpecialtyCard(model: item);
-                },
-              ),
-            );
-          },
-        ),
+                return _InactiveSpecialtyCard(model: item);
+              },
+            ),
+          );
+        }),
       ],
     );
   }
@@ -104,19 +101,18 @@ class _ActiveSpecialtyCard extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.20),
+                  color: AppColors.white.withValues(alpha: 0.20),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Icon(
-                  model.icon,
-                  color: Colors.white,
-                  size: 22,
-                ),
+                child: Icon(model.icon, color: AppColors.white, size: 22),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Row(
@@ -125,7 +121,7 @@ class _ActiveSpecialtyCard extends StatelessWidget {
                     const Icon(
                       Icons.circle,
                       size: 8,
-                      color: Color(0xFF69D1C5),
+                      color: AppColors.colorFF69D1C5,
                     ),
                     const SizedBox(width: 5),
                     Text(
@@ -134,7 +130,6 @@ class _ActiveSpecialtyCard extends StatelessWidget {
                         color: AppColors.primary,
                         fontSize: 10,
                         fontWeight: FontWeight.w800,
-                        
                       ),
                     ),
                   ],
@@ -146,27 +141,25 @@ class _ActiveSpecialtyCard extends StatelessWidget {
           Text(
             model.name,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.white,
               fontSize: 18,
               fontWeight: FontWeight.w800,
-              
             ),
           ),
           const SizedBox(height: 4),
           Text(
             model.description,
             style: const TextStyle(
-              color: Color(0xCCFFFFFF),
+              color: AppColors.colorCCFFFFFF,
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              
             ),
           ),
           const SizedBox(height: 18),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.10),
+              color: AppColors.white.withValues(alpha: 0.10),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -177,19 +170,17 @@ class _ActiveSpecialtyCard extends StatelessWidget {
                     Text(
                       AppLocalizations.of(context)!.today,
                       style: TextStyle(
-                        color: Color(0xE6FFFFFF),
+                        color: AppColors.colorE6FFFFFF,
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
-                        
                       ),
                     ),
                     Text(
                       AppLocalizations.of(context)!.text200Pm500Pm,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.white,
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
-                        
                       ),
                     ),
                   ],
@@ -198,7 +189,7 @@ class _ActiveSpecialtyCard extends StatelessWidget {
                 Container(
                   height: 6,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.20),
+                    color: AppColors.white.withValues(alpha: 0.20),
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Align(
@@ -220,10 +211,9 @@ class _ActiveSpecialtyCard extends StatelessWidget {
                   child: Text(
                     AppLocalizations.of(context)!.text610SlotsFilled,
                     style: TextStyle(
-                      color: Color(0xCCFFFFFF),
+                      color: AppColors.colorCCFFFFFF,
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
-                      
                     ),
                   ),
                 ),
@@ -252,7 +242,7 @@ class _InactiveSpecialtyCard extends StatelessWidget {
         border: Border.all(color: AppColors.border.withValues(alpha: 0.22)),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F766E).withValues(alpha: 0.04),
+            color: AppColors.colorFF0F766E.withValues(alpha: 0.04),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
@@ -272,14 +262,13 @@ class _InactiveSpecialtyCard extends StatelessWidget {
                   color: AppColors.secondary.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Icon(
-                  model.icon,
-                  color: AppColors.secondary,
-                  size: 22,
-                ),
+                child: Icon(model.icon, color: AppColors.secondary, size: 22),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.surfaceContainer,
                   borderRadius: BorderRadius.circular(999),
@@ -287,19 +276,14 @@ class _InactiveSpecialtyCard extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
-                      Icons.circle,
-                      size: 8,
-                      color: Color(0xFF6E7977),
-                    ),
+                    const Icon(Icons.circle, size: 8, color: AppColors.outline),
                     const SizedBox(width: 5),
                     Text(
                       AppLocalizations.of(context)!.next,
                       style: TextStyle(
-                        color: Color(0xFF3E4947),
+                        color: AppColors.textSecondary,
                         fontSize: 10,
                         fontWeight: FontWeight.w800,
-                        
                       ),
                     ),
                   ],
@@ -311,20 +295,20 @@ class _InactiveSpecialtyCard extends StatelessWidget {
           Text(
             model.name,
             style: TextStyle(
-              color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181C1C),
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.white
+                  : AppColors.onBackground,
               fontSize: 18,
               fontWeight: FontWeight.w800,
-              
             ),
           ),
           const SizedBox(height: 4),
           Text(
             model.description,
             style: TextStyle(
-              color: Color(0xFF6E7977),
+              color: AppColors.outline,
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              
             ),
           ),
           const SizedBox(height: 18),
@@ -340,18 +324,19 @@ class _InactiveSpecialtyCard extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.nextSlot,
                   style: TextStyle(
-                    color: Color(0xFF6E7977),
+                    color: AppColors.outline,
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
-                    
                   ),
                 ),
                 Text(
                   model.nextSlotLabel ?? '-',
-                  style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181C1C),
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.white
+                        : AppColors.onBackground,
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
-                    
                   ),
                 ),
               ],
@@ -362,5 +347,3 @@ class _InactiveSpecialtyCard extends StatelessWidget {
     );
   }
 }
-
-

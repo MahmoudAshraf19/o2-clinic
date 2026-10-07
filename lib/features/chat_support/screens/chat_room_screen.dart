@@ -23,7 +23,7 @@ class ChatRoomScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
         titleSpacing: 0,
         title: Row(
           children: [
@@ -51,7 +51,7 @@ class ChatRoomScreen extends StatelessWidget {
                         ? AppLocalizations.of(context)!.onlineSupport
                         : AppLocalizations.of(context)!.loginRequired,
                     style: TextStyle(
-                      color: Colors.grey.shade600,
+                      color: AppColors.grey600,
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                     ),
@@ -119,7 +119,7 @@ class ChatRoomScreen extends StatelessWidget {
                                   height: 14,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
-                                    color: Colors.white,
+                                    color: AppColors.white,
                                   ),
                                 ),
                               ),
@@ -162,4 +162,3 @@ class ChatRoomScreen extends StatelessWidget {
     );
   }
 }
-

@@ -13,7 +13,6 @@ class CosmeticCacheService {
         return _cache!;
       }
 
-
       _cache = await _service.getCosmeticCategories();
 
       return _cache!;

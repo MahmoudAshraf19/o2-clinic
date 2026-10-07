@@ -71,7 +71,9 @@ class BookingPage extends StatelessWidget {
             width: 42,
             height: 42,
             decoration: BoxDecoration(
-              color: (Theme.of(context).brightness == Brightness.dark ? Colors.transparent : AppColors.surface),
+              color: (Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.transparent
+                  : AppColors.surface),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppColors.border),
             ),
@@ -163,7 +165,13 @@ class BookingPage extends StatelessWidget {
               children: [
                 Text(
                   doctorName,
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16, color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 16,
+                    color: (Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.white
+                        : AppColors.textPrimary),
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -238,7 +246,9 @@ class BookingPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? AppColors.primary
-                            : (Theme.of(context).brightness == Brightness.dark ? Theme.of(context).cardColor : AppColors.cardBackground),
+                            : (Theme.of(context).brightness == Brightness.dark
+                                  ? Theme.of(context).cardColor
+                                  : AppColors.cardBackground),
                         borderRadius: BorderRadius.circular(18),
                         border: Border.all(
                           color: isSelected
@@ -257,7 +267,9 @@ class BookingPage extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 11,
                               letterSpacing: 1.5,
-                              color: isSelected ? Colors.white : AppColors.grey,
+                              color: isSelected
+                                  ? AppColors.white
+                                  : AppColors.grey,
                             ),
                           ),
                           const SizedBox(height: 6),
@@ -266,7 +278,12 @@ class BookingPage extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
-                              color: isSelected ? Colors.white : (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),
+                              color: isSelected
+                                  ? AppColors.white
+                                  : (Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? AppColors.white
+                                        : AppColors.textPrimary),
                             ),
                           ),
                         ],
@@ -392,7 +409,7 @@ class BookingPage extends StatelessWidget {
                                   const Icon(
                                     Icons.schedule,
                                     size: 20,
-                                    color: Colors.white70,
+                                    color: AppColors.white70,
                                   ),
                                   const SizedBox(width: 6),
                                   Expanded(
@@ -406,7 +423,7 @@ class BookingPage extends StatelessWidget {
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
                                             fontSize: 15,
-                                            color: Colors.white,
+                                            color: AppColors.white,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -417,7 +434,7 @@ class BookingPage extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               fontSize: 13,
-                                              color: Colors.white.withValues(
+                                              color: AppColors.white.withValues(
                                                 alpha: 0.7,
                                               ),
                                             ),
@@ -442,10 +459,12 @@ class BookingPage extends StatelessWidget {
                                     vertical: 7,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: 0.2),
+                                    color: AppColors.white.withValues(
+                                      alpha: 0.2,
+                                    ),
                                     borderRadius: BorderRadius.circular(999),
                                     border: Border.all(
-                                      color: Colors.white.withValues(
+                                      color: AppColors.white.withValues(
                                         alpha: 0.3,
                                       ),
                                     ),
@@ -458,7 +477,7 @@ class BookingPage extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           color: isAvailable
                                               ? secondaryFixed
-                                              : Colors.redAccent,
+                                              : AppColors.redAccent,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
@@ -474,7 +493,7 @@ class BookingPage extends StatelessWidget {
                                         style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                          color: AppColors.white,
                                         ),
                                       ),
                                     ],
@@ -492,7 +511,7 @@ class BookingPage extends StatelessWidget {
                               AppLocalizations.of(context)!.capacityStatus,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.white.withValues(alpha: 0.8),
+                                color: AppColors.white.withValues(alpha: 0.8),
                               ),
                             ),
                             Text(
@@ -500,7 +519,7 @@ class BookingPage extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                                color: AppColors.white,
                               ),
                             ),
                           ],
@@ -516,17 +535,19 @@ class BookingPage extends StatelessWidget {
                                 children: [
                                   Container(
                                     height: 6,
-                                    color: Colors.white.withValues(alpha: 0.2),
+                                    color: AppColors.white.withValues(
+                                      alpha: 0.2,
+                                    ),
                                   ),
                                   Container(
                                     height: 6,
                                     width: width,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: AppColors.white,
                                       borderRadius: BorderRadius.circular(999),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.white.withValues(
+                                          color: AppColors.white.withValues(
                                             alpha: 0.5,
                                           ),
                                           blurRadius: 8,
@@ -629,8 +650,3 @@ class BookingPage extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

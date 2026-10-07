@@ -121,13 +121,15 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+            color: (Theme.of(context).brightness == Brightness.dark
+                ? AppColors.colorFF60A5FA
+                : AppColors.primary),
             size: 20,
           ),
           onPressed: () => Navigator.of(context).pop(),
@@ -135,7 +137,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
         title: Text(
           AppLocalizations.of(context)!.doctorProfile,
           style: TextStyle(
-            color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+            color: (Theme.of(context).brightness == Brightness.dark
+                ? AppColors.colorFF60A5FA
+                : AppColors.primary),
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -152,7 +156,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               const SizedBox(height: 32),
               _buildAboutSection(),
               const SizedBox(height: 24),
-              const Divider(color: Color(0xFFE8F0EC), thickness: 1.5),
+              const Divider(color: AppColors.colorFFE8F0EC, thickness: 1.5),
               const SizedBox(height: 24),
               _buildAvailabilitySection(),
               const SizedBox(height: 32),
@@ -208,10 +212,12 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 child: Container(
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                    color: (Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.colorFF60A5FA
+                        : AppColors.primary),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(Icons.check, color: Colors.white, size: 16),
+                  child: Icon(Icons.check, color: AppColors.white, size: 16),
                 ),
               ),
           ],
@@ -225,7 +231,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w900,
-            color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+            color: (Theme.of(context).brightness == Brightness.dark
+                ? AppColors.colorFF60A5FA
+                : AppColors.primary),
           ),
         ),
         const SizedBox(height: 6),
@@ -238,7 +246,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,
-            color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withValues(alpha: 0.8)),
+            color: (Theme.of(context).brightness == Brightness.dark
+                ? AppColors.white70
+                : AppColors.textSecondary.withValues(alpha: 0.8)),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -248,19 +258,26 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.work_outline, color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary), size: 18),
+            Icon(
+              Icons.work_outline,
+              color: (Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.colorFF60A5FA
+                  : AppColors.primary),
+              size: 18,
+            ),
             const SizedBox(width: 6),
             Text(
               '${doctor.yearsExperience} ${AppLocalizations.of(context)!.yearsExp}',
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
-                color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                color: (Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.colorFF60A5FA
+                    : AppColors.primary),
               ),
             ),
           ],
         ),
-
       ],
     );
   }
@@ -283,7 +300,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               ),
               child: Icon(
                 Icons.person_outline,
-                color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                color: (Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.colorFF60A5FA
+                    : AppColors.primary),
                 size: 20,
               ),
             ),
@@ -293,7 +312,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
-                color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                color: (Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.colorFF60A5FA
+                    : AppColors.primary),
               ),
             ),
           ],
@@ -329,7 +350,10 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               onPressed: () => setState(() => _aboutExpanded = !_aboutExpanded),
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.only(top: 4, left: 4, right: 0),
-                foregroundColor: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                foregroundColor:
+                    (Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.colorFF60A5FA
+                    : AppColors.primary),
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
@@ -337,10 +361,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 _aboutExpanded
                     ? AppLocalizations.of(context)!.showLess
                     : AppLocalizations.of(context)!.readMore,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w800,
-                ),
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
               ),
             ),
           ),
@@ -366,7 +387,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               ),
               child: Icon(
                 Icons.calendar_month_outlined,
-                color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                color: (Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.colorFF60A5FA
+                    : AppColors.primary),
                 size: 20,
               ),
             ),
@@ -376,7 +399,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
-                color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                color: (Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.colorFF60A5FA
+                    : AppColors.primary),
               ),
             ),
           ],
@@ -397,14 +422,18 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                   vertical: 16,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.04), // Very light tint
+                  color: AppColors.primary.withValues(
+                    alpha: 0.04,
+                  ), // Very light tint
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(
                   children: [
                     Icon(
                       Icons.event_note_outlined,
-                      color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                      color: (Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.colorFF60A5FA
+                          : AppColors.primary),
                       size: 24,
                     ),
                     const SizedBox(width: 16),
@@ -417,7 +446,11 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                              color:
+                                  (Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? AppColors.colorFF60A5FA
+                                  : AppColors.primary),
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -425,7 +458,13 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                             e.value.toString(),
                             style: TextStyle(
                               fontSize: 13,
-                              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white60 : AppColors.textSecondary.withValues(alpha: 0.7)),
+                              color:
+                                  (Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? AppColors.white60
+                                  : AppColors.textSecondary.withValues(
+                                      alpha: 0.7,
+                                    )),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -434,7 +473,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                     ),
                     Icon(
                       Icons.arrow_forward_ios,
-                      color: (Theme.of(context).brightness == Brightness.dark ? Colors.white54 : AppColors.textSecondary.withValues(alpha: 0.5)),
+                      color: (Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.white54
+                          : AppColors.textSecondary.withValues(alpha: 0.5)),
                       size: 16,
                     ),
                   ],
@@ -465,14 +506,14 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               icon: Icon(Icons.calendar_today_outlined, size: 18),
               label: Text(
                 AppLocalizations.of(context)!.bookAppointment,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               style: ElevatedButton.styleFrom(
                 elevation: 0,
-                backgroundColor: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                backgroundColor:
+                    (Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.colorFF60A5FA
+                    : AppColors.primary),
                 foregroundColor: AppColors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(999), // Fully rounded
@@ -503,14 +544,19 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               icon: Icon(Icons.chat_bubble_outline, size: 18),
               label: Text(
                 AppLocalizations.of(context)!.chatMessage,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               style: OutlinedButton.styleFrom(
-                side: BorderSide(color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary), width: 1.5),
-                foregroundColor: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                side: BorderSide(
+                  color: (Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.colorFF60A5FA
+                      : AppColors.primary),
+                  width: 1.5,
+                ),
+                foregroundColor:
+                    (Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.colorFF60A5FA
+                    : AppColors.primary),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(999), // Fully rounded
                 ),
@@ -527,13 +573,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   TextStyle _bodyStyle() => TextStyle(
     fontSize: 14,
     height: 1.6,
-    color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withValues(alpha: 0.9)),
+    color: (Theme.of(context).brightness == Brightness.dark
+        ? AppColors.white70
+        : AppColors.textSecondary.withValues(alpha: 0.9)),
     fontWeight: FontWeight.w500,
   );
 }
-
-
-
-
-
-

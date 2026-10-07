@@ -217,11 +217,14 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.4)),
         boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10),
+          BoxShadow(
+            color: AppColors.black.withValues(alpha: 0.03),
+            blurRadius: 10,
+          ),
         ],
       ),
       child: Obx(() {
@@ -286,12 +289,12 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
 
-                      color: Colors.green,
+                      color: AppColors.green,
                     ),
                   ),
                   Text(
                     "-$discountAmount $currency",
-                    style: TextStyle(fontSize: 14, color: Colors.green),
+                    style: TextStyle(fontSize: 14, color: AppColors.green),
                   ),
                 ],
               ),
@@ -338,12 +341,16 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
           children: [
             Row(
               children: [
-                const Icon(Icons.check_circle, color: Colors.green, size: 20),
+                const Icon(
+                  Icons.check_circle,
+                  color: AppColors.green,
+                  size: 20,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   discountController.currentValidCode.value!.code,
                   style: const TextStyle(
-                    color: Colors.green,
+                    color: AppColors.green,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -351,7 +358,7 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
             ),
             TextButton(
               onPressed: () => discountController.removeDiscountCode(),
-              child: const Icon(Icons.close, color: Colors.red, size: 20),
+              child: const Icon(Icons.close, color: AppColors.red, size: 20),
             ),
           ],
         );
@@ -385,9 +392,12 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         boxShadow: [
-          BoxShadow(blurRadius: 20, color: Colors.black.withValues(alpha: 0.05)),
+          BoxShadow(
+            blurRadius: 20,
+            color: AppColors.black.withValues(alpha: 0.05),
+          ),
         ],
       ),
       child: SafeArea(
@@ -493,13 +503,13 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
                     width: 24,
                     height: 24,
                     child: CircularProgressIndicator(
-                      color: Colors.white,
+                      color: AppColors.white,
                       strokeWidth: 2,
                     ),
                   )
                 : Text(
                     AppLocalizations.of(context)!.confirm,
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.white),
                   ),
           ),
         ),
@@ -512,12 +522,12 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: AppColors.black.withValues(alpha: 0.04),
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),
@@ -532,4 +542,3 @@ class _UltrasoundConfirmScreenState extends State<UltrasoundConfirmScreen> {
     return formatter.format(date);
   }
 }
-

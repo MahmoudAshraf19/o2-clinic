@@ -48,7 +48,7 @@ class CategoryChips extends StatelessWidget {
 
                 border: Border.all(
                   color: isActive
-                      ? Colors.transparent
+                      ? AppColors.transparent
                       : AppColors.border.withValues(alpha: 0.18),
                 ),
               ),
@@ -63,7 +63,11 @@ class CategoryChips extends StatelessWidget {
                     fontFamily: AppFonts.poppins,
                     fontSize: 13,
                     fontWeight: isActive ? FontWeight.w700 : FontWeight.w600,
-                    color: isActive ? Colors.white : (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary),
+                    color: isActive
+                        ? AppColors.white
+                        : (Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.white70
+                              : AppColors.textSecondary),
                   ),
                 ),
               ),
@@ -74,4 +78,3 @@ class CategoryChips extends StatelessWidget {
     );
   }
 }
-

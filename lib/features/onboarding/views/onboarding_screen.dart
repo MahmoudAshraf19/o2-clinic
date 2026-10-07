@@ -151,12 +151,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 children: [
                                   TextSpan(
                                     text: data.titlePart1,
-                                    style: const TextStyle(color: AppColors.brandBlue),
+                                    style: const TextStyle(
+                                      color: AppColors.brandBlue,
+                                    ),
                                   ),
                                   if (data.titlePart2 != null)
                                     TextSpan(
                                       text: data.titlePart2,
-                                      style: const TextStyle(color: AppColors.vibrantCyan),
+                                      style: const TextStyle(
+                                        color: AppColors.vibrantCyan,
+                                      ),
                                     ),
                                 ],
                               ),
@@ -216,7 +220,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       onPressed: _nextPage,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.brandBlue,
-                        foregroundColor: Colors.white,
+                        foregroundColor: AppColors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(28),
                         ),
@@ -232,11 +236,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             style: GoogleFonts.cairo(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
-                              color: Colors.white,
+                              color: AppColors.white,
                             ),
                           ),
                           const SizedBox(width: 8),
-                          const Icon(Icons.arrow_forward, size: 20, color: Colors.white),
+                          const Icon(
+                            Icons.arrow_forward,
+                            size: 20,
+                            color: AppColors.white,
+                          ),
                         ],
                       ),
                     ),
@@ -250,4 +258,3 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 }
-

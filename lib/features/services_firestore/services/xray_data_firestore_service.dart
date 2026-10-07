@@ -262,18 +262,13 @@ class XrayDataFirestoreService {
     return fallback;
   }
 
-  void _logDivider() {
-  }
+  void _logDivider() {}
 
-  void _logInfo(String message) {
-  }
+  void _logInfo(String message) {}
 
-  void _logSuccess(String message) {
-  }
+  void _logSuccess(String message) {}
 
-  void _logWarn(String message) {
-  }
+  void _logWarn(String message) {}
 
-  void _logError(String message) {
-  }
+  void _logError(String message) {}
 }

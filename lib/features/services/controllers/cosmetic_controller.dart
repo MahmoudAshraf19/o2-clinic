@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import '../../services_firestore/services/cosmetic_cache_service.dart';
 import '../models/cosmetic_model.dart';
 import '../services/cosmetic_service.dart';
@@ -36,8 +35,6 @@ class CosmeticController extends ChangeNotifier {
     _setLoading(true);
     try {
       final categories = await CosmeticCacheService.getCategories();
-
-      
 
       _cosmetics = categories.map((cat) {
         return CosmeticModel(

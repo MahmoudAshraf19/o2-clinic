@@ -10,6 +10,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import 'doctor_profile_controller.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class DoctorEditProfileController extends GetxController {
   final DoctorProfileController _profileController =
@@ -113,8 +114,8 @@ class DoctorEditProfileController extends GetxController {
       Get.snackbar(
         'Invalid Time',
         'Start time must be before end time.',
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
+        backgroundColor: AppColors.redAccent,
+        colorText: AppColors.white,
       );
       return;
     }
@@ -136,8 +137,8 @@ class DoctorEditProfileController extends GetxController {
       Get.snackbar(
         'Conflict',
         'This time slot overlaps with an existing schedule for ${day.capitalizeFirst}.',
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
+        backgroundColor: AppColors.redAccent,
+        colorText: AppColors.white,
       );
       return;
     }
@@ -186,8 +187,8 @@ class DoctorEditProfileController extends GetxController {
       AppLocalizations.of(context)!.warning,
       AppLocalizations.of(context)!.contactAdminToEdit,
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.black87,
-      colorText: Colors.white,
+      backgroundColor: AppColors.black87,
+      colorText: AppColors.white,
       margin: const EdgeInsets.all(16),
       borderRadius: 8,
       duration: const Duration(seconds: 3),
@@ -266,8 +267,8 @@ class DoctorEditProfileController extends GetxController {
         Get.snackbar(
           'Success',
           'Profile updated successfully',
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
+          backgroundColor: AppColors.green,
+          colorText: AppColors.white,
         );
       }
     } catch (e, stackTrace) {
@@ -277,8 +278,8 @@ class DoctorEditProfileController extends GetxController {
       Get.snackbar(
         'Error',
         'Failed to save profile: ${e.toString()}',
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
+        backgroundColor: AppColors.redAccent,
+        colorText: AppColors.white,
         duration: const Duration(seconds: 5),
         snackPosition: SnackPosition.BOTTOM,
       );

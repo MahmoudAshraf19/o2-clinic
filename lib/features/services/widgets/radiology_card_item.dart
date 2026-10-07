@@ -32,7 +32,7 @@ class _RadiologyCardItemState extends State<RadiologyCardItem> {
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: hovered ? 0.20 : 0.08),
+              color: AppColors.black.withValues(alpha: hovered ? 0.20 : 0.08),
               blurRadius: hovered ? 28 : 16,
               offset: Offset(0, hovered ? 12 : 6),
             ),
@@ -62,9 +62,9 @@ class _RadiologyCardItemState extends State<RadiologyCardItem> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.transparent,
-                        Color(0x88000000),
-                        Color(0xDD000000),
+                        AppColors.transparent,
+                        AppColors.color88000000,
+                        AppColors.colorDD000000,
                       ],
                     ),
                   ),
@@ -87,14 +87,14 @@ class _RadiologyCardItemState extends State<RadiologyCardItem> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(m.getBadgeIcon(), size: 12, color: Colors.white),
+                      Icon(m.getBadgeIcon(), size: 12, color: AppColors.white),
                       const SizedBox(width: 5),
                       Text(
                         "Available",
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          color: AppColors.white,
                         ),
                       ),
                     ],
@@ -114,10 +114,10 @@ class _RadiologyCardItemState extends State<RadiologyCardItem> {
                     child: Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.12),
+                        color: AppColors.white.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.25),
+                          color: AppColors.white.withValues(alpha: 0.25),
                           width: 1.2,
                         ),
                       ),
@@ -134,7 +134,7 @@ class _RadiologyCardItemState extends State<RadiologyCardItem> {
                               fontFamily: 'Poppins',
                               fontSize: isMobile ? 17 : 19,
                               fontWeight: FontWeight.w800,
-                              color: Colors.white,
+                              color: AppColors.white,
                               letterSpacing: 0.3,
                             ),
                           ),
@@ -151,7 +151,7 @@ class _RadiologyCardItemState extends State<RadiologyCardItem> {
                               fontSize: 13,
                               height: 1.45,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white70,
+                              color: AppColors.white70,
                             ),
                           ),
                         ],
@@ -194,13 +194,13 @@ class _RadiologyCardItemState extends State<RadiologyCardItem> {
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                          color: AppColors.white,
                         ),
                       ),
                       const SizedBox(width: 6),
                       const Icon(
                         Icons.arrow_forward_rounded,
-                        color: Colors.white,
+                        color: AppColors.white,
                         size: 14,
                       ),
                     ],

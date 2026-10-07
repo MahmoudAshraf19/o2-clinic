@@ -81,12 +81,14 @@ class BookingFirestoreService {
       debugPrint("⚠️ [Firebase] Cannot cancel booking: ID is null ❌");
       return;
     }
-    
+
     debugPrint("🚀 [Firebase] Starting cancellation for booking: $bookingId ⏳");
 
     try {
       await _firestore.runTransaction((tx) async {
-        final bookingRef = _firestore.collection(FirestorePaths.bookings).doc(bookingId);
+        final bookingRef = _firestore
+            .collection(FirestorePaths.bookings)
+            .doc(bookingId);
         final bookingSnap = await tx.get(bookingRef);
         if (!bookingSnap.exists) {
           debugPrint("⚠️ [Firebase] Booking not found! $bookingId ❌");
@@ -98,38 +100,49 @@ class BookingFirestoreService {
         final doctor = data['doctor'];
         final schedule = data['schedule'];
 
-        if ((type == 'clinical' || data['serviceType'] == 'clinical') && 
-            doctor != null && (doctor['id'] != null || doctor['doctorId'] != null) && 
-            schedule != null && schedule['date'] != null) {
-          
+        if ((type == 'clinical' || data['serviceType'] == 'clinical') &&
+            doctor != null &&
+            (doctor['id'] != null || doctor['doctorId'] != null) &&
+            schedule != null &&
+            schedule['date'] != null) {
           final doctorId = doctor['id'] ?? doctor['doctorId'];
           final dateKey = schedule['date'];
           final statsId = "${doctorId}_$dateKey";
-          final statsRef = _firestore.collection('doctor_booking_stats').doc(statsId);
-          
+          final statsRef = _firestore
+              .collection('doctor_booking_stats')
+              .doc(statsId);
+
           final statsSnap = await tx.get(statsRef);
           if (statsSnap.exists) {
             final count = ((statsSnap.data()?['count'] ?? 0) as num).toInt();
             if (count > 0) {
               tx.update(statsRef, {'count': count - 1});
-              debugPrint("✅ [Firebase] Decremented doctor stats for $statsId 📉");
+              debugPrint(
+                "✅ [Firebase] Decremented doctor stats for $statsId 📉",
+              );
             } else {
-              debugPrint("⚠️ [Firebase] Doctor stats count is already 0 for $statsId 🤔");
+              debugPrint(
+                "⚠️ [Firebase] Doctor stats count is already 0 for $statsId 🤔",
+              );
             }
           } else {
-            debugPrint("⚠️ [Firebase] Doctor stats document not found! $statsId ❌");
+            debugPrint(
+              "⚠️ [Firebase] Doctor stats document not found! $statsId ❌",
+            );
           }
         }
 
         final currentStatus = data['status'] as Map<String, dynamic>? ?? {};
         final rawHistory = currentStatus['history'] as List<dynamic>? ?? [];
-        final history = rawHistory.map((e) => Map<String, dynamic>.from(e as Map)).toList();
-        
+        final history = rawHistory
+            .map((e) => Map<String, dynamic>.from(e as Map))
+            .toList();
+
         history.add({
           "status": "cancelled",
           "changed_at": FieldValue.serverTimestamp(),
           "changed_by": "user",
-          "note": "Cancelled by user via app"
+          "note": "Cancelled by user via app",
         });
 
         tx.update(bookingRef, {
@@ -137,8 +150,10 @@ class BookingFirestoreService {
           "status.history": history,
           "timeline.cancelledAt": FieldValue.serverTimestamp(),
         });
-        
-        debugPrint("✅ [Firebase] Booking $bookingId updated successfully to 'cancelled'! 🎉");
+
+        debugPrint(
+          "✅ [Firebase] Booking $bookingId updated successfully to 'cancelled'! 🎉",
+        );
       });
     } catch (e, stackTrace) {
       debugPrint("🔥 [Firebase] FATAL ERROR during cancellation 😭: $e");

@@ -24,7 +24,7 @@ class ServiceCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.10),
+              color: AppColors.black.withValues(alpha: 0.10),
               blurRadius: 18,
               offset: const Offset(0, 8),
             ),
@@ -46,9 +46,9 @@ class ServiceCard extends StatelessWidget {
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Colors.black87,
-                        Colors.black45,
-                        Colors.transparent,
+                        AppColors.black87,
+                        AppColors.black45,
+                        AppColors.transparent,
                       ],
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
@@ -76,10 +76,10 @@ class ServiceCard extends StatelessWidget {
                             vertical: 3,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.25),
+                            color: AppColors.black.withValues(alpha: 0.25),
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.15),
+                              color: AppColors.white.withValues(alpha: 0.15),
                               width: 1,
                             ),
                           ),
@@ -88,7 +88,7 @@ class ServiceCard extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: AppColors.white,
                               fontSize: 18,
                               fontFamily: "GreatVibes",
                               height: 1.1,
@@ -110,7 +110,7 @@ class ServiceCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.75),
+                        color: AppColors.white.withValues(alpha: 0.75),
                         fontSize: 10,
                         height: 1.2,
                       ),
@@ -133,7 +133,7 @@ class ServiceCard extends StatelessWidget {
                           Text(
                             AppLocalizations.of(context)!.explore,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppColors.white,
                               fontSize: 11,
                               fontWeight: FontWeight.w700,
                             ),
@@ -143,7 +143,7 @@ class ServiceCard extends StatelessWidget {
 
                           Icon(
                             Icons.arrow_forward_rounded,
-                            color: Colors.white,
+                            color: AppColors.white,
                             size: 14,
                           ),
                         ],

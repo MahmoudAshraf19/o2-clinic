@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class O2CalendarWidget extends StatefulWidget {
   const O2CalendarWidget({super.key});
@@ -70,9 +71,11 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
       child: Container(
         width: 360,
         decoration: BoxDecoration(
-          color: const Color(0xFFF6FAF8),
+          color: AppColors.colorFFF6FAF8,
           borderRadius: BorderRadius.circular(24),
-          boxShadow: const [BoxShadow(blurRadius: 30, color: Colors.black12)],
+          boxShadow: const [
+            BoxShadow(blurRadius: 30, color: AppColors.black12),
+          ],
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -82,7 +85,7 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
               padding: const EdgeInsets.all(18),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color(0xFF00685F), Color(0xFF008379)],
+                  colors: [AppColors.colorFF00685F, AppColors.colorFF008379],
                 ),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
@@ -96,13 +99,13 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
                         DateFormat.MMMM().format(_focusedMonth),
                         style: const TextStyle(
                           fontSize: 22,
-                          color: Colors.white,
+                          color: AppColors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         "${_focusedMonth.year}",
-                        style: const TextStyle(color: Colors.white70),
+                        style: const TextStyle(color: AppColors.white70),
                       ),
                     ],
                   ),
@@ -119,7 +122,7 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
                         },
                         icon: const Icon(
                           Icons.chevron_left,
-                          color: Colors.white,
+                          color: AppColors.white,
                         ),
                       ),
                       IconButton(
@@ -133,7 +136,7 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
                         },
                         icon: const Icon(
                           Icons.chevron_right,
-                          color: Colors.white,
+                          color: AppColors.white,
                         ),
                       ),
                     ],
@@ -186,19 +189,24 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
                   if (isSelected) {
                     decoration = const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF00685F), Color(0xFF008379)],
+                        colors: [
+                          AppColors.colorFF00685F,
+                          AppColors.colorFF008379,
+                        ],
                       ),
                       shape: BoxShape.circle,
                     );
-                    textColor = Colors.white;
+                    textColor = AppColors.white;
                   } else if (isToday) {
                     decoration = BoxDecoration(
-                      border: Border.all(color: const Color(0xFF00685F)),
+                      border: Border.all(color: AppColors.colorFF00685F),
                       shape: BoxShape.circle,
                     );
-                    textColor = const Color(0xFF00685F);
+                    textColor = AppColors.colorFF00685F;
                   } else {
-                    textColor = isCurrentMonth ? Colors.black87 : Colors.grey;
+                    textColor = isCurrentMonth
+                        ? AppColors.black87
+                        : AppColors.grey;
                   }
 
                   return GestureDetector(
@@ -225,7 +233,7 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
                               bottom: 6,
                               child: CircleAvatar(
                                 radius: 2,
-                                backgroundColor: Color(0xFF03458F),
+                                backgroundColor: AppColors.brandBlue,
                               ),
                             ),
                         ],
@@ -240,7 +248,7 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: const BoxDecoration(
-                border: Border(top: BorderSide(color: Colors.black12)),
+                border: Border(top: BorderSide(color: AppColors.black12)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -254,7 +262,7 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
                             ? "None"
                             : DateFormat("MMM dd, yyyy").format(_selectedDate!),
                         style: const TextStyle(
-                          color: Color(0xFF00685F),
+                          color: AppColors.colorFF00685F,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -262,7 +270,7 @@ class _O2CalendarWidgetState extends State<O2CalendarWidget> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF00685F),
+                      backgroundColor: AppColors.colorFF00685F,
                     ),
                     onPressed: () {},
                     child: const Text("Continue"),

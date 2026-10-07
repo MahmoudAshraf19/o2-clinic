@@ -1,4 +1,3 @@
-
 import '../../services_firestore/services/services_firestore_service.dart';
 import '../models/booking_service_model.dart';
 
@@ -12,12 +11,10 @@ class BookingService {
     bool forceRefresh = false,
   }) async {
     try {
-
       /// ⚡ لو موجود في الكاش → رجعه فورًا
       if (!forceRefresh && _cache != null) {
         return _cache!;
       }
-
 
       final firestoreServices = await _service.getAllServices(
         forceRefresh: forceRefresh,
@@ -40,7 +37,6 @@ class BookingService {
 
       /// 💾 خزّن في الكاش
       _cache = result;
-
 
       return result;
     } catch (e) {

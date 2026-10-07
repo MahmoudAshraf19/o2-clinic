@@ -1,4 +1,3 @@
-
 class DashboardQuickActionModel {
   final String id;
   final String title;

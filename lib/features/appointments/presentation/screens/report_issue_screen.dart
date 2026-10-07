@@ -100,14 +100,14 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
         AppLocalizations.of(context)!.reportIssue,
         'Submitted successfully',
         backgroundColor: AppColors.success,
-        colorText: Colors.white,
+        colorText: AppColors.white,
       );
     } catch (e) {
       Get.snackbar(
         'Error',
         'Failed to submit report',
         backgroundColor: AppColors.error,
-        colorText: Colors.white,
+        colorText: AppColors.white,
       );
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
@@ -121,7 +121,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         title: Text(
           l10n.reportIssue,
           style: const TextStyle(color: AppColors.textPrimary),
@@ -163,10 +163,10 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                             ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.close, color: Colors.white),
+                      icon: const Icon(Icons.close, color: AppColors.white),
                       onPressed: () => setState(() => _selectedImage = null),
                       style: IconButton.styleFrom(
-                        backgroundColor: Colors.black54,
+                        backgroundColor: AppColors.black54,
                       ),
                     ),
                   ],
@@ -188,7 +188,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                 onPressed: _isSubmitting ? null : _submitReport,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.error,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -200,7 +200,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                         width: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          color: Colors.white,
+                          color: AppColors.white,
                         ),
                       )
                     : Text(
@@ -218,5 +218,3 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
     );
   }
 }
-
-

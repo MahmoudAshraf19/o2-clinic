@@ -29,7 +29,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
         toolbarHeight: 60,
         automaticallyImplyLeading: false,
         titleSpacing: 16,
@@ -66,7 +66,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 fontSize: 14,
                 height: 1.5,
                 fontWeight: FontWeight.w400,
-                color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ?? AppColors.textSecondary,
+                color:
+                    Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ??
+                    AppColors.textSecondary,
               ),
             ),
             const SizedBox(height: 20),
@@ -100,9 +104,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           context: context,
                           backgroundColor: Theme.of(context).cardColor,
                           shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(24),
+                            ),
                           ),
-                          builder: (context) => const _ThemeSelectionBottomSheet(),
+                          builder: (context) =>
+                              const _ThemeSelectionBottomSheet(),
                         );
                       },
                     ),
@@ -234,7 +241,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
-                      color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ?? AppColors.textSecondary,
+                      color:
+                          Theme.of(context).textTheme.bodyMedium?.color
+                              ?.withValues(alpha: 0.7) ??
+                          AppColors.textSecondary,
                     ),
                   );
                 },
@@ -256,7 +266,7 @@ class _TopIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(14),
@@ -266,7 +276,11 @@ class _TopIconButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : AppColors.borderSoft),
+            border: Border.all(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.white12
+                  : AppColors.borderSoft,
+            ),
           ),
           child: Icon(icon, size: 22, color: AppColors.primary),
         ),
@@ -284,7 +298,11 @@ class _AvatarBubble extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         shape: BoxShape.circle,
-        border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : AppColors.borderSoft),
+        border: Border.all(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.white12
+              : AppColors.borderSoft,
+        ),
       ),
       child: const Icon(
         Icons.person_rounded,
@@ -295,7 +313,6 @@ class _AvatarBubble extends StatelessWidget {
   }
 }
 
-
 class _AssistanceBanner extends StatelessWidget {
   final VoidCallback onTap;
 
@@ -304,7 +321,7 @@ class _AssistanceBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(24),
@@ -401,7 +418,11 @@ class _ToggleTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : AppColors.borderSoft),
+        border: Border.all(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.white12
+              : AppColors.borderSoft,
+        ),
       ),
       child: Row(
         children: [
@@ -424,7 +445,9 @@ class _ToggleTile extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.textPrimary,
+                    color:
+                        Theme.of(context).textTheme.bodyLarge?.color ??
+                        AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -433,7 +456,11 @@ class _ToggleTile extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ?? AppColors.textSecondary,
+                    color:
+                        Theme.of(
+                          context,
+                        ).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ??
+                        AppColors.textSecondary,
                   ),
                 ),
               ],
@@ -462,7 +489,11 @@ class _SoftSwitch extends StatelessWidget {
         height: 28,
         padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
-          color: value ? AppColors.primary : (Theme.of(context).brightness == Brightness.dark ? Colors.white24 : AppColors.toggleTrack),
+          color: value
+              ? AppColors.primary
+              : (Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.white24
+                    : AppColors.toggleTrack),
           borderRadius: BorderRadius.circular(999),
         ),
         child: AnimatedAlign(
@@ -472,7 +503,9 @@ class _SoftSwitch extends StatelessWidget {
             width: 22,
             height: 22,
             decoration: BoxDecoration(
-              color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.toggleThumb,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.white70
+                  : AppColors.toggleThumb,
               shape: BoxShape.circle,
             ),
           ),
@@ -496,7 +529,7 @@ class _PrimaryActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(18),
@@ -560,7 +593,11 @@ class _QuickOptionCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : AppColors.borderSoft),
+            border: Border.all(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.white12
+                  : AppColors.borderSoft,
+            ),
           ),
           child: Row(
             children: [
@@ -584,7 +621,10 @@ class _QuickOptionCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ?? AppColors.textSecondary,
+                        color:
+                            Theme.of(context).textTheme.bodyMedium?.color
+                                ?.withValues(alpha: 0.7) ??
+                            AppColors.textSecondary,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -593,7 +633,9 @@ class _QuickOptionCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.textPrimary,
+                        color:
+                            Theme.of(context).textTheme.bodyLarge?.color ??
+                            AppColors.textPrimary,
                       ),
                     ),
                   ],
@@ -647,10 +689,7 @@ class _ThemeSelectionBottomSheet extends StatelessWidget {
           const Divider(height: 1, color: AppColors.borderSoft),
           ListTile(
             leading: const Icon(Icons.dark_mode, color: AppColors.muted),
-            title: Text(
-              'Dark',
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
+            title: Text('Dark', style: TextStyle(fontWeight: FontWeight.w500)),
             onTap: () {
               Get.changeThemeMode(ThemeMode.dark);
               Navigator.pop(context);
@@ -662,8 +701,3 @@ class _ThemeSelectionBottomSheet extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

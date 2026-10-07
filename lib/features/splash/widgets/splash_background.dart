@@ -1,6 +1,6 @@
-
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class SplashBackground extends StatelessWidget {
   const SplashBackground({super.key});
@@ -15,7 +15,7 @@ class SplashBackground extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Color(0xFF21897E), Color(0xFF00685F)],
+              colors: [AppColors.colorFF21897E, AppColors.colorFF00685F],
             ),
           ),
         ),
@@ -24,7 +24,7 @@ class SplashBackground extends StatelessWidget {
         Positioned(
           top: -80,
           left: -80,
-          child: _GlowCircle(color: Colors.white, size: 220, opacity: 0.07),
+          child: _GlowCircle(color: AppColors.white, size: 220, opacity: 0.07),
         ),
 
         // Soft bottom-right glow.
@@ -32,7 +32,7 @@ class SplashBackground extends StatelessWidget {
           bottom: -120,
           right: -90,
           child: _GlowCircle(
-            color: const Color(0xFF69D1C5),
+            color: AppColors.colorFF69D1C5,
             size: 280,
             opacity: 0.12,
           ),
@@ -46,7 +46,7 @@ class SplashBackground extends StatelessWidget {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: RadialGradient(
-                    colors: [Colors.white, Colors.transparent],
+                    colors: [AppColors.white, AppColors.transparent],
                     radius: 1.2,
                     center: Alignment.topCenter,
                   ),

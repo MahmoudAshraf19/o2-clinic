@@ -17,9 +17,10 @@ class LoginScreen extends GetView<LoginController> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    
+
     // Logic for showing Apple button
-    final showApple = kIsWeb || Theme.of(context).platform != TargetPlatform.android;
+    final showApple =
+        kIsWeb || Theme.of(context).platform != TargetPlatform.android;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -48,19 +49,21 @@ class LoginScreen extends GetView<LoginController> {
                     style: GoogleFonts.cairo(
                       fontSize: 28,
                       fontWeight: FontWeight.w800,
-                      color: isDarkMode ? Colors.white : AppColors.brandBlue,
+                      color: isDarkMode ? AppColors.white : AppColors.brandBlue,
                     ),
                   ),
                   const SizedBox(height: 8),
 
                   // Sign in to continue
                   Text(
-                    l10n.loginToContinueYourMedical, 
+                    l10n.loginToContinueYourMedical,
                     textAlign: TextAlign.start,
                     style: GoogleFonts.cairo(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: isDarkMode ? Colors.white70 : AppColors.brandBlue.withValues(alpha: 0.6),
+                      color: isDarkMode
+                          ? AppColors.white70
+                          : AppColors.brandBlue.withValues(alpha: 0.6),
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -71,7 +74,7 @@ class LoginScreen extends GetView<LoginController> {
                     style: GoogleFonts.cairo(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
-                      color: isDarkMode ? Colors.white : AppColors.brandBlue,
+                      color: isDarkMode ? AppColors.white : AppColors.brandBlue,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -89,7 +92,7 @@ class LoginScreen extends GetView<LoginController> {
                     style: GoogleFonts.cairo(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
-                      color: isDarkMode ? Colors.white : AppColors.brandBlue,
+                      color: isDarkMode ? AppColors.white : AppColors.brandBlue,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -109,7 +112,9 @@ class LoginScreen extends GetView<LoginController> {
                               : 'assets/icons/eye.png',
                           width: 22,
                           height: 22,
-                          color: isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5),
+                          color: isDarkMode
+                              ? AppColors.white54
+                              : AppColors.brandBlue.withValues(alpha: 0.5),
                         ),
                       ),
                     ),
@@ -138,10 +143,12 @@ class LoginScreen extends GetView<LoginController> {
                     () => SizedBox(
                       height: 56,
                       child: ElevatedButton(
-                        onPressed: controller.isLoading.value ? null : controller.login,
+                        onPressed: controller.isLoading.value
+                            ? null
+                            : controller.login,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.brandBlue,
-                          foregroundColor: Colors.white,
+                          foregroundColor: AppColors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(28),
@@ -152,7 +159,7 @@ class LoginScreen extends GetView<LoginController> {
                                 width: 24,
                                 height: 24,
                                 child: CircularProgressIndicator(
-                                  color: Colors.white,
+                                  color: AppColors.white,
                                   strokeWidth: 2.5,
                                 ),
                               )
@@ -178,18 +185,32 @@ class LoginScreen extends GetView<LoginController> {
                   // Divider
                   Row(
                     children: [
-                      Expanded(child: Divider(color: isDarkMode ? Colors.white24 : Colors.grey.shade300)),
+                      Expanded(
+                        child: Divider(
+                          color: isDarkMode
+                              ? AppColors.white24
+                              : AppColors.grey300,
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
                           l10n.or,
                           style: GoogleFonts.cairo(
-                            color: isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.7),
+                            color: isDarkMode
+                                ? AppColors.white54
+                                : AppColors.brandBlue.withValues(alpha: 0.7),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
-                      Expanded(child: Divider(color: isDarkMode ? Colors.white24 : Colors.grey.shade300)),
+                      Expanded(
+                        child: Divider(
+                          color: isDarkMode
+                              ? AppColors.white24
+                              : AppColors.grey300,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 24),
@@ -209,7 +230,7 @@ class LoginScreen extends GetView<LoginController> {
                       text: l10n.continueWithApple,
                       iconPath: 'assets/icons/apple-logo.png',
                       isDarkMode: isDarkMode,
-                      onPressed: () {}, 
+                      onPressed: () {},
                     ),
                   ],
 
@@ -222,7 +243,9 @@ class LoginScreen extends GetView<LoginController> {
                       Text(
                         '${l10n.dontHaveAnAccount} ',
                         style: GoogleFonts.cairo(
-                          color: isDarkMode ? Colors.white70 : AppColors.brandBlue.withValues(alpha: 0.6),
+                          color: isDarkMode
+                              ? AppColors.white70
+                              : AppColors.brandBlue.withValues(alpha: 0.6),
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
@@ -243,7 +266,7 @@ class LoginScreen extends GetView<LoginController> {
                     ],
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // Bottom buttons (Doctor / Guest) stacked
                   _outlinedButton(
                     text: l10n.loginAsDoctor,
@@ -280,7 +303,9 @@ class LoginScreen extends GetView<LoginController> {
     bool obscure = false,
     Widget? suffix,
   }) {
-    final iconColor = isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5);
+    final iconColor = isDarkMode
+        ? AppColors.white54
+        : AppColors.brandBlue.withValues(alpha: 0.5);
 
     return CommonTextField(
       controller: controller,
@@ -288,12 +313,7 @@ class LoginScreen extends GetView<LoginController> {
       hint: hint,
       prefixWidget: Padding(
         padding: const EdgeInsets.all(14.0),
-        child: Image.asset(
-          iconPath,
-          width: 20,
-          height: 20,
-          color: iconColor,
-        ),
+        child: Image.asset(iconPath, width: 20, height: 20, color: iconColor),
       ),
       suffixWidget: suffix,
     );
@@ -305,12 +325,12 @@ class LoginScreen extends GetView<LoginController> {
     required bool isDarkMode,
     required VoidCallback onPressed,
   }) {
-    // Determine if the icon should be colored dynamically (like apple logo in dark mode) 
-    // or kept original (like google logo). We'll assume google.png is full color, 
+    // Determine if the icon should be colored dynamically (like apple logo in dark mode)
+    // or kept original (like google logo). We'll assume google.png is full color,
     // but apple-logo.png needs to be white in dark mode.
     Color? imageColor;
     if (iconPath.contains('apple')) {
-      imageColor = isDarkMode ? Colors.white : Colors.black;
+      imageColor = isDarkMode ? AppColors.white : AppColors.black;
     }
 
     return SizedBox(
@@ -319,30 +339,25 @@ class LoginScreen extends GetView<LoginController> {
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           side: BorderSide(
-            color: isDarkMode ? Colors.white38 : AppColors.brandBlue, 
+            color: isDarkMode ? AppColors.white38 : AppColors.brandBlue,
             width: 1.5,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(28),
           ),
-          backgroundColor: isDarkMode ? Colors.transparent : Colors.white,
+          backgroundColor: isDarkMode ? AppColors.transparent : AppColors.white,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              iconPath,
-              width: 24,
-              height: 24,
-              color: imageColor,
-            ),
+            Image.asset(iconPath, width: 24, height: 24, color: imageColor),
             const SizedBox(width: 12),
             Text(
               text,
               style: GoogleFonts.cairo(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: isDarkMode ? Colors.white : AppColors.brandBlue,
+                color: isDarkMode ? AppColors.white : AppColors.brandBlue,
               ),
             ),
           ],
@@ -362,24 +377,25 @@ class LoginScreen extends GetView<LoginController> {
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           side: BorderSide(
-            color: isDarkMode ? Colors.white38 : AppColors.brandBlue.withValues(alpha: 0.5), 
+            color: isDarkMode
+                ? AppColors.white38
+                : AppColors.brandBlue.withValues(alpha: 0.5),
             width: 1.0,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(28),
           ),
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.transparent,
         ),
         child: Text(
           text,
           style: GoogleFonts.cairo(
             fontSize: 15,
             fontWeight: FontWeight.w600,
-            color: isDarkMode ? Colors.white70 : AppColors.brandBlue,
+            color: isDarkMode ? AppColors.white70 : AppColors.brandBlue,
           ),
         ),
       ),
     );
   }
 }
-

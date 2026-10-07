@@ -92,7 +92,7 @@ class UltrasoundBookingPage extends StatelessWidget {
                     margin: const EdgeInsets.only(right: 10),
                     width: 74,
                     decoration: BoxDecoration(
-                      color: isSelected ? AppColors.primary : Colors.white,
+                      color: isSelected ? AppColors.primary : AppColors.white,
                       borderRadius: BorderRadius.circular(18),
                       border: Border.all(
                         color: isSelected
@@ -108,7 +108,9 @@ class UltrasoundBookingPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: isSelected ? Colors.white : AppColors.grey,
+                            color: isSelected
+                                ? AppColors.white
+                                : AppColors.grey,
                           ),
                         ),
                       ],
@@ -155,13 +157,13 @@ class UltrasoundBookingPage extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: slot.isFull
-                    ? Colors.grey.shade300
+                    ? AppColors.grey300
                     : selected
                     ? AppColors.primary
-                    : Colors.white,
+                    : AppColors.white,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: slot.isFull ? Colors.grey : AppColors.primary,
+                  color: slot.isFull ? AppColors.grey : AppColors.primary,
                 ),
               ),
               child: Column(
@@ -171,7 +173,7 @@ class UltrasoundBookingPage extends StatelessWidget {
                         .replaceAll('AM', AppLocalizations.of(context)!.am)
                         .replaceAll('PM', AppLocalizations.of(context)!.pm),
                     style: TextStyle(
-                      color: selected ? Colors.white : Colors.black,
+                      color: selected ? AppColors.white : AppColors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -181,7 +183,7 @@ class UltrasoundBookingPage extends StatelessWidget {
                         : "${slot.remainingSlots} ${AppLocalizations.of(context)!.available}",
                     style: TextStyle(
                       fontSize: 12,
-                      color: selected ? Colors.white70 : Colors.black54,
+                      color: selected ? AppColors.white70 : AppColors.black54,
                     ),
                   ),
                 ],
@@ -225,7 +227,7 @@ class UltrasoundBookingPage extends StatelessWidget {
         child: Text(
           AppLocalizations.of(context)!.continueBooking,
           style: const TextStyle(
-            color: Colors.white,
+            color: AppColors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -233,4 +235,3 @@ class UltrasoundBookingPage extends StatelessWidget {
     );
   }
 }
-

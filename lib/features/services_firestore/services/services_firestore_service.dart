@@ -31,7 +31,6 @@ class ServicesFirestoreService {
         }
       }
 
-
       // 2. Try to get from local persistent cache first (instant response)
       // This doesn't count as a billable read if data is already in local SQLite
       try {
@@ -79,7 +78,9 @@ class ServicesFirestoreService {
 
       _cachedServices = _parseSnapshot(snapshot);
       _lastFetchTime = DateTime.now();
-    } catch (e) { /* ignore */ }
+    } catch (e) {
+      /* ignore */
+    }
   }
 
   List<ServiceModel> _parseSnapshot(QuerySnapshot snapshot) {

@@ -13,7 +13,6 @@ class DoctorsCacheService {
         return _cache!;
       }
 
-
       _cache = await _service.getAllDoctors();
 
       return _cache!;

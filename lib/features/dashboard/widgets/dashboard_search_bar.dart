@@ -25,16 +25,14 @@ class DashboardSearchBar extends StatelessWidget {
       fillColor: Theme.of(context).cardColor,
       borderColor: AppColors.border.withValues(alpha: 0.20),
       focusBorderColor: AppColors.primary,
-      style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181C1C),
+      style: TextStyle(
+        color: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.white
+            : AppColors.onBackground,
         fontSize: 14,
         fontWeight: FontWeight.w600,
       ),
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 16,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
     );
   }
 }
-
-

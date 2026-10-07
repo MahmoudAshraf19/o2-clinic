@@ -85,15 +85,15 @@ class _StepNode extends StatelessWidget {
                     colors: [AppColors.primary, AppColors.secondary],
                   )
                 : null,
-            color: active ? null : const Color(0xffF1F4FA),
+            color: active ? null : AppColors.colorFFF1F4FA,
             border: Border.all(
-              color: active ? Colors.transparent : AppColors.border,
+              color: active ? AppColors.transparent : AppColors.border,
             ),
             boxShadow: [
               BoxShadow(
                 color: active
                     ? AppColors.primary.withValues(alpha: .18)
-                    : Colors.black.withValues(alpha: .03),
+                    : AppColors.black.withValues(alpha: .03),
                 blurRadius: 18,
                 offset: const Offset(0, 6),
               ),
@@ -102,7 +102,7 @@ class _StepNode extends StatelessWidget {
           child: Icon(
             meta.icon,
             size: 18,
-            color: active ? Colors.white : AppColors.grey,
+            color: active ? AppColors.white : AppColors.grey,
           ),
         ),
 

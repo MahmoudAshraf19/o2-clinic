@@ -25,8 +25,8 @@ class OnboardingDots extends StatelessWidget {
           width: 8,
           height: 8,
           decoration: BoxDecoration(
-            color: isActive 
-                ? AppColors.vibrantCyan 
+            color: isActive
+                ? AppColors.vibrantCyan
                 : AppColors.vibrantCyan.withAlpha(80),
             shape: BoxShape.circle,
           ),

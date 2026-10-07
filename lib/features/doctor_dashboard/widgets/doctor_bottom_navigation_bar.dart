@@ -5,6 +5,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../core/navigation/widgets/navigation_tab_item.dart';
 import '../controllers/doctor_navigation_controller.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class DoctorBottomNavigationBar extends StatelessWidget {
   const DoctorBottomNavigationBar({super.key});
@@ -26,17 +27,17 @@ class DoctorBottomNavigationBar extends StatelessWidget {
             child: Container(
               constraints: const BoxConstraints(minHeight: 76, maxHeight: 80),
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.90),
+                color: AppColors.white.withValues(alpha: 0.90),
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(32),
                 ),
                 border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.50),
+                  color: AppColors.white.withValues(alpha: 0.50),
                   width: 1,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.08),
+                    color: AppColors.black.withValues(alpha: 0.08),
                     blurRadius: 24,
                     offset: const Offset(0, -8),
                   ),

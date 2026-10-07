@@ -13,18 +13,15 @@ class SpecializedCache {
         return _cache!;
       }
 
-
       _cache = await _service.getAllSpecialized();
 
       return _cache ?? [];
     } catch (e) {
-
       return _cache ?? [];
     }
   }
 
   static void clear() {
-
     _cache = null;
   }
 }

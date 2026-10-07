@@ -94,7 +94,6 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
   // ================= UI =================
 
   Widget _topBar() {
-    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(
@@ -138,7 +137,9 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                 _t("Review Appointment Details"),
                 style: TextStyle(
                   fontSize: 13,
-                  color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7).withValues(alpha: 0.75),
+                  color: Theme.of(context).textTheme.bodyMedium?.color
+                      ?.withValues(alpha: 0.7)
+                      .withValues(alpha: 0.75),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -243,46 +244,48 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
 
   Widget _serviceCard() {
     return _card(
-      child: Builder(builder: (context) {
-        final langCode = Get.locale?.languageCode ?? 'en';
-        return Row(
-          children: [
-            CircleAvatar(
-              radius: 26,
-            backgroundImage: widget.model.image.isNotEmpty
-                ? CachedNetworkImageProvider(widget.model.image)
-                : null,
-            child: widget.model.image.isEmpty
-                ? Icon(widget.model.getBadgeIcon(), color: Colors.white)
-                : null,
-          ),
-          SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.model.getName(langCode),
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
+      child: Builder(
+        builder: (context) {
+          final langCode = Get.locale?.languageCode ?? 'en';
+          return Row(
+            children: [
+              CircleAvatar(
+                radius: 26,
+                backgroundImage: widget.model.image.isNotEmpty
+                    ? CachedNetworkImageProvider(widget.model.image)
+                    : null,
+                child: widget.model.image.isEmpty
+                    ? Icon(widget.model.getBadgeIcon(), color: AppColors.white)
+                    : null,
+              ),
+              SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.model.getName(langCode),
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      (widget.model.id == 'Sleep_study' ||
+                              widget.model.id == 'pulmonary_function')
+                          ? _t("Direct Services")
+                          : _t("Cosmetic Department"),
+                      style: TextStyle(color: AppColors.grey, fontSize: 13),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 4),
-                Text(
-                  (widget.model.id == 'Sleep_study' ||
-                          widget.model.id == 'pulmonary_function')
-                      ? _t("Direct Services")
-                      : _t("Cosmetic Department"),
-                  style: TextStyle(color: AppColors.grey, fontSize: 13),
-                ),
-              ],
-            ),
-          ),
-          Icon(Icons.verified, color: AppColors.primary),
-        ],
-      );
-    }),
+              ),
+              Icon(Icons.verified, color: AppColors.primary),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -297,10 +300,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
             children: [
               Icon(Icons.calendar_month, color: AppColors.primary),
               SizedBox(width: 8),
-              Text(
-                dateKey,
-                style: TextStyle(fontWeight: FontWeight.w700),
-              ),
+              Text(dateKey, style: TextStyle(fontWeight: FontWeight.w700)),
             ],
           ),
           SizedBox(height: 10),
@@ -324,7 +324,6 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
   }
 
   Widget _locationCard() {
-    
     return _card(
       child: Row(
         children: [
@@ -353,7 +352,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
         border: Border.all(color: AppColors.border.withValues(alpha: 0.4)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
+            color: AppColors.black.withValues(alpha: 0.03),
             blurRadius: 10,
           ),
         ],
@@ -418,12 +417,12 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
 
-                      color: Colors.green,
+                      color: AppColors.green,
                     ),
                   ),
                   Text(
                     "-$discountAmount ${AppConstants.currencySymbol}",
-                    style: TextStyle(fontSize: 14, color: Colors.green),
+                    style: TextStyle(fontSize: 14, color: AppColors.green),
                   ),
                 ],
               ),
@@ -470,12 +469,12 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           children: [
             Row(
               children: [
-                Icon(Icons.check_circle, color: Colors.green, size: 20),
+                Icon(Icons.check_circle, color: AppColors.green, size: 20),
                 SizedBox(width: 8),
                 Text(
                   discountController.currentValidCode.value!.code,
                   style: TextStyle(
-                    color: Colors.green,
+                    color: AppColors.green,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -483,7 +482,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
             ),
             TextButton(
               onPressed: () => discountController.removeDiscountCode(),
-              child: Icon(Icons.close, color: Colors.red, size: 20),
+              child: Icon(Icons.close, color: AppColors.red, size: 20),
             ),
           ],
         );
@@ -551,10 +550,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    userName,
-                    style: TextStyle(fontWeight: FontWeight.w700),
-                  ),
+                  Text(userName, style: TextStyle(fontWeight: FontWeight.w700)),
                   Text(
                     email,
                     style: TextStyle(color: AppColors.grey, fontSize: 12),
@@ -582,7 +578,6 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
   }
 
   Widget _bottomBar(BuildContext context) {
-    
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -625,7 +620,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
 
   Future<void> _confirmBooking() async {
     final user = FirebaseAuth.instance.currentUser;
-    
+
     if (user == null) {
       Get.snackbar(_t('Error'), _t('Please log in first'));
       return;
@@ -634,8 +629,6 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
     setState(() => _isBooking = true);
 
     try {
-      
-
       Map<String, dynamic>? discountData;
       final code = discountController.currentValidCode.value;
       final type = discountController.discountTypes.firstWhereOrNull(
@@ -730,8 +723,8 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           _t('Booking Failed'),
           bookingRes.message,
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
+          backgroundColor: AppColors.red,
+          colorText: AppColors.white,
         );
       }
     } catch (e) {
@@ -739,17 +732,11 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
         _t('Error'),
         e.toString(),
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
+        backgroundColor: AppColors.red,
+        colorText: AppColors.white,
       );
     } finally {
       if (mounted) setState(() => _isBooking = false);
     }
   }
 }
-
-
-
-
-
-

@@ -1,6 +1,7 @@
 // lib/features/booking/widgets/Ultrasound/ultrasound_background.dart
 
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class UltrasoundBackground extends StatelessWidget {
   const UltrasoundBackground({super.key});
@@ -13,7 +14,7 @@ class UltrasoundBackground extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xffF6FAF8), Color(0xffF4F7FC)],
+            colors: [AppColors.colorFFF6FAF8, AppColors.colorFFF4F7FC],
           ),
         ),
       ),

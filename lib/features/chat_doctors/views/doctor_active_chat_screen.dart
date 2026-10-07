@@ -29,7 +29,7 @@ class DoctorActiveChatScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
         titleSpacing: 0,
         title: GestureDetector(
           onTap: () async {
@@ -76,7 +76,7 @@ class DoctorActiveChatScreen extends StatelessWidget {
                   Text(
                     'Patient',
                     style: TextStyle(
-                      color: Colors.grey.shade600,
+                      color: AppColors.grey600,
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                     ),
@@ -139,7 +139,7 @@ class DoctorActiveChatScreen extends StatelessWidget {
                                   height: 14,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
-                                    color: Colors.white,
+                                    color: AppColors.white,
                                   ),
                                 ),
                               ),
@@ -178,4 +178,3 @@ class DoctorActiveChatScreen extends StatelessWidget {
     );
   }
 }
-

@@ -21,14 +21,15 @@ class OnboardingSlideContent extends StatelessWidget {
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.45,
             child: slide.imageUrl.isEmpty
-                ? const Icon(Icons.local_hospital, size: 80, color: AppColors.brandBlue)
-                : Image.asset(
-                    slide.imageUrl,
-                    fit: BoxFit.contain,
-                  ),
+                ? const Icon(
+                    Icons.local_hospital,
+                    size: 80,
+                    color: AppColors.brandBlue,
+                  )
+                : Image.asset(slide.imageUrl, fit: BoxFit.contain),
           ),
         ),
-        
+
         const SizedBox(height: 32),
 
         // Title
@@ -42,9 +43,9 @@ class OnboardingSlideContent extends StatelessWidget {
             height: 1.2,
           ),
         ),
-        
+
         const SizedBox(height: 16),
-        
+
         // Subtitle
         Text(
           slide.description,
@@ -56,7 +57,7 @@ class OnboardingSlideContent extends StatelessWidget {
             height: 1.4,
           ),
         ),
-        
+
         const SizedBox(height: 16),
       ],
     );

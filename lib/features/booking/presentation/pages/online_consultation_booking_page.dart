@@ -108,7 +108,7 @@ class _OnlineConsultationBookingPageState
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.transparent,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new_rounded,
@@ -180,7 +180,7 @@ class _OnlineConsultationBookingPageState
         border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
+            color: AppColors.black.withValues(alpha: 0.03),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -233,15 +233,15 @@ class _OnlineConsultationBookingPageState
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.amber.withValues(alpha: 0.1),
+        color: AppColors.amber.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.amber.withValues(alpha: 0.5)),
+        border: Border.all(color: AppColors.amber.withValues(alpha: 0.5)),
       ),
       child: Row(
         children: [
           const Icon(
             Icons.warning_amber_rounded,
-            color: Colors.amber,
+            color: AppColors.amber,
             size: 28,
           ),
           const SizedBox(width: 12),
@@ -249,7 +249,7 @@ class _OnlineConsultationBookingPageState
             child: Text(
               AppLocalizations.of(context)!.mustContactDoctorWarning,
               style: const TextStyle(
-                color: Colors.amber,
+                color: AppColors.amber,
                 fontWeight: FontWeight.bold,
                 fontSize: 13,
               ),
@@ -319,7 +319,9 @@ class _OnlineConsultationBookingPageState
                           style: TextStyle(
                             fontSize: 11,
                             letterSpacing: 1.5,
-                            color: isSelected ? Colors.white : AppColors.grey,
+                            color: isSelected
+                                ? AppColors.white
+                                : AppColors.grey,
                           ),
                         ),
                         const SizedBox(height: 6),
@@ -329,7 +331,7 @@ class _OnlineConsultationBookingPageState
                             fontSize: 18,
                             fontWeight: FontWeight.w800,
                             color: isSelected
-                                ? Colors.white
+                                ? AppColors.white
                                 : AppColors.textPrimary,
                           ),
                         ),
@@ -381,14 +383,14 @@ class _OnlineConsultationBookingPageState
                   vertical: 12,
                 ),
                 decoration: BoxDecoration(
-                  color: isSelected ? AppColors.primary : Colors.transparent,
+                  color: isSelected ? AppColors.primary : AppColors.transparent,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: AppColors.primary),
                 ),
                 child: Text(
                   slot,
                   style: TextStyle(
-                    color: isSelected ? Colors.white : AppColors.primary,
+                    color: isSelected ? AppColors.white : AppColors.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -418,7 +420,7 @@ class _OnlineConsultationBookingPageState
           AppLocalizations.of(context)!.bookAppointment,
           style: const TextStyle(
             fontWeight: FontWeight.w800,
-            color: Colors.white,
+            color: AppColors.white,
             fontSize: 16,
           ),
         ),
@@ -452,5 +454,3 @@ class _OnlineConsultationBookingPageState
     );
   }
 }
-
-

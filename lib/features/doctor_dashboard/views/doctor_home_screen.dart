@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import '../widgets/doctor_home_top_cover.dart';
 import '../widgets/quick_actions_widget.dart';
 import '../widgets/next_patient_widget.dart';
@@ -27,4 +26,3 @@ class DoctorHomeScreen extends StatelessWidget {
     );
   }
 }
-

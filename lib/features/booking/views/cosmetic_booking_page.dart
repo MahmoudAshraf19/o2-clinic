@@ -185,7 +185,7 @@ class CosmeticBookingPage extends StatelessWidget {
         border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
+            color: AppColors.black.withValues(alpha: 0.03),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -355,7 +355,9 @@ class CosmeticBookingPage extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 11,
                               letterSpacing: 1.5,
-                              color: isSelected ? Colors.white : AppColors.grey,
+                              color: isSelected
+                                  ? AppColors.white
+                                  : AppColors.grey,
                             ),
                           ),
                           const SizedBox(height: 6),
@@ -365,7 +367,7 @@ class CosmeticBookingPage extends StatelessWidget {
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
                               color: isSelected
-                                  ? Colors.white
+                                  ? AppColors.white
                                   : AppColors.textPrimary,
                             ),
                           ),
@@ -443,7 +445,9 @@ class CosmeticBookingPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
-                      color: isSelected ? Colors.white : AppColors.textPrimary,
+                      color: isSelected
+                          ? AppColors.white
+                          : AppColors.textPrimary,
                     ),
                   ),
                 ),
@@ -503,11 +507,9 @@ class CosmeticBookingPage extends StatelessWidget {
         ),
         child: Text(
           _t("Book Appointment"),
-          style: TextStyle(fontWeight: FontWeight.w800, color: Colors.white),
+          style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.white),
         ),
       ),
     );
   }
 }
-
-

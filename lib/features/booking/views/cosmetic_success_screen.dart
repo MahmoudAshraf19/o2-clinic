@@ -68,11 +68,12 @@ class CosmeticSuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    try {
-} catch (e) { /* ignore */ }
+    try {} catch (e) {
+      /* ignore */
+    }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF6FAF8),
+      backgroundColor: AppColors.colorFFF6FAF8,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -97,18 +98,18 @@ class CosmeticSuccessScreen extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 380),
       padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.black.withValues(alpha: 0.05),
             blurRadius: 18,
           ),
         ],
       ),
       child: Column(
         children: [
-          const Icon(Icons.check_circle, size: 70, color: Color(0xFF03458F)),
+          const Icon(Icons.check_circle, size: 70, color: AppColors.brandBlue),
           const SizedBox(height: 16),
           Text(
             (model.id == 'Sleep_study' || model.id == 'pulmonary_function')
@@ -124,7 +125,7 @@ class CosmeticSuccessScreen extends StatelessWidget {
                     "Your cosmetic appointment has been scheduled successfully.",
                   ),
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey.shade600),
+            style: TextStyle(color: AppColors.grey600),
           ),
           const SizedBox(height: 18),
           _info(_t("Type"), model.getName(langCode)),
@@ -140,20 +141,20 @@ class CosmeticSuccessScreen extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: const Color(0xFF03458F),
+              color: AppColors.brandBlue,
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
               children: [
                 Text(
                   _t("BOOKING ID"),
-                  style: const TextStyle(color: Colors.white70),
+                  style: const TextStyle(color: AppColors.white70),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   bookingId,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),

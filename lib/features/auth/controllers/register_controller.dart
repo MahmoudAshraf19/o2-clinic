@@ -19,6 +19,7 @@ import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/countries.dart';
 import '../../profile/models/dashboard_profile_model.dart';
 import '../../services_firestore/user_firestore_service.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class RegisterController extends GetxController {
   final name = TextEditingController();
@@ -387,19 +388,19 @@ class RegisterController extends GetxController {
       'Oops',
       msg,
       snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.red.withValues(alpha: 0.15),
+      backgroundColor: AppColors.red.withValues(alpha: 0.15),
       barBlur: 15,
-      colorText: const Color(0xFFB71C1C),
+      colorText: AppColors.colorFFB71C1C,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       borderRadius: 20,
       icon: const Icon(
         Icons.error_outline_rounded,
-        color: Color(0xFFB71C1C),
+        color: AppColors.colorFFB71C1C,
         size: 30,
       ),
       duration: const Duration(seconds: 4),
       borderWidth: 1,
-      borderColor: Colors.red.withValues(alpha: 0.2),
+      borderColor: AppColors.red.withValues(alpha: 0.2),
     );
     return false;
   }

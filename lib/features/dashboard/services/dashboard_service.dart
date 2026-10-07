@@ -19,41 +19,73 @@ class DashboardService {
       promos: [
         DashboardPromoModel(
           id: 'promo_search',
-          title: isAr ? 'ابحث واحجز' : isHe ? 'חפש והזמן' : 'Search & Book',
-          subtitle: isAr ? 'ابحث عن الأطباء، العيادات، الأشعة...' : isHe ? 'חפש רופאים, מרפאות, רדיולוגיה...' : 'Find doctors, clinics, radiology...',
+          title: isAr
+              ? 'ابحث واحجز'
+              : isHe
+              ? 'חפש והזמן'
+              : 'Search & Book',
+          subtitle: isAr
+              ? 'ابحث عن الأطباء، العيادات، الأشعة...'
+              : isHe
+              ? 'חפש רופאים, מרפאות, רדיולוגיה...'
+              : 'Find doctors, clinics, radiology...',
           startColor: AppColors.primary,
-          endColor: const Color(0xFF005049),
+          endColor: AppColors.onTertiaryFixedVariant,
         ),
       ],
       quickActions: [
         DashboardQuickActionModel(
           id: 'location',
-          title: isAr ? 'موقعنا' : isHe ? 'המיקום\nשלנו' : 'Our\nLocation',
+          title: isAr
+              ? 'موقعنا'
+              : isHe
+              ? 'המיקום\nשלנו'
+              : 'Our\nLocation',
           imagePath: 'assets/icons/svg_icons/location.svg',
         ),
         DashboardQuickActionModel(
           id: 'doctor',
-          title: isAr ? 'ابحث عن\nطبيب' : isHe ? 'חפש\nרופא' : 'Find\nDoctor',
+          title: isAr
+              ? 'ابحث عن\nطبيب'
+              : isHe
+              ? 'חפש\nרופא'
+              : 'Find\nDoctor',
           imagePath: 'assets/icons/svg_icons/search.svg',
         ),
         DashboardQuickActionModel(
           id: 'radiology',
-          title: isAr ? 'حجز\nأشعة' : isHe ? 'הזמנת\nרדיולוגיה' : 'Radiology\nBooking',
+          title: isAr
+              ? 'حجز\nأشعة'
+              : isHe
+              ? 'הזמנת\nרדיולוגיה'
+              : 'Radiology\nBooking',
           imagePath: 'assets/icons/svg_icons/radiology.svg',
         ),
         DashboardQuickActionModel(
           id: 'lab',
-          title: isAr ? 'تحاليل\nمخبرية' : isHe ? 'בדיקות\nמעבדה' : 'Lab\nTests',
+          title: isAr
+              ? 'تحاليل\nمخبرية'
+              : isHe
+              ? 'בדיקות\nמעבדה'
+              : 'Lab\nTests',
           imagePath: 'assets/icons/svg_icons/lab.svg',
         ),
         DashboardQuickActionModel(
           id: 'cosmetic',
-          title: isAr ? 'حجز\nتجميل' : isHe ? 'הזמנת\nקוסמטיקה' : 'Cosmetic\nBooking',
+          title: isAr
+              ? 'حجز\nتجميل'
+              : isHe
+              ? 'הזמנת\nקוסמטיקה'
+              : 'Cosmetic\nBooking',
           imagePath: 'assets/icons/svg_icons/cosmetic.svg',
         ),
         DashboardQuickActionModel(
           id: 'appointments',
-          title: isAr ? 'مواعيدي' : isHe ? 'התורים\nשלי' : 'My\nAppointments',
+          title: isAr
+              ? 'مواعيدي'
+              : isHe
+              ? 'התורים\nשלי'
+              : 'My\nAppointments',
           imagePath: 'assets/icons/svg_icons/my_appointments.svg',
         ),
       ],
@@ -89,44 +121,76 @@ class DashboardService {
       specialties: [
         DashboardSpecialtyModel(
           id: 'chest',
-          name: isAr ? 'عيادة الصدرية' : isHe ? 'מרפאת חזה' : 'Chest Clinic',
-          description: isAr ? 'اختبارات وظائف الرئة واستشارات' : isHe ? 'בדיקות תפקודי ריאות וייעוצים' : 'Pulmonary function tests & consults',
+          name: isAr
+              ? 'عيادة الصدرية'
+              : isHe
+              ? 'מרפאת חזה'
+              : 'Chest Clinic',
+          description: isAr
+              ? 'اختبارات وظائف الرئة واستشارات'
+              : isHe
+              ? 'בדיקות תפקודי ריאות וייעוצים'
+              : 'Pulmonary function tests & consults',
           icon: Icons.air_rounded,
           isAvailable: true,
         ),
         DashboardSpecialtyModel(
           id: 'cardiology',
-          name: isAr ? 'عيادة القلب' : isHe ? 'קרדיולוגיה' : 'Cardiology',
-          description: isAr ? 'تخطيط القلب وصحة القلب' : isHe ? 'אק"ג ובריאות הלב' : 'ECG & Heart health',
+          name: isAr
+              ? 'عيادة القلب'
+              : isHe
+              ? 'קרדיולוגיה'
+              : 'Cardiology',
+          description: isAr
+              ? 'تخطيط القلب وصحة القلب'
+              : isHe
+              ? 'אק"ג ובריאות הלב'
+              : 'ECG & Heart health',
           icon: Icons.favorite_rounded,
           isAvailable: false,
-          nextSlotLabel: isAr ? 'الأربعاء، 9:00 ص' : isHe ? 'רביעי, 9:00 בבוקר' : 'Wed, 9:00 AM',
+          nextSlotLabel: isAr
+              ? 'الأربعاء، 9:00 ص'
+              : isHe
+              ? 'רביעי, 9:00 בבוקר'
+              : 'Wed, 9:00 AM',
         ),
       ],
       healthChips: [
         DashboardHealthChipModel(
           id: 'water',
-          title: isAr ? 'اشرب ماء' : isHe ? 'שתה מים' : 'Drink Water',
+          title: isAr
+              ? 'اشرب ماء'
+              : isHe
+              ? 'שתה מים'
+              : 'Drink Water',
           icon: Icons.water_drop_rounded,
-          backgroundColor: const Color(0xFFEAF9F7),
-          foregroundColor: const Color(0xFF3BA99C),
-          borderColor: const Color(0xFF8CF5E6),
+          backgroundColor: AppColors.colorFFEAF9F7,
+          foregroundColor: AppColors.colorFF3BA99C,
+          borderColor: AppColors.tertiaryFixed,
         ),
         DashboardHealthChipModel(
           id: 'steps',
-          title: isAr ? '10 آلاف خطوة' : isHe ? '10k צעדים' : '10k Steps',
+          title: isAr
+              ? '10 آلاف خطوة'
+              : isHe
+              ? '10k צעדים'
+              : '10k Steps',
           icon: Icons.directions_walk_rounded,
-          backgroundColor: const Color(0xFFF0FAF9),
-          foregroundColor: const Color(0xFF006860),
-          borderColor: const Color(0xFF8DF4E8),
+          backgroundColor: AppColors.colorFFF0FAF9,
+          foregroundColor: AppColors.colorFF006860,
+          borderColor: AppColors.colorFF8DF4E8,
         ),
         DashboardHealthChipModel(
           id: 'tips',
-          title: isAr ? 'المزيد من النصائح' : isHe ? 'טיפים נוספים' : 'More Tips',
+          title: isAr
+              ? 'المزيد من النصائح'
+              : isHe
+              ? 'טיפים נוספים'
+              : 'More Tips',
           icon: Icons.lightbulb_rounded,
-          backgroundColor: const Color(0xFFE6E9E8),
-          foregroundColor: const Color(0xFF3E4947),
-          borderColor: const Color(0xFFE6E9E8),
+          backgroundColor: AppColors.colorFFE6E9E8,
+          foregroundColor: AppColors.textSecondary,
+          borderColor: AppColors.colorFFE6E9E8,
         ),
       ],
     );

@@ -10,22 +10,21 @@ import '../../../features/notifications/controllers/notifications_controller.dar
 import '../../../features/notifications/widgets/notification_dropdown_widget.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../routes/app_routes.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
   const O2AppBar({super.key, this.onNotificationTap});
 
   final VoidCallback? onNotificationTap;
 
-  
-
   @override
   Size get preferredSize => const Size.fromHeight(72);
 
   @override
   Widget build(BuildContext context) {
-    const primary = Color(0xFF00685F);
-    const primaryContainer = Color(0xFF158278);
-    const surfaceContainerLow = Color(0xFFF1F4F3);
+    const primary = AppColors.colorFF00685F;
+    const primaryContainer = AppColors.colorFF158278;
+    const surfaceContainerLow = AppColors.surfaceContainerLow;
 
     final globalAuth = Get.find<GlobalAuthController>();
 
@@ -39,9 +38,10 @@ class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
 
       return Container(
         width: double.infinity,
-        decoration: BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor,
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
           border: Border(
-            bottom: BorderSide(color: Color(0x33BDC9C6), width: 1),
+            bottom: BorderSide(color: AppColors.color33BDC9C6, width: 1),
           ),
         ),
         child: SafeArea(
@@ -123,7 +123,11 @@ class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
                                 style: GoogleFonts.inter(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w800,
-                                  color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : primary,
+                                  color:
+                                      Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? AppColors.colorFF60A5FA
+                                      : primary,
                                   height: 1.1,
                                 ),
                               ),
@@ -147,7 +151,12 @@ class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
                             style: GoogleFonts.inter(
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
-                              color: isGuest ? primary : (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF64748B)),
+                              color: isGuest
+                                  ? primary
+                                  : (Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? AppColors.white70
+                                        : AppColors.colorFF64748B),
                               letterSpacing: 1.1,
                               height: 1.1,
                             ),
@@ -165,7 +174,7 @@ class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
                     } else {
                       Get.dialog(
                         const NotificationDropdownWidget(),
-                        barrierColor: Colors.transparent,
+                        barrierColor: AppColors.transparent,
                       );
                     }
                   },
@@ -175,11 +184,22 @@ class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
                       Container(
                         width: 32,
                         height: 32,
-                        decoration: BoxDecoration(color: (Theme.of(context).brightness == Brightness.dark ? Theme.of(context).cardColor : surfaceContainerLow),
+                        decoration: BoxDecoration(
+                          color:
+                              (Theme.of(context).brightness == Brightness.dark
+                              ? Theme.of(context).cardColor
+                              : surfaceContainerLow),
                           shape: BoxShape.circle,
                         ),
                         alignment: Alignment.center,
-                        child: Icon(Icons.notifications_none, size: 20, color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : primary),),
+                        child: Icon(
+                          Icons.notifications_none,
+                          size: 20,
+                          color:
+                              (Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.colorFF60A5FA
+                              : primary),
+                        ),
                       ),
                       Obx(() {
                         final notificationsController =
@@ -211,9 +231,14 @@ class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFF4B4B),
+                              color: AppColors.colorFFFF4B4B,
                               borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Theme.of(context).scaffoldBackgroundColor, width: 1.5,),
+                              border: Border.all(
+                                color: Theme.of(
+                                  context,
+                                ).scaffoldBackgroundColor,
+                                width: 1.5,
+                              ),
                             ),
                             constraints: const BoxConstraints(
                               minWidth: 18,
@@ -223,7 +248,7 @@ class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
                             child: Text(
                               displayCount,
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: AppColors.white,
                                 fontSize: 9,
                                 fontWeight: FontWeight.bold,
                                 height: 1,
@@ -244,7 +269,3 @@ class O2AppBar extends StatelessWidget implements PreferredSizeWidget {
     });
   }
 }
-
-
-
-

@@ -46,7 +46,7 @@ class ProfileDetailCard extends StatelessWidget {
               color: AppColors.primary,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, size: 20, color: Colors.white),
+            child: Icon(icon, size: 20, color: AppColors.white),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -62,7 +62,11 @@ class ProfileDetailCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
-                    color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ?? AppColors.grey500,
+                    color:
+                        Theme.of(
+                          context,
+                        ).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ??
+                        AppColors.grey500,
                     letterSpacing: 1.0,
                     height: 1.0,
                   ),
@@ -75,7 +79,9 @@ class ProfileDetailCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
-                    color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.textPrimary,
+                    color:
+                        Theme.of(context).textTheme.bodyLarge?.color ??
+                        AppColors.textPrimary,
                     height: 1.0,
                   ),
                 ),
@@ -87,7 +93,10 @@ class ProfileDetailCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 11.5,
-                      color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7) ?? AppColors.grey500,
+                      color:
+                          Theme.of(context).textTheme.bodyMedium?.color
+                              ?.withValues(alpha: 0.7) ??
+                          AppColors.grey500,
                       height: 1.0,
                     ),
                   ),
@@ -100,4 +109,3 @@ class ProfileDetailCard extends StatelessWidget {
     );
   }
 }
-

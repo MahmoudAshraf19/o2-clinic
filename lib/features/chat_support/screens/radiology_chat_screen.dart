@@ -42,12 +42,12 @@ class _RadiologyChatScreenState extends State<RadiologyChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F6F0),
+      backgroundColor: AppColors.colorFFF9F6F0,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: AppColors.white,
+        surfaceTintColor: AppColors.transparent,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
         ),
@@ -80,7 +80,7 @@ class _RadiologyChatScreenState extends State<RadiologyChatScreen> {
                         ? AppLocalizations.of(context)!.onlineSupport
                         : AppLocalizations.of(context)!.loginRequired,
                     style: TextStyle(
-                      color: Colors.grey.shade600,
+                      color: AppColors.grey600,
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                     ),
@@ -147,7 +147,7 @@ class _RadiologyChatScreenState extends State<RadiologyChatScreen> {
                                   height: 14,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
-                                    color: Colors.white,
+                                    color: AppColors.white,
                                   ),
                                 ),
                               ),

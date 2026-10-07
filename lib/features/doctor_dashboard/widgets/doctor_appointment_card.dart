@@ -74,7 +74,7 @@ class DoctorAppointmentCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.grey.withValues(alpha: 0.1)),
         // NO SHADOWS
@@ -220,7 +220,7 @@ class DoctorAppointmentCard extends StatelessWidget {
                               ? AppColors.primary
                               : AppColors.grey.withValues(alpha: 0.1),
                           textColor: _isActionEnabled(currentStatus)
-                              ? Colors.white
+                              ? AppColors.white
                               : AppColors.grey,
                           onTap: _isActionEnabled(currentStatus)
                               ? () {
@@ -292,18 +292,18 @@ class DoctorAppointmentCard extends StatelessWidget {
     switch (status) {
       case 'upcoming':
       case 'confirmed':
-        bgColor = Colors.green.withValues(alpha: 0.15);
-        textColor = Colors.green[700]!;
+        bgColor = AppColors.green.withValues(alpha: 0.15);
+        textColor = AppColors.green700!;
         text = AppLocalizations.of(context)!.upcoming; // or confirmed
         break;
       case 'pending':
-        bgColor = Colors.orange.withValues(alpha: 0.15);
-        textColor = Colors.orange[800]!;
+        bgColor = AppColors.orange.withValues(alpha: 0.15);
+        textColor = AppColors.orange800!;
         text = AppLocalizations.of(context)!.pending;
         break;
       case 'cancelled':
-        bgColor = Colors.red.withValues(alpha: 0.15);
-        textColor = Colors.red[700]!;
+        bgColor = AppColors.red.withValues(alpha: 0.15);
+        textColor = AppColors.red700!;
         text = AppLocalizations.of(context)!.cancelled;
         break;
       case 'completed':

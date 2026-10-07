@@ -24,7 +24,7 @@ class BookingScreen extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 45,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
         scrolledUnderElevation: 0,
         elevation: 0,
         centerTitle: false,
@@ -130,18 +130,26 @@ class BookingScreen extends StatelessWidget {
                     itemBuilder: (_, i) {
                       if (i == 0) {
                         return Padding(
-                          padding: const EdgeInsets.only(left: 4, right: 4, bottom: 0),
+                          padding: const EdgeInsets.only(
+                            left: 4,
+                            right: 4,
+                            bottom: 0,
+                          ),
                           child: Text(
-                            AppLocalizations.of(context)!.chooseTheMedicalServiceYou,
+                            AppLocalizations.of(
+                              context,
+                            )!.chooseTheMedicalServiceYou,
                             style: TextStyle(
                               fontSize: 14,
-                              color: AppColors.textSecondary.withValues(alpha: 0.8),
+                              color: AppColors.textSecondary.withValues(
+                                alpha: 0.8,
+                              ),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         );
                       }
-                      
+
                       final serviceIndex = i - 1;
                       return SizedBox(
                         height: 200,
@@ -161,4 +169,3 @@ class BookingScreen extends StatelessWidget {
     );
   }
 }
-

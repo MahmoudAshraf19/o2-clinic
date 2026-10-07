@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class OnboardingBackground extends StatelessWidget {
   const OnboardingBackground({super.key});
@@ -10,20 +11,20 @@ class OnboardingBackground extends StatelessWidget {
     return Stack(
       children: [
         // Base background.
-        Container(color: const Color(0xFFF7FAFA)),
+        Container(color: AppColors.colorFFF7FAFA),
 
         // Soft top-right glow.
         Positioned(
           top: -80,
           right: -60,
-          child: _BlurGlow(color: const Color(0xFF69D1C5), size: 260),
+          child: _BlurGlow(color: AppColors.colorFF69D1C5, size: 260),
         ),
 
         // Soft bottom-left glow.
         Positioned(
           bottom: -90,
           left: -70,
-          child: _BlurGlow(color: const Color(0xFF21897E), size: 240),
+          child: _BlurGlow(color: AppColors.colorFF21897E, size: 240),
         ),
 
         // Center mesh feel.
@@ -34,7 +35,7 @@ class OnboardingBackground extends StatelessWidget {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: RadialGradient(
-                    colors: [Color(0xFF69D1C5), Colors.transparent],
+                    colors: [AppColors.colorFF69D1C5, AppColors.transparent],
                     radius: 1.1,
                     center: Alignment.topLeft,
                   ),

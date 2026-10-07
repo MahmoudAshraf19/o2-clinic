@@ -60,7 +60,7 @@ class PatientAppointmentCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.grey.withValues(alpha: 0.1)),
       ),
@@ -156,23 +156,23 @@ class PatientAppointmentCard extends StatelessWidget {
     switch (status) {
       case 'upcoming':
       case 'confirmed':
-        bgColor = const Color(0xFF21897E).withValues(alpha: 0.12);
-        textColor = const Color(0xFF21897E);
+        bgColor = AppColors.colorFF21897E.withValues(alpha: 0.12);
+        textColor = AppColors.colorFF21897E;
         text = isAr ? 'مؤكد' : 'Confirmed';
         break;
       case 'pending':
-        bgColor = Colors.orange.withValues(alpha: 0.15);
-        textColor = Colors.orange[800]!;
+        bgColor = AppColors.orange.withValues(alpha: 0.15);
+        textColor = AppColors.orange800!;
         text = isAr ? 'قيد الانتظار' : 'Pending';
         break;
       case 'cancelled':
-        bgColor = const Color(0xFFE53E3E).withValues(alpha: 0.12);
-        textColor = const Color(0xFFE53E3E);
+        bgColor = AppColors.colorFFE53E3E.withValues(alpha: 0.12);
+        textColor = AppColors.colorFFE53E3E;
         text = isAr ? 'ملغي' : 'Cancelled';
         break;
       case 'completed':
-        bgColor = const Color(0xFF2D3737).withValues(alpha: 0.10);
-        textColor = const Color(0xFF2D3737);
+        bgColor = AppColors.colorFF2D3737.withValues(alpha: 0.10);
+        textColor = AppColors.colorFF2D3737;
         text = isAr ? 'مكتمل' : 'Completed';
         break;
       default:

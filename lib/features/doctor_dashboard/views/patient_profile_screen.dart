@@ -20,7 +20,7 @@ class PatientProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.transparent,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
@@ -100,4 +100,3 @@ class PatientProfileScreen extends StatelessWidget {
     );
   }
 }
-

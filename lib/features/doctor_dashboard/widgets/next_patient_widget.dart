@@ -27,7 +27,9 @@ class NextPatientWidget extends StatelessWidget {
       final status =
           (data['status'] as Map<String, dynamic>?)?['current'] as String? ??
           '';
-      if (status != 'upcoming' && status != 'pending' && status != 'confirmed') {
+      if (status != 'upcoming' &&
+          status != 'pending' &&
+          status != 'confirmed') {
         continue;
       }
 
@@ -52,7 +54,9 @@ class NextPatientWidget extends StatelessWidget {
             } catch (_) {
               try {
                 parsedTime = DateFormat("HH:mm").parse(startTimeStr);
-              } catch (e) { /* ignore */ }
+              } catch (e) {
+                /* ignore */
+              }
             }
 
             if (parsedTime != null) {
@@ -74,7 +78,9 @@ class NextPatientWidget extends StatelessWidget {
               closest ??= data;
             }
           }
-        } catch (e) { /* ignore */ }
+        } catch (e) {
+          /* ignore */
+        }
       }
     }
     return closest;
@@ -145,9 +151,11 @@ class NextPatientWidget extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: 0.1),
+                  ),
                 ),
                 child: Center(
                   child: Column(
@@ -242,9 +250,11 @@ class NextPatientWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
+                border: Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: AppColors.primary.withValues(alpha: 0.05),
@@ -280,7 +290,9 @@ class NextPatientWidget extends StatelessWidget {
                         }
                         return CircleAvatar(
                           radius: 30,
-                          backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+                          backgroundColor: AppColors.primary.withValues(
+                            alpha: 0.1,
+                          ),
                           backgroundImage: fetchedImage.trim().isNotEmpty
                               ? NetworkImage(fetchedImage.trim())
                               : null,

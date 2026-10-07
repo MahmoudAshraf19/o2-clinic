@@ -9,22 +9,21 @@ import '../controllers/doctor_navigation_controller.dart';
 import '../../../features/notifications/controllers/notifications_controller.dart';
 import '../../../features/notifications/widgets/notification_dropdown_widget.dart';
 import '../../../l10n/app_localizations.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DoctorAppBar({super.key, this.onNotificationTap});
 
   final VoidCallback? onNotificationTap;
 
-  
-
   @override
   Size get preferredSize => const Size.fromHeight(72);
 
   @override
   Widget build(BuildContext context) {
-    const primary = Color(0xFF00685F);
-    const primaryContainer = Color(0xFF158278);
-    const surfaceContainerLow = Color(0xFFF1F4F3);
+    const primary = AppColors.colorFF00685F;
+    const primaryContainer = AppColors.colorFF158278;
+    const surfaceContainerLow = AppColors.surfaceContainerLow;
 
     final doctorNav = Get.find<DoctorNavigationController>();
 
@@ -40,13 +39,12 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
 
       final image = user?['image'];
 
-
       return Container(
         width: double.infinity,
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
           border: const Border(
-            bottom: BorderSide(color: Color(0x33BDC9C6), width: 1),
+            bottom: BorderSide(color: AppColors.color33BDC9C6, width: 1),
           ),
         ),
         child: SafeArea(
@@ -74,9 +72,7 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                           ),
                           clipBehavior: Clip.antiAlias,
                           child:
-                              
-                                  image == null ||
-                                  image.toString().trim().isEmpty
+                              image == null || image.toString().trim().isEmpty
                               ? const Icon(Icons.person, color: primary)
                               : CachedImageWidget(
                                   imageUrl: image.toString(),
@@ -127,25 +123,24 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                                       style: GoogleFonts.inter(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w800,
-                                        color: const Color(0xFF134E4A),
+                                        color: AppColors.colorFF134E4A,
                                         height: 1.1,
                                       ),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                  
                                 ],
                               ),
                               const SizedBox(height: 2),
-                                Text(
-                                  DateFormat(
-                                    'd MMMM, yyyy',
-                                  ).format(DateTime.now()),
-                                  style: GoogleFonts.inter(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color(0xFF64748B),
+                              Text(
+                                DateFormat(
+                                  'd MMMM, yyyy',
+                                ).format(DateTime.now()),
+                                style: GoogleFonts.inter(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.colorFF64748B,
                                   letterSpacing: 1.1,
                                   height: 1.1,
                                 ),
@@ -167,7 +162,7 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                     } else {
                       Get.dialog(
                         const NotificationDropdownWidget(),
-                        barrierColor: Colors.transparent,
+                        barrierColor: AppColors.transparent,
                       );
                     }
                   },
@@ -217,10 +212,10 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFF4B4B),
+                              color: AppColors.colorFFFF4B4B,
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
-                                color: Colors.white,
+                                color: AppColors.white,
                                 width: 1.5,
                               ),
                             ),
@@ -232,7 +227,7 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
                             child: Text(
                               displayCount,
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: AppColors.white,
                                 fontSize: 9,
                                 fontWeight: FontWeight.bold,
                                 height: 1,
@@ -253,4 +248,3 @@ class DoctorAppBar extends StatelessWidget implements PreferredSizeWidget {
     });
   }
 }
-

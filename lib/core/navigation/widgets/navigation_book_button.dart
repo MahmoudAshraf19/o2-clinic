@@ -36,9 +36,13 @@ class NavigationBookButton extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            border: Border.all(color: Colors.white, width: 2),
+            border: Border.all(color: AppColors.white, width: 2),
           ),
-          child: const Icon(Icons.add_rounded, color: Colors.white, size: 28),
+          child: const Icon(
+            Icons.add_rounded,
+            color: AppColors.white,
+            size: 28,
+          ),
         ),
       ),
     );

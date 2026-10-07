@@ -10,11 +10,9 @@ class CtScanTypeFirestoreService {
   /// 🚀 GET ALL CT SCAN TYPES
   Future<List<CtScanTypeModel>> getCtScanTypes() async {
     try {
-
       final snapshot = await _firestore
           .collection("ct_scan_type")
           .get(const GetOptions(source: Source.serverAndCache));
-
 
       if (snapshot.docs.isEmpty) {
         return [];
@@ -24,20 +22,18 @@ class CtScanTypeFirestoreService {
 
       for (final doc in snapshot.docs) {
         try {
-
           final data = doc.data();
 
           final type = CtScanTypeModel.fromMap(id: doc.id, map: data);
 
           types.add(type);
-
-        } catch (e) { /* ignore */ }
+        } catch (e) {
+          /* ignore */
+        }
       }
-
 
       return types;
     } catch (e) {
-
       return [];
     }
   }

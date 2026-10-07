@@ -17,7 +17,7 @@ class DoctorsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.transparent,
         elevation: 0,
         leadingWidth: 80,
         leading: Padding(
@@ -29,7 +29,7 @@ class DoctorsScreen extends StatelessWidget {
                 color: AppColors.primary,
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: const Icon(Icons.arrow_back, color: Colors.white),
+              child: const Icon(Icons.arrow_back, color: AppColors.white),
             ),
           ),
         ),
@@ -98,4 +98,3 @@ class DoctorsScreen extends StatelessWidget {
     );
   }
 }
-

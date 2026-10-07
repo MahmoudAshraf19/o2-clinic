@@ -37,12 +37,16 @@ class AppBottomNavigationBar extends StatelessWidget {
                     maxHeight: 80,
                   ),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).brightness == Brightness.dark ? Theme.of(context).scaffoldBackgroundColor : Colors.white.withValues(alpha: 0.90),
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Theme.of(context).scaffoldBackgroundColor
+                        : AppColors.white.withValues(alpha: 0.90),
                     borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(32),
                     ),
                     border: Border.all(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white12 : Colors.white.withValues(alpha: 0.50),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.white12
+                          : AppColors.white.withValues(alpha: 0.50),
                       width: 1,
                     ),
                   ),
@@ -170,4 +174,3 @@ class _BookTabLabel extends StatelessWidget {
     );
   }
 }
-

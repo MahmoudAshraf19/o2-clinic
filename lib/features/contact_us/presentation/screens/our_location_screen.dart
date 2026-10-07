@@ -60,7 +60,6 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
   }
 
   Future<void> _drawRoute(LatLng clinicLocation) async {
-
     setState(() {
       _isDrawingRoute = true;
     });
@@ -260,7 +259,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
               title: Text(
                 AppLocalizations.of(context)!.ourLocation,
                 style: const TextStyle(
-                  color: Color(0xFF1A2020),
+                  color: AppColors.colorFF1A2020,
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
                 ),
@@ -268,11 +267,11 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
               leading: IconButton(
                 icon: const Icon(
                   Icons.arrow_back_ios_new_rounded,
-                  color: Color(0xFF1A2020),
+                  color: AppColors.colorFF1A2020,
                 ),
                 onPressed: () => Get.back(),
               ),
-              backgroundColor: Colors.white.withValues(alpha: 0.55),
+              backgroundColor: AppColors.white.withValues(alpha: 0.55),
               elevation: 0,
               centerTitle: true,
             ),
@@ -332,7 +331,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                         vertical: 16,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(32),
                         ),
@@ -358,7 +357,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                                 height: 4,
                                 margin: const EdgeInsets.only(bottom: 24),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFE6ECEC),
+                                  color: AppColors.colorFFE6ECEC,
                                   borderRadius: BorderRadius.circular(2),
                                 ),
                               ),
@@ -369,7 +368,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w800,
-                                color: Color(0xFF1A2020),
+                                color: AppColors.colorFF1A2020,
                               ),
                             ),
                             const SizedBox(height: 12),
@@ -390,7 +389,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                                     ),
                                     style: const TextStyle(
                                       fontSize: 14,
-                                      color: Color(0xFF546868),
+                                      color: AppColors.colorFF546868,
                                       height: 1.5,
                                     ),
                                   ),
@@ -425,7 +424,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                                     : () => _drawRoute(center),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.primary,
-                                  foregroundColor: Colors.white,
+                                  foregroundColor: AppColors.white,
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 16,
                                   ),
@@ -439,7 +438,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                                         width: 20,
                                         height: 20,
                                         child: CircularProgressIndicator(
-                                          color: Colors.white,
+                                          color: AppColors.white,
                                           strokeWidth: 2,
                                         ),
                                       )
@@ -556,4 +555,3 @@ class _ContactButton extends StatelessWidget {
     );
   }
 }
-

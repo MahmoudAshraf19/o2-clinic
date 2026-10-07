@@ -14,7 +14,6 @@ class MediaCompressor {
       if (ext == 'gif') return path; // Skip GIF compression
 
       final tempDir = await getTemporaryDirectory();
-      
 
       CompressFormat format = CompressFormat.jpeg;
       if (ext == 'png') {

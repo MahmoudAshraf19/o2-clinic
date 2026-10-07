@@ -7,6 +7,7 @@ import '../../../core/utils/auth_error_handler.dart';
 import '../../services_firestore/user_firestore_service.dart';
 import '../../chat_support/screens/support_chat_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class LoginController extends GetxController {
   final email = TextEditingController();
@@ -44,8 +45,8 @@ class LoginController extends GetxController {
             'Login Failed',
             'Email does not exist in our records.',
             snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red.withValues(alpha: 0.9),
-            colorText: Colors.white,
+            backgroundColor: AppColors.red.withValues(alpha: 0.9),
+            colorText: AppColors.white,
           );
           return;
         }
@@ -56,8 +57,8 @@ class LoginController extends GetxController {
             'Account Blocked',
             'Your account is currently blocked. Please contact the administration.',
             snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red.withValues(alpha: 0.9),
-            colorText: Colors.white,
+            backgroundColor: AppColors.red.withValues(alpha: 0.9),
+            colorText: AppColors.white,
             duration: const Duration(seconds: 8),
             mainButton: TextButton(
               onPressed: () {
@@ -68,7 +69,7 @@ class LoginController extends GetxController {
               },
               child: const Text(
                 'Contact Support',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: AppColors.white),
               ),
             ),
           );

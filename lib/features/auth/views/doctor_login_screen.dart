@@ -4,18 +4,19 @@ import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../controllers/doctor_login_controller.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class DoctorLoginScreen extends GetView<DoctorLoginController> {
   const DoctorLoginScreen({super.key});
 
-  static const primary = Color(0xFF00685F);
+  static const primary = AppColors.colorFF00685F;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F8F7),
+      backgroundColor: AppColors.colorFFF4F8F7,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.transparent,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: primary),
@@ -48,7 +49,7 @@ class DoctorLoginScreen extends GetView<DoctorLoginController> {
                     style: TextStyle(
                       fontSize: 15,
                       height: 1.5,
-                      color: Colors.grey.shade600,
+                      color: AppColors.grey600,
                       fontFamily: 'Inter',
                     ),
                   ),
@@ -59,9 +60,9 @@ class DoctorLoginScreen extends GetView<DoctorLoginController> {
                   Container(
                     padding: const EdgeInsets.all(22),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: Colors.grey.shade200),
+                      border: Border.all(color: AppColors.grey200),
                     ),
                     child: Column(
                       children: [
@@ -88,7 +89,7 @@ class DoctorLoginScreen extends GetView<DoctorLoginController> {
                                 controller.obscurePassword.value
                                     ? Icons.visibility_off_rounded
                                     : Icons.visibility_rounded,
-                                color: Colors.grey.shade500,
+                                color: AppColors.grey500,
                               ),
                             ),
                           ),
@@ -126,7 +127,7 @@ class DoctorLoginScreen extends GetView<DoctorLoginController> {
                                   : controller.login,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: primary,
-                                foregroundColor: Colors.white,
+                                foregroundColor: AppColors.white,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18),
@@ -137,7 +138,7 @@ class DoctorLoginScreen extends GetView<DoctorLoginController> {
                                       width: 24,
                                       height: 24,
                                       child: CircularProgressIndicator(
-                                        color: Colors.white,
+                                        color: AppColors.white,
                                         strokeWidth: 2.5,
                                       ),
                                     )
@@ -193,4 +194,3 @@ class DoctorLoginScreen extends GetView<DoctorLoginController> {
     );
   }
 }
-

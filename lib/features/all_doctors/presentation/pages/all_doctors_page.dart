@@ -178,7 +178,6 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
     }).toList();
   }
 
-
   String _normalizeCategory(String value) {
     return value
         .replaceAll(
@@ -190,7 +189,6 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
         .replaceAll(RegExp(r'\s+'), ' ');
   }
 
-
   String _beautifyCategory(String value) {
     final raw = value.replaceAll('-', ' ').replaceAll('_', ' ').trim();
     if (raw.isEmpty) return value;
@@ -201,8 +199,6 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
         .map((e) => e[0].toUpperCase() + e.substring(1).toLowerCase())
         .join(' ');
   }
-
-
 
   Widget _buildTopSection() {
     return Padding(
@@ -238,7 +234,9 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
-                    color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.colorFF60A5FA
+                        : AppColors.primary,
                     fontFamily: AppFonts.dancingScript,
                     height: 1,
                   ),
@@ -248,7 +246,9 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
                   AppLocalizations.of(context)!.chooseYourSpecialist,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary.withValues(alpha: 0.75),
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.white70
+                        : AppColors.textSecondary.withValues(alpha: 0.75),
                     fontWeight: FontWeight.w500,
                     fontFamily: AppFonts.inter,
                   ),
@@ -275,140 +275,158 @@ class _AllDoctorsPageState extends State<AllDoctorsPage> {
                 child: CustomScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
-                sliver: SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SearchBarWidget(
-                        controller: _searchController,
-                        onChanged: _onSearchChanged,
+                    SliverPadding(
+                      padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
+                      sliver: SliverToBoxAdapter(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SearchBarWidget(
+                              controller: _searchController,
+                              onChanged: _onSearchChanged,
+                            ),
+                            const SizedBox(height: 18),
+                            CategoryChips(
+                              categories: _categories,
+                              selectedCategory: _selectedCategory,
+                              onSelected: _onCategorySelected,
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 18),
-                      CategoryChips(
-                        categories: _categories,
-                        selectedCategory: _selectedCategory,
-                        onSelected: _onCategorySelected,
+                    ),
+                    if (_isLoading)
+                      const SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                    else if (_errorMessage != null)
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Center(
+                          child: Text(
+                            _errorMessage == 'Failed to load doctors'
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.failedToLoadDoctors
+                                : _errorMessage!,
+                            style: const TextStyle(
+                              fontFamily: AppFonts.inter,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      )
+                    else if (_filteredDoctors.isEmpty)
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/no_doctors_found.png',
+                                width: 250,
+                                height: 250,
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                AppLocalizations.of(context)!.noDoctorsFound,
+                                style: TextStyle(
+                                  fontFamily: AppFonts.inter,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    else
+                      SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+                        sliver: SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              if (index == _displayCount &&
+                                  _displayCount < _filteredDoctors.length) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                  child: OutlinedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _displayCount += 10;
+                                      });
+                                    },
+                                    child: Text(
+                                      Localizations.localeOf(
+                                                context,
+                                              ).languageCode ==
+                                              'ar'
+                                          ? 'عرض المزيد'
+                                          : 'Load More',
+                                    ),
+                                  ),
+                                );
+                              }
+
+                              final doctor = _filteredDoctors[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: DoctorCard(
+                                  doctor: doctor,
+                                  localizedSpecialty:
+                                      _categories[_normalizeCategory(
+                                        doctor.specialty,
+                                      )],
+                                  onViewProfile: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => DoctorProfilePage(
+                                          doctor: doctor,
+                                          localizedSpecialty:
+                                              _categories[_normalizeCategory(
+                                                doctor.specialty,
+                                              )],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  onBook: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => DoctorProfilePage(
+                                          doctor: doctor,
+                                          localizedSpecialty:
+                                              _categories[_normalizeCategory(
+                                                doctor.specialty,
+                                              )],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            childCount: _displayCount < _filteredDoctors.length
+                                ? _displayCount + 1
+                                : _filteredDoctors.length,
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
-              if (_isLoading)
-                const SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Center(child: CircularProgressIndicator()),
-                )
-              else if (_errorMessage != null)
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Center(
-                    child: Text(
-                      _errorMessage == 'Failed to load doctors'
-                          ? AppLocalizations.of(context)!.failedToLoadDoctors
-                          : _errorMessage!,
-                      style: const TextStyle(
-                        fontFamily: AppFonts.inter,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                )
-              else if (_filteredDoctors.isEmpty)
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/no_doctors_found.png',
-                          width: 250,
-                          height: 250,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          AppLocalizations.of(context)!.noDoctorsFound,
-                          style: TextStyle(
-                            fontFamily: AppFonts.inter,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              else
-                SliverPadding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      if (index == _displayCount && _displayCount < _filteredDoctors.length) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: OutlinedButton(
-                            onPressed: () {
-                              setState(() {
-                                _displayCount += 10;
-                              });
-                            },
-                            child: Text(Localizations.localeOf(context).languageCode == 'ar' ? 'عرض المزيد' : 'Load More'),
-                          ),
-                        );
-                      }
-
-                      final doctor = _filteredDoctors[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: DoctorCard(
-                          doctor: doctor,
-                          localizedSpecialty:
-                              _categories[_normalizeCategory(doctor.specialty)],
-                          onViewProfile: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => DoctorProfilePage(
-                                  doctor: doctor,
-                                  localizedSpecialty:
-                                      _categories[_normalizeCategory(
-                                        doctor.specialty,
-                                      )],
-                                ),
-                              ),
-                            );
-                          },
-                          onBook: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => DoctorProfilePage(
-                                  doctor: doctor,
-                                  localizedSpecialty:
-                                      _categories[_normalizeCategory(
-                                        doctor.specialty,
-                                      )],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    }, childCount: _displayCount < _filteredDoctors.length ? _displayCount + 1 : _filteredDoctors.length),
-                  ),
-                ),
-              ],
             ),
-          ),
-        ),
           ],
         ),
       ),
     );
   }
 }
-

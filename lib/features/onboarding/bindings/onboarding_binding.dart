@@ -6,7 +6,6 @@ import '../services/onboarding_service.dart';
 class OnboardingBinding extends Bindings {
   @override
   void dependencies() {
-
     // Register the service first.
     Get.lazyPut<OnboardingService>(() => OnboardingService());
 

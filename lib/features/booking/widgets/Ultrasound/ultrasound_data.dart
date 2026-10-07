@@ -96,13 +96,11 @@ class UltrasoundData {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static Future<List<UltrasoundModel>> loadFromFirestore() async {
-
     try {
       final doc = await _firestore
           .collection(_collection)
           .doc(_documentId)
           .get(const GetOptions(source: Source.server));
-
 
       if (!doc.exists) {
         return <UltrasoundModel>[];
@@ -113,13 +111,11 @@ class UltrasoundData {
         return <UltrasoundModel>[];
       }
 
-
       final rawUltrasound = _extractUltrasoundMap(data);
 
       if (rawUltrasound.isEmpty) {
         return <UltrasoundModel>[];
       }
-
 
       final items = <UltrasoundModel>[];
 
@@ -152,8 +148,9 @@ class UltrasoundData {
           );
 
           items.add(model);
-
-        } catch (e) { /* ignore */ }
+        } catch (e) {
+          /* ignore */
+        }
       }
 
       items.sort((a, b) {
@@ -161,7 +158,6 @@ class UltrasoundData {
         if (orderCompare != 0) return orderCompare;
         return a.title.toLowerCase().compareTo(b.title.toLowerCase());
       });
-
 
       return items;
     } catch (e) {

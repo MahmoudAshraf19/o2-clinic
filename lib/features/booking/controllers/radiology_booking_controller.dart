@@ -181,22 +181,26 @@ class RadiologyAppointmentBookingController extends GetxController {
     try {
       if (existingBookingId != null && existingBookingId.isNotEmpty) {
         // Update the existing pending booking
-        final amount = finalAmount ?? (num.tryParse(service.price.toString()) ?? 0);
-        
-        await FirebaseFirestore.instance.collection('bookings').doc(existingBookingId).update({
-          'status.current': 'confirmed',
-          'status.history': FieldValue.arrayUnion([
-            {
-              'status': 'confirmed',
-              'changed_at': FieldValue.serverTimestamp(),
-              'changed_by': 'user',
-              'note': 'Confirmed after price inquiry',
-            }
-          ]),
-          'payment.amount': amount,
-          'payment.discount': ?discountData,
-          'timeline.confirmedAt': FieldValue.serverTimestamp(),
-        });
+        final amount =
+            finalAmount ?? (num.tryParse(service.price.toString()) ?? 0);
+
+        await FirebaseFirestore.instance
+            .collection('bookings')
+            .doc(existingBookingId)
+            .update({
+              'status.current': 'confirmed',
+              'status.history': FieldValue.arrayUnion([
+                {
+                  'status': 'confirmed',
+                  'changed_at': FieldValue.serverTimestamp(),
+                  'changed_by': 'user',
+                  'note': 'Confirmed after price inquiry',
+                },
+              ]),
+              'payment.amount': amount,
+              'payment.discount': ?discountData,
+              'timeline.confirmedAt': FieldValue.serverTimestamp(),
+            });
 
         // Also update the inquiry if any
         final inquiries = await FirebaseFirestore.instance

@@ -66,7 +66,9 @@ class _AppBar extends StatelessWidget {
       height: 70,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: (Theme.of(context).brightness == Brightness.dark ? Theme.of(context).scaffoldBackgroundColor : AppColors.white.withValues(alpha: .95)),
+        color: (Theme.of(context).brightness == Brightness.dark
+            ? Theme.of(context).scaffoldBackgroundColor
+            : AppColors.white.withValues(alpha: .95)),
         border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: Row(
@@ -74,14 +76,18 @@ class _AppBar extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+            color: (Theme.of(context).brightness == Brightness.dark
+                ? AppColors.colorFF60A5FA
+                : AppColors.primary),
             onPressed: () => Navigator.pop(context),
           ),
           Text(
             AppLocalizations.of(context)!.doctorProfile,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.w700,
-              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),
+              color: (Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.white
+                  : AppColors.textPrimary),
             ),
           ),
           const SizedBox(width: 48), // Balance the back button
@@ -130,8 +136,10 @@ class _MessageButton extends StatelessWidget {
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
-          foregroundColor: Colors.white,
+          backgroundColor: (Theme.of(context).brightness == Brightness.dark
+              ? AppColors.colorFF60A5FA
+              : AppColors.primary),
+          foregroundColor: AppColors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -175,7 +183,9 @@ class _ProfileCard extends StatelessWidget {
             doctor.name,
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.w700,
-              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),
+              color: (Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.white
+                  : AppColors.textPrimary),
             ),
           ),
 
@@ -184,7 +194,9 @@ class _ProfileCard extends StatelessWidget {
           Text(
             doctor.title,
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+              color: (Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.colorFF60A5FA
+                  : AppColors.primary),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -194,7 +206,13 @@ class _ProfileCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.location_on, size: 18, color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary)),
+              Icon(
+                Icons.location_on,
+                size: 18,
+                color: (Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.white70
+                    : AppColors.textSecondary),
+              ),
               const SizedBox(width: 6),
               Text(
                 AppLocalizations.of(context)!.cityMedicalCenter,
@@ -250,12 +268,14 @@ class _StatItem extends StatelessWidget {
                 Text(
                   value,
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary),
+                    color: (Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.colorFF60A5FA
+                        : AppColors.primary),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 if (isStar)
-                  const Icon(Icons.star, color: Colors.amber, size: 18),
+                  const Icon(Icons.star, color: AppColors.amber, size: 18),
               ],
             ),
             const SizedBox(height: 4),
@@ -308,9 +328,9 @@ class _AboutCard extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.about,
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 10),
           Text(
@@ -334,9 +354,9 @@ class _Specializations extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.specializations,
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 14),
           GridView.count(
@@ -367,7 +387,9 @@ class _SpecItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: (Theme.of(context).brightness == Brightness.dark ? Colors.transparent : AppColors.surfaceContainer),
+        color: (Theme.of(context).brightness == Brightness.dark
+            ? AppColors.transparent
+            : AppColors.surfaceContainer),
         borderRadius: BorderRadius.circular(16),
       ),
       padding: const EdgeInsets.all(12),
@@ -436,15 +458,12 @@ BoxDecoration _cardDecoration(BuildContext context) {
     border: Border.all(color: AppColors.border),
     boxShadow: [
       BoxShadow(
-        color: (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA).withValues(alpha: 0.1) : AppColors.primary.withValues(alpha: 0.06)),
+        color: (Theme.of(context).brightness == Brightness.dark
+            ? AppColors.colorFF60A5FA.withValues(alpha: 0.1)
+            : AppColors.primary.withValues(alpha: 0.06)),
         blurRadius: 30,
         offset: const Offset(0, 10),
       ),
     ],
   );
 }
-
-
-
-
-

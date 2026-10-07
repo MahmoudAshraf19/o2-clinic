@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class CTScanBackground extends StatelessWidget {
   const CTScanBackground({super.key});
@@ -14,7 +15,7 @@ class CTScanBackground extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Color(0xffF9FBFF), Color(0xffF4F7FC)],
+                  colors: [AppColors.colorFFF9FBFF, AppColors.colorFFF4F7FC],
                 ),
               ),
             ),

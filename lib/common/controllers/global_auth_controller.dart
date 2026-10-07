@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../features/services_firestore/user_firestore_service.dart';
 import '../../core/routes/app_routes.dart';
 import '../../features/chat_support/screens/support_chat_screen.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class GlobalAuthController extends GetxController {
   StreamSubscription<User?>? _authSub;
@@ -59,7 +60,9 @@ class GlobalAuthController extends GetxController {
           data: {'auth.fcm_token': token},
         );
       }
-    } catch (e) { /* ignore */ }
+    } catch (e) {
+      /* ignore */
+    }
   }
 
   Future<void> _handleBlockedUser() async {
@@ -72,8 +75,8 @@ class GlobalAuthController extends GetxController {
       'Account Blocked',
       'Your account has been blocked. Please contact the administration.',
       snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.red.withValues(alpha: 0.9),
-      colorText: Colors.white,
+      backgroundColor: AppColors.red.withValues(alpha: 0.9),
+      colorText: AppColors.white,
       duration: const Duration(seconds: 8),
       mainButton: TextButton(
         onPressed: () {
@@ -82,7 +85,7 @@ class GlobalAuthController extends GetxController {
           }
           Get.to(() => const SupportChatScreen());
         },
-        child: const Text('OK', style: TextStyle(color: Colors.white)),
+        child: const Text('OK', style: TextStyle(color: AppColors.white)),
       ),
     );
   }

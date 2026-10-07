@@ -77,7 +77,7 @@ class _QuickActionCard extends StatelessWidget {
             border: Border.all(color: AppColors.border.withValues(alpha: 0.22)),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF0F766E).withValues(alpha: 0.04),
+                color: AppColors.colorFF0F766E.withValues(alpha: 0.04),
                 blurRadius: 16,
                 offset: const Offset(0, 8),
               ),
@@ -94,9 +94,16 @@ class _QuickActionCard extends StatelessWidget {
                     child: SvgPicture.asset(
                       data.imagePath,
                       fit: BoxFit.contain,
-                      colorFilter: Theme.of(context).brightness == Brightness.dark
-                          ? const ColorFilter.mode(Colors.white, BlendMode.srcIn)
-                          : const ColorFilter.mode(Color(0xFF0F766E), BlendMode.srcIn),
+                      colorFilter:
+                          Theme.of(context).brightness == Brightness.dark
+                          ? const ColorFilter.mode(
+                              AppColors.white,
+                              BlendMode.srcIn,
+                            )
+                          : const ColorFilter.mode(
+                              AppColors.colorFF0F766E,
+                              BlendMode.srcIn,
+                            ),
                     ),
                   ),
                 ),
@@ -106,11 +113,13 @@ class _QuickActionCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181C1C),
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.white
+                        : AppColors.onBackground,
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
                     height: 1.12,
-                    
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -122,5 +131,3 @@ class _QuickActionCard extends StatelessWidget {
     );
   }
 }
-
-

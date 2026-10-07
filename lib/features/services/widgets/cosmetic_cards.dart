@@ -59,7 +59,7 @@ class CosmeticCardsView extends StatelessWidget {
                     controller.error!,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      color: Colors.red,
+                      color: AppColors.red,
                       fontFamily: 'NunitoSans',
                       fontSize: 14,
                     ),
@@ -111,10 +111,11 @@ class _CosmeticCardState extends State<CosmeticCard> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) {
         return Container(
-          decoration: BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor,
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           child: Column(
@@ -270,9 +271,9 @@ class _CosmeticCardState extends State<CosmeticCard> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Colors.transparent,
-                          Color(0xAA000000),
-                          Color(0xCC000000),
+                          AppColors.transparent,
+                          AppColors.colorAA000000,
+                          AppColors.colorCC000000,
                         ],
                       ),
                     ),
@@ -289,10 +290,10 @@ class _CosmeticCardState extends State<CosmeticCard> {
                       child: Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.08),
+                          color: AppColors.white.withValues(alpha: 0.08),
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.15),
+                            color: AppColors.white.withValues(alpha: 0.15),
                           ),
                         ),
                         child: Text(
@@ -303,7 +304,7 @@ class _CosmeticCardState extends State<CosmeticCard> {
                             fontFamily: 'Poppins',
                             fontSize: 16.5,
                             fontWeight: FontWeight.w800,
-                            color: Colors.white,
+                            color: AppColors.white,
                             letterSpacing: 0.4,
                           ),
                         ),
@@ -319,5 +320,3 @@ class _CosmeticCardState extends State<CosmeticCard> {
     );
   }
 }
-
-

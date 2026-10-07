@@ -19,13 +19,34 @@ import '../../../core/theme/app_colors.dart';
 class NotificationDropdownWidget extends StatelessWidget {
   const NotificationDropdownWidget({super.key});
 
-  Color _surface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Theme.of(context).cardColor : const Color(0xFFFFFFFF);
-  Color _surfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white12 : const Color(0xFFDFE3E1);
-  Color _outlineVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white24 : const Color(0xFFBDC9C6);
-  Color _primary(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.brandBlue;
-  Color _tertiaryContainer(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? AppColors.vibrantCyan.withValues(alpha: 0.5) : AppColors.vibrantCyan;
-  Color _onSurface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181D1C);
-  Color _onTertiaryContainer(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFFF4FFFC);
+  Color _surface(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? Theme.of(context).cardColor
+      : AppColors.pureWhite;
+  Color _surfaceVariant(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.white12
+      : AppColors.colorFFDFE3E1;
+  Color _outlineVariant(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.white24
+      : AppColors.outlineVariant;
+  Color _primary(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.colorFF60A5FA
+      : AppColors.brandBlue;
+  Color _tertiaryContainer(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.vibrantCyan.withValues(alpha: 0.5)
+      : AppColors.vibrantCyan;
+  Color _onSurface(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.white
+      : AppColors.textPrimary;
+  Color _onTertiaryContainer(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.white
+      : AppColors.colorFFF4FFFC;
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +56,13 @@ class NotificationDropdownWidget extends StatelessWidget {
         : Get.put(NotificationsController(), permanent: true);
 
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: Stack(
         children: [
           Positioned.fill(
             child: GestureDetector(
               onTap: () => Get.back(),
-              child: Container(color: Colors.black.withValues(alpha: 0.02)),
+              child: Container(color: AppColors.black.withValues(alpha: 0.02)),
             ),
           ),
           Positioned(
@@ -61,7 +82,7 @@ class NotificationDropdownWidget extends StatelessWidget {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF006A61).withValues(alpha: 0.08),
+                      color: AppColors.colorFF006A61.withValues(alpha: 0.08),
                       blurRadius: 32,
                       offset: const Offset(0, 8),
                     ),
@@ -124,7 +145,9 @@ class NotificationDropdownWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: _surfaceVariant(context).withValues(alpha: 0.50)),
+          bottom: BorderSide(
+            color: _surfaceVariant(context).withValues(alpha: 0.50),
+          ),
         ),
       ),
       child: Row(
@@ -205,7 +228,9 @@ class NotificationDropdownWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: _surface(context).withValues(alpha: 0.50),
         border: Border(
-          top: BorderSide(color: _surfaceVariant(context).withValues(alpha: 0.50)),
+          top: BorderSide(
+            color: _surfaceVariant(context).withValues(alpha: 0.50),
+          ),
         ),
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(16),
@@ -257,30 +282,30 @@ class NotificationDropdownWidget extends StatelessWidget {
     required BuildContext context,
   }) {
     IconData icon;
-    Color iconBg = const Color(0xFFE5E9E7); // surfaceContainerHigh
-    Color iconFg = const Color(0xFF6E7977); // outline
+    Color iconBg = AppColors.colorFFE5E9E7; // surfaceContainerHigh
+    Color iconFg = AppColors.outline; // outline
 
     switch (n.type) {
       case 'booking':
       case 'booking_confirmation':
         icon = Icons.event_available;
-        iconBg = const Color(0xFF158278); // primaryContainer
-        iconFg = const Color(0xFFF4FFFC); // onPrimaryContainer
+        iconBg = AppColors.colorFF158278; // primaryContainer
+        iconFg = AppColors.colorFFF4FFFC; // onPrimaryContainer
         break;
       case 'message':
         icon = Icons.message_rounded;
-        iconBg = const Color(0xFF008379); // tertiaryContainer
-        iconFg = const Color(0xFFF4FFFC); // onTertiaryContainer
+        iconBg = AppColors.colorFF008379; // tertiaryContainer
+        iconFg = AppColors.colorFFF4FFFC; // onTertiaryContainer
         break;
       case 'payment':
         icon = Icons.receipt_long_rounded;
-        iconBg = const Color(0xFF8CF5E6); // secondaryContainer
-        iconFg = const Color(0xFF007167); // onSecondaryContainer
+        iconBg = AppColors.tertiaryFixed; // secondaryContainer
+        iconFg = AppColors.colorFF007167; // onSecondaryContainer
         break;
       case 'reminder':
         icon = Icons.schedule;
-        iconBg = const Color(0xFFFFDAD6); // errorContainer
-        iconFg = const Color(0xFF93000A); // onErrorContainer
+        iconBg = AppColors.colorFFFFDAD6; // errorContainer
+        iconFg = AppColors.onErrorContainer; // onErrorContainer
         break;
       default:
         icon = Icons.notifications;
@@ -323,7 +348,7 @@ class NotificationDropdownWidget extends StatelessWidget {
             child: CircularProgressIndicator(color: AppColors.brandBlue),
           ),
           barrierDismissible: false,
-          barrierColor: Colors.black12,
+          barrierColor: AppColors.black12,
         );
 
         try {
@@ -421,9 +446,18 @@ class _UnreadNotificationItem extends StatelessWidget {
   final bool showTopDivider;
   final bool showUnreadDot;
 
-  Color _primary(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.brandBlue;
-  Color _onSurface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181D1C);
-  Color _onSurfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF3E4947);
+  Color _primary(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.colorFF60A5FA
+      : AppColors.brandBlue;
+  Color _onSurface(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.white
+      : AppColors.textPrimary;
+  Color _onSurfaceVariant(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.white70
+      : AppColors.textSecondary;
 
   @override
   Widget build(BuildContext context) {
@@ -433,8 +467,8 @@ class _UnreadNotificationItem extends StatelessWidget {
           left: BorderSide(color: _primary(context), width: 4),
           top: BorderSide(
             color: showTopDivider
-                ? const Color(0xFFBDC9C6).withValues(alpha: 0.30)
-                : Colors.transparent,
+                ? AppColors.outlineVariant.withValues(alpha: 0.30)
+                : AppColors.transparent,
             width: 1,
           ),
         ),
@@ -537,20 +571,29 @@ class _ReadNotificationItem extends StatelessWidget {
   final bool showTopDivider;
   final String? avatarUrl;
 
-  Color _surfaceVariant(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white12 : const Color(0xFFDFE3E1);
-  Color _outline(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white54 : const Color(0xFF6E7977);
-  Color _onSurface(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF181D1C);
+  Color _surfaceVariant(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.white12
+      : AppColors.colorFFDFE3E1;
+  Color _outline(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.white54
+      : AppColors.outline;
+  Color _onSurface(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? AppColors.white
+      : AppColors.textPrimary;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         border: Border(
-          left: BorderSide(color: Colors.transparent, width: 4),
+          left: BorderSide(color: AppColors.transparent, width: 4),
           top: BorderSide(
             color: showTopDivider
                 ? _surfaceVariant(context).withValues(alpha: 0.30)
-                : Colors.transparent,
+                : AppColors.transparent,
             width: 1,
           ),
         ),
@@ -650,7 +693,7 @@ class _UnreadDot extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.02),
+              color: AppColors.black.withValues(alpha: 0.02),
               blurRadius: 0,
             ),
           ],
@@ -659,5 +702,3 @@ class _UnreadDot extends StatelessWidget {
     );
   }
 }
-
-

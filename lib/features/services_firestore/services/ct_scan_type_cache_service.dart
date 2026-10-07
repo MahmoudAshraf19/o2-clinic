@@ -11,23 +11,19 @@ class CtScanTypeCacheService {
   static Future<List<CtScanTypeModel>> getCtScanTypes() async {
     try {
       if (_cache != null) {
-
         return _cache!;
       }
-
 
       _cache = await _service.getCtScanTypes();
 
       return _cache!;
     } catch (e) {
-
       return [];
     }
   }
 
   /// 🧹 CLEAR CACHE
   static void clearCache() {
-
     _cache = null;
   }
 }

@@ -168,7 +168,7 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
       duration: const Duration(milliseconds: 300),
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: isExpanded
@@ -177,7 +177,7 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
+            color: AppColors.black.withValues(alpha: 0.03),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -263,7 +263,7 @@ class _ServiceImage extends StatelessWidget {
       width: 82,
       height: 82,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           if (isHighlighted)
@@ -275,7 +275,7 @@ class _ServiceImage extends StatelessWidget {
             )
           else
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
+              color: AppColors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -283,7 +283,7 @@ class _ServiceImage extends StatelessWidget {
         border: Border.all(
           color: isHighlighted
               ? AppColors.primary.withValues(alpha: 0.4)
-              : Colors.transparent,
+              : AppColors.transparent,
           width: 1.5,
         ),
       ),
@@ -328,6 +328,3 @@ class _ImageFallback extends StatelessWidget {
     );
   }
 }
-
-
-

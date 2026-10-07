@@ -30,10 +30,11 @@ class DashboardTopDoctors extends StatelessWidget {
               Text(
                 AppLocalizations.of(context)!.topDoctors,
                 style: TextStyle(
-                  color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF081F1D),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.white
+                      : AppColors.colorFF081F1D,
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
-                  
                 ),
               ),
             ],
@@ -70,7 +71,7 @@ class _DoctorCard extends StatelessWidget {
         border: Border.all(color: AppColors.border.withValues(alpha: 0.22)),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F766E).withValues(alpha: 0.04),
+            color: AppColors.colorFF0F766E.withValues(alpha: 0.04),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
@@ -90,10 +91,12 @@ class _DoctorCard extends StatelessWidget {
                       : doctor.nameEn,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF081F1D),
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.white
+                        : AppColors.colorFF081F1D,
                     fontSize: 14,
                     fontWeight: FontWeight.w800,
-                    
                   ),
                 ),
                 const SizedBox(height: 3),
@@ -103,10 +106,12 @@ class _DoctorCard extends StatelessWidget {
                       : doctor.titleEn,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF6B7280),
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.white70
+                        : AppColors.grey500,
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
-                    
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -120,11 +125,13 @@ class _DoctorCard extends StatelessWidget {
                     ),
                     _MiniInfoChip(
                       icon: Icons.timelapse_rounded,
-                      text: '${doctor.yearsExperience}+ ${AppLocalizations.of(context)!.years}',
+                      text:
+                          '${doctor.yearsExperience}+ ${AppLocalizations.of(context)!.years}',
                     ),
                     _MiniInfoChip(
                       icon: Icons.event_available_rounded,
-                      text: '${AppLocalizations.of(context)!.max} ${doctor.maxBooking}',
+                      text:
+                          '${AppLocalizations.of(context)!.max} ${doctor.maxBooking}',
                     ),
                     // _MiniInfoChip(
                     //   icon: Icons.payments_rounded,
@@ -166,13 +173,20 @@ class _DoctorAvatar extends StatelessWidget {
         width: 56,
         height: 56,
         decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.dark ? Colors.transparent : const Color(0xFFF8FAFA),
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.transparent
+              : AppColors.colorFFF8FAFA,
           shape: BoxShape.circle,
-          border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF2A3A39) : const Color(0xFFF2F7F6), width: 2),
+          border: Border.all(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.colorFF2A3A39
+                : AppColors.colorFFF2F7F6,
+            width: 2,
+          ),
         ),
         clipBehavior: Clip.antiAlias,
-        child: CachedImageWidget(imageUrl: 
-          imageUrl,
+        child: CachedImageWidget(
+          imageUrl: imageUrl,
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) {
             return Image.asset('assets/icons/user.png', fit: BoxFit.cover);
@@ -195,7 +209,9 @@ class _MiniInfoChip extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 140),
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF2A3A39) : const Color(0xFFF3F8F7),
+        color: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.colorFF2A3A39
+            : AppColors.colorFFF3F8F7,
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
@@ -208,10 +224,12 @@ class _MiniInfoChip extends StatelessWidget {
               text,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF334155),
+              style: TextStyle(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.white70
+                    : AppColors.colorFF334155,
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
-                
               ),
             ),
           ),
@@ -220,7 +238,3 @@ class _MiniInfoChip extends StatelessWidget {
     );
   }
 }
-
-
-
-

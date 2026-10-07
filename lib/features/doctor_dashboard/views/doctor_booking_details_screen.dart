@@ -135,9 +135,9 @@ class _DoctorBookingDetailsScreenState
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
       ),
       body: Stack(
         children: [
@@ -259,7 +259,7 @@ class _DoctorBookingDetailsScreenState
                   vertical: 20,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
                   border: Border(
                     top: BorderSide(
                       color: AppColors.grey.withValues(alpha: 0.1),
@@ -272,8 +272,8 @@ class _DoctorBookingDetailsScreenState
                       Expanded(
                         child: _CustomButton(
                           title: isAr ? 'رفض' : 'Reject',
-                          textColor: Colors.red[700]!,
-                          bgColor: Colors.red.withValues(alpha: 0.1),
+                          textColor: AppColors.red700!,
+                          bgColor: AppColors.red.withValues(alpha: 0.1),
                           onTap: () => _handleStatusChange('cancelled', isAr),
                         ),
                       ),
@@ -282,7 +282,7 @@ class _DoctorBookingDetailsScreenState
                         flex: 2,
                         child: _CustomButton(
                           title: isAr ? 'تأكيد الحجز' : 'Accept Booking',
-                          textColor: Colors.white,
+                          textColor: AppColors.white,
                           bgColor: AppColors.primary,
                           onTap: () => _handleStatusChange('upcoming', isAr),
                         ),
@@ -295,7 +295,7 @@ class _DoctorBookingDetailsScreenState
 
           if (_isLoading)
             Container(
-              color: Colors.black.withValues(alpha: 0.2),
+              color: AppColors.black.withValues(alpha: 0.2),
               child: const Center(
                 child: CircularProgressIndicator(color: AppColors.primary),
               ),
@@ -322,7 +322,7 @@ class _DoctorBookingDetailsScreenState
 
     return Container(
       width: double.infinity,
-      color: Colors.white,
+      color: AppColors.white,
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -408,7 +408,7 @@ class _DoctorBookingDetailsScreenState
   Widget _buildInfoCard(List<_InfoItem> items) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.grey.withValues(alpha: 0.1)),
       ),
@@ -503,7 +503,7 @@ class _DoctorBookingDetailsScreenState
 
     final bool? confirm = await Get.dialog<bool>(
       AlertDialog(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         content: Text(content, style: const TextStyle(height: 1.5)),
@@ -523,7 +523,7 @@ class _DoctorBookingDetailsScreenState
             style: ElevatedButton.styleFrom(
               backgroundColor: newStatus == 'upcoming'
                   ? AppColors.primary
-                  : Colors.red,
+                  : AppColors.red,
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -532,7 +532,7 @@ class _DoctorBookingDetailsScreenState
             child: Text(
               confirmBtn,
               style: const TextStyle(
-                color: Colors.white,
+                color: AppColors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -605,8 +605,8 @@ class _DoctorBookingDetailsScreenState
       Get.snackbar(
         'Error',
         e.toString(),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
+        backgroundColor: AppColors.red,
+        colorText: AppColors.white,
       );
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -633,11 +633,11 @@ class _DoctorBookingDetailsScreenState
     switch (status) {
       case 'upcoming':
       case 'confirmed':
-        return Colors.green[700]!;
+        return AppColors.green700!;
       case 'pending':
-        return Colors.orange[800]!;
+        return AppColors.orange800!;
       case 'cancelled':
-        return Colors.red[700]!;
+        return AppColors.red700!;
       case 'completed':
         return AppColors.primary;
       default:
@@ -706,4 +706,3 @@ class _CustomButton extends StatelessWidget {
     );
   }
 }
-

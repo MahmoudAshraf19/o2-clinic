@@ -40,7 +40,7 @@ class AvailabilityBar extends StatelessWidget {
             minHeight: 7,
             backgroundColor: AppColors.surface,
             color: percent > 0.8
-                ? Colors.redAccent
+                ? AppColors.redAccent
                 : percent > 0.5
                 ? AppColors.primary
                 : AppColors.accent,

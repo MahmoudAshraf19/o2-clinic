@@ -37,7 +37,9 @@ class BookingHelper {
     } catch (e) {
       try {
         isOnline = doctor.isOnlineConsultationAvailable == true;
-      } catch (e) { /* ignore */ }
+      } catch (e) {
+        /* ignore */
+      }
     }
 
     Get.back(); // Close loading dialog
@@ -46,7 +48,7 @@ class BookingHelper {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.transparent,
         builder: (context) => _buildBookingOptionsSheet(context, doctor),
       );
     } else {
@@ -61,7 +63,7 @@ class BookingHelper {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
       ),
       child: Column(
@@ -74,7 +76,7 @@ class BookingHelper {
               width: 50,
               height: 5,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: AppColors.grey300,
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -156,7 +158,7 @@ class BookingHelper {
                 color: AppColors.primary,
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, color: Colors.white, size: 24),
+              child: Icon(icon, color: AppColors.white, size: 24),
             ),
             const SizedBox(width: 16),
             Expanded(

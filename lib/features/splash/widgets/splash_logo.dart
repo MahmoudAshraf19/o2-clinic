@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class SplashLogo extends StatelessWidget {
   const SplashLogo({super.key});
@@ -14,15 +15,15 @@ class SplashLogo extends StatelessWidget {
           width: 140,
           height: 140,
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.10),
+            color: AppColors.white.withValues(alpha: 0.10),
             shape: BoxShape.circle,
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.20),
+              color: AppColors.white.withValues(alpha: 0.20),
               width: 1,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.10),
+                color: AppColors.black.withValues(alpha: 0.10),
                 blurRadius: 24,
                 offset: const Offset(0, 10),
               ),
@@ -35,11 +36,11 @@ class SplashLogo extends StatelessWidget {
                 width: 120,
                 height: 120,
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
+                  color: AppColors.white.withValues(alpha: 0.05),
                   shape: BoxShape.circle,
                 ),
               ),
-              const Icon(Icons.air, color: Colors.white, size: 56),
+              const Icon(Icons.air, color: AppColors.white, size: 56),
             ],
           ),
         ),
@@ -53,7 +54,7 @@ class SplashLogo extends StatelessWidget {
           style: GoogleFonts.cormorantGaramond(
             fontSize: 64,
             fontWeight: FontWeight.w700,
-            color: Colors.white,
+            color: AppColors.white,
             height: 1.0,
             fontStyle: FontStyle.italic,
           ),
@@ -68,7 +69,7 @@ class SplashLogo extends StatelessWidget {
           style: GoogleFonts.manrope(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: Colors.white.withValues(alpha: 0.70),
+            color: AppColors.white.withValues(alpha: 0.70),
             letterSpacing: 3.0,
           ),
         ),

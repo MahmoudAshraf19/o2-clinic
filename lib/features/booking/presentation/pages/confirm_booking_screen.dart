@@ -143,7 +143,9 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 AppLocalizations.of(context)!.reviewAppointmentDetails,
                 style: TextStyle(
                   fontSize: 13,
-                  color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.7).withValues(alpha: 0.75),
+                  color: Theme.of(context).textTheme.bodyMedium?.color
+                      ?.withValues(alpha: 0.7)
+                      .withValues(alpha: 0.75),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -193,7 +195,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 ? CachedNetworkImageProvider(widget.doctor.image)
                 : null,
             child: widget.doctor.image.isEmpty
-                ? Icon(Icons.person, color: Colors.white)
+                ? Icon(Icons.person, color: AppColors.white)
                 : null,
           ),
           SizedBox(width: 12),
@@ -203,10 +205,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
               children: [
                 Text(
                   doctorName,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                 ),
                 SizedBox(height: 4),
                 Text(
@@ -307,7 +306,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
         border: Border.all(color: AppColors.border.withValues(alpha: 0.4)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
+            color: AppColors.black.withValues(alpha: 0.03),
             blurRadius: 10,
           ),
         ],
@@ -376,12 +375,12 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
 
-                      color: Colors.green,
+                      color: AppColors.green,
                     ),
                   ),
                   Text(
                     "-$discountAmount $currency",
-                    style: TextStyle(fontSize: 14, color: Colors.green),
+                    style: TextStyle(fontSize: 14, color: AppColors.green),
                   ),
                 ],
               ),
@@ -428,12 +427,12 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
           children: [
             Row(
               children: [
-                Icon(Icons.check_circle, color: Colors.green, size: 20),
+                Icon(Icons.check_circle, color: AppColors.green, size: 20),
                 SizedBox(width: 8),
                 Text(
                   discountController.currentValidCode.value!.code,
                   style: TextStyle(
-                    color: Colors.green,
+                    color: AppColors.green,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -441,7 +440,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
             ),
             TextButton(
               onPressed: () => discountController.removeDiscountCode(),
-              child: Icon(Icons.close, color: Colors.red, size: 20),
+              child: Icon(Icons.close, color: AppColors.red, size: 20),
             ),
           ],
         );
@@ -798,8 +797,3 @@ class _InfoRow extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

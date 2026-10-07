@@ -233,18 +233,18 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF6FAF8),
+      backgroundColor: AppColors.colorFFF6FAF8,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF6FAF8),
+        backgroundColor: AppColors.colorFFF6FAF8,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF181D1C)),
+          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: () => Navigator.maybePop(context),
         ),
         title: Text(
           reviewsTitle,
           style: const TextStyle(
-            color: Color(0xFF181D1C),
+            color: AppColors.textPrimary,
             fontWeight: FontWeight.w700,
             fontSize: 20,
             letterSpacing: -0.4,
@@ -283,7 +283,7 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
                           child: Container(
                             height: 52,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: AppColors.white,
                               borderRadius: BorderRadius.circular(26),
                               border: Border.all(
                                 color: AppColors.grey.withValues(alpha: 0.2),
@@ -310,12 +310,12 @@ class _DoctorReviewsScreenState extends State<DoctorReviewsScreen> {
                               value: _sortType,
                               icon: const Icon(
                                 Icons.filter_list,
-                                color: Colors.white,
+                                color: AppColors.white,
                                 size: 20,
                               ),
                               dropdownColor: AppColors.primary,
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: AppColors.white,
                                 fontWeight: FontWeight.w600,
                               ),
                               items: [
@@ -436,7 +436,7 @@ class _RatingSummaryCard extends StatelessWidget {
                         Text(
                           overallRating.toStringAsFixed(1),
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: AppColors.white,
                             fontWeight: FontWeight.w800,
                             fontSize: 36,
                           ),
@@ -447,7 +447,7 @@ class _RatingSummaryCard extends StatelessWidget {
                           child: Text(
                             '/5',
                             style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.7),
+                              color: AppColors.white.withValues(alpha: 0.7),
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
                             ),
@@ -463,20 +463,20 @@ class _RatingSummaryCard extends StatelessWidget {
                           return const Icon(
                             Icons.star,
                             size: 20,
-                            color: Colors.orangeAccent,
+                            color: AppColors.orangeAccent,
                           );
                         } else if (overallRating > index &&
                             overallRating < index + 1) {
                           return const Icon(
                             Icons.star_half,
                             size: 20,
-                            color: Colors.orangeAccent,
+                            color: AppColors.orangeAccent,
                           );
                         }
                         return const Icon(
                           Icons.star_border,
                           size: 20,
-                          color: Colors.orangeAccent,
+                          color: AppColors.orangeAccent,
                         );
                       }),
                     ),
@@ -486,7 +486,7 @@ class _RatingSummaryCard extends StatelessWidget {
                         context,
                       )!.totalReviewsCount(totalReviews),
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.8),
+                        color: AppColors.white.withValues(alpha: 0.8),
                         fontSize: 14,
                       ),
                     ),
@@ -498,14 +498,14 @@ class _RatingSummaryCard extends StatelessWidget {
                   width: 1,
                   height: 180,
                   margin: const EdgeInsets.symmetric(horizontal: 24),
-                  color: Colors.white.withValues(alpha: 0.1),
+                  color: AppColors.white.withValues(alpha: 0.1),
                 ),
               ] else ...[
                 Container(
                   width: double.infinity,
                   height: 1,
                   margin: const EdgeInsets.symmetric(vertical: 24),
-                  color: Colors.white.withValues(alpha: 0.1),
+                  color: AppColors.white.withValues(alpha: 0.1),
                 ),
               ],
               if (isWide)
@@ -554,7 +554,7 @@ class _RatingRow extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.9),
+              color: AppColors.white.withValues(alpha: 0.9),
               fontSize: 14,
             ),
           ),
@@ -565,14 +565,14 @@ class _RatingRow extends StatelessWidget {
             borderRadius: BorderRadius.circular(999),
             child: Container(
               height: 8,
-              color: Colors.white.withValues(alpha: 0.1),
+              color: AppColors.white.withValues(alpha: 0.1),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: FractionallySizedBox(
                   widthFactor: category.progress,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.orangeAccent,
+                      color: AppColors.orangeAccent,
                       borderRadius: BorderRadius.circular(999),
                     ),
                   ),
@@ -588,7 +588,7 @@ class _RatingRow extends StatelessWidget {
             category.value,
             textAlign: TextAlign.right,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.white,
               fontWeight: FontWeight.w700,
               fontSize: 14,
             ),
@@ -624,7 +624,7 @@ class _ReviewCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: isHighlighted
             ? AppColors.primary.withValues(alpha: 0.05)
-            : Colors.white,
+            : AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isHighlighted
@@ -673,7 +673,11 @@ class _ReviewCardWidget extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const Icon(Icons.star, color: Colors.orangeAccent, size: 18),
+                  const Icon(
+                    Icons.star,
+                    color: AppColors.orangeAccent,
+                    size: 18,
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     review.rating.toStringAsFixed(1),
@@ -703,4 +707,3 @@ class _ReviewCardWidget extends StatelessWidget {
     );
   }
 }
-

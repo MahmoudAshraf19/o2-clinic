@@ -45,7 +45,6 @@ class ServicesController extends GetxController {
           );
         }).toList(),
       );
-
     } finally {
       isLoading.value = false;
     }

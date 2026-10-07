@@ -15,6 +15,7 @@ import '../../services/models/radiology_category_model.dart';
 import '../../services/models/cosmetic_category_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class DiscountBannersSection extends StatelessWidget {
   const DiscountBannersSection({super.key});
@@ -83,7 +84,9 @@ class DiscountBannersSection extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: _FallbackBannerCard(
                 title: AppLocalizations.of(context)!.noActiveBanners,
-                subtitle: AppLocalizations.of(context)!.newPromotionsWillAppearHere,
+                subtitle: AppLocalizations.of(
+                  context,
+                )!.newPromotionsWillAppearHere,
                 buttonText: AppLocalizations.of(context)!.refresh,
               ),
             ),
@@ -131,7 +134,7 @@ class _BannerCard extends StatelessWidget {
     if (banner.type == 'normal') return;
 
     Widget? targetScreen;
-    
+
     // Quick navigation for screens that don't need a fetched model
     if (banner.type == 'doctor') {
       Get.to(() => AllDoctorsPage());
@@ -178,9 +181,15 @@ class _BannerCard extends StatelessWidget {
 
     if (targetScreen != null) {
       if (['laser', 'skin', 'nutrition'].contains(banner.type)) {
-        Get.delete<CosmeticAppointmentBookingController>(tag: banner.type, force: true);
+        Get.delete<CosmeticAppointmentBookingController>(
+          tag: banner.type,
+          force: true,
+        );
       } else if (['ct_scan', 'x_ray', 'ultrasound'].contains(banner.type)) {
-        Get.delete<RadiologyAppointmentBookingController>(tag: banner.type, force: true);
+        Get.delete<RadiologyAppointmentBookingController>(
+          tag: banner.type,
+          force: true,
+        );
       }
       Get.to(() => targetScreen!);
     } else if (context.mounted) {
@@ -195,7 +204,7 @@ class _BannerCard extends StatelessWidget {
     final bool useRemoteBackground =
         banner.withBackground && banner.imageUrl.trim().isNotEmpty;
     final langCode = Localizations.localeOf(context).languageCode;
-    
+
     final localizedBadge = banner.getLocalizedBadge(langCode);
     final localizedTitle = banner.getLocalizedTitle(langCode);
     final localizedSubtitle = banner.getLocalizedSubtitle(langCode);
@@ -215,15 +224,15 @@ class _BannerCard extends StatelessWidget {
           children: [
             Positioned.fill(
               child: useRemoteBackground
-                  ? CachedImageWidget(imageUrl: 
-                      banner.imageUrl,
+                  ? CachedImageWidget(
+                      imageUrl: banner.imageUrl,
                       fit: BoxFit.cover,
                       errorBuilder: (_, _, _) {
                         debugPrint(
                           '[Banners] Failed to load network image for banner id: ${banner.id}. '
                           'Using local asset fallback.',
                         );
-  
+
                         return Image.asset(
                           'assets/images/backgroung_banner.png',
                           fit: BoxFit.cover,
@@ -248,7 +257,7 @@ class _BannerCard extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.18),
+                        color: AppColors.white.withValues(alpha: 0.18),
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Text(
@@ -256,20 +265,21 @@ class _BannerCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.white,
                           fontSize: 9,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 0.8,
                         ),
                       ),
                     ),
-                  if (localizedBadge.trim().isNotEmpty) const SizedBox(height: 6),
+                  if (localizedBadge.trim().isNotEmpty)
+                    const SizedBox(height: 6),
                   Text(
                     localizedTitle,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
                       height: 1.1,
@@ -281,7 +291,7 @@ class _BannerCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      color: Colors.white70,
+                      color: AppColors.white70,
                       fontSize: 11,
                       fontWeight: FontWeight.w500,
                       height: 1.3,
@@ -296,8 +306,8 @@ class _BannerCard extends StatelessWidget {
                       onPressed: () => _navigateToScreen(context),
                       type: CommonButtonType.primary,
                       size: CommonButtonSize.medium,
-                      backgroundColor: Colors.white,
-                      foregroundColor: const Color(0xFF00685F),
+                      backgroundColor: AppColors.white,
+                      foregroundColor: AppColors.colorFF00685F,
                       borderRadius: BorderRadius.circular(999),
                     ),
                 ],
@@ -355,7 +365,7 @@ class _FallbackBannerCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
                     height: 1.1,
@@ -367,7 +377,7 @@ class _FallbackBannerCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    color: Colors.white70,
+                    color: AppColors.white70,
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
                     height: 1.3,
@@ -379,8 +389,8 @@ class _FallbackBannerCard extends StatelessWidget {
                   onPressed: () {},
                   type: CommonButtonType.primary,
                   size: CommonButtonSize.medium,
-                  backgroundColor: Colors.white,
-                  foregroundColor: const Color(0xFF00685F),
+                  backgroundColor: AppColors.white,
+                  foregroundColor: AppColors.colorFF00685F,
                   borderRadius: BorderRadius.circular(999),
                 ),
               ],
@@ -391,4 +401,3 @@ class _FallbackBannerCard extends StatelessWidget {
     );
   }
 }
-

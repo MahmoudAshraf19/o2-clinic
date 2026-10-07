@@ -93,7 +93,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
     ).format(DateTime.now());
 
     // You can adjust the colors to match AppColors if needed
-    final Color surface = Colors.white;
+    final Color surface = AppColors.white;
 
     return SliverAppBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -102,7 +102,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
       elevation: 0,
       stretch: true,
       toolbarHeight: 72.0,
-      surfaceTintColor: Colors.transparent,
+      surfaceTintColor: AppColors.transparent,
       titleSpacing: 0, // Remove default title padding
       flexibleSpace: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
@@ -129,7 +129,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                       children: [
                         if (_isLoading)
                           Container(
-                            color: Colors.grey.shade200,
+                            color: AppColors.grey200,
                             child: const Center(
                               child: CircularProgressIndicator(),
                             ),
@@ -140,7 +140,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                             child: const Icon(
                               Icons.person,
                               size: 80,
-                              color: Colors.white,
+                              color: AppColors.white,
                             ),
                           )
                         else
@@ -154,7 +154,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                               child: const Icon(
                                 Icons.person,
                                 size: 80,
-                                color: Colors.white,
+                                color: AppColors.white,
                               ),
                             ),
                           ),
@@ -166,9 +166,9 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                Color(0x66000000), // Top shadow for icons
-                                Color(0x11000000), // Middle clear
-                                Color(0xE6000000), // Bottom dark for text
+                                AppColors.color66000000, // Top shadow for icons
+                                AppColors.color11000000, // Middle clear
+                                AppColors.colorE6000000, // Bottom dark for text
                               ],
                               stops: [0.0, 0.45, 1.0],
                             ),
@@ -194,11 +194,11 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                                   fontSize: 24,
                                   height: 1.3,
                                   fontWeight: FontWeight.w800,
-                                  color: Colors.white,
+                                  color: AppColors.white,
                                   shadows: [
                                     Shadow(
                                       blurRadius: 8,
-                                      color: Color(0x99000000),
+                                      color: AppColors.color99000000,
                                       offset: Offset(0, 1),
                                     ),
                                   ],
@@ -210,7 +210,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                                 children: [
                                   const Icon(
                                     Icons.calendar_today_outlined,
-                                    color: Colors.white70,
+                                    color: AppColors.white70,
                                     size: 16,
                                   ),
                                   const SizedBox(width: 8),
@@ -218,7 +218,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                                     formattedDate,
                                     style: const TextStyle(
                                       fontSize: 15,
-                                      color: Colors.white70,
+                                      color: AppColors.white70,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -258,7 +258,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                         onTap: () {
                           Get.dialog(
                             const NotificationDropdownWidget(),
-                            barrierColor: Colors.transparent,
+                            barrierColor: AppColors.transparent,
                           );
                         },
                         child: Stack(
@@ -277,7 +277,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                               ),
                               child: const Icon(
                                 Icons.notifications_outlined,
-                                color: Colors.white,
+                                color: AppColors.white,
                                 size: 24,
                               ),
                             ),
@@ -295,7 +295,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                                   child: Container(
                                     padding: const EdgeInsets.all(4),
                                     decoration: const BoxDecoration(
-                                      color: Colors.red,
+                                      color: AppColors.red,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Text(
@@ -303,7 +303,7 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
                                           ? '9+'
                                           : unreadCount.toString(),
                                       style: const TextStyle(
-                                        color: Colors.white,
+                                        color: AppColors.white,
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -325,4 +325,3 @@ class _DoctorHomeTopCoverState extends State<DoctorHomeTopCover> {
     );
   }
 }
-

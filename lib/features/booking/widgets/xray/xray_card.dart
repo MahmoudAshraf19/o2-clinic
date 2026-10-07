@@ -34,7 +34,7 @@ class XRayCard extends StatelessWidget {
         : AppColors.textPrimary;
 
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
         onTap: onTap,

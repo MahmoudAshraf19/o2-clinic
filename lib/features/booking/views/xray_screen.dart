@@ -61,8 +61,6 @@ class _XRayScreenState extends State<XRayScreen> {
   }
 
   Future<void> _continue() async {
-    
-
     if (selectedCategoryId == null) {
       Get.snackbar(
         'Select category',
@@ -96,10 +94,13 @@ class _XRayScreenState extends State<XRayScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final isNarrow = size.width < 360;
-    
+
     final headerTitle = selectedCategoryId == null
         ? 'X-Ray'
-        : (_selectedCategory?.titleForLanguage(Get.locale?.languageCode ?? 'en') ?? 'X-Ray');
+        : (_selectedCategory?.titleForLanguage(
+                Get.locale?.languageCode ?? 'en',
+              ) ??
+              'X-Ray');
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -392,4 +393,3 @@ class _XRayScreenState extends State<XRayScreen> {
     );
   }
 }
-

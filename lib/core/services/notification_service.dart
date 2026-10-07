@@ -330,8 +330,6 @@ class NotificationService {
     }
   }
 
-
-
   /// ── Legacy single-reminder helper (kept for backward compatibility) ───────
   Future<void> scheduleLocalReminder({
     required int id,

@@ -160,7 +160,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
         title: Text(
           AppLocalizations.of(context)!.doctorAppointments,
           style: const TextStyle(
@@ -190,7 +190,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.only(top: 16, bottom: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -279,7 +279,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                     decoration: BoxDecoration(
                       color: isSelected
                           ? AppColors.primary
-                          : Colors.transparent,
+                          : AppColors.transparent,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Column(
@@ -292,7 +292,9 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
-                            color: isSelected ? Colors.white70 : AppColors.grey,
+                            color: isSelected
+                                ? AppColors.white70
+                                : AppColors.grey,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -302,7 +304,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
                             color: isSelected
-                                ? Colors.white
+                                ? AppColors.white
                                 : AppColors.textPrimary,
                           ),
                         ),
@@ -334,7 +336,7 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(30),
       ),
       child: SingleChildScrollView(
@@ -353,14 +355,14 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
                 ),
                 margin: const EdgeInsets.only(right: 4),
                 decoration: BoxDecoration(
-                  color: isSelected ? AppColors.primary : Colors.transparent,
+                  color: isSelected ? AppColors.primary : AppColors.transparent,
                   borderRadius: BorderRadius.circular(26),
                 ),
                 alignment: Alignment.center,
                 child: Text(
                   status['label']!,
                   style: TextStyle(
-                    color: isSelected ? Colors.white : AppColors.grey,
+                    color: isSelected ? AppColors.white : AppColors.grey,
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
                     fontSize: 13,
                   ),
@@ -460,4 +462,3 @@ class _DoctorAppointmentsScreenState extends State<DoctorAppointmentsScreen> {
     });
   }
 }
-

@@ -26,7 +26,9 @@ class PastAppointmentsWidget extends StatelessWidget {
           (data['status'] as Map<String, dynamic>?)?['current'] as String? ??
           '';
       // We only care about pending, upcoming, or confirmed that have PASSED their time.
-      if (status != 'upcoming' && status != 'pending' && status != 'confirmed') {
+      if (status != 'upcoming' &&
+          status != 'pending' &&
+          status != 'confirmed') {
         continue;
       }
 
@@ -51,7 +53,9 @@ class PastAppointmentsWidget extends StatelessWidget {
           } catch (_) {
             try {
               parsedTime = DateFormat("HH:mm").parse(endTimeStr);
-            } catch (e) { /* ignore */ }
+            } catch (e) {
+              /* ignore */
+            }
           }
 
           if (parsedTime != null) {
@@ -68,7 +72,9 @@ class PastAppointmentsWidget extends StatelessWidget {
               pastList.add(data);
             }
           }
-        } catch (e) { /* ignore */ }
+        } catch (e) {
+          /* ignore */
+        }
       }
     }
 
@@ -169,7 +175,7 @@ class PastAppointmentsWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.grey.withValues(alpha: 0.2)),
         boxShadow: [
@@ -292,7 +298,7 @@ class PastAppointmentsWidget extends StatelessWidget {
                   onPressed: () => _markAsCompleted(context, bookingId),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.white,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     elevation: 0,
                   ),

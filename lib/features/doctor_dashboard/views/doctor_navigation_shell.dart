@@ -38,4 +38,3 @@ class DoctorNavigationShell extends StatelessWidget {
     });
   }
 }
-

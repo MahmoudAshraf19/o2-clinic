@@ -58,7 +58,11 @@ class DoctorCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(28),
-          border: Border.all(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1)),
+          border: Border.all(
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.1),
+          ),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +72,9 @@ class DoctorCard extends StatelessWidget {
               child: Container(
                 width: 96,
                 height: 96,
-                color: Theme.of(context).brightness == Brightness.dark ? Colors.transparent : AppColors.surfaceContainer,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.transparent
+                    : AppColors.surfaceContainer,
                 child: CachedImageWidget(
                   imageUrl: doctor.image,
                   fit: BoxFit.cover,
@@ -98,7 +104,11 @@ class DoctorCard extends StatelessWidget {
                                 fontFamily: AppFonts.poppins,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
-                                color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),
+                                color:
+                                    (Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? AppColors.white
+                                    : AppColors.textPrimary),
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -127,7 +137,9 @@ class DoctorCard extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF2A3A39) : AppColors.surfaceContainer.withValues(alpha: 0.45),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.colorFF2A3A39
+                          : AppColors.surfaceContainer.withValues(alpha: 0.45),
                       borderRadius: BorderRadius.circular(999),
                     ),
                     child: Text(
@@ -138,7 +150,9 @@ class DoctorCard extends StatelessWidget {
                         fontFamily: AppFonts.inter,
                         fontSize: 11.5,
                         fontWeight: FontWeight.w700,
-                        color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary),
+                        color: (Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.white70
+                            : AppColors.textSecondary),
                       ),
                     ),
                   ),
@@ -198,7 +212,7 @@ class DoctorCard extends StatelessWidget {
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.white,
                             padding: const EdgeInsets.symmetric(vertical: 11),
                             elevation: 0,
                             shape: RoundedRectangleBorder(
@@ -218,5 +232,3 @@ class DoctorCard extends StatelessWidget {
     );
   }
 }
-
-

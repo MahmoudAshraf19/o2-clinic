@@ -11,19 +11,15 @@ class DashboardHealthChips extends StatelessWidget {
   Widget build(BuildContext context) {
     final DashboardController controller = Get.find<DashboardController>();
 
-    return Obx(
-      () {
-        final chips = controller.healthChips;
+    return Obx(() {
+      final chips = controller.healthChips;
 
-        return Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          children: [
-            for (final chip in chips) _HealthChip(model: chip),
-          ],
-        );
-      },
-    );
+      return Wrap(
+        spacing: 10,
+        runSpacing: 10,
+        children: [for (final chip in chips) _HealthChip(model: chip)],
+      );
+    });
   }
 }
 
@@ -52,7 +48,6 @@ class _HealthChip extends StatelessWidget {
               color: model.foregroundColor,
               fontSize: 12,
               fontWeight: FontWeight.w700,
-              
             ),
           ),
         ],

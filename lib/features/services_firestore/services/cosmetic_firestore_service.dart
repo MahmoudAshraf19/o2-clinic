@@ -8,7 +8,6 @@ class CosmeticFirestoreService {
   /// 🚀 GET ALL COSMETIC CATEGORIES
   Future<List<CosmeticCategoryModel>> getCosmeticCategories() async {
     try {
-
       final snapshot = await _firestore
           .collection("cosmetic")
           .get(const GetOptions(source: Source.serverAndCache));
@@ -24,13 +23,13 @@ class CosmeticFirestoreService {
           final data = doc.data();
           final item = CosmeticCategoryModel.fromMap(id: doc.id, map: data);
           list.add(item);
-        } catch (e) { /* ignore */ }
+        } catch (e) {
+          /* ignore */
+        }
       }
-
 
       return list;
     } catch (e) {
-
       return [];
     }
   }

@@ -84,14 +84,14 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                             icon: const Icon(
                               Icons.edit_outlined,
                               size: 16,
-                              color: Colors.white,
+                              color: AppColors.white,
                             ),
                             label: Text(
                               AppLocalizations.of(context)!.editProfile,
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                                color: AppColors.white,
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
@@ -119,10 +119,13 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                           height: 120,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 4),
+                            border: Border.all(
+                              color: AppColors.white,
+                              width: 4,
+                            ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.05),
+                                color: AppColors.black.withValues(alpha: 0.05),
                                 blurRadius: 10,
                                 offset: const Offset(0, 4),
                               ),
@@ -169,7 +172,7 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                           ),
                           child: const Icon(
                             Icons.verified_rounded,
-                            color: Colors.white,
+                            color: AppColors.white,
                             size: 18,
                           ),
                         ),
@@ -186,7 +189,10 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w800,
-                          color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF13364A)),
+                          color:
+                              (Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.white
+                              : AppColors.colorFF13364A),
                         ),
                       ),
                     ),
@@ -198,7 +204,10 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
-                          color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF6B7280)),
+                          color:
+                              (Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.white70
+                              : AppColors.grey500),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -269,20 +278,26 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         children: [
-                          _buildSection(context: context,
+                          _buildSection(
+                            context: context,
                             icon: Icons.person_outline,
                             title: AppLocalizations.of(context)!.about,
                             child: Text(
                               doctorAbout,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF6B7280)),
+                                color:
+                                    (Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? AppColors.white70
+                                    : AppColors.grey500),
                                 height: 1.5,
                               ),
                             ),
                           ),
 
-                          _buildSection(context: context,
+                          _buildSection(
+                            context: context,
                             icon: Icons.calendar_today_outlined,
                             title: AppLocalizations.of(
                               context,
@@ -303,7 +318,11 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                                     '${entry.key.capitalizeFirst} • ${entry.value}',
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF6B7280)),
+                                      color:
+                                          (Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? AppColors.white70
+                                          : AppColors.grey500),
                                     ),
                                   ),
                                 );
@@ -311,7 +330,8 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                             ),
                           ),
 
-                          _buildSection(context: context,
+                          _buildSection(
+                            context: context,
                             icon: Icons.videocam_outlined,
                             title: AppLocalizations.of(
                               context,
@@ -323,8 +343,8 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                                   height: 8,
                                   decoration: BoxDecoration(
                                     color: doctor.isOnlineConsultationAvailable
-                                        ? Colors.green
-                                        : Colors.grey,
+                                        ? AppColors.green
+                                        : AppColors.grey,
                                     shape: BoxShape.circle,
                                   ),
                                 ),
@@ -345,7 +365,8 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                             ),
                           ),
 
-                          _buildSection(context: context,
+                          _buildSection(
+                            context: context,
                             icon: Icons.monetization_on_outlined,
                             title: AppLocalizations.of(
                               context,
@@ -355,12 +376,17 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
-                                color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF13364A)),
+                                color:
+                                    (Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? AppColors.white
+                                    : AppColors.colorFF13364A),
                               ),
                             ),
                           ),
 
-                          _buildSection(context: context,
+                          _buildSection(
+                            context: context,
                             icon: Icons.star_border_rounded,
                             title: AppLocalizations.of(context)!.rating,
                             titleBadge: const Icon(
@@ -383,7 +409,11 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                                   '(4.8)',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF6B7280)),
+                                    color:
+                                        (Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? AppColors.white70
+                                        : AppColors.grey500),
                                   ),
                                 ),
                               ],
@@ -399,17 +429,20 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                               await FirebaseAuth.instance.signOut();
                               Get.offAllNamed(AppRoutes.login);
                             },
-                            icon: const Icon(Icons.logout, color: Colors.white),
+                            icon: const Icon(
+                              Icons.logout,
+                              color: AppColors.white,
+                            ),
                             label: Text(
                               isArabic ? 'تسجيل الخروج' : 'Logout',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.white,
+                                color: AppColors.white,
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red.shade400,
+                              backgroundColor: AppColors.red400,
                               minimumSize: const Size(double.infinity, 50),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
@@ -442,7 +475,13 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
       padding: const EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
         border: showBorder
-            ? Border(bottom: BorderSide(color: (Theme.of(context).brightness == Brightness.dark ? Colors.white12 : const Color(0xFFF3F4F6))))
+            ? Border(
+                bottom: BorderSide(
+                  color: (Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.white12
+                      : AppColors.hover),
+                ),
+              )
             : null,
       ),
       child: Row(
@@ -461,7 +500,9 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
-                        color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF13364A)),
+                        color: (Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.white
+                            : AppColors.colorFF13364A),
                       ),
                     ),
                     if (titleBadge != null) ...[
@@ -480,7 +521,3 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
     );
   }
 }
-
-
-
-

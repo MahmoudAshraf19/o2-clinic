@@ -18,9 +18,7 @@ class SearchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
       child: CommonTextField(
         controller: controller,
         onChanged: onChanged,
@@ -31,14 +29,20 @@ class SearchBarWidget extends StatelessWidget {
         suffixWidget: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA).withValues(alpha: 0.15) : AppColors.primary.withValues(alpha: 0.10),
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.colorFF60A5FA.withValues(alpha: 0.15)
+                : AppColors.primary.withValues(alpha: 0.10),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Icon(Icons.tune, color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF60A5FA) : AppColors.primary, size: 20),
+          child: Icon(
+            Icons.tune,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.colorFF60A5FA
+                : AppColors.primary,
+            size: 20,
+          ),
         ),
       ),
     );
   }
 }
-
-

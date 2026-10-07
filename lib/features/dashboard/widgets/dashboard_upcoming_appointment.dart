@@ -28,15 +28,22 @@ class DashboardUpcomingAppointment extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.event_available_rounded, size: 18, color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF081F1D)),
+              Icon(
+                Icons.event_available_rounded,
+                size: 18,
+                color: (Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.white
+                    : AppColors.colorFF081F1D),
               ),
               const SizedBox(width: 8),
               Text(
                 AppLocalizations.of(context)!.upcomingDoctors,
-                style: TextStyle(color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF081F1D),
+                style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.white
+                      : AppColors.colorFF081F1D,
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
-                  
                 ),
               ),
             ],
@@ -72,173 +79,170 @@ class _UpcomingDoctorCard extends StatelessWidget {
       onTap: () => BookingHelper.onBookNowClicked(context, doctor),
       child: Container(
         decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppColors.primary, Color(0xFF005049)],
-        ),
-        borderRadius: BorderRadius.circular(28),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.20),
-            blurRadius: 22,
-            offset: const Offset(0, 10),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppColors.primary, AppColors.onTertiaryFixedVariant],
           ),
-        ],
-      ),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-
-          Padding(
-            padding: const EdgeInsets.all(18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.local_hospital_rounded,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          AppLocalizations.of(context)!.featuredDoctor,
-                          style: const TextStyle(
-                            color: Color(0xE6FFFFFF),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 1.5,
-                            
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.20),
-                        borderRadius: BorderRadius.circular(999),
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.18),
-                        ),
-                      ),
-                      child: Text(
-                        doctor.theTop ? 'THE TOP' : 'FEATURED',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w800,
-                          
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Container(
-                      width: 62,
-                      height: 62,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.10),
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.18),
-                        ),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: CachedImageWidget(imageUrl: 
-                        doctor.image,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(
-                            Icons.person_rounded,
-                            color: Colors.white,
-                            size: 30,
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+          borderRadius: BorderRadius.circular(28),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withValues(alpha: 0.20),
+              blurRadius: 22,
+              offset: const Offset(0, 10),
+            ),
+          ],
+        ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         children: [
+                          const Icon(
+                            Icons.local_hospital_rounded,
+                            color: AppColors.white,
+                            size: 18,
+                          ),
+                          const SizedBox(width: 8),
                           Text(
-                            isArabic && doctor.nameAr.isNotEmpty
-                                ? doctor.nameAr
-                                : doctor.nameEn,
+                            AppLocalizations.of(context)!.featuredDoctor,
                             style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
+                              color: AppColors.colorE6FFFFFF,
+                              fontSize: 10,
                               fontWeight: FontWeight.w800,
-                              height: 1.1,
-                              
+                              letterSpacing: 1.5,
                             ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            isArabic && doctor.titleAr.isNotEmpty
-                                ? doctor.titleAr
-                                : doctor.titleEn,
-                            style: const TextStyle(
-                              color: Color(0xB3FFFFFF),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: [
-                              _InfoChip(
-                                icon: Icons.local_hospital_rounded,
-                                text: doctor.specialty,
-                              ),
-                              _InfoChip(
-                                icon: Icons.work_history_rounded,
-                                text: '${doctor.yearsExperience}+ ${AppLocalizations.of(context)!.years}',
-                              ),
-                              _InfoChip(
-                                icon: Icons.payments_rounded,
-                                text: '${doctor.price.toString()} ${Get.isRegistered<AppConstantsController>() ? Get.find<AppConstantsController>().currencySymbol.value : "EGP"}',
-                              ),
-                            ],
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                if (availabilityPreview.isNotEmpty) ...[
-                  const SizedBox(height: 14),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      for (final item in availabilityPreview)
-                        _InfoChip(icon: Icons.schedule_rounded, text: item),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.white.withValues(alpha: 0.20),
+                          borderRadius: BorderRadius.circular(999),
+                          border: Border.all(
+                            color: AppColors.white.withValues(alpha: 0.18),
+                          ),
+                        ),
+                        child: Text(
+                          doctor.theTop ? 'THE TOP' : 'FEATURED',
+                          style: const TextStyle(
+                            color: AppColors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Container(
+                        width: 62,
+                        height: 62,
+                        decoration: BoxDecoration(
+                          color: AppColors.white.withValues(alpha: 0.10),
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: AppColors.white.withValues(alpha: 0.18),
+                          ),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: CachedImageWidget(
+                          imageUrl: doctor.image,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(
+                              Icons.person_rounded,
+                              color: AppColors.white,
+                              size: 30,
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              isArabic && doctor.nameAr.isNotEmpty
+                                  ? doctor.nameAr
+                                  : doctor.nameEn,
+                              style: const TextStyle(
+                                color: AppColors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w800,
+                                height: 1.1,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              isArabic && doctor.titleAr.isNotEmpty
+                                  ? doctor.titleAr
+                                  : doctor.titleEn,
+                              style: const TextStyle(
+                                color: AppColors.colorB3FFFFFF,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              children: [
+                                _InfoChip(
+                                  icon: Icons.local_hospital_rounded,
+                                  text: doctor.specialty,
+                                ),
+                                _InfoChip(
+                                  icon: Icons.work_history_rounded,
+                                  text:
+                                      '${doctor.yearsExperience}+ ${AppLocalizations.of(context)!.years}',
+                                ),
+                                _InfoChip(
+                                  icon: Icons.payments_rounded,
+                                  text:
+                                      '${doctor.price.toString()} ${Get.isRegistered<AppConstantsController>() ? Get.find<AppConstantsController>().currencySymbol.value : "EGP"}',
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (availabilityPreview.isNotEmpty) ...[
+                    const SizedBox(height: 14),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final item in availabilityPreview)
+                          _InfoChip(icon: Icons.schedule_rounded, text: item),
+                      ],
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
     );
   }
 
@@ -287,21 +291,20 @@ class _InfoChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.10),
+        color: AppColors.white.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: Colors.white),
+          Icon(icon, size: 14, color: AppColors.white),
           const SizedBox(width: 4),
           Text(
             text,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.white,
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              
             ),
           ),
         ],
@@ -309,6 +312,3 @@ class _InfoChip extends StatelessWidget {
     );
   }
 }
-
-
-

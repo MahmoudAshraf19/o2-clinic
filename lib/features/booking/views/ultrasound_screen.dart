@@ -27,8 +27,9 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
   @override
   void initState() {
     super.initState();
-    try {
-} catch (e) { /* ignore */ }
+    try {} catch (e) {
+      /* ignore */
+    }
     _loadData();
   }
 
@@ -312,4 +313,3 @@ class _UltrasoundScreenState extends State<UltrasoundScreen> {
     );
   }
 }
-

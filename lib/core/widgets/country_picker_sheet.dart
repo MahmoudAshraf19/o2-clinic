@@ -3,6 +3,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/countries.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class CountryPickerSheet extends StatefulWidget {
   final Function(Country) onSelect;
@@ -23,7 +24,7 @@ class _CountryPickerSheetState extends State<CountryPickerSheet> {
       padding: const EdgeInsets.all(16),
       height: MediaQuery.of(context).size.height * 0.85,
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
       ),
       child: Column(
@@ -32,7 +33,7 @@ class _CountryPickerSheetState extends State<CountryPickerSheet> {
             width: 50,
             height: 5,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: AppColors.grey300,
               borderRadius: BorderRadius.circular(20),
             ),
           ),
@@ -88,4 +89,3 @@ class _CountryPickerSheetState extends State<CountryPickerSheet> {
     });
   }
 }
-

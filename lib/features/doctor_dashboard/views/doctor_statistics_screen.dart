@@ -28,9 +28,9 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
       ),
       body: CustomScrollView(
         slivers: [
@@ -62,9 +62,9 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
+        border: Border.all(color: AppColors.grey.withValues(alpha: 0.2)),
       ),
       child: Obx(() {
         return DropdownButtonHideUnderline(
@@ -227,12 +227,12 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
+                    color: AppColors.white.withValues(alpha: 0.2),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.account_balance_wallet_rounded,
-                    color: Colors.white,
+                    color: AppColors.white,
                     size: 32,
                   ),
                 ),
@@ -244,7 +244,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
                       Text(
                         l10n.totalEarnings,
                         style: const TextStyle(
-                          color: Colors.white70,
+                          color: AppColors.white70,
                           fontSize: 14,
                         ),
                       ),
@@ -252,7 +252,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
                       Text(
                         '\$${_controller.totalEarnings.value.toStringAsFixed(2)}',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.white,
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
@@ -274,7 +274,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
                   title: l10n.totalAppointments,
                   value: _controller.totalAppointments.value.toString(),
                   icon: Icons.calendar_month_rounded,
-                  color: Colors.orange,
+                  color: AppColors.orange,
                 ),
               ),
             ),
@@ -285,7 +285,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
                   title: l10n.uniquePatients,
                   value: _controller.uniquePatients.value.toString(),
                   icon: Icons.people_alt_rounded,
-                  color: Colors.blue,
+                  color: AppColors.blue,
                 ),
               ),
             ),
@@ -297,7 +297,7 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
             title: l10n.averageEarnings,
             value: '\$${_controller.averageEarnings.value.toStringAsFixed(2)}',
             icon: Icons.analytics_rounded,
-            color: Colors.purple,
+            color: AppColors.purple,
           ),
         ),
       ],
@@ -313,12 +313,12 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+        border: Border.all(color: AppColors.grey.withValues(alpha: 0.1)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -370,9 +370,9 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+            border: Border.all(color: AppColors.grey.withValues(alpha: 0.1)),
           ),
           child: Obx(() {
             final total = _controller.totalAppointments.value;
@@ -381,11 +381,16 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
             final cancelled = _controller.cancelledCount.value;
             return Column(
               children: [
-                _buildProgressBar('Completed', completed, total, Colors.green),
+                _buildProgressBar(
+                  'Completed',
+                  completed,
+                  total,
+                  AppColors.green,
+                ),
                 const SizedBox(height: 12),
-                _buildProgressBar('Pending', pending, total, Colors.orange),
+                _buildProgressBar('Pending', pending, total, AppColors.orange),
                 const SizedBox(height: 12),
-                _buildProgressBar('Cancelled', cancelled, total, Colors.red),
+                _buildProgressBar('Cancelled', cancelled, total, AppColors.red),
               ],
             );
           }),
@@ -404,9 +409,9 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
+            border: Border.all(color: AppColors.grey.withValues(alpha: 0.1)),
           ),
           child: Obx(() {
             final services = _controller.topServices;
@@ -475,4 +480,3 @@ class _DoctorStatisticsScreenState extends State<DoctorStatisticsScreen> {
     );
   }
 }
-

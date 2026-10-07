@@ -140,9 +140,7 @@ class FirestoreService {
   Stream<List<RadiologyServiceModel>> watchRadiologyServices() {
     const collectionName = "radiology_category";
 
-
     return _db.collection(collectionName).snapshots().map((snapshot) {
-
       final List<RadiologyServiceModel> items = snapshot.docs.map((doc) {
         final id = doc.id; // ct / x_ray / ultrasound
         final data = doc.data();
@@ -241,9 +239,6 @@ class FirestoreService {
         return "https://images.unsplash.com/photo-1580281657527-47f249e8f3b1?auto=format&fit=crop&w=800&q=60";
     }
   }
-
-
-
 
   /// Streams cosmetic services.
   Stream<List<CosmeticModel>> watchCosmeticServices() {

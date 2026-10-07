@@ -25,7 +25,9 @@ class QuickActionsWidget extends StatelessWidget {
                 dt.day == now.day) {
               count++;
             }
-          } catch (e) { /* ignore */ }
+          } catch (e) {
+            /* ignore */
+          }
         }
       }
     }
@@ -69,7 +71,7 @@ class QuickActionsWidget extends StatelessWidget {
                     gradient: const LinearGradient(
                       colors: [
                         AppColors.primary,
-                        Color(0xFF1E877B),
+                        AppColors.colorFF1E877B,
                       ], // Slight gradient for premium feel
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
@@ -85,8 +87,8 @@ class QuickActionsWidget extends StatelessWidget {
                       apptCtrl.targetStatus.value = 'upcoming';
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent,
+                      backgroundColor: AppColors.transparent,
+                      shadowColor: AppColors.transparent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
@@ -96,7 +98,7 @@ class QuickActionsWidget extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: AppColors.white,
                       ),
                     ),
                   ),

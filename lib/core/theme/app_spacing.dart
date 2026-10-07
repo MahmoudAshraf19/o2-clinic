@@ -15,10 +15,15 @@ class AppSpacing {
 
   // Common EdgeInsets
   static const EdgeInsets pagePadding = EdgeInsets.all(md);
-  static const EdgeInsets horizontalPadding = EdgeInsets.symmetric(horizontal: md);
+  static const EdgeInsets horizontalPadding = EdgeInsets.symmetric(
+    horizontal: md,
+  );
   static const EdgeInsets verticalPadding = EdgeInsets.symmetric(vertical: md);
   static const EdgeInsets cardPadding = EdgeInsets.all(md);
-  
+
   // Specific EdgeInsets
-  static const EdgeInsets inputPadding = EdgeInsets.symmetric(horizontal: md, vertical: 12.0);
+  static const EdgeInsets inputPadding = EdgeInsets.symmetric(
+    horizontal: md,
+    vertical: 12.0,
+  );
 }

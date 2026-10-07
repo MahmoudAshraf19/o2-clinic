@@ -278,7 +278,7 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.border),
       ),
@@ -318,5 +318,3 @@ class _DepartmentDoctorScreenState extends State<DepartmentDoctorScreen> {
     );
   }
 }
-
-

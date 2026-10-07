@@ -52,7 +52,6 @@ class CommonButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final buttonPadding = padding ?? _getDefaultPadding();
     final buttonTextStyle = textStyle ?? _getDefaultTextStyle();
 
@@ -179,8 +178,6 @@ class CommonButton extends StatelessWidget {
     }
   }
 
-
-
   Color _getDefaultBackgroundColor() {
     switch (type) {
       case CommonButtonType.primary:
@@ -189,9 +186,9 @@ class CommonButton extends StatelessWidget {
         return AppColors.secondary;
       case CommonButtonType.outline:
       case CommonButtonType.text:
-        return Colors.transparent;
+        return AppColors.transparent;
       case CommonButtonType.gradient:
-        return Colors.transparent;
+        return AppColors.transparent;
     }
   }
 

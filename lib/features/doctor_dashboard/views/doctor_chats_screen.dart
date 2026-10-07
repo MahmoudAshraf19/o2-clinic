@@ -22,7 +22,7 @@ class DoctorChatsScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
         title: Text(
           AppLocalizations.of(context)!.doctorChats,
           style: const TextStyle(
@@ -119,4 +119,3 @@ class DoctorChatsScreen extends StatelessWidget {
     return '$hour:$minute $period';
   }
 }
-

@@ -341,5 +341,3 @@ class GlobalSearchScreen extends StatelessWidget {
     );
   }
 }
-
-

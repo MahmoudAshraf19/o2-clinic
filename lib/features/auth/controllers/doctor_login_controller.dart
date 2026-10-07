@@ -11,6 +11,7 @@ import '../../../core/utils/auth_error_handler.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class DoctorLoginController extends GetxController {
   final email = TextEditingController();
@@ -60,8 +61,8 @@ class DoctorLoginController extends GetxController {
                 ? AppLocalizations.of(context)!.doctorEmailNotFound
                 : 'This email is not found. Please contact administration.',
             snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red.withValues(alpha: 0.9),
-            colorText: Colors.white,
+            backgroundColor: AppColors.red.withValues(alpha: 0.9),
+            colorText: AppColors.white,
             duration: const Duration(seconds: 4),
           );
           return;

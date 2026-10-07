@@ -25,7 +25,9 @@ class ContactUsIntro extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceLowest,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: .25)),
+        border: Border.all(
+          color: AppColors.outlineVariant.withValues(alpha: .25),
+        ),
       ),
       child: Row(
         children: [
@@ -35,7 +37,7 @@ class ContactUsIntro extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 height: 1.6,
-                color: Colors.grey.shade800,
+                color: AppColors.grey800,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -69,14 +71,14 @@ class SupportChatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(24),
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
               color: AppColors.outlineVariant.withValues(alpha: .25),
@@ -102,8 +104,8 @@ class SupportChatTile extends StatelessWidget {
                         height: 12,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.green,
-                          border: Border.all(color: Colors.white, width: 2),
+                          color: AppColors.green,
+                          border: Border.all(color: AppColors.white, width: 2),
                         ),
                       ),
                     ),
@@ -140,7 +142,7 @@ class SupportChatTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 13,
-                        color: Colors.grey.shade600,
+                        color: AppColors.grey600,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -155,14 +157,14 @@ class SupportChatTile extends StatelessWidget {
                     lastMessageTime,
                     style: TextStyle(
                       fontSize: 11,
-                      color: Colors.grey.shade600,
+                      color: AppColors.grey600,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Icon(
                     Icons.chevron_right_rounded,
-                    color: Colors.grey.shade500,
+                    color: AppColors.grey500,
                   ),
                 ],
               ),
@@ -183,9 +185,11 @@ class SupportAuthPrompt extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: .25)),
+        border: Border.all(
+          color: AppColors.outlineVariant.withValues(alpha: .25),
+        ),
       ),
       child: Column(
         children: [
@@ -214,7 +218,7 @@ class SupportAuthPrompt extends StatelessWidget {
             style: TextStyle(
               fontSize: 13.5,
               height: 1.5,
-              color: Colors.grey.shade600,
+              color: AppColors.grey600,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -240,7 +244,7 @@ class SupportAuthPrompt extends StatelessWidget {
                   onPressed: () => Get.toNamed(AppRoutes.register),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -267,7 +271,7 @@ class ChatComposer extends StatelessWidget {
       Container(
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 20),
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(26)),
         ),
         child: SafeArea(
@@ -279,7 +283,7 @@ class ChatComposer extends StatelessWidget {
                 width: 42,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: AppColors.grey300,
                   borderRadius: BorderRadius.circular(100),
                 ),
               ),
@@ -364,7 +368,7 @@ class ChatComposer extends StatelessWidget {
                       Text(
                         AppLocalizations.of(context)!.compressingMedia,
                         style: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: AppColors.grey700,
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
                         ),
@@ -396,7 +400,7 @@ class ChatComposer extends StatelessWidget {
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         borderRadius: BorderRadius.circular(26),
                       ),
                       child: Row(
@@ -408,9 +412,7 @@ class ChatComposer extends StatelessWidget {
                               minLines: 1,
                               maxLines: 5,
                               textInputAction: TextInputAction.newline,
-                              hint: AppLocalizations.of(
-                                context,
-                              )!.typeAMessage,
+                              hint: AppLocalizations.of(context)!.typeAMessage,
                               type: CommonTextFieldType.multiline,
                               showBorder: false,
                               filled: false,
@@ -423,7 +425,7 @@ class ChatComposer extends StatelessWidget {
                           IconButton(
                             icon: const Icon(
                               Icons.attach_file_rounded,
-                              color: Color(0xFF64748B),
+                              color: AppColors.colorFF64748B,
                               size: 24,
                             ),
                             onPressed: () => _showAttachmentSheet(context),
@@ -466,7 +468,7 @@ class ChatComposer extends StatelessWidget {
                                 padding: EdgeInsets.all(14),
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2.2,
-                                  color: Colors.white,
+                                  color: AppColors.white,
                                 ),
                               )
                             : Icon(
@@ -475,7 +477,7 @@ class ChatComposer extends StatelessWidget {
                                     : (recording
                                           ? Icons.stop_rounded
                                           : Icons.mic_rounded),
-                                color: Colors.white,
+                                color: AppColors.white,
                                 size: 22,
                               ),
                       ),
@@ -549,7 +551,7 @@ class _AgentBubble extends StatelessWidget {
                   vertical: 10,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(18),
                     topRight: Radius.circular(18),
@@ -566,7 +568,7 @@ class _AgentBubble extends StatelessWidget {
                   style: const TextStyle(
                     height: 1.5,
                     fontSize: 14,
-                    color: Color(0xFF1E293B),
+                    color: AppColors.colorFF1E293B,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -576,7 +578,10 @@ class _AgentBubble extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 4),
                 child: Text(
                   formatTime(message.createdAt),
-                  style: TextStyle(fontSize: 10, color: Colors.grey.shade600),
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: AppColors.grey600,
+                  ),
                 ),
               ),
             ],
@@ -628,13 +633,16 @@ class _UserBubble extends StatelessWidget {
               children: [
                 Text(
                   formatTime(message.createdAt),
-                  style: TextStyle(fontSize: 10, color: Colors.grey.shade600),
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: AppColors.grey600,
+                  ),
                 ),
                 const SizedBox(width: 4),
                 const Icon(
                   Icons.done_all_rounded,
                   size: 14,
-                  color: Colors.green,
+                  color: AppColors.green,
                 ),
               ],
             ),
@@ -667,7 +675,7 @@ class _AgentMediaBubble extends StatelessWidget {
           child: _MediaCard(
             message: message,
             backgroundColor: AppColors.surfaceContainerHigh,
-            textColor: Colors.black87,
+            textColor: AppColors.black87,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(8),
               topRight: Radius.circular(20),
@@ -696,7 +704,7 @@ class _UserMediaBubble extends StatelessWidget {
         child: _MediaCard(
           message: message,
           backgroundColor: AppColors.primary,
-          textColor: Colors.white,
+          textColor: AppColors.white,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(8),
@@ -766,7 +774,7 @@ class _MediaCard extends StatelessWidget {
                 formatTime(message.createdAt),
                 style: TextStyle(
                   fontSize: 10,
-                  color: isUser ? Colors.white70 : Colors.grey.shade600,
+                  color: isUser ? AppColors.white70 : AppColors.grey600,
                 ),
               ),
               const SizedBox(width: 4),
@@ -774,7 +782,7 @@ class _MediaCard extends StatelessWidget {
                 const Icon(
                   Icons.done_all_rounded,
                   size: 14,
-                  color: Colors.green,
+                  color: AppColors.green,
                 )
               else
                 const SizedBox.shrink(),
@@ -802,7 +810,7 @@ class _ImagePreview extends StatelessWidget {
           fit: fit,
           errorBuilder: (_, _, _) {
             return Container(
-              color: Colors.black12,
+              color: AppColors.black12,
               alignment: Alignment.center,
               child: const Icon(Icons.broken_image_rounded),
             );
@@ -812,7 +820,7 @@ class _ImagePreview extends StatelessWidget {
         if (kIsWeb) {
           // Fallback if somehow it's web but not blob
           return Container(
-            color: Colors.black12,
+            color: AppColors.black12,
             alignment: Alignment.center,
             child: const CircularProgressIndicator(),
           );
@@ -822,7 +830,7 @@ class _ImagePreview extends StatelessWidget {
           fit: fit,
           errorBuilder: (_, _, _) {
             return Container(
-              color: Colors.black12,
+              color: AppColors.black12,
               alignment: Alignment.center,
               child: const Icon(Icons.broken_image_rounded),
             );
@@ -867,7 +875,7 @@ class _VideoPreview extends StatelessWidget {
         height: 180,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.black12,
+          color: AppColors.black12,
           borderRadius: BorderRadius.circular(18),
         ),
         child: Stack(
@@ -877,7 +885,7 @@ class _VideoPreview extends StatelessWidget {
               child: Icon(
                 Icons.play_circle_fill_rounded,
                 size: 60,
-                color: Colors.white,
+                color: AppColors.white,
               ),
             ),
             Positioned(
@@ -887,7 +895,7 @@ class _VideoPreview extends StatelessWidget {
               child: Text(
                 AppLocalizations.of(context)!.video,
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: .9),
+                  color: AppColors.white.withValues(alpha: .9),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -964,7 +972,7 @@ class _VideoViewerState extends State<_VideoViewer> {
                       ? Icons.pause_circle_filled_rounded
                       : Icons.play_circle_fill_rounded,
                   size: 64,
-                  color: Colors.white,
+                  color: AppColors.white,
                 ),
               ),
             ],
@@ -1037,12 +1045,14 @@ class _VoicePlayerState extends State<_VoicePlayer> {
         bool playing = false;
         try {
           playing = (snapshot.data as dynamic)?.playing ?? false;
-        } catch (e) { /* ignore */ }
+        } catch (e) {
+          /* ignore */
+        }
 
         return Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: .12),
+            color: AppColors.white.withValues(alpha: .12),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(
@@ -1062,21 +1072,21 @@ class _VoicePlayerState extends State<_VoicePlayer> {
                   height: 44,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white24,
+                    color: AppColors.white24,
                   ),
                   child: _loading
                       ? const Padding(
                           padding: EdgeInsets.all(11),
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: Colors.white,
+                            color: AppColors.white,
                           ),
                         )
                       : Icon(
                           playing
                               ? Icons.pause_rounded
                               : Icons.play_arrow_rounded,
-                          color: Colors.white,
+                          color: AppColors.white,
                           size: 28,
                         ),
                 ),
@@ -1086,7 +1096,7 @@ class _VoicePlayerState extends State<_VoicePlayer> {
                 child: Text(
                   AppLocalizations.of(context)!.voiceNote,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
                   ),
@@ -1116,7 +1126,7 @@ class _AttachmentAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(20),
@@ -1126,7 +1136,9 @@ class _AttachmentAction extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.surfaceLowest,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: AppColors.outlineVariant.withValues(alpha: .2)),
+            border: Border.all(
+              color: AppColors.outlineVariant.withValues(alpha: .2),
+            ),
           ),
           child: Row(
             children: [
@@ -1152,7 +1164,7 @@ class _AttachmentAction extends StatelessWidget {
                     Text(
                       subtitle,
                       style: TextStyle(
-                        color: Colors.grey.shade600,
+                        color: AppColors.grey600,
                         fontSize: 12.5,
                         fontWeight: FontWeight.w500,
                       ),
@@ -1168,8 +1180,6 @@ class _AttachmentAction extends StatelessWidget {
     );
   }
 }
-
-
 
 class _AttachmentPreview extends StatelessWidget {
   final PendingAttachment attachment;
@@ -1187,7 +1197,9 @@ class _AttachmentPreview extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceLowest,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: .2)),
+        border: Border.all(
+          color: AppColors.outlineVariant.withValues(alpha: .2),
+        ),
       ),
       child: Row(
         children: [
@@ -1235,13 +1247,19 @@ class _AttachmentPreview extends StatelessWidget {
                       attachment.localPath.split(Platform.pathSeparator).last,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.grey.shade600, fontSize: 12.5),
+                  style: TextStyle(
+                    color: AppColors.grey600,
+                    fontSize: 12.5,
+                  ),
                 ),
                 if (attachment.durationMs != null) ...[
                   const SizedBox(height: 4),
                   Text(
                     '${(attachment.durationMs! / 1000).ceil()} sec',
-                    style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                    style: TextStyle(
+                      color: AppColors.grey600,
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ],
@@ -1276,15 +1294,15 @@ class _RecordingBar extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.red.withValues(alpha: .08),
+        color: AppColors.red.withValues(alpha: .08),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Colors.red.withValues(alpha: .2)),
+        border: Border.all(color: AppColors.red.withValues(alpha: .2)),
       ),
       child: Row(
         children: [
           const Icon(
             Icons.fiber_manual_record_rounded,
-            color: Colors.red,
+            color: AppColors.red,
             size: 16,
           ),
           const SizedBox(width: 8),
@@ -1293,15 +1311,15 @@ class _RecordingBar extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.w800),
           ),
           const SizedBox(width: 10),
-          Text(duration, style: TextStyle(color: Colors.grey.shade700)),
+          Text(duration, style: TextStyle(color: AppColors.grey700)),
           const Spacer(),
           TextButton(onPressed: onCancel, child: const Text('Cancel')),
           const SizedBox(width: 6),
           ElevatedButton(
             onPressed: onStop,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+              backgroundColor: AppColors.red,
+              foregroundColor: AppColors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
               ),
@@ -1357,7 +1375,7 @@ class _Dot extends StatelessWidget {
       height: 6,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.grey.shade500,
+        color: AppColors.grey500,
       ),
     );
   }
@@ -1382,7 +1400,7 @@ class ChatDateDivider extends StatelessWidget {
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w700,
-            color: Colors.grey.shade700,
+            color: AppColors.grey700,
           ),
         ),
       ),
@@ -1398,4 +1416,3 @@ String formatTime(DateTime time) {
   final period = time.hour >= 12 ? 'PM' : 'AM';
   return '$hour:$minute $period';
 }
-

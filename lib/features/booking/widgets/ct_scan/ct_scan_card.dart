@@ -18,7 +18,7 @@ class CTScanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
         onTap: onTap,
@@ -56,13 +56,13 @@ class CTScanCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: selected
-                      ? Colors.white.withValues(alpha: .2)
+                      ? AppColors.white.withValues(alpha: .2)
                       : AppColors.surface,
                 ),
                 child: Icon(
                   card.icon,
                   size: 30,
-                  color: selected ? Colors.white : AppColors.primary,
+                  color: selected ? AppColors.white : AppColors.primary,
                 ),
               ),
 
@@ -78,7 +78,9 @@ class CTScanCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
-                        color: selected ? Colors.white : AppColors.textPrimary,
+                        color: selected
+                            ? AppColors.white
+                            : AppColors.textPrimary,
                       ),
                       child: Text(card.title),
                     ),
@@ -92,7 +94,7 @@ class CTScanCard extends StatelessWidget {
                         height: 1.6,
                         fontWeight: FontWeight.w500,
                         color: selected
-                            ? Colors.white.withValues(alpha: .8)
+                            ? AppColors.white.withValues(alpha: .8)
                             : AppColors.textSecondary,
                       ),
                       child: Text(
@@ -113,7 +115,7 @@ class CTScanCard extends StatelessWidget {
                 width: 34,
                 height: 34,
                 decoration: BoxDecoration(
-                  color: selected ? Colors.white : AppColors.surface,
+                  color: selected ? AppColors.white : AppColors.surface,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(

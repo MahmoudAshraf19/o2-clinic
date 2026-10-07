@@ -94,4 +94,3 @@ class HtmlContentScreen extends StatelessWidget {
     );
   }
 }
-

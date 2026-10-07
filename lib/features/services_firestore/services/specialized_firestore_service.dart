@@ -12,11 +12,9 @@ class SpecializedFirestoreService {
 
   Future<List<SpecializedServiceModel>> getAllSpecialized() async {
     try {
-
       final snapshot = await _firestore
           .collection("specialized")
           .get(const GetOptions(source: Source.serverAndCache));
-
 
       if (snapshot.docs.isEmpty) {
         return [];
@@ -32,7 +30,9 @@ class SpecializedFirestoreService {
 
         try {
           result.add(SpecializedServiceModel.fromMap(map: fixedMap));
-        } catch (e) { /* ignore */ }
+        } catch (e) {
+          /* ignore */
+        }
       }
 
       return result;

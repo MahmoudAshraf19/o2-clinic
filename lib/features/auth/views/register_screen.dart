@@ -25,7 +25,7 @@ class RegisterScreen extends GetView<RegisterController> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
@@ -35,14 +35,14 @@ class RegisterScreen extends GetView<RegisterController> {
           onPressed: () => Get.back(),
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: isDarkMode ? Colors.white : AppColors.brandBlue,
+            color: isDarkMode ? AppColors.white : AppColors.brandBlue,
             size: 22,
           ),
         ),
         title: Text(
           controller.isEditMode ? l10n.editAccount : l10n.createAccount,
           style: GoogleFonts.cairo(
-            color: isDarkMode ? Colors.white : AppColors.brandBlue,
+            color: isDarkMode ? AppColors.white : AppColors.brandBlue,
             fontWeight: FontWeight.w800,
             fontSize: 20,
           ),
@@ -55,7 +55,9 @@ class RegisterScreen extends GetView<RegisterController> {
                 child: Text(
                   l10n.editing,
                   style: GoogleFonts.cairo(
-                    color: isDarkMode ? Colors.white70 : AppColors.brandBlue.withValues(alpha: 0.6),
+                    color: isDarkMode
+                        ? AppColors.white70
+                        : AppColors.brandBlue.withValues(alpha: 0.6),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -68,7 +70,10 @@ class RegisterScreen extends GetView<RegisterController> {
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 20,
+                ),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
                     maxWidth: isTablet ? 500 : double.infinity,
@@ -87,17 +92,25 @@ class RegisterScreen extends GetView<RegisterController> {
                           margin: const EdgeInsets.only(bottom: 16),
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: isDarkMode ? Colors.green.withValues(alpha: 0.1) : const Color(0xFFEAF8F6),
+                            color: isDarkMode
+                                ? AppColors.green.withValues(alpha: 0.1)
+                                : AppColors.colorFFEAF8F6,
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: isDarkMode ? Colors.green.withValues(alpha: 0.3) : AppColors.vibrantCyan.withValues(alpha: 0.3),
+                              color: isDarkMode
+                                  ? AppColors.green.withValues(alpha: 0.3)
+                                  : AppColors.vibrantCyan.withValues(
+                                      alpha: 0.3,
+                                    ),
                             ),
                           ),
                           child: Row(
                             children: [
                               Icon(
                                 Icons.check_circle_outline_rounded,
-                                color: isDarkMode ? Colors.greenAccent : AppColors.vibrantCyan,
+                                color: isDarkMode
+                                    ? AppColors.greenAccent
+                                    : AppColors.vibrantCyan,
                                 size: 24,
                               ),
                               const SizedBox(width: 12),
@@ -105,7 +118,9 @@ class RegisterScreen extends GetView<RegisterController> {
                                 child: Text(
                                   msg,
                                   style: GoogleFonts.cairo(
-                                    color: isDarkMode ? Colors.white : AppColors.brandBlue,
+                                    color: isDarkMode
+                                        ? AppColors.white
+                                        : AppColors.brandBlue,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 15,
                                   ),
@@ -125,17 +140,17 @@ class RegisterScreen extends GetView<RegisterController> {
                           margin: const EdgeInsets.only(bottom: 16),
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: Colors.red.withValues(alpha: 0.08),
+                            color: AppColors.red.withValues(alpha: 0.08),
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: Colors.red.withValues(alpha: 0.2),
+                              color: AppColors.red.withValues(alpha: 0.2),
                             ),
                           ),
                           child: Row(
                             children: [
                               const Icon(
                                 Icons.error_outline_rounded,
-                                color: Colors.red,
+                                color: AppColors.red,
                                 size: 24,
                               ),
                               const SizedBox(width: 12),
@@ -143,7 +158,9 @@ class RegisterScreen extends GetView<RegisterController> {
                                 child: Text(
                                   msg,
                                   style: GoogleFonts.cairo(
-                                    color: isDarkMode ? Colors.red.shade300 : Colors.red.shade700,
+                                    color: isDarkMode
+                                        ? AppColors.red300
+                                        : AppColors.red700,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 15,
                                   ),
@@ -165,7 +182,7 @@ class RegisterScreen extends GetView<RegisterController> {
             if (!controller.isLoading.value) return const SizedBox.shrink();
 
             return Container(
-              color: Colors.black.withValues(alpha: 0.3),
+              color: AppColors.black.withValues(alpha: 0.3),
               child: const Center(
                 child: CircularProgressIndicator(color: AppColors.vibrantCyan),
               ),
@@ -183,18 +200,18 @@ class RegisterScreen extends GetView<RegisterController> {
         Text(
           controller.isEditMode ? l10n.editYourAccount : l10n.createYourAccount,
           style: GoogleFonts.cairo(
-            fontSize: 26, 
+            fontSize: 26,
             fontWeight: FontWeight.w800,
-            color: isDarkMode ? Colors.white : AppColors.brandBlue,
+            color: isDarkMode ? AppColors.white : AppColors.brandBlue,
           ),
         ),
         const SizedBox(height: 6),
         Text(
-          controller.isEditMode
-              ? l10n.updateProfileSafely
-              : l10n.joinUsJourney,
+          controller.isEditMode ? l10n.updateProfileSafely : l10n.joinUsJourney,
           style: GoogleFonts.cairo(
-            color: isDarkMode ? Colors.white60 : AppColors.brandBlue.withValues(alpha: 0.6),
+            color: isDarkMode
+                ? AppColors.white60
+                : AppColors.brandBlue.withValues(alpha: 0.6),
             fontSize: 15,
           ),
         ),
@@ -202,7 +219,11 @@ class RegisterScreen extends GetView<RegisterController> {
     );
   }
 
-  Widget _formFields(BuildContext context, AppLocalizations l10n, bool isDarkMode) {
+  Widget _formFields(
+    BuildContext context,
+    AppLocalizations l10n,
+    bool isDarkMode,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -225,9 +246,9 @@ class RegisterScreen extends GetView<RegisterController> {
 
         // Full Name
         _field(
-          controller: controller.name, 
-          hint: l10n.fullName, 
-          iconPath: 'assets/icons/user.png', 
+          controller: controller.name,
+          hint: l10n.fullName,
+          iconPath: 'assets/icons/user.png',
           isDarkMode: isDarkMode,
         ),
         const SizedBox(height: 12),
@@ -240,7 +261,9 @@ class RegisterScreen extends GetView<RegisterController> {
             icon: Icons.mail_outline_rounded,
             isLocked: controller.isEditMode,
             isDarkMode: isDarkMode,
-            errorText: controller.emailError.value.isEmpty ? null : controller.emailError.value,
+            errorText: controller.emailError.value.isEmpty
+                ? null
+                : controller.emailError.value,
           ),
         ),
         const SizedBox(height: 12),
@@ -263,10 +286,10 @@ class RegisterScreen extends GetView<RegisterController> {
 
         // Bio
         _field(
-          controller: controller.bio, 
-          hint: l10n.bio, 
-          iconPath: 'assets/icons/user.png', 
-          max: 3, 
+          controller: controller.bio,
+          hint: l10n.bio,
+          iconPath: 'assets/icons/user.png',
+          max: 3,
           isDarkMode: isDarkMode,
         ),
         const SizedBox(height: 32),
@@ -278,12 +301,18 @@ class RegisterScreen extends GetView<RegisterController> {
     );
   }
 
-  Widget _editLockNote(BuildContext context, AppLocalizations l10n, bool isDarkMode) {
+  Widget _editLockNote(
+    BuildContext context,
+    AppLocalizations l10n,
+    bool isDarkMode,
+  ) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: isDarkMode ? AppColors.vibrantCyan.withValues(alpha: 0.1) : AppColors.softCyan.withValues(alpha: 0.15),
+        color: isDarkMode
+            ? AppColors.vibrantCyan.withValues(alpha: 0.1)
+            : AppColors.softCyan.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.vibrantCyan.withValues(alpha: 0.3)),
       ),
@@ -297,7 +326,9 @@ class RegisterScreen extends GetView<RegisterController> {
               style: GoogleFonts.cairo(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: isDarkMode ? Colors.white70 : AppColors.brandBlue.withValues(alpha: 0.8),
+                color: isDarkMode
+                    ? AppColors.white70
+                    : AppColors.brandBlue.withValues(alpha: 0.8),
               ),
             ),
           ),
@@ -316,7 +347,9 @@ class RegisterScreen extends GetView<RegisterController> {
           children: [
             CircleAvatar(
               radius: 56,
-              backgroundColor: isDarkMode ? const Color(0xFF1A2625) : Colors.white,
+              backgroundColor: isDarkMode
+                  ? AppColors.colorFF1A2625
+                  : AppColors.white,
               child: ClipOval(
                 child: SizedBox(
                   width: 112,
@@ -333,7 +366,10 @@ class RegisterScreen extends GetView<RegisterController> {
                 decoration: BoxDecoration(
                   color: AppColors.vibrantCyan,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Theme.of(Get.context!).scaffoldBackgroundColor, width: 2),
+                  border: Border.all(
+                    color: Theme.of(Get.context!).scaffoldBackgroundColor,
+                    width: 2,
+                  ),
                 ),
                 child: Image.asset(
                   'assets/icons/pencil.png',
@@ -354,7 +390,8 @@ class RegisterScreen extends GetView<RegisterController> {
       return _avatarFallback(isDarkMode);
     }
 
-    if (!kIsWeb && (value.startsWith('/') || RegExp(r'^[a-zA-Z]:\\').hasMatch(value))) {
+    if (!kIsWeb &&
+        (value.startsWith('/') || RegExp(r'^[a-zA-Z]:\\').hasMatch(value))) {
       return Image.file(
         io.File(value),
         fit: BoxFit.cover,
@@ -366,10 +403,16 @@ class RegisterScreen extends GetView<RegisterController> {
       return CachedImageWidget(
         imageUrl: value,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => _avatarFallback(isDarkMode),
+        errorBuilder: (context, error, stackTrace) =>
+            _avatarFallback(isDarkMode),
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
-          return const Center(child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.vibrantCyan));
+          return const Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: AppColors.vibrantCyan,
+            ),
+          );
         },
       );
     }
@@ -379,16 +422,20 @@ class RegisterScreen extends GetView<RegisterController> {
 
   Widget _avatarFallback(bool isDarkMode) {
     return Container(
-      color: isDarkMode ? const Color(0xFF1A2625) : Colors.grey.shade100,
+      color: isDarkMode ? AppColors.colorFF1A2625 : AppColors.grey100,
       alignment: Alignment.center,
       child: Image.asset(
         'assets/icons/user.png',
         width: 40,
         height: 40,
         fit: BoxFit.contain,
-        color: isDarkMode ? Colors.white24 : Colors.grey.shade400,
+        color: isDarkMode ? AppColors.white24 : AppColors.grey400,
         errorBuilder: (_, _, _) {
-          return Icon(Icons.person, size: 40, color: isDarkMode ? Colors.white24 : Colors.grey.shade400);
+          return Icon(
+            Icons.person,
+            size: 40,
+            color: isDarkMode ? AppColors.white24 : AppColors.grey400,
+          );
         },
       ),
     );
@@ -404,7 +451,9 @@ class RegisterScreen extends GetView<RegisterController> {
     Widget? suffix,
     bool readOnly = false,
   }) {
-    final iconColor = isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5);
+    final iconColor = isDarkMode
+        ? AppColors.white54
+        : AppColors.brandBlue.withValues(alpha: 0.5);
     return CommonTextField(
       controller: controller,
       maxLines: max,
@@ -413,12 +462,7 @@ class RegisterScreen extends GetView<RegisterController> {
       hint: hint,
       prefixWidget: Padding(
         padding: const EdgeInsets.all(14),
-        child: Image.asset(
-          iconPath,
-          width: 20,
-          height: 20,
-          color: iconColor,
-        ),
+        child: Image.asset(iconPath, width: 20, height: 20, color: iconColor),
       ),
       suffixWidget: suffix,
     );
@@ -432,7 +476,9 @@ class RegisterScreen extends GetView<RegisterController> {
     bool isLocked = true,
     String? errorText,
   }) {
-    final iconColor = isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5);
+    final iconColor = isDarkMode
+        ? AppColors.white54
+        : AppColors.brandBlue.withValues(alpha: 0.5);
     return CommonTextField(
       controller: controller,
       readOnly: isLocked,
@@ -456,10 +502,14 @@ class RegisterScreen extends GetView<RegisterController> {
           child: Padding(
             padding: const EdgeInsets.all(14),
             child: Image.asset(
-              controller.showPassword.value ? 'assets/icons/eye.png' : 'assets/icons/hidden.png',
+              controller.showPassword.value
+                  ? 'assets/icons/eye.png'
+                  : 'assets/icons/hidden.png',
               width: 22,
               height: 22,
-              color: isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5),
+              color: isDarkMode
+                  ? AppColors.white54
+                  : AppColors.brandBlue.withValues(alpha: 0.5),
             ),
           ),
         ),
@@ -472,7 +522,10 @@ class RegisterScreen extends GetView<RegisterController> {
       final match = controller.passwordMatch.value;
       final started = controller.hasStartedTypingConfirm.value;
 
-      final showMessage = started && controller.password.text.isNotEmpty && controller.confirmPassword.text.isNotEmpty;
+      final showMessage =
+          started &&
+          controller.password.text.isNotEmpty &&
+          controller.confirmPassword.text.isNotEmpty;
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -488,10 +541,14 @@ class RegisterScreen extends GetView<RegisterController> {
               child: Padding(
                 padding: const EdgeInsets.all(14),
                 child: Image.asset(
-                  controller.showConfirm.value ? 'assets/icons/eye.png' : 'assets/icons/hidden.png',
+                  controller.showConfirm.value
+                      ? 'assets/icons/eye.png'
+                      : 'assets/icons/hidden.png',
                   width: 22,
                   height: 22,
-                  color: isDarkMode ? Colors.white54 : AppColors.brandBlue.withValues(alpha: 0.5),
+                  color: isDarkMode
+                      ? AppColors.white54
+                      : AppColors.brandBlue.withValues(alpha: 0.5),
                 ),
               ),
             ),
@@ -506,7 +563,7 @@ class RegisterScreen extends GetView<RegisterController> {
                   Icon(
                     match ? Icons.check_circle_rounded : Icons.error_rounded,
                     size: 16,
-                    color: match ? Colors.green : Colors.red,
+                    color: match ? AppColors.green : AppColors.red,
                   ),
                   const SizedBox(width: 8),
                   Text(
@@ -514,33 +571,36 @@ class RegisterScreen extends GetView<RegisterController> {
                     style: GoogleFonts.cairo(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: match ? Colors.green : Colors.red,
+                      color: match ? AppColors.green : AppColors.red,
                     ),
                   ),
                 ],
               ),
             ),
-          ]
+          ],
         ],
       );
     });
   }
 
   Widget _phone(BuildContext context, AppLocalizations l10n, bool isDarkMode) {
-    final borderColor = isDarkMode ? Colors.white24 : Colors.grey.shade300;
-    final fillColor = isDarkMode ? const Color(0xFF1A2625) : Colors.white;
-    final textColor = isDarkMode ? Colors.white : AppColors.brandBlue;
+    final borderColor = isDarkMode
+        ? AppColors.white24
+        : AppColors.grey300;
+    final fillColor = isDarkMode ? AppColors.colorFF1A2625 : AppColors.white;
+    final textColor = isDarkMode ? AppColors.white : AppColors.brandBlue;
 
     return Obx(() {
       return Row(
-        crossAxisAlignment: CrossAxisAlignment.start, // Align to top in case textfield shows error
+        crossAxisAlignment: CrossAxisAlignment
+            .start, // Align to top in case textfield shows error
         children: [
           GestureDetector(
             onTap: () {
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                backgroundColor: Colors.transparent,
+                backgroundColor: AppColors.transparent,
                 builder: (_) {
                   return CountryPickerSheet(
                     onSelect: (country) {
@@ -575,7 +635,10 @@ class RegisterScreen extends GetView<RegisterController> {
                     ),
                   ),
                   const SizedBox(width: 4),
-                  Icon(Icons.keyboard_arrow_down_rounded, color: textColor.withValues(alpha: 0.7)),
+                  Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: textColor.withValues(alpha: 0.7),
+                  ),
                 ],
               ),
             ),
@@ -585,7 +648,8 @@ class RegisterScreen extends GetView<RegisterController> {
             child: _field(
               controller: controller.phone,
               hint: l10n.phone,
-              iconPath: 'assets/icons/phone-call.png', // Or use normal icon since you don't have this one requested
+              iconPath:
+                  'assets/icons/phone-call.png', // Or use normal icon since you don't have this one requested
               isDarkMode: isDarkMode,
             ),
           ),
@@ -607,14 +671,20 @@ class RegisterScreen extends GetView<RegisterController> {
   }
 
   Widget _genderBtn(String value, String icon, bool isDarkMode) {
-     // Note: controller.gender is comparing localized value now? Actually controller sets 'Male'/'Female'.
+    // Note: controller.gender is comparing localized value now? Actually controller sets 'Male'/'Female'.
     // Better to check if value matches what controller sets. Controller expects English values internally or localized? Let's assume it checks english, wait, the old code used 'Male' and 'Female'.
     // Let's keep the internal value english but display localized.
-    final internalValue = value.contains('ذكر') || value.toLowerCase() == 'male' ? 'Male' : 'Female';
+    final internalValue = value.contains('ذكر') || value.toLowerCase() == 'male'
+        ? 'Male'
+        : 'Female';
     final isSelected = controller.gender.value == internalValue;
-    
-    final borderColor = isDarkMode ? Colors.white24 : Colors.grey.shade300;
-    final unselectedColor = isDarkMode ? const Color(0xFF1A2625) : Colors.white;
+
+    final borderColor = isDarkMode
+        ? AppColors.white24
+        : AppColors.grey300;
+    final unselectedColor = isDarkMode
+        ? AppColors.colorFF1A2625
+        : AppColors.white;
 
     return Expanded(
       child: GestureDetector(
@@ -625,7 +695,9 @@ class RegisterScreen extends GetView<RegisterController> {
           decoration: BoxDecoration(
             color: isSelected ? AppColors.brandBlue : unselectedColor,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: isSelected ? AppColors.brandBlue : borderColor),
+            border: Border.all(
+              color: isSelected ? AppColors.brandBlue : borderColor,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -633,13 +705,17 @@ class RegisterScreen extends GetView<RegisterController> {
               Image.asset(
                 icon,
                 width: 20,
-                color: isSelected ? Colors.white : (isDarkMode ? Colors.white70 : AppColors.brandBlue),
+                color: isSelected
+                    ? AppColors.white
+                    : (isDarkMode ? AppColors.white70 : AppColors.brandBlue),
               ),
               const SizedBox(width: 8),
               Text(
                 value,
                 style: GoogleFonts.cairo(
-                  color: isSelected ? Colors.white : (isDarkMode ? Colors.white : AppColors.brandBlue),
+                  color: isSelected
+                      ? AppColors.white
+                      : (isDarkMode ? AppColors.white : AppColors.brandBlue),
                   fontWeight: FontWeight.w700,
                   fontSize: 15,
                 ),
@@ -660,7 +736,7 @@ class RegisterScreen extends GetView<RegisterController> {
           onPressed: controller.isLoading.value ? null : controller.submitForm,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.brandBlue,
-            foregroundColor: Colors.white,
+            foregroundColor: AppColors.white,
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(28),
@@ -670,13 +746,18 @@ class RegisterScreen extends GetView<RegisterController> {
               ? const SizedBox(
                   width: 24,
                   height: 24,
-                  child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
+                  child: CircularProgressIndicator(
+                    color: AppColors.white,
+                    strokeWidth: 2.5,
+                  ),
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      controller.isEditMode ? l10n.saveChanges : l10n.createAccountBtn,
+                      controller.isEditMode
+                          ? l10n.saveChanges
+                          : l10n.createAccountBtn,
                       style: GoogleFonts.cairo(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -685,7 +766,7 @@ class RegisterScreen extends GetView<RegisterController> {
                     if (!controller.isEditMode) ...[
                       const SizedBox(width: 8),
                       const Icon(Icons.arrow_forward, size: 20),
-                    ]
+                    ],
                   ],
                 ),
         ),
@@ -693,5 +774,3 @@ class RegisterScreen extends GetView<RegisterController> {
     });
   }
 }
-
-

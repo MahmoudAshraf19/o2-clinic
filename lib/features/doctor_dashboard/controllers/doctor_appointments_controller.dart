@@ -51,7 +51,6 @@ class DoctorAppointmentsController extends GetxController {
         .snapshots()
         .listen(
           (snapshot) {
-
             final sortedDocs = snapshot.docs.toList();
             sortedDocs.sort((a, b) {
               final dataA = a.data();

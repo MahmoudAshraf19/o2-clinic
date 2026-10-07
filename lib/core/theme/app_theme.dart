@@ -7,7 +7,9 @@ class AppTheme {
   AppTheme._();
 
   // Light theme configuration
-  static ThemeData get lightTheme { return ThemeData( brightness: Brightness.light,
+  static ThemeData get lightTheme {
+    return ThemeData(
+      brightness: Brightness.light,
       useMaterial3: true,
       scaffoldBackgroundColor: AppColors.scaffoldLight,
       cardColor: AppColors.pureWhite,
@@ -97,7 +99,9 @@ class AppTheme {
   }
 
   // Dark theme configuration
-  static ThemeData get darkTheme { return ThemeData( brightness: Brightness.dark,
+  static ThemeData get darkTheme {
+    return ThemeData(
+      brightness: Brightness.dark,
       useMaterial3: true,
       scaffoldBackgroundColor: AppColors.scaffoldDark,
       cardColor: const Color(0xFF1E2A29),
@@ -186,5 +190,3 @@ class AppTheme {
     );
   }
 }
-
-

@@ -86,7 +86,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F7F9),
+      backgroundColor: AppColors.colorFFF4F7F9,
       body: SafeArea(
         child: user == null
             ? _buildNotLoggedInView(context)
@@ -123,7 +123,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
 
                   return RefreshIndicator(
                     color: AppColors.primary,
-                    backgroundColor: Colors.white,
+                    backgroundColor: AppColors.white,
                     onRefresh: () async {
                       setState(() {
                         _bookingsStream = _service.streamBookingsByUserId(
@@ -214,11 +214,11 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.04),
+                  color: AppColors.black.withValues(alpha: 0.04),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -250,7 +250,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                 AppLocalizations.of(context)!.manageYourBookingsEasily,
                 style: TextStyle(
                   fontSize: 13,
-                  color: Colors.grey.shade600,
+                  color: AppColors.grey600,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -279,14 +279,14 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF1E877B), Color(0xFF0F5A51)],
+          colors: [AppColors.colorFF1E877B, AppColors.colorFF0F5A51],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF1E877B).withValues(alpha: 0.3),
+            color: AppColors.colorFF1E877B.withValues(alpha: 0.3),
             blurRadius: 24,
             offset: const Offset(0, 10),
           ),
@@ -303,7 +303,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                 width: 150,
                 height: 150,
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
+                  color: AppColors.white.withValues(alpha: 0.05),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -315,7 +315,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                 width: 100,
                 height: 100,
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
+                  color: AppColors.white.withValues(alpha: 0.05),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -343,7 +343,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: AppColors.white,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -353,7 +353,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                               subtitle,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.white.withValues(alpha: 0.85),
+                                color: AppColors.white.withValues(alpha: 0.85),
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -367,10 +367,10 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
+                          color: AppColors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.1),
+                            color: AppColors.white.withValues(alpha: 0.1),
                           ),
                         ),
                         child: Text(
@@ -378,7 +378,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: AppColors.white,
                           ),
                         ),
                       ),
@@ -388,7 +388,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                   Container(
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.12),
+                      color: AppColors.black.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Row(
@@ -396,7 +396,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                         const Icon(
                           Icons.access_time_filled_rounded,
                           size: 20,
-                          color: Colors.white,
+                          color: AppColors.white,
                         ),
                         const SizedBox(width: 10),
                         Expanded(
@@ -405,7 +405,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                              color: AppColors.white,
                             ),
                           ),
                         ),
@@ -455,7 +455,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
           ? 'قريباً'
           : 'Soon';
     }
-    
+
     final now = DateTime.now();
     final diff = date.difference(now).inDays;
     final isAr = Localizations.localeOf(context).languageCode == 'ar';
@@ -468,11 +468,11 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
   Widget _buildSearchBar() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
+            color: AppColors.black.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -498,7 +498,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
           Icon(
             Icons.filter_list_rounded,
             size: 20,
-            color: _showFilters ? AppColors.primary : Colors.grey.shade600,
+            color: _showFilters ? AppColors.primary : AppColors.grey600,
           ),
           const SizedBox(width: 6),
           Text(
@@ -508,7 +508,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: _showFilters ? AppColors.primary : Colors.grey.shade600,
+              color: _showFilters ? AppColors.primary : AppColors.grey600,
             ),
           ),
           const SizedBox(width: 4),
@@ -517,7 +517,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                 ? Icons.keyboard_arrow_up_rounded
                 : Icons.keyboard_arrow_down_rounded,
             size: 18,
-            color: _showFilters ? AppColors.primary : Colors.grey.shade600,
+            color: _showFilters ? AppColors.primary : AppColors.grey600,
           ),
         ],
       ),
@@ -530,9 +530,9 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.grey200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -604,7 +604,11 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     );
   }
 
-  String _statusLabel(BuildContext context, AppointmentStatusFilter filter, bool isAr) {
+  String _statusLabel(
+    BuildContext context,
+    AppointmentStatusFilter filter,
+    bool isAr,
+  ) {
     switch (filter) {
       case AppointmentStatusFilter.all:
         return isAr ? 'الكل' : 'All';
@@ -658,7 +662,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: AppColors.black87,
           ),
         ),
         Container(
@@ -758,7 +762,6 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         booking.timeline.createdAt?.toDate();
     if (date == null) return false;
 
-    
     final now = DateTime.now();
     final diffDays = now.difference(date).inDays;
 
@@ -804,9 +807,9 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.grey.shade200, width: 2),
+        border: Border.all(color: AppColors.grey200, width: 2),
       ),
       child: Column(
         children: [
@@ -828,14 +831,14 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.black87,
+              color: AppColors.black87,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             AppLocalizations.of(context)!.tryChangingTheFilterOr,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 14, color: AppColors.grey600),
           ),
         ],
       ),
@@ -849,10 +852,13 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
-              BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 20),
+              BoxShadow(
+                color: AppColors.black.withValues(alpha: 0.05),
+                blurRadius: 20,
+              ),
             ],
           ),
           child: Column(
@@ -875,14 +881,14 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
               Text(
                 AppLocalizations.of(context)!.pleaseLoginOrCreateAn,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                style: TextStyle(fontSize: 14, color: AppColors.grey600),
               ),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () => Get.toNamed(AppRoutes.login),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.white,
                   minimumSize: const Size.fromHeight(54),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -905,7 +911,11 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.error_outline_rounded, size: 48, color: Colors.red),
+          const Icon(
+            Icons.error_outline_rounded,
+            size: 48,
+            color: AppColors.red,
+          ),
           const SizedBox(height: 12),
           Text(
             AppLocalizations.of(context)!.somethingWentWrong,
@@ -914,7 +924,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
           Text(
             error,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey.shade600),
+            style: TextStyle(color: AppColors.grey600),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
@@ -930,7 +940,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (_) => _BookingDetailsSheet(booking: booking),
     );
   }
@@ -955,16 +965,16 @@ class _FilterChipWidget extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : Colors.grey.shade100,
+          color: isSelected ? AppColors.primary : AppColors.grey100,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? AppColors.primary : Colors.grey.shade300,
+            color: isSelected ? AppColors.primary : AppColors.grey300,
           ),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.grey.shade700,
+            color: isSelected ? AppColors.white : AppColors.grey700,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
             fontSize: 13,
           ),
@@ -990,16 +1000,16 @@ class _AppointmentCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
+              color: AppColors.black.withValues(alpha: 0.03),
               blurRadius: 15,
               offset: const Offset(0, 5),
             ),
           ],
-          border: Border.all(color: Colors.grey.shade100),
+          border: Border.all(color: AppColors.grey100),
         ),
         child: Column(
           children: [
@@ -1020,7 +1030,7 @@ class _AppointmentCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                          color: AppColors.black87,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -1030,7 +1040,7 @@ class _AppointmentCard extends StatelessWidget {
                         _BookingHelper.subtitle(context, booking),
                         style: TextStyle(
                           fontSize: 13,
-                          color: Colors.grey.shade600,
+                          color: AppColors.grey600,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -1048,7 +1058,7 @@ class _AppointmentCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: const Color(0xFFF4F7F9),
+                color: AppColors.colorFFF4F7F9,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
@@ -1067,14 +1077,14 @@ class _AppointmentCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: AppColors.black87,
                       ),
                     ),
                   ),
                   Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 14,
-                    color: Colors.grey.shade400,
+                    color: AppColors.grey400,
                   ),
                 ],
               ),
@@ -1097,16 +1107,16 @@ class _StatusBadge extends StatelessWidget {
     Color bg, fg;
     String label;
     if (status == 'completed') {
-      bg = Colors.green.shade50;
-      fg = Colors.green.shade700;
+      bg = AppColors.green50;
+      fg = AppColors.green700;
       label = isAr ? 'مكتمل' : 'Completed';
     } else if (status == 'cancelled') {
-      bg = Colors.red.shade50;
-      fg = Colors.red.shade700;
+      bg = AppColors.red50;
+      fg = AppColors.red700;
       label = isAr ? 'ملغي' : 'Cancelled';
     } else if (status == 'pending' || status == 'pending_price') {
-      bg = Colors.orange.shade50;
-      fg = Colors.orange.shade700;
+      bg = AppColors.orange50;
+      fg = AppColors.orange700;
       label = isAr ? 'معلق' : 'Pending';
     } else {
       bg = AppColors.primary.withValues(alpha: 0.1);
@@ -1147,7 +1157,7 @@ class _DoctorAvatar extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color: isHero
-            ? Colors.white.withValues(alpha: 0.15)
+            ? AppColors.white.withValues(alpha: 0.15)
             : AppColors.primary.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(16),
       ),
@@ -1158,12 +1168,12 @@ class _DoctorAvatar extends StatelessWidget {
               fit: BoxFit.cover,
               errorBuilder: (_, _, _) => Icon(
                 fallbackIcon,
-                color: isHero ? Colors.white : AppColors.primary,
+                color: isHero ? AppColors.white : AppColors.primary,
               ),
             )
           : Icon(
               fallbackIcon,
-              color: isHero ? Colors.white : AppColors.primary,
+              color: isHero ? AppColors.white : AppColors.primary,
             ),
     );
   }
@@ -1184,8 +1194,10 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = filled ? Colors.white : Colors.white.withValues(alpha: 0.15);
-    final fg = filled ? AppColors.primary : Colors.white;
+    final bg = filled
+        ? AppColors.white
+        : AppColors.white.withValues(alpha: 0.15);
+    final fg = filled ? AppColors.primary : AppColors.white;
 
     return Material(
       color: bg,
@@ -1224,18 +1236,18 @@ class _BookingDetailsSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final isAr = Localizations.localeOf(context).languageCode == 'ar';
     final date = booking.schedule.timestamp?.toDate();
-    
-    
+
     // Can cancel if status is not cancelled/completed/no_show
     final currentStatus = booking.status.current.toLowerCase();
-    final bool canCancel = currentStatus != 'cancelled' &&
+    final bool canCancel =
+        currentStatus != 'cancelled' &&
         currentStatus != 'completed' &&
         currentStatus != 'no_show';
 
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
       ),
       child: Column(
@@ -1247,7 +1259,7 @@ class _BookingDetailsSheet extends StatelessWidget {
               width: 50,
               height: 5,
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: AppColors.grey300,
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -1269,7 +1281,7 @@ class _BookingDetailsSheet extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        color: AppColors.black87,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -1277,7 +1289,7 @@ class _BookingDetailsSheet extends StatelessWidget {
                       _BookingHelper.subtitle(context, booking),
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.grey.shade600,
+                        color: AppColors.grey600,
                       ),
                     ),
                   ],
@@ -1344,7 +1356,7 @@ class _BookingDetailsSheet extends StatelessWidget {
                         catDoc.data()!,
                       );
                       Get.back(); // close bottom sheet
-                      
+
                       Get.to(
                         () => RadiologyConfirmBookingScreen(
                           service: service,
@@ -1366,7 +1378,7 @@ class _BookingDetailsSheet extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -1394,7 +1406,7 @@ class _BookingDetailsSheet extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.grey.shade600,
+                    color: AppColors.grey600,
                   ),
                 ),
               ),
@@ -1406,7 +1418,7 @@ class _BookingDetailsSheet extends StatelessWidget {
                 onPressed: () => Get.back(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -1441,16 +1453,16 @@ class _BookingDetailsSheet extends StatelessWidget {
                         ),
                       ),
                       content: Text(
-                        isAr 
-                          ? 'هل أنت متأكد من إلغاء حجزك؟' 
-                          : 'Are you sure you want to cancel your booking?',
+                        isAr
+                            ? 'هل أنت متأكد من إلغاء حجزك؟'
+                            : 'Are you sure you want to cancel your booking?',
                         style: const TextStyle(fontSize: 16),
                       ),
                       actions: [
                         TextButton(
                           onPressed: () => Get.back(result: false),
                           style: TextButton.styleFrom(
-                            foregroundColor: Colors.grey.shade600,
+                            foregroundColor: AppColors.grey600,
                           ),
                           child: Text(
                             isAr ? 'لا' : 'No',
@@ -1461,7 +1473,7 @@ class _BookingDetailsSheet extends StatelessWidget {
                           onPressed: () => Get.back(result: true),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -1478,7 +1490,9 @@ class _BookingDetailsSheet extends StatelessWidget {
                   if (confirm == true) {
                     Get.dialog(
                       const Center(
-                        child: CircularProgressIndicator(color: AppColors.primary),
+                        child: CircularProgressIndicator(
+                          color: AppColors.primary,
+                        ),
                       ),
                       barrierDismissible: false,
                     );
@@ -1489,9 +1503,11 @@ class _BookingDetailsSheet extends StatelessWidget {
                       Get.back(); // close sheet
                       Get.snackbar(
                         isAr ? 'تم الإلغاء' : 'Cancelled',
-                        isAr ? 'تم إلغاء حجزك بنجاح.' : 'Your booking has been cancelled successfully.',
-                        backgroundColor: Colors.green,
-                        colorText: Colors.white,
+                        isAr
+                            ? 'تم إلغاء حجزك بنجاح.'
+                            : 'Your booking has been cancelled successfully.',
+                        backgroundColor: AppColors.green,
+                        colorText: AppColors.white,
                       );
                     } catch (e) {
                       Get.back(); // close loading
@@ -1545,14 +1561,14 @@ class _BookingDetailsSheet extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: TextStyle(fontSize: 13, color: Colors.grey.shade500),
+                style: TextStyle(fontSize: 13, color: AppColors.grey500),
               ),
               Text(
                 value,
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: Colors.black87,
+                  color: AppColors.black87,
                 ),
               ),
             ],
@@ -1602,4 +1618,3 @@ class _BookingHelper {
     return isAr ? 'حجز' : 'Booking';
   }
 }
-

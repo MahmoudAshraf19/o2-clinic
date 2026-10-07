@@ -9,7 +9,6 @@ class RadiologyFirestoreService {
 
   Future<List<RadiologyItemModel>> getAllRadiology() async {
     try {
-
       final doc = await _firestore
           .collection("services")
           .doc("radiology_category")
@@ -24,10 +23,8 @@ class RadiologyFirestoreService {
 
       final List<RadiologyItemModel> result = [];
 
-
       data.forEach((categoryKey, categoryValue) {
         if (categoryValue is Map<String, dynamic>) {
-
           categoryValue.forEach((itemKey, itemValue) {
             if (itemValue is Map<String, dynamic>) {
               result.add(
@@ -37,12 +34,10 @@ class RadiologyFirestoreService {
                   category: categoryKey,
                 ),
               );
-
             }
           });
         }
       });
-
 
       return result;
     } catch (e) {

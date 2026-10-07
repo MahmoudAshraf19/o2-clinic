@@ -17,23 +17,23 @@ class DoctorEditProfileScreen extends StatelessWidget {
     final controller = Get.put(DoctorEditProfileController());
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.editProfile,
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF13364A),
+            color: AppColors.colorFF13364A,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: Color(0xFF13364A),
+            color: AppColors.colorFF13364A,
           ),
           onPressed: () => Get.back(),
         ),
@@ -55,7 +55,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: AppColors.white,
                 ),
               ),
             ),
@@ -152,7 +152,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                               'Online Consultation',
                               style: TextStyle(
                                 fontSize: 15,
-                                color: Color(0xFF6B7280),
+                                color: AppColors.grey500,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -173,10 +173,10 @@ class DoctorEditProfileScreen extends StatelessWidget {
                       Switch(
                         value: controller.isOnlineAvailable.value,
                         onChanged: controller.toggleOnline,
-                        activeThumbColor: Colors.white,
+                        activeThumbColor: AppColors.white,
                         activeTrackColor: AppColors.primary,
-                        inactiveThumbColor: Colors.white,
-                        inactiveTrackColor: const Color(0xFFD1D5DB),
+                        inactiveThumbColor: AppColors.white,
+                        inactiveTrackColor: AppColors.grey300,
                       ),
                     ],
                   ),
@@ -248,15 +248,15 @@ class DoctorEditProfileScreen extends StatelessWidget {
                         return Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF9FAFB),
+                            color: AppColors.grey50,
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: const Color(0xFFE5E7EB)),
+                            border: Border.all(color: AppColors.pressed),
                           ),
                           child: const Center(
                             child: Text(
                               'No online schedule added',
                               style: TextStyle(
-                                color: Color(0xFF6B7280),
+                                color: AppColors.grey500,
                                 fontSize: 14,
                               ),
                             ),
@@ -280,9 +280,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                                   vertical: 12,
                                 ),
                                 decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: const Color(0xFFE5E7EB),
-                                  ),
+                                  border: Border.all(color: AppColors.pressed),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Row(
@@ -297,14 +295,14 @@ class DoctorEditProfileScreen extends StatelessWidget {
                                             style: const TextStyle(
                                               fontWeight: FontWeight.w600,
                                               fontSize: 15,
-                                              color: Color(0xFF13364A),
+                                              color: AppColors.colorFF13364A,
                                             ),
                                           ),
                                           const SizedBox(height: 4),
                                           Text(
                                             '${schedules[i]['from']}:00 - ${schedules[i]['to']}:00',
                                             style: const TextStyle(
-                                              color: Color(0xFF6B7280),
+                                              color: AppColors.grey500,
                                               fontSize: 13,
                                             ),
                                           ),
@@ -314,7 +312,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                                     IconButton(
                                       icon: const Icon(
                                         Icons.delete_outline,
-                                        color: Colors.red,
+                                        color: AppColors.red,
                                       ),
                                       onPressed: () => controller
                                           .removeOnlineScheduleSlot(day, i),
@@ -333,7 +331,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                 );
               }),
 
-              const Divider(color: Color(0xFFF3F4F6), thickness: 1),
+              const Divider(color: AppColors.hover, thickness: 1),
               const SizedBox(height: 24),
 
               // Locked Fields
@@ -385,7 +383,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
       style: const TextStyle(
         fontSize: 15,
         fontWeight: FontWeight.w700,
-        color: Color(0xFF13364A),
+        color: AppColors.colorFF13364A,
       ),
     );
   }
@@ -402,11 +400,11 @@ class DoctorEditProfileScreen extends StatelessWidget {
                 height: 80,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFFF3F4F6),
-                  border: Border.all(color: Colors.white, width: 3),
+                  color: AppColors.hover,
+                  border: Border.all(color: AppColors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
+                      color: AppColors.black.withValues(alpha: 0.05),
                       blurRadius: 10,
                     ),
                   ],
@@ -444,7 +442,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
               ),
               child: const Icon(
                 Icons.camera_alt,
-                color: Colors.white,
+                color: AppColors.white,
                 size: 14,
               ),
             ),
@@ -507,7 +505,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFFE5E7EB)),
+          border: Border.all(color: AppColors.pressed),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(
@@ -550,8 +548,8 @@ class DoctorEditProfileScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14,
                       color: text == 'Not set'
-                          ? const Color(0xFF9CA3AF)
-                          : const Color(0xFF13364A),
+                          ? AppColors.disabled
+                          : AppColors.colorFF13364A,
                       fontWeight: FontWeight.w600,
                     ),
                     maxLines: 1,
@@ -579,7 +577,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       builder: (context) {
         return Container(
           padding: EdgeInsets.only(
@@ -589,7 +587,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
             bottom: MediaQuery.of(context).viewInsets.bottom + 24,
           ),
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           constraints: BoxConstraints(
@@ -607,11 +605,11 @@ class DoctorEditProfileScreen extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF13364A),
+                      color: AppColors.colorFF13364A,
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.close, color: Color(0xFF6B7280)),
+                    icon: const Icon(Icons.close, color: AppColors.grey500),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],
@@ -665,7 +663,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                   child: const Text(
                     'Done',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
@@ -687,7 +685,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: AppColors.pressed),
       ),
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -697,7 +695,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
             lang,
             style: const TextStyle(
               fontSize: 11,
-              color: Color(0xFF6B7280),
+              color: AppColors.grey500,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -720,7 +718,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: AppColors.pressed),
       ),
       child: CommonTextField(
         controller: controller,
@@ -743,8 +741,8 @@ class DoctorEditProfileScreen extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFFE5E7EB)),
-          color: Colors.transparent, // Looks editable but isn't
+          border: Border.all(color: AppColors.pressed),
+          color: AppColors.transparent, // Looks editable but isn't
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(
@@ -756,7 +754,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                 value.isEmpty ? 'Not set' : value,
                 style: const TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF13364A),
+                  color: AppColors.colorFF13364A,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -764,15 +762,13 @@ class DoctorEditProfileScreen extends StatelessWidget {
             if (isDropdown)
               const Icon(
                 Icons.keyboard_arrow_down_rounded,
-                color: Color(0xFF6B7280),
+                color: AppColors.grey500,
               ),
           ],
         ),
       ),
     );
   }
-
-
 
   Widget _buildLockedRow({
     required BuildContext context,
@@ -796,7 +792,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                   title,
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF6B7280),
+                    color: AppColors.grey500,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -807,7 +803,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                       subtitle,
                       style: const TextStyle(
                         fontSize: 15,
-                        color: Color(0xFF13364A),
+                        color: AppColors.colorFF13364A,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -815,7 +811,7 @@ class DoctorEditProfileScreen extends StatelessWidget {
                     const Icon(
                       Icons.lock_outline,
                       size: 14,
-                      color: Color(0xFF9CA3AF),
+                      color: AppColors.disabled,
                     ),
                   ],
                 ),
@@ -825,13 +821,13 @@ class DoctorEditProfileScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             decoration: BoxDecoration(
-              color: const Color(0xFFF3F4F6),
+              color: AppColors.hover,
               borderRadius: BorderRadius.circular(16),
             ),
             child: const Text(
               'Edit',
               style: TextStyle(
-                color: Color(0xFF9CA3AF),
+                color: AppColors.disabled,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
@@ -895,7 +891,7 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF13364A),
+                color: AppColors.colorFF13364A,
               ),
             ),
             const SizedBox(height: 16),
@@ -944,15 +940,15 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
                         vertical: 16,
                       ),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade400),
+                        border: Border.all(color: AppColors.grey400),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         fromHour != null ? '$fromHour:00' : 'From',
                         style: TextStyle(
                           color: fromHour != null
-                              ? const Color(0xFF13364A)
-                              : Colors.grey.shade600,
+                              ? AppColors.colorFF13364A
+                              : AppColors.grey600,
                           fontSize: 16,
                         ),
                       ),
@@ -969,15 +965,15 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
                         vertical: 16,
                       ),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade400),
+                        border: Border.all(color: AppColors.grey400),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         toHour != null ? '$toHour:00' : 'To',
                         style: TextStyle(
                           color: toHour != null
-                              ? const Color(0xFF13364A)
-                              : Colors.grey.shade600,
+                              ? AppColors.colorFF13364A
+                              : AppColors.grey600,
                           fontSize: 16,
                         ),
                       ),
@@ -1001,8 +997,8 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
                     Get.snackbar(
                       'Missing Info',
                       'Please select both start and end times.',
-                      backgroundColor: Colors.orange,
-                      colorText: Colors.white,
+                      backgroundColor: AppColors.orange,
+                      colorText: AppColors.white,
                     );
                   }
                 },
@@ -1016,7 +1012,7 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
                 child: const Text(
                   'Add Schedule',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
@@ -1029,4 +1025,3 @@ class _AddOnlineScheduleDialogState extends State<_AddOnlineScheduleDialog> {
     );
   }
 }
-

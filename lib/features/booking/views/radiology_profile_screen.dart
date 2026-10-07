@@ -102,7 +102,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                 border: Border.all(color: AppColors.border),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.04),
+                    color: AppColors.black.withValues(alpha: 0.04),
                     blurRadius: 10,
                     offset: const Offset(0, 6),
                   ),
@@ -196,7 +196,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                   gradient: LinearGradient(
                     colors: [
                       AppColors.primary.withValues(alpha: 0.12),
-                      Colors.transparent,
+                      AppColors.transparent,
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -697,4 +697,3 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
     fontWeight: FontWeight.w600,
   );
 }
-

@@ -23,8 +23,7 @@ class AppConstantsController extends GetxController {
         final currencyModel = CurrencyModel.fromMap(doc);
         currencySymbol.value = currencyModel.symbol;
         currencyName.value = currencyModel.name;
-      } else {
-      }
+      } else {}
 
       final docInterval = await AppConstantsFirestoreService.instance
           .getAppConstants('slot_interval_hours');
@@ -32,7 +31,8 @@ class AppConstantsController extends GetxController {
         slotIntervalHours.value = (docInterval['slot_interval_hours'] as num)
             .toInt();
       }
-
-    } catch (e) { /* ignore */ }
+    } catch (e) {
+      /* ignore */
+    }
   }
 }

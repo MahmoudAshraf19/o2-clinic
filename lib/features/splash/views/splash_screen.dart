@@ -10,7 +10,6 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // The controller is registered through SplashBinding.
     Get.find<SplashController>();
-    
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -26,10 +25,7 @@ class SplashScreen extends StatelessWidget {
               tween: Tween<double>(begin: 0.0, end: 1.0),
               duration: const Duration(milliseconds: 800),
               builder: (context, value, child) {
-                return Opacity(
-                  opacity: value,
-                  child: child,
-                );
+                return Opacity(opacity: value, child: child);
               },
               child: Image.asset(
                 'assets/images/onboarding/splash.png',
@@ -37,7 +33,7 @@ class SplashScreen extends StatelessWidget {
               ),
             ),
           ),
-          
+
           // Center content (Logo + Text)
           SafeArea(
             child: Center(
@@ -49,7 +45,10 @@ class SplashScreen extends StatelessWidget {
                   return Opacity(
                     opacity: value,
                     // scale goes from 0.85 to 1.0
-                    child: Transform.scale(scale: 0.85 + (value * 0.15), child: child),
+                    child: Transform.scale(
+                      scale: 0.85 + (value * 0.15),
+                      child: child,
+                    ),
                   );
                 },
                 child: Column(
@@ -72,4 +71,3 @@ class SplashScreen extends StatelessWidget {
     );
   }
 }
-

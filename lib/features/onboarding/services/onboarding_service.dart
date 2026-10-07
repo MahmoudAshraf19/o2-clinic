@@ -15,13 +15,11 @@ class OnboardingService {
   /// might be missing the 'isActive' field. The model defaults missing
   /// fields to 'true'.
   Stream<List<OnboardingSlideModel>> watchSlides() {
-
     return _firestore
         .collection(AppFirestoreCollections.onboardingSlides)
         .orderBy('order')
         .snapshots()
         .map((snapshot) {
-
           final slides = snapshot.docs
               .map(OnboardingSlideModel.fromDoc)
               .where((slide) => slide.isActive)
@@ -29,8 +27,7 @@ class OnboardingService {
 
           if (slides.isEmpty && snapshot.docs.isNotEmpty) {
           } else if (slides.isEmpty) {
-          } else {
-          }
+          } else {}
 
           return slides;
         });
@@ -38,23 +35,19 @@ class OnboardingService {
 
   /// Direct fetch for onboarding slides.
   Future<List<OnboardingSlideModel>> getSlides() async {
-
     try {
       final snapshot = await _firestore
           .collection(AppFirestoreCollections.onboardingSlides)
           .orderBy('order')
           .get();
 
-
       final slides = snapshot.docs
           .map(OnboardingSlideModel.fromDoc)
           .where((slide) => slide.isActive)
           .toList(growable: false);
 
-
       return slides;
     } catch (e) {
-
       // Simpler fallback without order just in case index is missing
       try {
         final fallbackSnapshot = await _firestore

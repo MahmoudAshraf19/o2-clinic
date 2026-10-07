@@ -17,7 +17,8 @@ class DashboardProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DashboardProfileController controller = Get.find<DashboardProfileController>();
+    final DashboardProfileController controller =
+        Get.find<DashboardProfileController>();
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -81,22 +82,30 @@ class DashboardProfileScreen extends StatelessWidget {
                                   children: [
                                     ProfileDetailCard(
                                       icon: Icons.call_outlined,
-                                      title: AppLocalizations.of(context)!.phoneNumber,
+                                      title: AppLocalizations.of(
+                                        context,
+                                      )!.phoneNumber,
                                       value: user.phone,
                                     ),
                                     ProfileDetailCard(
                                       icon: Icons.mail_outline,
-                                      title: AppLocalizations.of(context)!.email,
+                                      title: AppLocalizations.of(
+                                        context,
+                                      )!.email,
                                       value: user.email,
                                     ),
                                     ProfileDetailCard(
                                       icon: Icons.person_outline,
-                                      title: AppLocalizations.of(context)!.gender,
+                                      title: AppLocalizations.of(
+                                        context,
+                                      )!.gender,
                                       value: user.gender,
                                     ),
                                     ProfileDetailCard(
                                       icon: Icons.event_outlined,
-                                      title: AppLocalizations.of(context)!.lastVisit,
+                                      title: AppLocalizations.of(
+                                        context,
+                                      )!.lastVisit,
                                       value: user.lastVisit,
                                       subtitle: user.lastVisitType,
                                     ),
@@ -146,8 +155,12 @@ class DashboardProfileScreen extends StatelessWidget {
                                         const SizedBox(width: 8),
                                         Text(
                                           controller.isGuest
-                                              ? AppLocalizations.of(context)!.login
-                                              : AppLocalizations.of(context)!.signOut,
+                                              ? AppLocalizations.of(
+                                                  context,
+                                                )!.login
+                                              : AppLocalizations.of(
+                                                  context,
+                                                )!.signOut,
                                           style: const TextStyle(
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -181,11 +194,13 @@ class DashboardProfileScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceLowest.withValues(alpha: 0.80),
         border: Border(
-          bottom: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.30)),
+          bottom: BorderSide(
+            color: AppColors.outlineVariant.withValues(alpha: 0.30),
+          ),
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xff21897E).withValues(alpha: 0.05),
+            color: AppColors.colorFF21897E.withValues(alpha: 0.05),
             blurRadius: 15,
             offset: const Offset(0, 2),
           ),
@@ -279,12 +294,12 @@ class _TopAvatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: AppColors.surfaceLowest, width: 2),
-        color: Colors.white,
+        color: AppColors.white,
       ),
       child: ClipOval(
         child: url.isEmpty
             ? Container(
-                color: Colors.white,
+                color: AppColors.white,
                 alignment: Alignment.center,
                 child: const Icon(
                   Icons.person,
@@ -292,12 +307,12 @@ class _TopAvatar extends StatelessWidget {
                   size: 24,
                 ),
               )
-            : CachedImageWidget(imageUrl: 
-                url,
+            : CachedImageWidget(
+                imageUrl: url,
                 key: ValueKey(url),
                 fit: BoxFit.cover,
                 errorBuilder: (_, _, _) => Container(
-                  color: Colors.white,
+                  color: AppColors.white,
                   alignment: Alignment.center,
                   child: const Icon(
                     Icons.person,
@@ -322,19 +337,19 @@ class _ErrorBanner extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.red.withValues(alpha: 0.08),
+        color: AppColors.red.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.red.withValues(alpha: 0.16)),
+        border: Border.all(color: AppColors.red.withValues(alpha: 0.16)),
       ),
       child: Row(
         children: [
-          const Icon(Icons.error_outline_rounded, color: Colors.red),
+          const Icon(Icons.error_outline_rounded, color: AppColors.red),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
               text,
               style: const TextStyle(
-                color: Colors.red,
+                color: AppColors.red,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -344,6 +359,3 @@ class _ErrorBanner extends StatelessWidget {
     );
   }
 }
-
-
-

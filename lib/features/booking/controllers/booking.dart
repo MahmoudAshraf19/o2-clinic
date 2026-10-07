@@ -316,17 +316,18 @@ class BookingFirestoreService {
         tx.set(bookingRef, bookingData);
 
         // Prepare Admin Notification
-        final adminNotifRef = _firestore.collection('admin_notifications').doc();
+        final adminNotifRef = _firestore
+            .collection('admin_notifications')
+            .doc();
         tx.set(adminNotifRef, {
           'kind': 'booking.created',
           'tone': 'success',
-          'title': {
-            'en': 'New Clinical Booking',
-            'ar': 'حجز عيادة جديد'
-          },
+          'title': {'en': 'New Clinical Booking', 'ar': 'حجز عيادة جديد'},
           'body': {
-            'en': 'A new clinical booking has been created by ${user.name} for Doctor ${doctor.nameEn} (ID: $bookingId).',
-            'ar': 'قام ${user.name} بحجز جديد لدى الطبيب ${doctor.nameAr} (رقم: $bookingId).'
+            'en':
+                'A new clinical booking has been created by ${user.name} for Doctor ${doctor.nameEn} (ID: $bookingId).',
+            'ar':
+                'قام ${user.name} بحجز جديد لدى الطبيب ${doctor.nameAr} (رقم: $bookingId).',
           },
           'bookingId': bookingId,
           'link': '/bookings/$bookingId',
@@ -490,17 +491,18 @@ class BookingFirestoreService {
         tx.set(bookingRef, bookingData);
 
         // Prepare Admin Notification
-        final adminNotifRef = _firestore.collection('admin_notifications').doc();
+        final adminNotifRef = _firestore
+            .collection('admin_notifications')
+            .doc();
         tx.set(adminNotifRef, {
           'kind': 'booking.created',
           'tone': 'success',
-          'title': {
-            'en': 'New Imaging Booking',
-            'ar': 'حجز أشعة جديد'
-          },
+          'title': {'en': 'New Imaging Booking', 'ar': 'حجز أشعة جديد'},
           'body': {
-            'en': 'A new imaging booking ($nameEn) has been created by ${user.name} (ID: $bookingId).',
-            'ar': 'قام ${user.name} بحجز أشعة جديد ($nameAr) (رقم: $bookingId).'
+            'en':
+                'A new imaging booking ($nameEn) has been created by ${user.name} (ID: $bookingId).',
+            'ar':
+                'قام ${user.name} بحجز أشعة جديد ($nameAr) (رقم: $bookingId).',
           },
           'bookingId': bookingId,
           'link': '/bookings/$bookingId',
@@ -662,17 +664,18 @@ class BookingFirestoreService {
         tx.set(bookingRef, bookingData);
 
         // Prepare Admin Notification
-        final adminNotifRef = _firestore.collection('admin_notifications').doc();
+        final adminNotifRef = _firestore
+            .collection('admin_notifications')
+            .doc();
         tx.set(adminNotifRef, {
           'kind': 'booking.created',
           'tone': 'success',
-          'title': {
-            'en': 'New Cosmetic Booking',
-            'ar': 'حجز تجميل جديد'
-          },
+          'title': {'en': 'New Cosmetic Booking', 'ar': 'حجز تجميل جديد'},
           'body': {
-            'en': 'A new cosmetic booking ($nameEn) has been created by ${user.name} (ID: $bookingId).',
-            'ar': 'قام ${user.name} بحجز تجميل جديد ($nameAr) (رقم: $bookingId).'
+            'en':
+                'A new cosmetic booking ($nameEn) has been created by ${user.name} (ID: $bookingId).',
+            'ar':
+                'قام ${user.name} بحجز تجميل جديد ($nameAr) (رقم: $bookingId).',
           },
           'bookingId': bookingId,
           'link': '/bookings/$bookingId',
@@ -681,7 +684,6 @@ class BookingFirestoreService {
           'readAt': null,
           'createdAt': FieldValue.serverTimestamp(),
         });
-
 
         return BookingResult(
           success: true,
@@ -832,7 +834,6 @@ class BookingFirestoreService {
         };
 
         tx.set(bookingRef, bookingData);
-
 
         return BookingResult(
           success: true,

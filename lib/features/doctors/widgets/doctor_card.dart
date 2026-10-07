@@ -24,13 +24,15 @@ class DoctorCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(22),
           decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.dark 
-                ? Theme.of(context).cardColor.withValues(alpha: 0.75) 
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Theme.of(context).cardColor.withValues(alpha: 0.75)
                 : AppColors.white.withValues(alpha: 0.75),
             borderRadius: BorderRadius.circular(28),
             border: Border.all(
-              color: Theme.of(context).brightness == Brightness.dark 
-                  ? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1) 
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.1)
                   : AppColors.primary.withValues(alpha: 0.15),
             ),
             boxShadow: [
@@ -83,7 +85,9 @@ class DoctorCard extends StatelessWidget {
                 doctor.name,
                 style: AppTextStyles.textTheme.titleLarge!.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : AppColors.textPrimary),
+                  color: (Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.white
+                      : AppColors.textPrimary),
                 ),
               ),
 
@@ -153,7 +157,10 @@ class DoctorCard extends StatelessWidget {
                           AppLocalizations.of(context)!.fullProfile,
                           style: AppTextStyles.textTheme.bodyMedium!.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : AppColors.textSecondary),
+                            color:
+                                (Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.white70
+                                : AppColors.textSecondary),
                           ),
                         ),
                       ),
@@ -208,4 +215,3 @@ class DoctorCard extends StatelessWidget {
     );
   }
 }
-

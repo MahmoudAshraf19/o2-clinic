@@ -18,10 +18,9 @@ import '../../../core/theme/app_colors.dart';
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
 
-  
-
   @override
-  Widget build(BuildContext context) { final colors = _O2Colors(context);
+  Widget build(BuildContext context) {
+    final colors = _O2Colors(context);
     final textTheme = Theme.of(context).textTheme;
     final NotificationsController controller =
         Get.isRegistered<NotificationsController>()
@@ -95,7 +94,6 @@ class NotificationsScreen extends StatelessWidget {
               return ListView(
                 padding: const EdgeInsets.only(bottom: 20),
                 children: [
-
                   if (newNotes.isNotEmpty) ...[
                     _SectionTitle(
                       title: AppLocalizations.of(context)!.notifSectionNew,
@@ -131,7 +129,8 @@ class NotificationsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTile(NotificationModel n, BuildContext context) { final colors = _O2Colors(context);
+  Widget _buildTile(NotificationModel n, BuildContext context) {
+    final colors = _O2Colors(context);
     IconData icon;
     Color iconBg = colors.surfaceContainerHigh;
     Color iconFg = colors.onSurface;
@@ -212,7 +211,7 @@ class NotificationsScreen extends StatelessWidget {
               child: CircularProgressIndicator(color: AppColors.brandBlue),
             ),
             barrierDismissible: false,
-            barrierColor: Colors.black12,
+            barrierColor: AppColors.black12,
           );
 
           try {
@@ -287,7 +286,9 @@ class _SectionTitle extends StatelessWidget {
         style: GoogleFonts.manrope(
           fontSize: 16,
           fontWeight: FontWeight.w700,
-          color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF3E4947),
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.white70
+              : AppColors.textSecondary,
         ),
       ),
     );
@@ -394,20 +395,32 @@ class _O2Colors {
 
   bool get isDark => Theme.of(context).brightness == Brightness.dark;
 
-  Color get surface => isDark ? Theme.of(context).scaffoldBackgroundColor : const Color(0xFFF6FAF8);
-  Color get surfaceContainerLow => isDark ? Theme.of(context).scaffoldBackgroundColor : const Color(0xFFF0F4F2);
-  Color get surfaceContainerLowest => isDark ? Theme.of(context).cardColor : const Color(0xFFFFFFFF);
-  Color get surfaceContainerHigh => isDark ? Colors.white24 : const Color(0xFFE5E9E7);
-  Color get primary => isDark ? const Color(0xFF60A5FA) : AppColors.brandBlue;
-  Color get primaryContainer => isDark ? AppColors.brandBlue.withValues(alpha: 0.5) : AppColors.brandBlue;
+  Color get surface => isDark
+      ? Theme.of(context).scaffoldBackgroundColor
+      : AppColors.colorFFF6FAF8;
+  Color get surfaceContainerLow => isDark
+      ? Theme.of(context).scaffoldBackgroundColor
+      : AppColors.colorFFF0F4F2;
+  Color get surfaceContainerLowest =>
+      isDark ? Theme.of(context).cardColor : AppColors.pureWhite;
+  Color get surfaceContainerHigh =>
+      isDark ? AppColors.white24 : AppColors.colorFFE5E9E7;
+  Color get primary => isDark ? AppColors.colorFF60A5FA : AppColors.brandBlue;
+  Color get primaryContainer =>
+      isDark ? AppColors.brandBlue.withValues(alpha: 0.5) : AppColors.brandBlue;
   Color get onPrimaryContainer => AppColors.pureWhite;
   Color get secondaryContainer => AppColors.softCyan;
-  Color get onSecondaryContainer => isDark ? Colors.white : AppColors.brandBlue;
-  Color get tertiaryContainer => isDark ? AppColors.vibrantCyan.withValues(alpha: 0.5) : AppColors.vibrantCyan;
+  Color get onSecondaryContainer =>
+      isDark ? AppColors.white : AppColors.brandBlue;
+  Color get tertiaryContainer => isDark
+      ? AppColors.vibrantCyan.withValues(alpha: 0.5)
+      : AppColors.vibrantCyan;
   Color get onTertiaryContainer => AppColors.pureWhite;
-  Color get errorContainer => isDark ? const Color(0xFF93000A) : const Color(0xFFFFDAD6);
-  Color get onErrorContainer => isDark ? const Color(0xFFFFDAD6) : const Color(0xFF93000A);
-  Color get onSurface => isDark ? Colors.white : const Color(0xFF181D1C);
-  Color get onSurfaceVariant => isDark ? Colors.white70 : const Color(0xFF3E4947);
+  Color get errorContainer =>
+      isDark ? AppColors.onErrorContainer : AppColors.colorFFFFDAD6;
+  Color get onErrorContainer =>
+      isDark ? AppColors.colorFFFFDAD6 : AppColors.onErrorContainer;
+  Color get onSurface => isDark ? AppColors.white : AppColors.textPrimary;
+  Color get onSurfaceVariant =>
+      isDark ? AppColors.white70 : AppColors.textSecondary;
 }
-

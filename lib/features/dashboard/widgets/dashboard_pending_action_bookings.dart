@@ -100,7 +100,10 @@ class DashboardPendingActionBookings extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3), width: 1.5),
+        border: Border.all(
+          color: AppColors.primary.withValues(alpha: 0.3),
+          width: 1.5,
+        ),
         boxShadow: [
           BoxShadow(
             color: AppColors.primary.withValues(alpha: 0.05),
@@ -130,10 +133,7 @@ class DashboardPendingActionBookings extends StatelessWidget {
               Expanded(
                 child: Text(
                   booking.imaging?.nameEn ?? booking.type,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -145,7 +145,9 @@ class DashboardPendingActionBookings extends StatelessWidget {
             '$dateKey • ${booking.schedule.time}',
             style: TextStyle(
               fontSize: 13,
-              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white70 : Colors.grey.shade600),
+              color: (Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.white70
+                  : AppColors.grey600),
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -165,10 +167,7 @@ class DashboardPendingActionBookings extends StatelessWidget {
               ),
               child: Text(
                 AppLocalizations.of(context)!.continueBooking,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -220,6 +219,3 @@ class DashboardPendingActionBookings extends StatelessWidget {
     }
   }
 }
-
-
-

@@ -22,13 +22,13 @@ class UltrasoundBottomBar extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.fromLTRB(18, 14, 18, 18),
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: .92),
+          color: AppColors.white.withValues(alpha: .92),
           border: Border(
             top: BorderSide(color: AppColors.border.withValues(alpha: .5)),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: .05),
+              color: AppColors.black.withValues(alpha: .05),
               blurRadius: 24,
               offset: const Offset(0, -8),
             ),
@@ -81,7 +81,7 @@ class UltrasoundBottomBar extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18),
                     ),

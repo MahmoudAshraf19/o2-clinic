@@ -6,6 +6,7 @@ import '../../../common/widgets/common_button.dart';
 import '../../services_firestore/models/banner_model.dart';
 import '../../services_firestore/services/banner_service.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 class ExternalLinkBannersSection extends StatelessWidget {
   const ExternalLinkBannersSection({super.key});
@@ -50,7 +51,9 @@ class ExternalLinkBannersSection extends StatelessWidget {
         }
 
         final allBanners = snapshot.data ?? const <BannerModel>[];
-        final banners = allBanners.where((b) => b.type == 'external_link').toList();
+        final banners = allBanners
+            .where((b) => b.type == 'external_link')
+            .toList();
 
         debugPrint('[Banners] Received ${banners.length} banner(s).');
 
@@ -74,7 +77,9 @@ class ExternalLinkBannersSection extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: _FallbackBannerCard(
                 title: AppLocalizations.of(context)!.noActiveBanners,
-                subtitle: AppLocalizations.of(context)!.newPromotionsWillAppearHere,
+                subtitle: AppLocalizations.of(
+                  context,
+                )!.newPromotionsWillAppearHere,
                 buttonText: AppLocalizations.of(context)!.refresh,
               ),
             ),
@@ -122,12 +127,9 @@ class _BannerCard extends StatelessWidget {
     if (banner.url == null || banner.url!.isEmpty) return;
 
     final Uri url = Uri.parse(banner.url!);
-    
+
     try {
-      await launchUrl(
-        url,
-        mode: LaunchMode.externalApplication,
-      );
+      await launchUrl(url, mode: LaunchMode.externalApplication);
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -142,7 +144,7 @@ class _BannerCard extends StatelessWidget {
     final bool useRemoteBackground =
         banner.withBackground && banner.imageUrl.trim().isNotEmpty;
     final langCode = Localizations.localeOf(context).languageCode;
-    
+
     final localizedBadge = banner.getLocalizedBadge(langCode);
     final localizedTitle = banner.getLocalizedTitle(langCode);
     final localizedSubtitle = banner.getLocalizedSubtitle(langCode);
@@ -162,15 +164,15 @@ class _BannerCard extends StatelessWidget {
           children: [
             Positioned.fill(
               child: useRemoteBackground
-                  ? CachedImageWidget(imageUrl: 
-                      banner.imageUrl,
+                  ? CachedImageWidget(
+                      imageUrl: banner.imageUrl,
                       fit: BoxFit.cover,
                       errorBuilder: (_, _, _) {
                         debugPrint(
                           '[Banners] Failed to load network image for banner id: ${banner.id}. '
                           'Using local asset fallback.',
                         );
-  
+
                         return Image.asset(
                           'assets/images/backgroung_banner.png',
                           fit: BoxFit.cover,
@@ -195,7 +197,7 @@ class _BannerCard extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.18),
+                        color: AppColors.white.withValues(alpha: 0.18),
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Text(
@@ -203,20 +205,21 @@ class _BannerCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.white,
                           fontSize: 9,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 0.8,
                         ),
                       ),
                     ),
-                  if (localizedBadge.trim().isNotEmpty) const SizedBox(height: 6),
+                  if (localizedBadge.trim().isNotEmpty)
+                    const SizedBox(height: 6),
                   Text(
                     localizedTitle,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
                       height: 1.1,
@@ -228,7 +231,7 @@ class _BannerCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      color: Colors.white70,
+                      color: AppColors.white70,
                       fontSize: 11,
                       fontWeight: FontWeight.w500,
                       height: 1.3,
@@ -243,8 +246,8 @@ class _BannerCard extends StatelessWidget {
                       onPressed: () => _navigateToScreen(context),
                       type: CommonButtonType.primary,
                       size: CommonButtonSize.medium,
-                      backgroundColor: Colors.white,
-                      foregroundColor: const Color(0xFF00685F),
+                      backgroundColor: AppColors.white,
+                      foregroundColor: AppColors.colorFF00685F,
                       borderRadius: BorderRadius.circular(999),
                     ),
                 ],
@@ -302,7 +305,7 @@ class _FallbackBannerCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
                     height: 1.1,
@@ -314,7 +317,7 @@ class _FallbackBannerCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    color: Colors.white70,
+                    color: AppColors.white70,
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
                     height: 1.3,
@@ -326,8 +329,8 @@ class _FallbackBannerCard extends StatelessWidget {
                   onPressed: () {},
                   type: CommonButtonType.primary,
                   size: CommonButtonSize.medium,
-                  backgroundColor: Colors.white,
-                  foregroundColor: const Color(0xFF00685F),
+                  backgroundColor: AppColors.white,
+                  foregroundColor: AppColors.colorFF00685F,
                   borderRadius: BorderRadius.circular(999),
                 ),
               ],
@@ -338,4 +341,3 @@ class _FallbackBannerCard extends StatelessWidget {
     );
   }
 }
-

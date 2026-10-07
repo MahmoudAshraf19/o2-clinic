@@ -29,14 +29,14 @@ class UltrasoundCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
           border: Border.all(
-            color: selected ? AppColors.primary : Colors.transparent,
+            color: selected ? AppColors.primary : AppColors.transparent,
             width: 2,
           ),
           boxShadow: [
             BoxShadow(
               color: selected
                   ? AppColors.primary.withValues(alpha: .15)
-                  : Colors.black.withValues(alpha: .05),
+                  : AppColors.black.withValues(alpha: .05),
               blurRadius: selected ? 24 : 14,
               offset: const Offset(0, 8),
             ),
@@ -66,9 +66,9 @@ class UltrasoundCard extends StatelessWidget {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      const Color(0xff21897E),
-                      const Color(0xff21897E).withValues(alpha: .75),
-                      Colors.transparent,
+                      AppColors.colorFF21897E,
+                      AppColors.colorFF21897E.withValues(alpha: .75),
+                      AppColors.transparent,
                     ],
                   ),
                 ),
@@ -87,7 +87,7 @@ class UltrasoundCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w800,
-                      color: Colors.white,
+                      color: AppColors.white,
                     ),
                   ),
 
@@ -101,7 +101,7 @@ class UltrasoundCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 13,
                       height: 1.5,
-                      color: Colors.white.withValues(alpha: .92),
+                      color: AppColors.white.withValues(alpha: .92),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -119,7 +119,7 @@ class UltrasoundCard extends StatelessWidget {
                   width: 42,
                   height: 42,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: .88),
+                    color: AppColors.white.withValues(alpha: .88),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(

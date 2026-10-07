@@ -91,7 +91,9 @@ class BookingController extends GetxController {
             formattedAvailMap[day.toString().toLowerCase()] = "$h1:00-$h2:00";
           }
         });
-      } catch (e) { /* ignore */ }
+      } catch (e) {
+        /* ignore */
+      }
       isLoading.value = false;
 
       // Map to CosmeticCategoryModel so we can reuse CosmeticBookingPage

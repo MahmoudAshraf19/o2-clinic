@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:o2_clinic/core/theme/app_colors.dart';
 
 enum BookingStatus {
   pending,
@@ -88,34 +89,34 @@ enum BookingStatus {
   Color get color {
     switch (this) {
       case BookingStatus.pending:
-        return Colors.orange;
+        return AppColors.orange;
       case BookingStatus.upcoming:
-        return Colors.blue;
+        return AppColors.blue;
       case BookingStatus.inProgress:
-        return Colors.purple;
+        return AppColors.purple;
       case BookingStatus.completed:
-        return Colors.green;
+        return AppColors.green;
       case BookingStatus.cancelled:
-        return Colors.red;
+        return AppColors.red;
       case BookingStatus.noShow:
-        return Colors.grey;
+        return AppColors.grey;
     }
   }
 
   Color get backgroundColor {
     switch (this) {
       case BookingStatus.pending:
-        return Colors.orange.withValues(alpha: 0.1);
+        return AppColors.orange.withValues(alpha: 0.1);
       case BookingStatus.upcoming:
-        return Colors.blue.withValues(alpha: 0.1);
+        return AppColors.blue.withValues(alpha: 0.1);
       case BookingStatus.inProgress:
-        return Colors.purple.withValues(alpha: 0.1);
+        return AppColors.purple.withValues(alpha: 0.1);
       case BookingStatus.completed:
-        return Colors.green.withValues(alpha: 0.1);
+        return AppColors.green.withValues(alpha: 0.1);
       case BookingStatus.cancelled:
-        return Colors.red.withValues(alpha: 0.1);
+        return AppColors.red.withValues(alpha: 0.1);
       case BookingStatus.noShow:
-        return Colors.grey.withValues(alpha: 0.1);
+        return AppColors.grey.withValues(alpha: 0.1);
     }
   }
 

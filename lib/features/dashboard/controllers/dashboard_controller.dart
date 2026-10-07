@@ -34,7 +34,7 @@ class DashboardController extends GetxController {
   void onInit() {
     super.onInit();
     loadDashboard();
-    
+
     // Listen for language changes to instantly update static UI translations
     final localeController = Get.find<LocaleController>();
     ever(localeController.rxLanguageCode, (_) {

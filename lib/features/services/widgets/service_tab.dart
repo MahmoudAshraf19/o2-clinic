@@ -29,7 +29,7 @@ class ServiceTab extends StatelessWidget {
           color: isSelected ? null : AppColors.surfaceContainer,
           borderRadius: BorderRadius.circular(30),
           border: Border.all(
-            color: isSelected ? Colors.transparent : AppColors.border,
+            color: isSelected ? AppColors.transparent : AppColors.border,
           ),
           boxShadow: isSelected
               ? [
@@ -45,7 +45,7 @@ class ServiceTab extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-              color: isSelected ? Colors.white : AppColors.grey,
+              color: isSelected ? AppColors.white : AppColors.grey,
               fontWeight: FontWeight.w600,
               fontSize: 14,
             ),

@@ -99,7 +99,7 @@ class ImagingBookingPage extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        const CircleAvatar(radius: 20, backgroundColor: Colors.transparent),
+        const CircleAvatar(radius: 20, backgroundColor: AppColors.transparent),
       ],
     );
   }
@@ -115,7 +115,7 @@ class ImagingBookingPage extends StatelessWidget {
         border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
+            color: AppColors.black.withValues(alpha: 0.03),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -246,7 +246,9 @@ class ImagingBookingPage extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 11,
                               letterSpacing: 1.4,
-                              color: isSelected ? Colors.white : AppColors.grey,
+                              color: isSelected
+                                  ? AppColors.white
+                                  : AppColors.grey,
                             ),
                           ),
                           const SizedBox(height: 6),
@@ -256,7 +258,7 @@ class ImagingBookingPage extends StatelessWidget {
                               fontSize: 19,
                               fontWeight: FontWeight.w800,
                               color: isSelected
-                                  ? Colors.white
+                                  ? AppColors.white
                                   : AppColors.textPrimary,
                             ),
                           ),
@@ -296,9 +298,9 @@ class ImagingBookingPage extends StatelessWidget {
       selectedTime = "$selectedTime - $dateStr";
     }
 
-    const Color primary = Color(0xFF00685F);
-    const Color secondary = Color(0xFF006A61);
-    const Color secondaryFixed = Color(0xFF6FD8CA);
+    const Color primary = AppColors.colorFF00685F;
+    const Color secondary = AppColors.colorFF006A61;
+    const Color secondaryFixed = AppColors.tertiaryFixedDim;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -356,7 +358,9 @@ class ImagingBookingPage extends StatelessWidget {
                     slot.time,
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      color: isSelected ? Colors.white : AppColors.textPrimary,
+                      color: isSelected
+                          ? AppColors.white
+                          : AppColors.textPrimary,
                     ),
                   ),
                 ),
@@ -421,14 +425,14 @@ class ImagingBookingPage extends StatelessWidget {
                               const Icon(
                                 Icons.schedule,
                                 size: 20,
-                                color: Colors.white70,
+                                color: AppColors.white70,
                               ),
                               const SizedBox(width: 6),
                               Text(
                                 selectedTime,
                                 style: const TextStyle(
                                   fontSize: 15,
-                                  color: Colors.white70,
+                                  color: AppColors.white70,
                                 ),
                               ),
                             ],
@@ -443,10 +447,12 @@ class ImagingBookingPage extends StatelessWidget {
                                   vertical: 7,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: .2),
+                                  color: AppColors.white.withValues(alpha: .2),
                                   borderRadius: BorderRadius.circular(999),
                                   border: Border.all(
-                                    color: Colors.white.withValues(alpha: .3),
+                                    color: AppColors.white.withValues(
+                                      alpha: .3,
+                                    ),
                                   ),
                                 ),
                                 child: Row(
@@ -465,7 +471,7 @@ class ImagingBookingPage extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                                        color: AppColors.white,
                                       ),
                                     ),
                                   ],
@@ -482,7 +488,7 @@ class ImagingBookingPage extends StatelessWidget {
                         )!.yourImagingAppointmentHasBeen,
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.white.withValues(alpha: .82),
+                          color: AppColors.white.withValues(alpha: .82),
 
                           height: 1.4,
                         ),
@@ -554,5 +560,3 @@ class ImagingBookingPage extends StatelessWidget {
     );
   }
 }
-
-

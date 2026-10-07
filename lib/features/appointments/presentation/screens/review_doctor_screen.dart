@@ -103,14 +103,14 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
         AppLocalizations.of(context)!.submitReview,
         'Review submitted successfully',
         backgroundColor: AppColors.success,
-        colorText: Colors.white,
+        colorText: AppColors.white,
       );
     } catch (e) {
       Get.snackbar(
         'Error',
         'Failed to submit review',
         backgroundColor: AppColors.error,
-        colorText: Colors.white,
+        colorText: AppColors.white,
       );
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
@@ -150,7 +150,7 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
                     val <= (_categoryRatings[key] ?? 0)
                         ? Icons.star
                         : Icons.star_border,
-                    color: Colors.orangeAccent,
+                    color: AppColors.orangeAccent,
                     size: 28,
                   ),
                 ),
@@ -169,7 +169,7 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         title: Text(
           l10n.rateYourExperience,
           style: const TextStyle(color: AppColors.textPrimary),
@@ -193,22 +193,13 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              _buildCategoryRating(
-                'waiting_time',
-                l10n.catWaitingTime,
-              ),
-              _buildCategoryRating(
-                'communication',
-                l10n.catCommunication,
-              ),
+              _buildCategoryRating('waiting_time', l10n.catWaitingTime),
+              _buildCategoryRating('communication', l10n.catCommunication),
               _buildCategoryRating(
                 'clinic_cleanliness',
                 l10n.catClinicCleanliness,
               ),
-              _buildCategoryRating(
-                'effectiveness',
-                l10n.catEffectiveness,
-              ),
+              _buildCategoryRating('effectiveness', l10n.catEffectiveness),
               const SizedBox(height: 32),
               CommonTextField(
                 controller: _textController,
@@ -221,7 +212,7 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
                 onPressed: _isSubmitting ? null : _submitReview,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -233,7 +224,7 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
                         width: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          color: Colors.white,
+                          color: AppColors.white,
                         ),
                       )
                     : Text(
@@ -251,5 +242,3 @@ class _ReviewDoctorScreenState extends State<ReviewDoctorScreen> {
     );
   }
 }
-
-

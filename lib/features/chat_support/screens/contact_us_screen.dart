@@ -25,7 +25,7 @@ class ContactUsScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.transparent,
         title: Text(
           AppLocalizations.of(context)!.contactUs,
           style: TextStyle(
@@ -99,4 +99,3 @@ class ContactUsScreen extends StatelessWidget {
     );
   }
 }
-

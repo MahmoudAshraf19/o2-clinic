@@ -36,7 +36,9 @@ class SpecializedFirestoreService {
           return _cachedList!;
         }
       }
-    } catch (e) { /* ignore */ }
+    } catch (e) {
+      /* ignore */
+    }
 
     // 3. Server
     final result = await _firestore
@@ -53,7 +55,9 @@ class SpecializedFirestoreService {
     if (_cachedList != null) {
       try {
         return _cachedList!.firstWhere((element) => element['id'] == id);
-      } catch (e) { /* ignore */ }
+      } catch (e) {
+        /* ignore */
+      }
     }
 
     final result = await _firestore

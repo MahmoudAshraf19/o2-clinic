@@ -5,8 +5,6 @@ class DashboardAlertsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Alerts Screen'),
-    );
+    return const Center(child: Text('Alerts Screen'));
   }
 }

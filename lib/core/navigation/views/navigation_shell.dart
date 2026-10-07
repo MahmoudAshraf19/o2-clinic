@@ -64,4 +64,3 @@ class _PlaceholderPage extends StatelessWidget {
     );
   }
 }
-
