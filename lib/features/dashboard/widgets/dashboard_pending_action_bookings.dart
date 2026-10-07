@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
@@ -152,24 +153,16 @@ class DashboardPendingActionBookings extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          SizedBox(
+          CommonButton(
+            text: AppLocalizations.of(context)!.continueBooking,
+            onPressed: () => _handleContinue(booking),
+            type: CommonButtonType.primary,
+            backgroundColor: AppColors.primary,
+            foregroundColor: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(10),
             width: double.infinity,
             height: 44,
-            child: ElevatedButton(
-              onPressed: () => _handleContinue(booking),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Theme.of(context).cardColor,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: Text(
-                AppLocalizations.of(context)!.continueBooking,
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-              ),
-            ),
+            textStyle: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
           ),
         ],
       ),

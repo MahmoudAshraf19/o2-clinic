@@ -1,6 +1,7 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -124,48 +125,28 @@ class DashboardProfileScreen extends StatelessWidget {
                                   alignment: isDesktop
                                       ? Alignment.centerLeft
                                       : Alignment.center,
-                                  child: TextButton(
+                                  child: CommonButton(
+                                    text: controller.isGuest
+                                        ? AppLocalizations.of(context)!.login
+                                        : AppLocalizations.of(context)!.signOut,
                                     onPressed: controller.logout,
-                                    style: TextButton.styleFrom(
-                                      backgroundColor:
-                                          (controller.isGuest
-                                                  ? AppColors.primary
-                                                  : AppColors.error)
-                                              .withValues(alpha: 0.08),
-                                      foregroundColor: controller.isGuest
-                                          ? AppColors.primary
-                                          : AppColors.error,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 18,
-                                        vertical: 12,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
+                                    icon: controller.isGuest ? Icons.login : Icons.logout,
+                                    iconPosition: IconPosition.left,
+                                    type: CommonButtonType.text,
+                                    backgroundColor: (controller.isGuest
+                                            ? AppColors.primary
+                                            : AppColors.error)
+                                        .withValues(alpha: 0.08),
+                                    foregroundColor: controller.isGuest
+                                        ? AppColors.primary
+                                        : AppColors.error,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 18,
+                                      vertical: 12,
                                     ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          controller.isGuest
-                                              ? Icons.login
-                                              : Icons.logout,
-                                          size: 20,
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          controller.isGuest
-                                              ? AppLocalizations.of(
-                                                  context,
-                                                )!.login
-                                              : AppLocalizations.of(
-                                                  context,
-                                                )!.signOut,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
+                                    borderRadius: BorderRadius.circular(12),
+                                    textStyle: const TextStyle(
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),

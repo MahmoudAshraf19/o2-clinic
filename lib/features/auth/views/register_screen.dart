@@ -5,6 +5,7 @@ import 'dart:io' as io;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -729,46 +730,22 @@ class RegisterScreen extends GetView<RegisterController> {
 
   Widget _button(AppLocalizations l10n) {
     return Obx(() {
-      return SizedBox(
+      return CommonButton(
+        text: controller.isEditMode
+            ? l10n.saveChanges
+            : l10n.createAccountBtn,
+        onPressed: controller.submitForm,
+        isLoading: controller.isLoading.value,
+        icon: controller.isEditMode ? null : Icons.arrow_forward,
+        iconPosition: IconPosition.right,
+        type: CommonButtonType.primary,
+        backgroundColor: AppColors.brandBlue,
+        borderRadius: BorderRadius.circular(28),
         width: double.infinity,
         height: 56,
-        child: ElevatedButton(
-          onPressed: controller.isLoading.value ? null : controller.submitForm,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.brandBlue,
-            foregroundColor: AppColors.white,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(28),
-            ),
-          ),
-          child: controller.isLoading.value
-              ? const SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircularProgressIndicator(
-                    color: AppColors.white,
-                    strokeWidth: 2.5,
-                  ),
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      controller.isEditMode
-                          ? l10n.saveChanges
-                          : l10n.createAccountBtn,
-                      style: GoogleFonts.cairo(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    if (!controller.isEditMode) ...[
-                      const SizedBox(width: 8),
-                      const Icon(Icons.arrow_forward, size: 20),
-                    ],
-                  ],
-                ),
+        textStyle: GoogleFonts.cairo(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
         ),
       );
     });

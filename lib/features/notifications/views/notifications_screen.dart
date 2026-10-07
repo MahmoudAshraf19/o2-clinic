@@ -1,5 +1,6 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -48,20 +49,17 @@ class NotificationsScreen extends StatelessWidget {
         actions: [
           Obx(() {
             if (controller.unreadCount > 0) {
-              return TextButton(
+              return CommonButton(
+                text: AppLocalizations.of(context)!.markAllAsRead,
                 onPressed: () => controller.markAllAsRead(),
-                style: TextButton.styleFrom(
-                  foregroundColor: colors.primary,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.markAllAsRead,
-                  style: GoogleFonts.manrope(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.6,
-                    color: colors.primary,
-                  ),
+                type: CommonButtonType.text,
+                foregroundColor: colors.primary,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                textStyle: GoogleFonts.manrope(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.6,
+                  color: colors.primary,
                 ),
               );
             }

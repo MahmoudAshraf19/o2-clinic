@@ -1,6 +1,7 @@
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:flutter/material.dart';
+import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -198,22 +199,17 @@ class NotificationDropdownWidget extends StatelessWidget {
           ),
           Obx(() {
             if (controller.unreadCount == 0) return const SizedBox.shrink();
-            return TextButton(
+            return CommonButton(
+              text: AppLocalizations.of(context)!.markAllRead,
               onPressed: () => controller.markAllAsRead(),
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                foregroundColor: _primary(context),
-              ),
-              child: Text(
-                AppLocalizations.of(context)!.markAllRead,
-                style: GoogleFonts.manrope(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  height: 1.4,
-                  color: _primary(context),
-                ),
+              type: CommonButtonType.text,
+              foregroundColor: _primary(context),
+              padding: EdgeInsets.zero,
+              textStyle: GoogleFonts.manrope(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                height: 1.4,
+                color: _primary(context),
               ),
             );
           }),
@@ -239,36 +235,23 @@ class NotificationDropdownWidget extends StatelessWidget {
       ),
       child: SizedBox(
         width: double.infinity,
-        child: TextButton(
+        child: CommonButton(
+          text: AppLocalizations.of(context)!.viewAllNotifications,
           onPressed: () {
             Get.back();
             Get.to(() => const NotificationsScreen());
           },
-          style: TextButton.styleFrom(
-            foregroundColor: _primary(context),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            shape: const StadiumBorder(),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.viewAllNotifications,
-                style: GoogleFonts.manrope(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  height: 1.4,
-                  color: _primary(context),
-                ),
-              ),
-              const SizedBox(width: 6),
-              Icon(
-                Icons.arrow_forward_rounded,
-                size: 18,
-                color: _primary(context),
-              ),
-            ],
+          icon: Icons.arrow_forward_rounded,
+          iconPosition: IconPosition.right,
+          type: CommonButtonType.text,
+          foregroundColor: _primary(context),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          borderRadius: BorderRadius.circular(999), // StadiumBorder equivalent
+          textStyle: GoogleFonts.manrope(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            height: 1.4,
+            color: _primary(context),
           ),
         ),
       ),

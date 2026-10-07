@@ -12,6 +12,7 @@ class CommonButton extends StatelessWidget {
     this.type = CommonButtonType.primary,
     this.size = CommonButtonSize.medium,
     this.icon,
+    this.customIcon,
     this.iconPosition = IconPosition.left,
     this.isLoading = false,
     this.disabled = false,
@@ -33,6 +34,7 @@ class CommonButton extends StatelessWidget {
   final CommonButtonType type;
   final CommonButtonSize size;
   final IconData? icon;
+  final Widget? customIcon;
   final IconPosition iconPosition;
   final bool isLoading;
   final bool disabled;
@@ -128,11 +130,11 @@ class CommonButton extends StatelessWidget {
   }
 
   Widget _buildButtonContent(TextStyle textStyle) {
-    if (icon == null) {
+    if (icon == null && customIcon == null) {
       return Text(text, style: textStyle);
     }
 
-    final iconWidget = Icon(
+    final iconWidget = customIcon ?? Icon(
       icon,
       size: textStyle.fontSize ?? 14,
       color: textStyle.color,

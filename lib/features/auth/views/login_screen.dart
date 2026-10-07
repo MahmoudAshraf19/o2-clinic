@@ -2,6 +2,7 @@ import '../../../../common/widgets/common_text_field.dart';
 import 'package:flutter/foundation.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import '../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -140,44 +141,20 @@ class LoginScreen extends GetView<LoginController> {
 
                   // Log In Button
                   Obx(
-                    () => SizedBox(
+                    () => CommonButton(
+                      text: l10n.login,
+                      onPressed: controller.login,
+                      isLoading: controller.isLoading.value,
+                      icon: Icons.arrow_forward,
+                      iconPosition: IconPosition.right,
+                      type: CommonButtonType.primary,
                       height: 56,
-                      child: ElevatedButton(
-                        onPressed: controller.isLoading.value
-                            ? null
-                            : controller.login,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.brandBlue,
-                          foregroundColor: AppColors.white,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(28),
-                          ),
-                        ),
-                        child: controller.isLoading.value
-                            ? const SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: CircularProgressIndicator(
-                                  color: AppColors.white,
-                                  strokeWidth: 2.5,
-                                ),
-                              )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    l10n.login,
-                                    style: GoogleFonts.cairo(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  const Icon(Icons.arrow_forward, size: 20),
-                                ],
-                              ),
+                      borderRadius: BorderRadius.circular(28),
+                      textStyle: GoogleFonts.cairo(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
                       ),
+                    ),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -333,35 +310,18 @@ class LoginScreen extends GetView<LoginController> {
       imageColor = isDarkMode ? AppColors.white : AppColors.black;
     }
 
-    return SizedBox(
+    return CommonButton(
+      text: text,
+      onPressed: onPressed,
+      type: CommonButtonType.outline,
       height: 56,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(
-            color: isDarkMode ? AppColors.white38 : AppColors.brandBlue,
-            width: 1.5,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
-          ),
-          backgroundColor: isDarkMode ? AppColors.transparent : AppColors.white,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(iconPath, width: 24, height: 24, color: imageColor),
-            const SizedBox(width: 12),
-            Text(
-              text,
-              style: GoogleFonts.cairo(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: isDarkMode ? AppColors.white : AppColors.brandBlue,
-              ),
-            ),
-          ],
-        ),
+      borderRadius: BorderRadius.circular(28),
+      borderColor: isDarkMode ? AppColors.white38 : AppColors.brandBlue,
+      customIcon: Image.asset(iconPath, width: 24, height: 24, color: imageColor),
+      textStyle: GoogleFonts.cairo(
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+        color: isDarkMode ? AppColors.white : AppColors.brandBlue,
       ),
     );
   }
@@ -371,30 +331,19 @@ class LoginScreen extends GetView<LoginController> {
     required bool isDarkMode,
     required VoidCallback onPressed,
   }) {
-    return SizedBox(
+    return CommonButton(
+      text: text,
+      onPressed: onPressed,
+      type: CommonButtonType.outline,
       height: 56,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(
-            color: isDarkMode
-                ? AppColors.white38
-                : AppColors.brandBlue.withValues(alpha: 0.5),
-            width: 1.0,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
-          ),
-          backgroundColor: AppColors.transparent,
-        ),
-        child: Text(
-          text,
-          style: GoogleFonts.cairo(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: isDarkMode ? AppColors.white70 : AppColors.brandBlue,
-          ),
-        ),
+      borderRadius: BorderRadius.circular(28),
+      borderColor: isDarkMode
+          ? AppColors.white38
+          : AppColors.brandBlue.withValues(alpha: 0.5),
+      textStyle: GoogleFonts.cairo(
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+        color: isDarkMode ? AppColors.white70 : AppColors.brandBlue,
       ),
     );
   }
