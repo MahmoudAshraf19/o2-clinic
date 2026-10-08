@@ -35,6 +35,8 @@ class AppointmentsController extends GetxController {
   final isLoading = true.obs;
   final error = Rx<String?>(null);
   final showFilters = false.obs;
+  
+  final displayCount = 10.obs;
 
   /// Set when a deep-link (`showBookingId`) matches a loaded booking.
   /// The screen listens to it, opens the details sheet and resets it.
@@ -160,6 +162,11 @@ class AppointmentsController extends GetxController {
     typeFilter.value = AppointmentTypeFilter.all;
     timeFilter.value = AppointmentTimeFilter.all;
     searchController.clear();
+    displayCount.value = 10;
+  }
+
+  void loadMore() {
+    displayCount.value += 10;
   }
 
   /// Number of active filters inside the "advanced" panel (type + time).

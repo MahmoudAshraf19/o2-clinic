@@ -79,7 +79,9 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     final filtered = _controller.filteredBookings;
     final next = _controller.nextAppointment;
     final hasFilters = _controller.hasActiveFilters;
-    final items = _buildItems(filtered);
+    final paginatedFiltered = filtered.take(_controller.displayCount.value).toList();
+    final items = _buildItems(paginatedFiltered);
+    final canLoadMore = filtered.length > paginatedFiltered.length;
 
     return RefreshIndicator(
       color: AppColors.primary,
@@ -156,6 +158,19 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
                     ),
                   );
                 }, childCount: items.length),
+              ),
+            ),
+          if (canLoadMore)
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
+                child: CommonButton(
+                  onPressed: _controller.loadMore,
+                  text: 'Load more', // Better to localize later if needed
+                  type: CommonButtonType.outline,
+                  borderColor: AppColors.primary,
+                  foregroundColor: AppColors.primary,
+                ),
               ),
             ),
         ],

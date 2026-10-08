@@ -32,13 +32,6 @@ class NextAppointmentCard extends StatelessWidget {
             ? AppColors.colorFF1E293B 
             : AppColors.primary,
         borderRadius: BorderRadius.circular(28),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.colorFF1E877B.withValues(alpha: 0.3),
-            blurRadius: 24,
-            offset: const Offset(0, 10),
-          ),
-        ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(28),

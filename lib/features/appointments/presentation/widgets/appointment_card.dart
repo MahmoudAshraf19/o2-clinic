@@ -47,7 +47,7 @@ class AppointmentCard extends StatelessWidget {
           ],
           border: Border.all(
             color: Theme.of(context).brightness == Brightness.dark 
-                ? AppColors.scaffoldDark 
+                ? AppColors.primary 
                 : AppColors.grey100,
           ),
         ),
