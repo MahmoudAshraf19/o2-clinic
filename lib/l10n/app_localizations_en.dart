@@ -1400,4 +1400,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get reportSubmitFailed =>
       'Failed to submit the report. Please try again.';
+
+  @override
+  String get noRecentVisit => 'No recent visit';
 }

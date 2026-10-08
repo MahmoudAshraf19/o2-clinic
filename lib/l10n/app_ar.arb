@@ -404,5 +404,6 @@
 "@reportDescLengthError": { "placeholders": { "minChars": { "type": "int" } } },
 "reportDescMaxLengthError": "الحد الأقصى {maxChars} حرف.",
 "@reportDescMaxLengthError": { "placeholders": { "maxChars": { "type": "int" } } },
-"reportSubmittedSuccess": "تم إرسال بلاغك بنجاح وسنراجعه قريباً.", "reportSubmitFailed": "تعذّر إرسال البلاغ، حاول مرة أخرى."
+"reportSubmittedSuccess": "تم إرسال بلاغك بنجاح وسنراجعه قريباً.", "reportSubmitFailed": "تعذّر إرسال البلاغ، حاول مرة أخرى.",
+"noRecentVisit": "لا توجد زيارة حديثة"
 }

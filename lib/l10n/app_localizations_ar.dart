@@ -1394,4 +1394,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reportSubmitFailed => 'تعذّر إرسال البلاغ، حاول مرة أخرى.';
+
+  @override
+  String get noRecentVisit => 'لا توجد زيارة حديثة';
 }

@@ -441,5 +441,6 @@
 "@reportDescLengthError": { "placeholders": { "minChars": { "type": "int" } } },
 "reportDescMaxLengthError": "Maximum {maxChars} characters.",
 "@reportDescMaxLengthError": { "placeholders": { "maxChars": { "type": "int" } } },
-"reportSubmittedSuccess": "Your report was submitted. We will review it shortly.", "reportSubmitFailed": "Failed to submit the report. Please try again."
+"reportSubmittedSuccess": "Your report was submitted. We will review it shortly.", "reportSubmitFailed": "Failed to submit the report. Please try again.",
+"noRecentVisit": "No recent visit"
 }

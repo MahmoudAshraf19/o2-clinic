@@ -1385,4 +1385,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get reportSubmitFailed => 'שליחת הדיווח נכשלה. נסה שוב.';
+
+  @override
+  String get noRecentVisit => 'אין ביקור אחרון';
 }

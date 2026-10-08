@@ -404,5 +404,6 @@
 "@reportDescLengthError": { "placeholders": { "minChars": { "type": "int" } } },
 "reportDescMaxLengthError": "מקסימום {maxChars} תווים.",
 "@reportDescMaxLengthError": { "placeholders": { "maxChars": { "type": "int" } } },
-"reportSubmittedSuccess": "הדיווח שלך נשלח בהצלחה ויבדק בקרוב.", "reportSubmitFailed": "שליחת הדיווח נכשלה. נסה שוב."
+"reportSubmittedSuccess": "הדיווח שלך נשלח בהצלחה ויבדק בקרוב.", "reportSubmitFailed": "שליחת הדיווח נכשלה. נסה שוב.",
+"noRecentVisit": "אין ביקור אחרון"
 }

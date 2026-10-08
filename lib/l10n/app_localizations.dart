@@ -2757,6 +2757,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to submit the report. Please try again.'**
   String get reportSubmitFailed;
+
+  /// No description provided for @noRecentVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent visit'**
+  String get noRecentVisit;
 }
 
 class _AppLocalizationsDelegate

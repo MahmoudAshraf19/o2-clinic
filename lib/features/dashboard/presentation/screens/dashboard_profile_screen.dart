@@ -87,7 +87,7 @@ class DashboardProfileScreen extends StatelessWidget {
                                       title: AppLocalizations.of(
                                         context,
                                       )!.phoneNumber,
-                                      value: user.phone,
+                                      value: _formatPhoneNumber(user.phone),
                                     ),
                                     ProfileDetailCard(
                                       icon: Icons.mail_outline,
@@ -101,14 +101,14 @@ class DashboardProfileScreen extends StatelessWidget {
                                       title: AppLocalizations.of(
                                         context,
                                       )!.gender,
-                                      value: user.gender,
+                                      value: _localizeGender(context, user.gender),
                                     ),
                                     ProfileDetailCard(
                                       icon: Icons.event_outlined,
                                       title: AppLocalizations.of(
                                         context,
                                       )!.lastVisit,
-                                      value: user.lastVisit,
+                                      value: _localizeLastVisit(context, user.lastVisit),
                                       subtitle: user.lastVisitType,
                                     ),
                                   ],
@@ -304,6 +304,52 @@ class _TopAvatar extends StatelessWidget {
               ),
       ),
     );
+  }
+  String _formatPhoneNumber(String phone) {
+    if (phone.isEmpty) return phone;
+    
+    final Map<String, String> countryFlags = {
+      '+20': '🇪🇬',
+      '+966': '🇸🇦',
+      '+971': '🇦🇪',
+      '+972': '🇮🇱',
+      '+970': '🇵🇸',
+      '+962': '🇯🇴',
+      '+965': '🇰🇼',
+      '+974': '🇶🇦',
+      '+973': '🇧🇭',
+      '+968': '🇴🇲',
+      '+212': '🇲🇦',
+      '+213': '🇩🇿',
+      '+216': '🇹🇳',
+    };
+
+    for (final code in countryFlags.keys) {
+      if (phone.startsWith(code)) {
+        String localNumber = phone.substring(code.length);
+        if (code == '+20' && localNumber.startsWith('1')) {
+          localNumber = '0$localNumber';
+        }
+        return '${countryFlags[code]} $localNumber';
+      }
+    }
+    return phone;
+  }
+
+  String _localizeGender(BuildContext context, String gender) {
+    if (gender.toLowerCase() == 'male') {
+      return AppLocalizations.of(context)!.male;
+    } else if (gender.toLowerCase() == 'female') {
+      return AppLocalizations.of(context)!.female;
+    }
+    return gender;
+  }
+
+  String _localizeLastVisit(BuildContext context, String lastVisit) {
+    if (lastVisit == 'No recent visit') {
+      return AppLocalizations.of(context)!.noRecentVisit;
+    }
+    return lastVisit;
   }
 }
 
