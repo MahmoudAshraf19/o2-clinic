@@ -76,9 +76,13 @@ class RadiologyBookingScreen extends StatelessWidget {
             width: 42,
             height: 42,
             decoration: BoxDecoration(
-              color: AppColors.surface,
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.border),
+              border: Border.all(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.primary
+                    : AppColors.border,
+              ),
             ),
             child: const Icon(
               Icons.arrow_back_ios_new_rounded,
@@ -108,7 +112,7 @@ class RadiologyBookingScreen extends StatelessWidget {
               AppLocalizations.of(context)!.selectDateTime,
               style: TextStyle(
                 fontSize: 13,
-                color: AppColors.textSecondary.withValues(alpha: 0.75),
+                color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.75),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -124,7 +128,11 @@ class RadiologyBookingScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.primary
+              : AppColors.border,
+        ),
         boxShadow: [
           BoxShadow(
             color: AppColors.black.withValues(alpha: 0.03),
@@ -156,10 +164,10 @@ class RadiologyBookingScreen extends StatelessWidget {
               children: [
                 Text(
                   service.getName('en'),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -248,12 +256,14 @@ class RadiologyBookingScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? AppColors.primary
-                            : AppColors.cardBackground,
+                            : Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(18),
                         border: Border.all(
                           color: isSelected
                               ? AppColors.primary
-                              : AppColors.border,
+                              : Theme.of(context).brightness == Brightness.dark
+                                  ? AppColors.primary
+                                  : AppColors.border,
                         ),
                         boxShadow: isSelected
                             ? [
@@ -280,7 +290,7 @@ class RadiologyBookingScreen extends StatelessWidget {
                               letterSpacing: 1.5,
                               color: isSelected
                                   ? AppColors.white
-                                  : AppColors.grey,
+                                  : Theme.of(context).textTheme.bodyMedium?.color,
                             ),
                           ),
                           const SizedBox(height: 6),
@@ -291,7 +301,7 @@ class RadiologyBookingScreen extends StatelessWidget {
                               fontWeight: FontWeight.w800,
                               color: isSelected
                                   ? AppColors.white
-                                  : AppColors.textPrimary,
+                                  : Theme.of(context).textTheme.bodyLarge?.color,
                             ),
                           ),
                         ],
@@ -355,10 +365,14 @@ class RadiologyBookingScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isSelected
                         ? AppColors.primary
-                        : AppColors.cardBackground,
+                        : Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
-                      color: isSelected ? AppColors.primary : AppColors.border,
+                      color: isSelected
+                          ? AppColors.primary
+                          : Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.primary
+                              : AppColors.border,
                     ),
                   ),
                   child: Text(
@@ -370,7 +384,7 @@ class RadiologyBookingScreen extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       color: isSelected
                           ? AppColors.white
-                          : AppColors.textPrimary,
+                          : Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                   ),
                 ),
