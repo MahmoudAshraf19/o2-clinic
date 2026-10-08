@@ -7,12 +7,12 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:record/record.dart';
 
-import '../../../core/utils/media_compressor.dart';
-import '../../chat_support/controllers/support_chat_controller.dart'
+import '../../../../core/utils/media_compressor.dart';
+import '../../../chat_support/controllers/support_chat_controller.dart'
     show PendingAttachment;
-import '../../chat_support/models/chat_support_model.dart';
-import '../models/doctor_chat_model.dart';
-import '../services/doctor_chat_service.dart';
+import '../../../chat_support/models/chat_support_model.dart';
+import '../../data/models/doctor_chat_model.dart';
+import '../../data/services/doctor_chat_service.dart';
 
 class DoctorChatController extends GetxController {
   final DoctorChatService service;

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../chat_support/models/chat_support_model.dart'; // To reuse ChatMessageKind, ChatAttachment, ChatOption
+import '../../../chat_support/models/chat_support_model.dart'; // To reuse ChatMessageKind, ChatAttachment, ChatOption
 
 class DoctorChatRoom {
   final String id;

@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import '../../../core/constants/app_firestore.dart';
-import '../models/doctor_chat_model.dart';
-import '../services/doctor_chat_service.dart';
+import '../../../../core/constants/app_firestore.dart';
+import '../../data/models/doctor_chat_model.dart';
+import '../../data/services/doctor_chat_service.dart';
 
 class DoctorChatsListController extends GetxController {
   final DoctorChatService service;
