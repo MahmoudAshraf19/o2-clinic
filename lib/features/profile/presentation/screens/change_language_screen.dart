@@ -109,7 +109,9 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                       fontSize: 24,
                       height: 1.2,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
+                      color: Theme.of(context).brightness == Brightness.dark 
+                          ? AppColors.white 
+                          : AppColors.primary,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -122,7 +124,9 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                       fontSize: 14,
                       height: 1.5,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.textSecondary,
+                      color: Theme.of(context).brightness == Brightness.dark 
+                          ? AppColors.white70 
+                          : AppColors.textSecondary,
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -149,12 +153,16 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                             decoration: BoxDecoration(
                               color: isSelected
                                   ? AppColors.primary.withValues(alpha: 0.08)
-                                  : AppColors.surface,
+                                  : (Theme.of(context).brightness == Brightness.dark 
+                                      ? AppColors.white.withValues(alpha: 0.05) 
+                                      : AppColors.surface),
                               borderRadius: BorderRadius.circular(18),
                               border: Border.all(
                                 color: isSelected
                                     ? AppColors.primary
-                                    : AppColors.borderSoft,
+                                    : (Theme.of(context).brightness == Brightness.dark 
+                                        ? AppColors.white.withValues(alpha: 0.1) 
+                                        : AppColors.borderSoft),
                                 width: 2,
                               ),
                               boxShadow: [
@@ -219,7 +227,9 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                     fontSize: 16,
                                     color: isSelected
                                         ? AppColors.primary
-                                        : AppColors.textPrimary,
+                                        : (Theme.of(context).brightness == Brightness.dark 
+                                            ? AppColors.white 
+                                            : AppColors.textPrimary),
                                     fontWeight: isSelected
                                         ? FontWeight.w700
                                         : FontWeight.w500,
@@ -259,11 +269,23 @@ class _TopIconButton extends StatelessWidget {
           width: 42,
           height: 42,
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            color: Theme.of(context).brightness == Brightness.dark 
+                ? AppColors.white.withValues(alpha: 0.05) 
+                : AppColors.surface,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: AppColors.borderSoft),
+            border: Border.all(
+              color: Theme.of(context).brightness == Brightness.dark 
+                  ? AppColors.white.withValues(alpha: 0.1) 
+                  : AppColors.borderSoft,
+            ),
           ),
-          child: Icon(icon, size: 22, color: AppColors.primary),
+          child: Icon(
+            icon, 
+            size: 22, 
+            color: Theme.of(context).brightness == Brightness.dark 
+                ? AppColors.white 
+                : AppColors.primary,
+          ),
         ),
       ),
     );
