@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
@@ -134,9 +135,10 @@ class CosmeticSuccessScreen extends StatelessWidget {
             style: TextStyle(color: AppColors.grey600),
           ),
           const SizedBox(height: 18),
-          _info(_t("Type"), model.getName(langCode)),
-          _info(_t("Date"), _formatDate(selectedDate)),
+          _info(context, _t("Type"), model.getName(langCode)),
+          _info(context, _t("Date"), _formatDate(selectedDate)),
           _info(
+            context,
             _t("Time"),
             selectedTime
                 .replaceAll('AM', _getAm(langCode))
@@ -189,7 +191,7 @@ class CosmeticSuccessScreen extends StatelessWidget {
     );
   }
 
-  Widget _info(String t, String v) {
+  Widget _info(BuildContext context, String t, String v) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
