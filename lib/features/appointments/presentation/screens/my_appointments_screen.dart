@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../../common/widgets/common_text_field.dart';
+import '../../../../common/widgets/common_button.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../booking/data/models/fs_booking_model.dart';
