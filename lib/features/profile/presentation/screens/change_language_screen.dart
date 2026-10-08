@@ -120,7 +120,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                           context,
                         )?.selectYourPreferredLanguageFor ??
                         'Select your preferred language for a personalized app experience.',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       height: 1.5,
                       fontWeight: FontWeight.w400,
