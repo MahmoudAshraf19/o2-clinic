@@ -291,19 +291,16 @@ class _ScreenHeader extends StatelessWidget {
           child: GestureDetector(
             onTap: () => Get.back(),
             child: Container(
-              padding: const EdgeInsets.all(12),
+              width: 42,
+              height: 42,
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).brightness == Brightness.dark 
-                        ? AppColors.white.withValues(alpha: 0.04) 
-                        : AppColors.black.withValues(alpha: 0.04),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.primary
+                      : AppColors.border,
+                ),
               ),
               child: const Icon(
                 Icons.arrow_back_ios_new_rounded,
