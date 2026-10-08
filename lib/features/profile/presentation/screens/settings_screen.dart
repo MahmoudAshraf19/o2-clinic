@@ -99,8 +99,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: _QuickOptionCard(
                       icon: Icons.dark_mode_rounded,
                       title: AppLocalizations.of(context)?.theme ?? 'Theme',
-                      value:
-                          AppLocalizations.of(context)?.lightTheme ?? 'Light',
+                      value: Theme.of(context).brightness == Brightness.dark
+                          ? AppLocalizations.of(context)?.darkTheme ?? 'Dark'
+                          : AppLocalizations.of(context)?.lightTheme ?? 'Light',
                       onTap: () {
                         CommonDialogs.showBottomSheet(
                           context,
@@ -655,6 +656,8 @@ class _ThemeSelectionBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -671,12 +674,12 @@ class _ThemeSelectionBottomSheet extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           ListTile(
-            leading: const Icon(Icons.light_mode, color: AppColors.vibrantCyan),
+            leading: Icon(Icons.light_mode, color: !isDark ? AppColors.vibrantCyan : AppColors.muted),
             title: Text(
               AppLocalizations.of(context)?.lightTheme ?? 'Light',
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: TextStyle(fontWeight: !isDark ? FontWeight.w600 : FontWeight.w500),
             ),
-            trailing: const Icon(Icons.check, color: AppColors.brandBlue),
+            trailing: !isDark ? const Icon(Icons.check, color: AppColors.brandBlue) : null,
             onTap: () {
               Get.changeThemeMode(ThemeMode.light);
               Navigator.pop(context);
@@ -684,8 +687,12 @@ class _ThemeSelectionBottomSheet extends StatelessWidget {
           ),
           const Divider(height: 1, color: AppColors.borderSoft),
           ListTile(
-            leading: const Icon(Icons.dark_mode, color: AppColors.muted),
-            title: Text('Dark', style: TextStyle(fontWeight: FontWeight.w500)),
+            leading: Icon(Icons.dark_mode, color: isDark ? AppColors.vibrantCyan : AppColors.muted),
+            title: Text(
+              AppLocalizations.of(context)?.darkTheme ?? 'Dark',
+              style: TextStyle(fontWeight: isDark ? FontWeight.w600 : FontWeight.w500),
+            ),
+            trailing: isDark ? const Icon(Icons.check, color: AppColors.brandBlue) : null,
             onTap: () {
               Get.changeThemeMode(ThemeMode.dark);
               Navigator.pop(context);

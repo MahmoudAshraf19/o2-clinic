@@ -658,6 +658,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lightTheme => 'فاتح';
 
   @override
+  String get darkTheme => 'داكن';
+
+  @override
   String get signOut => 'تسجيل الخروج';
 
   @override

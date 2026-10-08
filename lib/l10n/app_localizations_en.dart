@@ -659,6 +659,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lightTheme => 'Light';
 
   @override
+  String get darkTheme => 'Dark';
+
+  @override
   String get signOut => 'Sign Out';
 
   @override

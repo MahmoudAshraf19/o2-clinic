@@ -1348,6 +1348,12 @@ abstract class AppLocalizations {
   /// **'Light'**
   String get lightTheme;
 
+  /// No description provided for @darkTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get darkTheme;
+
   /// No description provided for @signOut.
   ///
   /// In en, this message translates to:
