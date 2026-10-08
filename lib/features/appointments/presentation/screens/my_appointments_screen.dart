@@ -84,37 +84,37 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
     final items = _buildItems(paginatedFiltered);
     final canLoadMore = filtered.length > paginatedFiltered.length;
 
-    return RefreshIndicator(
-      color: AppColors.primary,
-      backgroundColor: Theme.of(context).cardColor,
-      onRefresh: _controller.refreshBookings,
-      child: CustomScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
-        ),
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const _ScreenHeader(),
-                  if (next != null && !hasFilters) ...[
-                    const SizedBox(height: 20),
-                    NextAppointmentCard(
-                      booking: next,
-                      onViewDetails: () => _openDetails(next),
-                    ),
+    return _StateLayout(
+      expandChild: true,
+      child: RefreshIndicator(
+        color: AppColors.primary,
+        backgroundColor: Theme.of(context).cardColor,
+        onRefresh: _controller.refreshBookings,
+        child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (next != null && !hasFilters) ...[
+                      NextAppointmentCard(
+                        booking: next,
+                        onViewDetails: () => _openDetails(next),
+                      ),
+                      const SizedBox(height: 24),
+                    ],
+                    _buildSearchRow(context),
+                    AppointmentAdvancedFilters(controller: _controller),
+                    const SizedBox(height: 16),
                   ],
-                  const SizedBox(height: 24),
-                  _buildSearchRow(context),
-                  AppointmentAdvancedFilters(controller: _controller),
-                  const SizedBox(height: 16),
-                ],
+                ),
               ),
             ),
-          ),
           SliverToBoxAdapter(
             child: AppointmentStatusChips(controller: _controller),
           ),
@@ -176,7 +176,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
             ),
         ],
       ),
-    );
+    ));
   }
 
   /// Flattens bookings into list items. When no status filter is applied the
@@ -322,15 +322,6 @@ class _ScreenHeader extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: AppColors.primary,
                   fontFamily: AppFonts.dancingScript,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                l10n.manageYourBookingsEasily,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Theme.of(context).brightness == Brightness.dark ? AppColors.white54 : AppColors.grey600,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
