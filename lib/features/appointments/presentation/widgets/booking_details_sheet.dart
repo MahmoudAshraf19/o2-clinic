@@ -140,21 +140,21 @@ class BookingDetailsSheet extends StatelessWidget {
                       label: l10n.date,
                       value: BookingHelper.dateText(context, booking),
                     ),
-                    _divider(),
+                    _divider(context),
                     _DetailRow(
                       icon: Icons.access_time_rounded,
                       label: l10n.time,
                       value: BookingHelper.timeText(context, booking),
                     ),
                     if (location.isNotEmpty) ...[
-                      _divider(),
+                      _divider(context),
                       _DetailRow(
                         icon: Icons.location_on_rounded,
                         label: l10n.location,
                         value: location,
                       ),
                     ],
-                    _divider(),
+                    _divider(context),
                     _DetailRow(
                       icon: Icons.confirmation_number_rounded,
                       label: l10n.bookingRef,
@@ -388,9 +388,14 @@ class BookingDetailsSheet extends StatelessWidget {
     }
   }
 
-  Widget _divider() => Padding(
+  Widget _divider(BuildContext context) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 12),
-    child: Divider(height: 1, color: AppColors.grey200),
+    child: Divider(
+      height: 1, 
+      color: Theme.of(context).brightness == Brightness.dark 
+          ? AppColors.scaffoldDark 
+          : AppColors.grey200,
+    ),
   );
 }
 
@@ -433,10 +438,12 @@ class _DetailRow extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 value,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.black87,
+                  color: Theme.of(context).brightness == Brightness.dark 
+                      ? AppColors.white 
+                      : AppColors.black87,
                 ),
               ),
             ],
