@@ -134,7 +134,7 @@ class CosmeticBookingScreen extends StatelessWidget {
             width: 42,
             height: 42,
             decoration: BoxDecoration(
-              color: AppColors.surface,
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppColors.border),
             ),
@@ -330,7 +330,7 @@ class CosmeticBookingScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? AppColors.primary
-                            : AppColors.cardBackground,
+                            : Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(18),
                         border: Border.all(
                           color: isSelected
@@ -359,7 +359,7 @@ class CosmeticBookingScreen extends StatelessWidget {
                               letterSpacing: 1.5,
                               color: isSelected
                                   ? AppColors.white
-                                  : AppColors.grey,
+                                  : AppColors.textSecondary,
                             ),
                           ),
                           const SizedBox(height: 6),
@@ -434,7 +434,7 @@ class CosmeticBookingScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isSelected
                         ? AppColors.primary
-                        : AppColors.cardBackground,
+                        : Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
                       color: isSelected ? AppColors.primary : AppColors.border,
