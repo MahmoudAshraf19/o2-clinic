@@ -99,7 +99,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(color: AppColors.border),
                 boxShadow: [
@@ -267,10 +267,10 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                         service.getName(Get.locale?.languageCode ?? 'en'),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w900,
-                          color: AppColors.textPrimary,
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
                         ),
                       ),
                       const SizedBox(height: 6),
@@ -278,10 +278,10 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                         AppLocalizations.of(context)!.advancedDiagnosticImaging,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
                           height: 1.35,
-                          color: AppColors.textSecondary,
+                          color: Theme.of(context).textTheme.bodyMedium?.color,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -348,11 +348,10 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
-
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -550,7 +549,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                     vertical: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceContainerLow,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: AppColors.border),
                   ),
@@ -576,9 +575,9 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                             e.key,
                             Get.locale?.languageCode ?? 'en',
                           ).toUpperCase(),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w900,
-                            color: AppColors.textPrimary,
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
                           ),
                         ),
                       ),
@@ -614,10 +613,10 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
         const SizedBox(width: 10),
         Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w900,
-            color: AppColors.textPrimary,
+            color: Theme.of(context).textTheme.bodyLarge?.color,
           ),
         ),
       ],
@@ -630,7 +629,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: Theme.of(context).cardColor,
         border: Border(top: BorderSide(color: AppColors.border)),
       ),
       child: SizedBox(
@@ -660,7 +659,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
 
   BoxDecoration _cardDecoration() {
     return BoxDecoration(
-      color: AppColors.white,
+      color: Theme.of(context).cardColor,
       borderRadius: BorderRadius.circular(24),
       border: Border.all(color: AppColors.border.withValues(alpha: 0.85)),
       boxShadow: [
@@ -676,7 +675,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
   TextStyle _bodyStyle() => TextStyle(
     fontSize: 13,
     height: 1.8,
-    color: AppColors.textSecondary.withValues(alpha: 0.88),
+    color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.88),
     fontWeight: FontWeight.w600,
   );
 }
