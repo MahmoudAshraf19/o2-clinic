@@ -62,7 +62,11 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.primary
+                      : AppColors.border,
+                ),
               ),
               child: const Icon(
                 Icons.arrow_back_ios_new_rounded,
@@ -93,7 +97,7 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                       : "Choose your aesthetic service",
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.textSecondary.withValues(alpha: 0.75),
+                    color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.75),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -188,7 +192,9 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
         border: Border.all(
           color: isExpanded
               ? AppColors.primary.withValues(alpha: 0.3)
-              : AppColors.border.withValues(alpha: 0.6),
+              : Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.primary
+                  : AppColors.border.withValues(alpha: 0.6),
           width: isExpanded ? 1.5 : 1.0,
         ),
         boxShadow: [
@@ -229,7 +235,7 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                             fontWeight: FontWeight.w800,
                             color: isExpanded
                                 ? AppColors.primary
-                                : AppColors.textPrimary,
+                                : Theme.of(context).textTheme.bodyLarge?.color,
                           ),
                           child: Text(service.getName(langCode)),
                         ),
@@ -277,7 +283,7 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                     decoration: BoxDecoration(
                       color: isExpanded
                           ? AppColors.primary.withValues(alpha: 0.12)
-                          : AppColors.surface,
+                          : Theme.of(context).scaffoldBackgroundColor,
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: AnimatedRotation(
@@ -315,7 +321,7 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                     style: TextStyle(
                       fontSize: 14,
                       height: 1.4,
-                      color: AppColors.textPrimary.withValues(alpha: 0.85),
+                      color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.85),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
