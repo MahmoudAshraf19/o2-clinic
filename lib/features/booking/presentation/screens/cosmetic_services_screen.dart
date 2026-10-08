@@ -233,9 +233,11 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                           style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w800,
-                            color: isExpanded
-                                ? AppColors.primary
-                                : Theme.of(context).textTheme.bodyLarge?.color,
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.white
+                                : (isExpanded
+                                    ? AppColors.primary
+                                    : AppColors.textPrimary),
                           ),
                           child: Text(service.getName(langCode)),
                         ),
@@ -321,7 +323,9 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                     style: TextStyle(
                       fontSize: 14,
                       height: 1.4,
-                      color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.85),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.white.withValues(alpha: 0.85)
+                          : AppColors.textPrimary.withValues(alpha: 0.85),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -434,7 +438,6 @@ class _PrimaryButton extends StatelessWidget {
       foregroundColor: AppColors.white,
       borderRadius: BorderRadius.circular(18),
       padding: const EdgeInsets.symmetric(vertical: 15),
-      icon: Icons.calendar_month_rounded,
       textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
     );
   }
