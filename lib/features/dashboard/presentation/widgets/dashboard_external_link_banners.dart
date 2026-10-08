@@ -198,9 +198,7 @@ class _BannerCard extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.dark 
-                            ? AppColors.scaffoldDark.withValues(alpha: 0.18) 
-                            : AppColors.white.withValues(alpha: 0.18),
+                        color: AppColors.white.withValues(alpha: 0.18),
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Text(
@@ -208,7 +206,7 @@ class _BannerCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: Theme.of(context).brightness == Brightness.dark ? AppColors.scaffoldDark : AppColors.white,
+                          color: AppColors.white,
                           fontSize: 9,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 0.8,
@@ -222,7 +220,7 @@ class _BannerCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: Theme.of(context).brightness == Brightness.dark ? AppColors.scaffoldDark : AppColors.white,
+                      color: AppColors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
                       height: 1.1,
@@ -234,7 +232,7 @@ class _BannerCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: Theme.of(context).brightness == Brightness.dark ? AppColors.scaffoldDark.withValues(alpha: 0.7) : AppColors.white70,
+                      color: AppColors.white70,
                       fontSize: 11,
                       fontWeight: FontWeight.w500,
                       height: 1.3,
@@ -249,8 +247,8 @@ class _BannerCard extends StatelessWidget {
                       onPressed: () => _navigateToScreen(context),
                       type: CommonButtonType.primary,
                       size: CommonButtonSize.medium,
-                      backgroundColor: Theme.of(context).brightness == Brightness.dark ? AppColors.scaffoldDark : AppColors.white,
-                      foregroundColor: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.colorFF00685F,
+                      backgroundColor: AppColors.white,
+                      foregroundColor: AppColors.colorFF00685F,
                       borderRadius: BorderRadius.circular(999),
                     ),
                 ],
