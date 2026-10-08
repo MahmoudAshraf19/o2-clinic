@@ -34,6 +34,7 @@ class NextAppointmentCard extends StatelessWidget {
         image: const DecorationImage(
           image: AssetImage('assets/images/background_banner.png'),
           fit: BoxFit.cover,
+          matchTextDirection: true,
         ),
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
@@ -94,7 +95,7 @@ class NextAppointmentCard extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Theme.of(context).brightness == Brightness.dark ? AppColors.black : AppColors.white,
+                                color: AppColors.white,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -104,7 +105,7 @@ class NextAppointmentCard extends StatelessWidget {
                               BookingHelper.subtitle(context, booking),
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Theme.of(context).brightness == Brightness.dark ? AppColors.black87 : AppColors.white.withValues(alpha: 0.85),
+                                color: AppColors.white.withValues(alpha: 0.85),
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -119,14 +120,10 @@ class NextAppointmentCard extends StatelessWidget {
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).brightness == Brightness.dark 
-                              ? AppColors.black.withValues(alpha: 0.1) 
-                              : AppColors.white.withValues(alpha: 0.2),
+                          color: AppColors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
-                            color: Theme.of(context).brightness == Brightness.dark 
-                                ? AppColors.black.withValues(alpha: 0.05) 
-                                : AppColors.white.withValues(alpha: 0.1),
+                            color: AppColors.white.withValues(alpha: 0.1),
                           ),
                         ),
                         child: Text(
@@ -134,7 +131,7 @@ class NextAppointmentCard extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).brightness == Brightness.dark ? AppColors.black : AppColors.white,
+                            color: AppColors.white,
                           ),
                         ),
                       ),
@@ -152,7 +149,7 @@ class NextAppointmentCard extends StatelessWidget {
                         Icon(
                           Icons.access_time_filled_rounded,
                           size: 20,
-                          color: Theme.of(context).brightness == Brightness.dark ? AppColors.black : AppColors.white,
+                          color: AppColors.white,
                         ),
                         const SizedBox(width: 10),
                         Expanded(
@@ -161,7 +158,7 @@ class NextAppointmentCard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: Theme.of(context).brightness == Brightness.dark ? AppColors.black : AppColors.white,
+                              color: AppColors.white,
                             ),
                           ),
                         ),
