@@ -110,7 +110,7 @@ class BookingScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.textSecondary,
+                              color: Theme.of(context).textTheme.bodyMedium?.color,
                             ),
                           ),
                         ),
@@ -142,7 +142,7 @@ class BookingScreen extends StatelessWidget {
                             )!.chooseTheMedicalServiceYou,
                             style: TextStyle(
                               fontSize: 14,
-                              color: AppColors.textSecondary.withValues(
+                              color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(
                                 alpha: 0.8,
                               ),
                               fontWeight: FontWeight.w500,
