@@ -13,7 +13,7 @@ import '../../../../core/utils/media_compressor.dart';
 import '../../../chat_support/presentation/controllers/support_chat_controller.dart'
     show PendingAttachment;
 import '../../../chat_support/data/models/chat_support_model.dart';
-import '../../../doctors/data/models/doctor_model.dart';
+import 'package:o2_clinic/common/models/fs_doctor_model.dart';
 import '../../../profile/presentation/controllers/dashboard_profile_controller.dart';
 import '../../data/models/doctor_chat_model.dart';
 import '../../data/services/doctor_chat_service.dart';
@@ -95,7 +95,7 @@ class PatientChatController extends GetxController {
       final patientName = profileController.user.value?.name ?? 'Patient';
       final patientProfileImage = profileController.user.value?.image ?? '';
 
-      final doctorName = doctor.name;
+      final doctorName = doctor.name(Get.locale?.languageCode ?? 'en');
       final doctorProfileImage = doctor.image;
 
       // No pending attachment logic, media sends automatically in background
@@ -223,7 +223,7 @@ class PatientChatController extends GetxController {
     final profileController = Get.find<DashboardProfileController>();
     final patientName = profileController.user.value?.name ?? 'Patient';
     final patientProfileImage = profileController.user.value?.image ?? '';
-    final doctorName = doctor.name;
+    final doctorName = doctor.name(Get.locale?.languageCode ?? 'en');
     final doctorProfileImage = doctor.image;
 
     final dummyMessage = DoctorChatMessage(

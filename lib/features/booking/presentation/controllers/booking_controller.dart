@@ -9,7 +9,7 @@ import '../screens/radiology_services_screen.dart';
 import '../widgets/department_doctor_widget.dart'; // فيه DepartmentDoctorScreen
 import '../screens/cosmetic_services_screen.dart';
 import '../../../services/data/models/cosmetic_category_model.dart';
-import '../screens/cosmetic_booking_page.dart';
+import '../screens/cosmetic_booking_screen.dart';
 
 class BookingController extends GetxController {
   final services = <BookingServiceModel>[].obs;
@@ -117,7 +117,7 @@ class BookingController extends GetxController {
       );
 
       Get.to(
-        () => CosmeticBookingPage(model: directModel),
+        () => CosmeticBookingScreen(model: directModel),
         transition: Transition.rightToLeftWithFade,
         duration: const Duration(milliseconds: 350),
       );

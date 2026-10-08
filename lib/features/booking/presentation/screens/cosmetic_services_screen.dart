@@ -7,7 +7,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../services/data/models/cosmetic_category_model.dart';
 import '../controllers/cosmetic_services_controller.dart';
-import 'cosmetic_booking_page.dart';
+import 'cosmetic_booking_screen.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class CosmeticServicesScreen extends StatefulWidget {
@@ -323,7 +323,7 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
                   _PrimaryButton(
                     text: isAr ? 'احجز الآن' : 'Book Now',
                     onPressed: () =>
-                        Get.to(() => CosmeticBookingPage(model: service)),
+                        Get.to(() => CosmeticBookingScreen(model: service)),
                   ),
                 ],
               ),

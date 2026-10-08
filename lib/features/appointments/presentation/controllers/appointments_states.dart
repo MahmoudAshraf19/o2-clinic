@@ -28,9 +28,13 @@ class _StateCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 24),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.grey200),
+        border: Border.all(
+          color: Theme.of(context).brightness == Brightness.dark 
+              ? AppColors.scaffoldDark 
+              : AppColors.grey200,
+        ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -47,17 +51,21 @@ class _StateCard extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AppColors.black87,
+              color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.black87,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             message,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, height: 1.4, color: AppColors.grey600),
+            style: TextStyle(
+              fontSize: 14, 
+              height: 1.4, 
+              color: Theme.of(context).brightness == Brightness.dark ? AppColors.white54 : AppColors.grey600,
+            ),
           ),
           if (action != null) ...[const SizedBox(height: 24), action!],
         ],

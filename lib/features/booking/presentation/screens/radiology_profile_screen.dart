@@ -9,7 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../services/data/models/radiology_category_model.dart';
 import '../../../services/data/models/radiologist_model.dart';
 import 'radiologist_profile_screen.dart';
-import '../../presentation/pages/radiology_booking_page.dart';
+import '../../presentation/screens/radiology_booking_screen.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class RadiologyProfileScreen extends StatefulWidget {
@@ -638,7 +638,7 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
         child: CommonButton(
           onPressed: () {
             Get.to(
-              () => RadiologyBookingPage(service: widget.service),
+              () => RadiologyBookingScreen(service: widget.service),
               transition: Transition.rightToLeftWithFade,
               duration: const Duration(milliseconds: 300),
             );

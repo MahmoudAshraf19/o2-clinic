@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import '../models/discount_type_model.dart';
-import '../models/discount_code_model.dart';
-import '../services/discount_service.dart';
+import '../../data/models/discount_type_model.dart';
+import '../../data/models/discount_code_model.dart';
+import '../../data/services/discount_service.dart';
 
 class DiscountController extends GetxController {
   final DiscountService _discountService = DiscountService();

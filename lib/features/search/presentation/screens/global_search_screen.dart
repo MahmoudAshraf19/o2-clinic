@@ -8,7 +8,7 @@ import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 
 import '../../../doctors/presentation/screens/all_doctor_profile_page.dart';
-import '../../../booking/presentation/screens/cosmetic_booking_page.dart';
+import '../../../booking/presentation/screens/cosmetic_booking_screen.dart';
 import '../../../booking/presentation/screens/radiology_profile_screen.dart';
 
 import '../controllers/global_search_controller.dart';
@@ -196,7 +196,7 @@ class GlobalSearchScreen extends StatelessWidget {
                       controller.submitSearch(
                         c.getName(Get.locale?.languageCode ?? 'en'),
                       );
-                      Get.to(() => CosmeticBookingPage(model: c));
+                      Get.to(() => CosmeticBookingScreen(model: c));
                     },
                   ),
                 ),

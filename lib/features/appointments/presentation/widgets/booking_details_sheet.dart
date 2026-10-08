@@ -58,8 +58,8 @@ class BookingDetailsSheet extends StatelessWidget {
 
     return Container(
       constraints: BoxConstraints(maxHeight: maxHeight),
-      decoration: const BoxDecoration(
-        color: AppColors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
       ),
       child: SafeArea(
@@ -95,10 +95,10 @@ class BookingDetailsSheet extends StatelessWidget {
                       children: [
                         Text(
                           BookingHelper.title(context, booking),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.black87,
+                            color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.black87,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -106,7 +106,7 @@ class BookingDetailsSheet extends StatelessWidget {
                           BookingHelper.subtitle(context, booking),
                           style: TextStyle(
                             fontSize: 14,
-                            color: AppColors.grey600,
+                            color: Theme.of(context).brightness == Brightness.dark ? AppColors.white54 : AppColors.grey600,
                           ),
                         ),
                       ],
@@ -128,7 +128,9 @@ class BookingDetailsSheet extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.colorFFF4F7F9,
+                  color: Theme.of(context).brightness == Brightness.dark 
+                      ? AppColors.scaffoldDark.withValues(alpha: 0.5) 
+                      : AppColors.colorFFF4F7F9,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
@@ -246,9 +248,9 @@ class BookingDetailsSheet extends StatelessWidget {
                       : CommonButtonType.primary,
                   backgroundColor: canContinueImaging
                       ? null
-                      : AppColors.primary,
+                      : (Theme.of(context).brightness == Brightness.dark ? AppColors.scaffoldDark : AppColors.primary),
                   foregroundColor: canContinueImaging
-                      ? AppColors.grey600
+                      ? (Theme.of(context).brightness == Brightness.dark ? AppColors.white54 : AppColors.grey600)
                       : AppColors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   borderRadius: BorderRadius.circular(16),

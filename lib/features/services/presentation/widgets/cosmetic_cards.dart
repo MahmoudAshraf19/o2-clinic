@@ -6,7 +6,7 @@ import 'package:o2_clinic/common/widgets/common_dialogs.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-import '../../../booking/presentation/screens/cosmetic_booking_page.dart';
+import '../../../booking/presentation/screens/cosmetic_booking_screen.dart';
 
 import '../../../../common/widgets/common_button.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -187,7 +187,7 @@ class _CosmeticCardState extends State<CosmeticCard> {
                       onPressed: () {
                         Navigator.pop(context);
                         Get.to(
-                          () => CosmeticBookingPage(
+                          () => CosmeticBookingScreen(
                             model: CosmeticCategoryModel(
                               id: widget.model.id,
                               image: widget.model.image,

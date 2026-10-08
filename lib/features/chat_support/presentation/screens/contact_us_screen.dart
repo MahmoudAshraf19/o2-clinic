@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../presentation/controllers/contact_us_controller.dart';
+import '../../../../core/theme/app_fonts.dart';
+import '../../presentation/controllers/chat_contact_us_controller.dart';
 import '../../data/services/chat_support_service.dart';
 import '../../presentation/widgets/support_chat_widgets.dart';
 import 'chat_room_screen.dart';
 import '../../../chat_doctors/presentation/screens/patient_chat_screen.dart';
-import '../../../doctors/data/models/doctor_model.dart';
+import 'package:o2_clinic/common/models/fs_doctor_model.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class ContactUsScreen extends StatelessWidget {
@@ -27,14 +28,40 @@ class ContactUsScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: AppColors.transparent,
-        title: Text(
-          AppLocalizations.of(context)!.contactUs,
-          style: TextStyle(
-            color: AppColors.primary,
-            fontWeight: FontWeight.w800,
-          ),
+        centerTitle: false,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              AppLocalizations.of(context)!.contactUs,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.colorFF60A5FA
+                    : AppColors.primary,
+                fontFamily: AppFonts.dancingScript,
+                height: 1,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              AppLocalizations.of(context)!.needHelpWithInquiriesComplaints ?? 'We are here to help',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.grey400
+                    : AppColors.grey600,
+              ),
+            ),
+          ],
         ),
-        iconTheme: const IconThemeData(color: AppColors.primary),
+        iconTheme: IconThemeData(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.pureWhite
+              : AppColors.primary,
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -80,14 +107,23 @@ class ContactUsScreen extends StatelessWidget {
                   onTap: () {
                     final dummyDoctor = DoctorModel(
                       id: room.doctorId,
-                      name: room.doctorName,
+                      nameEn: room.doctorName,
+                      nameAr: room.doctorName,
+                      nameHe: room.doctorName,
                       image: room.doctorProfileImage,
-                      title: 'Doctor', // fallback
-                      rating: 0,
-                      reviews: 0,
-                      availability: '',
-                      booked: 0,
-                      total: 0,
+                      titleEn: 'Doctor',
+                      titleAr: 'دكتور',
+                      titleHe: 'Doctor',
+                      descriptionEn: '',
+                      descriptionAr: '',
+                      descriptionHe: '',
+                      maxBooking: 0,
+                      availabilityDay: {},
+                      isTopRateEnable: false,
+                      theTop: false,
+                      specialty: '',
+                      yearsExperience: 0,
+                      price: 0,
                     );
                     Get.to(() => PatientChatScreen(doctor: dummyDoctor));
                   },

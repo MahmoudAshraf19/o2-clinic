@@ -113,13 +113,9 @@ class DashboardProfileScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: isDesktop ? 24 : 16),
-                                SizedBox(
-                                  width: double.infinity,
-                                  height: isDesktop ? 250 : 210,
-                                  child: ProfileSettingsCard(
-                                    onTap: controller.openSettings,
-                                  ),
+                                const SizedBox(height: 16),
+                                ProfileSettingsCard(
+                                  onTap: controller.openSettings,
                                 ),
                                 SizedBox(height: isDesktop ? 48 : 32),
                                 Align(

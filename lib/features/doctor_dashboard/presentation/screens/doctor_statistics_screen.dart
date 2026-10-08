@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../common/widgets/common_dropdown.dart';
+import '../../../../common/widgets/common_dropdown.dart';
 
 import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';

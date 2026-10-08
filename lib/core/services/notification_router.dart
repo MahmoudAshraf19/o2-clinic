@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
 import '../../features/chat_support/presentation/screens/chat_room_screen.dart';
 import '../../features/doctors/data/services/doctor_firestore_service.dart';
-import '../../features/doctors/data/models/doctor_model.dart';
+import 'package:o2_clinic/common/models/fs_doctor_model.dart';
 import '../../features/chat_doctors/presentation/screens/patient_chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../features/chat_doctors/data/models/doctor_chat_model.dart';
@@ -42,22 +42,25 @@ class NotificationRouter {
             if (docData != null) {
               final doctor = DoctorModel(
                 id: doctorId,
-                name:
-                    docData['name_en'] ??
-                    docData['name_ar'] ??
-                    docData['name'] ??
-                    '',
-                title:
-                    docData['title_en'] ??
-                    docData['title_ar'] ??
-                    docData['title'] ??
-                    '',
+                nameEn: docData['name_en'] ?? docData['name'] ?? '',
+                nameAr: docData['name_ar'] ?? docData['name'] ?? '',
+                nameHe: docData['name_he'] ?? docData['name'] ?? '',
+                titleEn: docData['title_en'] ?? docData['title'] ?? '',
+                titleAr: docData['title_ar'] ?? docData['title'] ?? '',
+                titleHe: docData['title_he'] ?? docData['title'] ?? '',
+                descriptionEn: docData['description_en'] ?? docData['description'] ?? '',
+                descriptionAr: docData['description_ar'] ?? docData['description'] ?? '',
+                descriptionHe: docData['description_he'] ?? docData['description'] ?? '',
                 image: docData['image'] ?? '',
-                rating: (docData['rating_average'] ?? 5.0).toDouble(),
-                reviews: docData['reviews_count'] ?? 0,
-                availability: 'Available',
-                booked: 0,
-                total: docData['max_booking'] ?? 0,
+                ratingAverage: (docData['rating_average'] ?? 5.0).toDouble(),
+                reviewsCount: docData['reviews_count'] ?? 0,
+                maxBooking: docData['max_booking'] ?? 0,
+                availabilityDay: {},
+                isTopRateEnable: docData['is_top_rate_enable'] ?? false,
+                theTop: docData['the_top'] ?? false,
+                specialty: docData['specialty'] ?? '',
+                yearsExperience: docData['years_experience'] ?? 0,
+                price: docData['price'] ?? 0,
               );
               Get.to(() => PatientChatScreen(doctor: doctor));
             } else {

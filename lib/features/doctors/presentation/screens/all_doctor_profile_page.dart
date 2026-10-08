@@ -6,10 +6,9 @@ import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/booking_helper.dart';
+import 'package:o2_clinic/features/booking/utils/booking_helper.dart';
 import '../../../chat_doctors/presentation/screens/patient_chat_screen.dart'; // NEW
-import '../../../../features/doctors/data/models/doctor_model.dart';
-import '../../data/models/doctor_model.dart' as ui_model; // NEW
+import 'package:o2_clinic/common/models/fs_doctor_model.dart'; // NEW
 import '../../../services/data/services/fs_specialized_cache.dart';
 
 class DoctorProfilePage extends StatefulWidget {
@@ -513,18 +512,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
             height: 54,
             child: CommonButton(
               onPressed: () {
-                final uiDoctor = ui_model.DoctorModel(
-                  id: widget.doctor.id,
-                  name: _getDoctorName(context),
-                  title: _getDoctorTitle(context),
-                  image: widget.doctor.image,
-                  rating: 5.0,
-                  reviews: 0,
-                  availability: 'Available',
-                  booked: 0,
-                  total: widget.doctor.maxBooking,
-                );
-                Get.to(() => PatientChatScreen(doctor: uiDoctor));
+                Get.to(() => PatientChatScreen(doctor: widget.doctor));
               },
               icon: Icons.chat_bubble_outline,
               iconSize: 18,

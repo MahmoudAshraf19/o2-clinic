@@ -77,7 +77,7 @@ class _QuickActionCard extends StatelessWidget {
             border: Border.all(color: AppColors.border.withValues(alpha: 0.22)),
             boxShadow: [
               BoxShadow(
-                color: AppColors.colorFF0F766E.withValues(alpha: 0.04),
+                color: AppColors.brandBlue.withValues(alpha: 0.04),
                 blurRadius: 16,
                 offset: const Offset(0, 8),
               ),
@@ -94,16 +94,10 @@ class _QuickActionCard extends StatelessWidget {
                     child: SvgPicture.asset(
                       data.imagePath,
                       fit: BoxFit.contain,
-                      colorFilter:
-                          Theme.of(context).brightness == Brightness.dark
-                          ? const ColorFilter.mode(
-                              AppColors.white,
-                              BlendMode.srcIn,
-                            )
-                          : const ColorFilter.mode(
-                              AppColors.colorFF0F766E,
-                              BlendMode.srcIn,
-                            ),
+                      colorFilter: const ColorFilter.mode(
+                        AppColors.brandBlue,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
                 ),

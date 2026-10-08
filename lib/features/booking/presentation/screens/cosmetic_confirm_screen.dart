@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
+import 'package:o2_clinic/features/booking/data/models/booking_request_models.dart';
+import 'package:o2_clinic/features/booking/data/services/fs_bookings_firestore_service.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../../common/controllers/global_auth_controller.dart';
 import '../../../../common/app_constants.dart';
 import '../../../services/data/models/cosmetic_category_model.dart';
-import '../controllers/booking.dart';
 import '../controllers/cosmetic_booking_controller.dart';
 import '../../../discounts/presentation/controllers/discount_controller.dart';
 import '../../../discounts/presentation/widgets/discount_input_widget.dart';
@@ -292,7 +293,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
   }
 
   Widget _scheduleCard() {
-    final dateKey = BookingFirestoreService.formatDate(widget.selectedDate);
+    final dateKey = BookingsFirestoreService.formatDate(widget.selectedDate);
 
     return _card(
       child: Column(
@@ -663,7 +664,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
 
       BookingResult bookingRes;
       if (isDirect) {
-        bookingRes = await BookingFirestoreService().createDirectBooking(
+        bookingRes = await BookingsFirestoreService().createDirectBooking(
           user: BookingUserInfo(
             userId: user.uid,
             name: user.displayName ?? "Guest",
@@ -679,7 +680,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           discountData: discountData,
         );
       } else {
-        bookingRes = await BookingFirestoreService().createCosmeticBooking(
+        bookingRes = await BookingsFirestoreService().createCosmeticBooking(
           user: BookingUserInfo(
             userId: user.uid,
             name: user.displayName ?? "Guest",

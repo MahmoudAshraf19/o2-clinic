@@ -8,8 +8,7 @@ import '../../../chat_doctors/presentation/screens/patient_chat_screen.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
-import '../../../../features/doctors/data/models/doctor_model.dart';
-import '../../data/models/doctor_model.dart' as ui_model;
+import 'package:o2_clinic/common/models/fs_doctor_model.dart';
 
 class DoctorCard extends StatelessWidget {
   const DoctorCard({
@@ -167,7 +166,12 @@ class DoctorCard extends StatelessWidget {
                           type: CommonButtonType.outline,
                           padding: const EdgeInsets.symmetric(vertical: 11),
                           borderRadius: BorderRadius.circular(999),
-                          foregroundColor: AppColors.primary,
+                          foregroundColor: Theme.of(context).brightness == Brightness.dark 
+                              ? AppColors.white 
+                              : AppColors.primary,
+                          borderColor: Theme.of(context).brightness == Brightness.dark 
+                              ? AppColors.white.withValues(alpha: 0.5) 
+                              : AppColors.primary,
                           textStyle: TextStyle(
                             fontFamily: AppFonts.poppins,
                             fontSize: 12,
@@ -179,18 +183,7 @@ class DoctorCard extends StatelessWidget {
                       Expanded(
                         child: CommonButton(
                           onPressed: () {
-                            final uiDoctor = ui_model.DoctorModel(
-                              id: doctor.id,
-                              name: _getDoctorName(context),
-                              title: _getDoctorTitle(context),
-                              image: doctor.image,
-                              rating: 5.0,
-                              reviews: 0,
-                              availability: 'Available',
-                              booked: 0,
-                              total: doctor.maxBooking,
-                            );
-                            Get.to(() => PatientChatScreen(doctor: uiDoctor));
+                            Get.to(() => PatientChatScreen(doctor: doctor));
                           },
                           icon: Icons.chat_bubble_outline,
                           iconSize: 16,

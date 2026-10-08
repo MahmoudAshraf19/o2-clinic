@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'clinical_booking_controller.dart';
+import 'package:o2_clinic/features/booking/data/services/fs_bookings_firestore_service.dart';
 
 import '../../../../common/controllers/app_constants_controller.dart';
 import '../../../services/data/models/cosmetic_category_model.dart';
-import 'booking.dart';
+
 
 class CosmeticAppointmentBookingController extends GetxController {
   final CosmeticCategoryModel service;
@@ -47,7 +49,7 @@ class CosmeticAppointmentBookingController extends GetxController {
         if (timeRange.contains('-')) {
           final endTimeStr = timeRange.split('-').last.trim();
           try {
-            final endTs = BookingFirestoreService.buildTimestamp(
+            final endTs = BookingsFirestoreService.buildTimestamp(
               date,
               endTimeStr,
             ).toDate();

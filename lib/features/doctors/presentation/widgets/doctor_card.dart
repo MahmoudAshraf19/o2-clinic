@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/routes/app_routes.dart';
-import '../../../../core/utils/booking_helper.dart'; // NEW
-import '../../data/models/doctor_model.dart';
+import 'package:o2_clinic/features/booking/utils/booking_helper.dart'; // NEW
+import 'package:o2_clinic/common/models/fs_doctor_model.dart';
 import 'availability_bar.dart';
 
 class DoctorCard extends StatelessWidget {
@@ -68,17 +68,15 @@ class DoctorCard extends StatelessWidget {
                       CommonAvatar(size: 42 * 2, imageUrl: doctor.image,),
                     ],
                   ),
-                  if (doctor.isTopRated)
-                    _badge("Top Rated")
-                  else if (doctor.isMostBooked)
-                    _badge("Most Booked"),
+                  if (doctor.theTop)
+                    _badge("Top Rated"),
                 ],
               ),
 
               const SizedBox(height: 18),
 
               Text(
-                doctor.name,
+                doctor.name(Get.locale?.languageCode ?? 'en'),
                 style: AppTextStyles.textTheme.titleLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                   color: (Theme.of(context).brightness == Brightness.dark
@@ -90,7 +88,7 @@ class DoctorCard extends StatelessWidget {
               const SizedBox(height: 4),
 
               Text(
-                doctor.title,
+                doctor.title(Get.locale?.languageCode ?? 'en'),
                 style: AppTextStyles.textTheme.bodyLarge!.copyWith(
                   color: AppColors.primary,
                   fontWeight: FontWeight.w600,
@@ -105,19 +103,19 @@ class DoctorCard extends StatelessWidget {
                   const Icon(Icons.star, color: AppColors.accent, size: 18),
                   const SizedBox(width: 4),
                   Text(
-                    "${doctor.rating}",
+                    "${doctor.ratingAverage.toDouble()}",
                     style: AppTextStyles.textTheme.bodyMedium,
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    "(${doctor.reviews})",
+                    "(${doctor.reviewsCount})",
                     style: AppTextStyles.textTheme.bodyMedium!.copyWith(
                       color: AppColors.outline,
                     ),
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    doctor.availability,
+                    '',
                     style: AppTextStyles.textTheme.bodyMedium!.copyWith(
                       color: AppColors.primary,
                     ),
@@ -127,7 +125,7 @@ class DoctorCard extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              AvailabilityBar(booked: doctor.booked, total: doctor.total),
+              AvailabilityBar(booked: 0, total: doctor.maxBooking),
 
               const SizedBox(height: 24),
 

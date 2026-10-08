@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
+import 'package:o2_clinic/features/booking/data/models/booking_request_models.dart';
+import 'package:o2_clinic/features/booking/data/services/fs_bookings_firestore_service.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../controllers/imaging_booking_controller.dart';
 import 'imaging_success_screen.dart';
-import '../controllers/booking.dart';
 import '../../../../common/controllers/app_constants_controller.dart';
 import '../../../discounts/presentation/controllers/discount_controller.dart';
 import '../../../discounts/presentation/widgets/discount_input_widget.dart';
@@ -467,7 +468,7 @@ class _ImagingConfirmScreenState extends State<ImagingConfirmScreen> {
                 }
 
                 final currentUser = FirebaseAuth.instance.currentUser;
-                final bookingRes = await BookingFirestoreService()
+                final bookingRes = await BookingsFirestoreService()
                     .createImagingBooking(
                       user: BookingUserInfo(
                         userId: currentUser?.uid ?? 'guest',

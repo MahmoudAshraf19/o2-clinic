@@ -5,7 +5,7 @@ import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../chat_doctors/presentation/screens/patient_chat_screen.dart';
-import '../../data/models/doctor_model.dart';
+import 'package:o2_clinic/common/models/fs_doctor_model.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
   final DoctorModel doctor;
@@ -173,7 +173,7 @@ class _ProfileCard extends StatelessWidget {
           const SizedBox(height: 16),
 
           Text(
-            doctor.name,
+            doctor.name(Get.locale?.languageCode ?? 'en'),
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.w700,
               color: (Theme.of(context).brightness == Brightness.dark
@@ -185,7 +185,7 @@ class _ProfileCard extends StatelessWidget {
           const SizedBox(height: 6),
 
           Text(
-            doctor.title,
+            doctor.title(Get.locale?.languageCode ?? 'en'),
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
               color: (Theme.of(context).brightness == Brightness.dark
                   ? AppColors.colorFF60A5FA
@@ -232,9 +232,9 @@ class _StatsCard extends StatelessWidget {
         children: [
           _StatItem("15+", "Years Exp."),
           _Divider(),
-          _StatItem("${doctor.rating}", "Rating", isStar: true),
+          _StatItem("${doctor.ratingAverage.toDouble()}", "Rating", isStar: true),
           _Divider(),
-          _StatItem("${doctor.reviews}+", "Patients"),
+          _StatItem("${doctor.reviewsCount}+", "Patients"),
         ],
       ),
     );
@@ -327,7 +327,7 @@ class _AboutCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            "Dr. ${doctor.name.split(' ').last} is a specialist in ${doctor.title}.",
+            "Dr. ${doctor.name(Get.locale?.languageCode ?? 'en').split(' ').last} is a specialist in ${doctor.title(Get.locale?.languageCode ?? 'en')}.",
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],

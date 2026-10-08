@@ -1,5 +1,5 @@
 import '../../../../../common/widgets/common_text_field.dart';
-import '../../../../../common/widgets/common_dropdown.dart';
+import '../../../../common/widgets/common_dropdown.dart';
 
 import 'package:flutter/material.dart';
 import 'package:o2_clinic/common/widgets/common_snackbar.dart';

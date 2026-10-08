@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 
 import '../../core/navigation/bindings/navigation_binding.dart';
 import '../../core/navigation/views/navigation_shell.dart';
-import '../../features/doctors/presentation/screens/all_doctors_page.dart';
+import '../../features/doctors/presentation/screens/all_doctors_screen.dart';
 import '../../features/auth/presentation/bindings/login_binding.dart';
 import '../../features/auth/presentation/bindings/register_binding.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/doctors/presentation/bindings/doctor_profile_binding.dart';
 import '../../features/doctors/presentation/bindings/doctors_binding.dart';
-import '../../features/doctors/data/models/doctor_model.dart';
+import 'package:o2_clinic/common/models/fs_doctor_model.dart';
 import '../../features/doctors/presentation/screens/doctor_profile_screen.dart';
 import '../../features/doctors/presentation/screens/doctors_screen.dart';
 import '../../features/onboarding/presentation/bindings/onboarding_binding.dart';
@@ -106,7 +106,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.allDoctors,
-      page: () => const AllDoctorsPage(),
+      page: () => const AllDoctorsScreen(),
       transition: Transition.cupertino,
     ),
     GetPage(

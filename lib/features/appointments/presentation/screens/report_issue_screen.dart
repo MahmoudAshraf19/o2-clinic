@@ -169,12 +169,12 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: AppColors.white,
+          backgroundColor: Theme.of(context).cardColor,
           title: Text(
             l10n.reportIssue,
-            style: const TextStyle(color: AppColors.textPrimary),
+            style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
           ),
-          iconTheme: const IconThemeData(color: AppColors.textPrimary),
+          iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color),
           elevation: 0,
         ),
         body: SafeArea(
@@ -233,7 +233,9 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.orange50,
+        color: Theme.of(context).brightness == Brightness.dark 
+            ? AppColors.orange700.withValues(alpha: 0.1) 
+            : AppColors.orange50,
         borderRadius: BorderRadius.circular(14),
       ),
       child: Row(

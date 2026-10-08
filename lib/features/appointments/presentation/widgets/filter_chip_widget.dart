@@ -21,7 +21,10 @@ class FilterChipWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fg = isSelected ? AppColors.white : AppColors.grey700;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final fg = isSelected 
+        ? AppColors.white 
+        : (isDark ? AppColors.white70 : AppColors.grey700);
 
     return Semantics(
       button: true,
@@ -35,10 +38,12 @@ class FilterChipWidget extends StatelessWidget {
           curve: Curves.easeOut,
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : AppColors.white,
+            color: isSelected ? AppColors.primary : Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: isSelected ? AppColors.primary : AppColors.grey300,
+              color: isSelected 
+                  ? AppColors.primary 
+                  : (isDark ? AppColors.white24 : AppColors.grey300),
             ),
           ),
           child: Row(
@@ -66,7 +71,7 @@ class FilterChipWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isSelected
                         ? AppColors.white.withValues(alpha: 0.25)
-                        : AppColors.grey100,
+                        : (isDark ? AppColors.white10 : AppColors.grey100),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(

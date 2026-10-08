@@ -1,4 +1,4 @@
-import 'doctor_model.dart';
+import 'package:o2_clinic/common/models/fs_doctor_model.dart';
 
 class DepartmentModel {
   final String id;
@@ -26,7 +26,7 @@ class DepartmentModel {
       description: json['description'] ?? '',
       doctors:
           (json['doctors'] as List<dynamic>?)
-              ?.map((doctor) => DoctorModel.fromJson(doctor))
+              ?.map((doctor) => DoctorModel.fromMap(id: doctor['id'] ?? '', map: doctor))
               .toList() ??
           [],
     );
@@ -39,7 +39,7 @@ class DepartmentModel {
       'subtitle': subtitle,
       'icon': icon,
       'description': description,
-      'doctors': doctors.map((doctor) => doctor.toJson()).toList(),
+      'doctors': [],
     };
   }
 }

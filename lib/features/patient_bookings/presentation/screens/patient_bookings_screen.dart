@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_fonts.dart';
 import '../../presentation/controllers/patient_bookings_controller.dart';
 import '../../presentation/widgets/patient_appointment_card.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
@@ -28,17 +29,38 @@ class _PatientBookingsScreenState extends State<PatientBookingsScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(
-          isAr ? 'حجوزاتي' : 'My Bookings',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: AppColors.primary,
-          ),
-        ),
-        centerTitle: false,
-        backgroundColor: AppColors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         surfaceTintColor: AppColors.transparent,
+        centerTitle: false,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              isAr ? 'حجوزاتي' : 'My Bookings',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.colorFF60A5FA
+                    : AppColors.primary,
+                fontFamily: AppFonts.dancingScript,
+                height: 1,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              isAr ? 'إدارة حجوزاتك بسهولة' : 'Manage your bookings easily',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.grey400
+                    : AppColors.grey600,
+              ),
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [

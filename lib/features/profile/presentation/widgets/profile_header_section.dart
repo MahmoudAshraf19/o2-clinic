@@ -9,7 +9,7 @@ import '../../../../../../core/routes/app_routes.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../auth/presentation/controllers/register_controller.dart';
 import '../controllers/dashboard_profile_controller.dart';
-import '../models/dashboard_profile_model.dart';
+import '../../data/models/dashboard_profile_model.dart';
 
 class ProfileHeaderSection extends StatelessWidget {
   final DashboardProfileModel user;
@@ -198,7 +198,9 @@ class ProfileHeaderSection extends StatelessWidget {
                       text: AppLocalizations.of(context)!.id,
                       style: TextStyle(
                         fontSize: 14,
-                        color: AppColors.primary,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.white
+                            : AppColors.primary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -206,7 +208,9 @@ class ProfileHeaderSection extends StatelessWidget {
                       text: user.id,
                       style: TextStyle(
                         fontSize: 14,
-                        color: AppColors.textSecondary,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.white.withValues(alpha: 0.9)
+                            : AppColors.textSecondary,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

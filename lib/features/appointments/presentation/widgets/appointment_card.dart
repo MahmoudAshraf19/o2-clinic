@@ -34,16 +34,22 @@ class AppointmentCard extends StatelessWidget {
       label: '$title, ${BookingHelper.whenText(context, booking)}',
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: AppColors.black.withValues(alpha: 0.03),
+              color: Theme.of(context).brightness == Brightness.dark 
+                  ? AppColors.white.withValues(alpha: 0.03) 
+                  : AppColors.black.withValues(alpha: 0.03),
               blurRadius: 15,
               offset: const Offset(0, 5),
             ),
           ],
-          border: Border.all(color: AppColors.grey100),
+          border: Border.all(
+            color: Theme.of(context).brightness == Brightness.dark 
+                ? AppColors.scaffoldDark 
+                : AppColors.grey100,
+          ),
         ),
         child: Material(
           color: Colors.transparent,
@@ -68,10 +74,10 @@ class AppointmentCard extends StatelessWidget {
                           children: [
                             Text(
                               title,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.black87,
+                                color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.black87,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -81,7 +87,7 @@ class AppointmentCard extends StatelessWidget {
                               BookingHelper.subtitle(context, booking),
                               style: TextStyle(
                                 fontSize: 13,
-                                color: AppColors.grey600,
+                                color: Theme.of(context).brightness == Brightness.dark ? AppColors.white54 : AppColors.grey600,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -125,7 +131,9 @@ class AppointmentCard extends StatelessWidget {
                       vertical: 12,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.colorFFF4F7F9,
+                      color: Theme.of(context).brightness == Brightness.dark 
+                          ? AppColors.scaffoldDark.withValues(alpha: 0.5) 
+                          : AppColors.colorFFF4F7F9,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Row(
@@ -141,10 +149,10 @@ class AppointmentCard extends StatelessWidget {
                             BookingHelper.whenText(context, booking),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.black87,
+                              color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.black87,
                             ),
                           ),
                         ),

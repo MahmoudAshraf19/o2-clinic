@@ -10,7 +10,7 @@ import '../../../services/data/models/fs_radiology_ct_model.dart';
 import '../controllers/ct_scan_controller.dart';
 import '../widgets/ct_scan/ct_scan_card.dart';
 import '../widgets/ct_scan/ct_scan_data.dart';
-import 'imaging_booking_page.dart';
+import 'imaging_booking_screen.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 import 'package:o2_clinic/common/widgets/common_empty_state.dart';
 
@@ -186,7 +186,7 @@ class CTScanScreen extends StatelessWidget {
                 .fold(0.0, (sum, item) => sum + item.price);
 
             Get.to(
-              () => ImagingBookingPage(
+              () => ImagingBookingScreen(
                 title: AppLocalizations.of(context)!.ctScan,
               ),
               arguments: {

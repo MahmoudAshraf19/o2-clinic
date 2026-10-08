@@ -53,7 +53,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.colorFFF4F7F9,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: _controller.user == null
             ? _StateLayout(child: const AppointmentsLoginRequired())
@@ -83,7 +83,7 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
 
     return RefreshIndicator(
       color: AppColors.primary,
-      backgroundColor: AppColors.white,
+      backgroundColor: Theme.of(context).cardColor,
       onRefresh: _controller.refreshBookings,
       child: CustomScrollView(
         physics: const AlwaysScrollableScrollPhysics(
@@ -185,11 +185,13 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.black.withValues(alpha: 0.03),
+                  color: Theme.of(context).brightness == Brightness.dark 
+                      ? AppColors.white.withValues(alpha: 0.03) 
+                      : AppColors.black.withValues(alpha: 0.03),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -226,10 +228,10 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AppColors.black87,
+              color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.black87,
             ),
           ),
         ),
@@ -275,11 +277,13 @@ class _ScreenHeader extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.black.withValues(alpha: 0.04),
+                    color: Theme.of(context).brightness == Brightness.dark 
+                        ? AppColors.white.withValues(alpha: 0.04) 
+                        : AppColors.black.withValues(alpha: 0.04),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -312,7 +316,7 @@ class _ScreenHeader extends StatelessWidget {
                 l10n.manageYourBookingsEasily,
                 style: TextStyle(
                   fontSize: 13,
-                  color: AppColors.grey600,
+                  color: Theme.of(context).brightness == Brightness.dark ? AppColors.white54 : AppColors.grey600,
                   fontWeight: FontWeight.w500,
                 ),
               ),

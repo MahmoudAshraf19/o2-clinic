@@ -1,5 +1,5 @@
-import 'firestore_paths.dart';
-import 'firestore_service.dart';
+import '../../core/services/firestore/firestore_paths.dart';
+import '../../core/services/firestore/firestore_service.dart';
 
 class AppConstantsFirestoreService {
   AppConstantsFirestoreService._();

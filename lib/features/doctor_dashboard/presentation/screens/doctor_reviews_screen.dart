@@ -2,7 +2,7 @@ import '../../../../../common/widgets/common_text_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../../../../common/widgets/common_dropdown.dart';
+import '../../../../common/widgets/common_dropdown.dart';
 
 import 'package:o2_clinic/common/widgets/common_avatar.dart';
 import 'package:get/get.dart';

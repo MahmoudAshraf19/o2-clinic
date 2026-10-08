@@ -1,4 +1,4 @@
-import '../../../../features/doctors/data/models/doctor_model.dart';
+import '../../../../common/models/fs_doctor_model.dart';
 import 'doctors_firestore_service.dart';
 
 class DoctorsCacheService {

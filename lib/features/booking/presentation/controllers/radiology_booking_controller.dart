@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'clinical_booking_controller.dart';
+import 'package:o2_clinic/features/booking/data/models/booking_request_models.dart';
+import 'package:o2_clinic/features/booking/data/services/fs_bookings_firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../../common/app_constants.dart';
 import '../../../../common/controllers/app_constants_controller.dart';
 import '../../../services/data/models/radiology_category_model.dart';
-import 'booking.dart';
+
 
 class RadiologyAppointmentBookingController extends GetxController {
   final RadiologyCategoryModel service;
@@ -51,7 +54,7 @@ class RadiologyAppointmentBookingController extends GetxController {
         if (timeRange.contains('-')) {
           final endTimeStr = timeRange.split('-').last.trim();
           try {
-            final endTs = BookingFirestoreService.buildTimestamp(
+            final endTs = BookingsFirestoreService.buildTimestamp(
               date,
               endTimeStr,
             ).toDate();
@@ -229,7 +232,7 @@ class RadiologyAppointmentBookingController extends GetxController {
           number: user.phoneNumber?.replaceAll("+20", "") ?? "1234567890",
         );
 
-        final serviceApi = BookingFirestoreService();
+        final serviceApi = BookingsFirestoreService();
         final result = await serviceApi.createImagingBooking(
           user: userInfo,
           categoryId: service.id,
@@ -289,7 +292,7 @@ class RadiologyAppointmentBookingController extends GetxController {
         number: user.phoneNumber?.replaceAll("+20", "") ?? "1234567890",
       );
 
-      final serviceApi = BookingFirestoreService();
+      final serviceApi = BookingsFirestoreService();
       // createImagingBooking actually sets status: pending.
       // But for this flow, we want it to be pending_price explicitly or it defaults to pending.
       // Wait, let's just use createImagingBooking and we can update it to pending_price if needed.

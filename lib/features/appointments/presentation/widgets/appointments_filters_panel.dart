@@ -136,9 +136,9 @@ class AppointmentAdvancedFilters extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: AppColors.grey200),
+                    border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? AppColors.scaffoldDark : AppColors.grey200),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,10 +202,10 @@ class AppointmentAdvancedFilters extends StatelessWidget {
     padding: const EdgeInsets.only(bottom: 8),
     child: Text(
       text,
-      style: const TextStyle(
+      style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 13,
-        color: AppColors.black87,
+        color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.black87,
       ),
     ),
   );
@@ -228,7 +228,7 @@ class AppointmentFilterButton extends StatelessWidget {
         button: true,
         label: isAr ? 'تصفية متقدمة' : 'Advanced filters',
         child: Material(
-          color: expanded ? AppColors.primary : AppColors.white,
+          color: expanded ? AppColors.primary : Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(18),
           elevation: 0,
           child: InkWell(
@@ -242,7 +242,7 @@ class AppointmentFilterButton extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.tune_rounded,
-                    color: expanded ? AppColors.white : AppColors.primary,
+                    color: expanded ? Theme.of(context).cardColor : AppColors.primary,
                   ),
                   if (activeCount > 0)
                     PositionedDirectional(
@@ -255,7 +255,7 @@ class AppointmentFilterButton extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: AppColors.error,
                           shape: BoxShape.circle,
-                          border: Border.all(color: AppColors.white, width: 1.5),
+                          border: Border.all(color: Theme.of(context).cardColor, width: 1.5),
                         ),
                         child: Text(
                           '$activeCount',

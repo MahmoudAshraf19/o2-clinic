@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../features/doctors/presentation/screens/all_doctors_page.dart';
+import '../../../features/doctors/presentation/screens/all_doctors_screen.dart';
 import '../../../features/booking/presentation/screens/booking_screen.dart';
 import '../../../features/chat_support/presentation/screens/contact_us_screen.dart';
 import '../../../features/dashboard/presentation/screens/dashboard_home_screen.dart';
@@ -32,7 +32,7 @@ class NavigationShell extends StatelessWidget {
             case 0:
               return const DashboardHomeScreen();
             case 1:
-              return const AllDoctorsPage(showBackButton: false);
+              return const AllDoctorsScreen(showBackButton: false);
             case 2:
               return BookingScreen();
             case 3:

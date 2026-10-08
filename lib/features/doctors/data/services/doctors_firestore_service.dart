@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../../features/doctors/data/models/doctor_model.dart';
+import '../../../../common/models/fs_doctor_model.dart';
 
 class DoctorsFirestoreService {
   DoctorsFirestoreService();
