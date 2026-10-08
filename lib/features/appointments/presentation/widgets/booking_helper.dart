@@ -124,7 +124,7 @@ class BookingHelper {
 
   /// "Clinic - Floor 2 - Room 5", skipping empty parts (online / imaging).
   static String locationText(BuildContext context, BookingModel booking) {
-    final isAr = isArabic(context);
+
     final loc = booking.location;
     final parts = <String>[];
 

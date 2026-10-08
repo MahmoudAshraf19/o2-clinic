@@ -4,7 +4,7 @@ import 'package:o2_clinic/common/widgets/common_button.dart';
 import 'package:o2_clinic/core/routes/app_routes.dart';
 import 'package:o2_clinic/core/theme/app_colors.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
-import 'booking_helper.dart';
+import '../widgets/booking_helper.dart';
 
 /// Shared layout for full-screen informational states.
 class _StateCard extends StatelessWidget {
@@ -88,7 +88,6 @@ class AppointmentsEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isAr = BookingHelper.isArabic(context);
 
     if (hasActiveFilters) {
       return _StateCard(
@@ -127,7 +126,7 @@ class AppointmentsErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAr = BookingHelper.isArabic(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return _StateCard(
       icon: Icons.cloud_off_rounded,
@@ -154,7 +153,6 @@ class AppointmentsLoginRequired extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isAr = BookingHelper.isArabic(context);
 
     return _StateCard(
       icon: Icons.lock_outline_rounded,

@@ -10,7 +10,7 @@ import '../controllers/appointments_controller.dart';
 import '../widgets/appointment_card.dart';
 import '../widgets/appointment_skeleton.dart';
 import '../widgets/appointments_filters_panel.dart';
-import '../widgets/appointments_states.dart';
+import '../controllers/appointments_states.dart';
 import '../widgets/booking_details_sheet.dart';
 import '../widgets/booking_helper.dart';
 import '../widgets/next_appointment_card.dart';

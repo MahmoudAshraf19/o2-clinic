@@ -69,7 +69,7 @@ class AppointmentStatusChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAr = BookingHelper.isArabic(context);
+
 
     return SizedBox(
       height: 44,
@@ -118,7 +118,7 @@ class AppointmentAdvancedFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAr = BookingHelper.isArabic(context);
+
 
     return Obx(() {
       final expanded = controller.showFilters.value;
@@ -145,7 +145,7 @@ class AppointmentAdvancedFilters extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _sectionTitle(AppLocalizations.of(context)!.serviceTypeFilterTitle),
+                      _sectionTitle(context, AppLocalizations.of(context)!.serviceTypeFilterTitle),
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -158,7 +158,7 @@ class AppointmentAdvancedFilters extends StatelessWidget {
                         }).toList(),
                       ),
                       const SizedBox(height: 16),
-                      _sectionTitle(AppLocalizations.of(context)!.timePeriodFilterTitle),
+                      _sectionTitle(context, AppLocalizations.of(context)!.timePeriodFilterTitle),
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -200,7 +200,7 @@ class AppointmentAdvancedFilters extends StatelessWidget {
     });
   }
 
-  Widget _sectionTitle(String text) => Padding(
+  Widget _sectionTitle(BuildContext context, String text) => Padding(
     padding: const EdgeInsets.only(bottom: 8),
     child: Text(
       text,
@@ -220,7 +220,7 @@ class AppointmentFilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAr = BookingHelper.isArabic(context);
+
 
     return Obx(() {
       final expanded = controller.showFilters.value;

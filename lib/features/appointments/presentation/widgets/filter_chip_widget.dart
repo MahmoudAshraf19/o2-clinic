@@ -71,7 +71,7 @@ class FilterChipWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isSelected
                         ? AppColors.white.withValues(alpha: 0.25)
-                        : (isDark ? AppColors.white10 : AppColors.grey100),
+                        : (isDark ? AppColors.white.withValues(alpha: 0.1) : AppColors.grey100),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(

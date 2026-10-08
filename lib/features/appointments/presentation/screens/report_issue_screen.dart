@@ -61,7 +61,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
   bool get _isAr => Localizations.localeOf(context).languageCode == 'ar';
 
   Future<void> _pickImage() async {
-    final isAr = _isAr;
+
     try {
       final picked = await ImagePicker().pickImage(
         source: ImageSource.gallery,
@@ -82,7 +82,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
   }
 
   Future<void> _submitReport() async {
-    final isAr = _isAr;
+
     final l10n = AppLocalizations.of(context)!;
     final text = _textController.text.trim();
 

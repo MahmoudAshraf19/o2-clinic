@@ -20,7 +20,7 @@ class NextAppointmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isAr = BookingHelper.isArabic(context);
+
     final date = booking.schedule.timestamp?.toDate();
     final countdown =
         BookingHelper.relativeDay(context, date) ?? l10n.soon;
