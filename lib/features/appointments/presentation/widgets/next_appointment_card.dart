@@ -28,10 +28,12 @@ class NextAppointmentCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.colorFF1E877B, AppColors.colorFF0F5A51],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+        color: Theme.of(context).brightness == Brightness.dark 
+            ? AppColors.colorFF1E293B 
+            : AppColors.primary,
+        image: const DecorationImage(
+          image: AssetImage('assets/images/background_banner.png'),
+          fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
@@ -46,16 +48,18 @@ class NextAppointmentCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(28),
         child: Stack(
           children: [
-            PositionedDirectional(
-              end: -30,
-              top: -30,
-              child: _circle(150, 0.05),
-            ),
-            PositionedDirectional(
-              start: -20,
-              bottom: -20,
-              child: _circle(100, 0.05),
-            ),
+            if (Theme.of(context).brightness != Brightness.dark) ...[
+              PositionedDirectional(
+                end: -30,
+                top: -30,
+                child: _circle(150, 0.05),
+              ),
+              PositionedDirectional(
+                start: -20,
+                bottom: -20,
+                child: _circle(100, 0.05),
+              ),
+            ],
             Padding(
               padding: const EdgeInsets.all(22),
               child: Column(
@@ -67,7 +71,9 @@ class NextAppointmentCard extends StatelessWidget {
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 0.3,
-                      color: AppColors.white.withValues(alpha: 0.8),
+                      color: Theme.of(context).brightness == Brightness.dark 
+                          ? AppColors.black87 
+                          : AppColors.white.withValues(alpha: 0.8),
                     ),
                   ),
                   const SizedBox(height: 14),
@@ -85,10 +91,10 @@ class NextAppointmentCard extends StatelessWidget {
                           children: [
                             Text(
                               BookingHelper.title(context, booking),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.white,
+                                color: Theme.of(context).brightness == Brightness.dark ? AppColors.black : AppColors.white,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -98,7 +104,7 @@ class NextAppointmentCard extends StatelessWidget {
                               BookingHelper.subtitle(context, booking),
                               style: TextStyle(
                                 fontSize: 14,
-                                color: AppColors.white.withValues(alpha: 0.85),
+                                color: Theme.of(context).brightness == Brightness.dark ? AppColors.black87 : AppColors.white.withValues(alpha: 0.85),
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -113,18 +119,22 @@ class NextAppointmentCard extends StatelessWidget {
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.white.withValues(alpha: 0.2),
+                          color: Theme.of(context).brightness == Brightness.dark 
+                              ? AppColors.black.withValues(alpha: 0.1) 
+                              : AppColors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
-                            color: AppColors.white.withValues(alpha: 0.1),
+                            color: Theme.of(context).brightness == Brightness.dark 
+                                ? AppColors.black.withValues(alpha: 0.05) 
+                                : AppColors.white.withValues(alpha: 0.1),
                           ),
                         ),
                         child: Text(
                           countdown,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.white,
+                            color: Theme.of(context).brightness == Brightness.dark ? AppColors.black : AppColors.white,
                           ),
                         ),
                       ),
@@ -139,19 +149,19 @@ class NextAppointmentCard extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.access_time_filled_rounded,
                           size: 20,
-                          color: AppColors.white,
+                          color: Theme.of(context).brightness == Brightness.dark ? AppColors.black : AppColors.white,
                         ),
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
                             BookingHelper.whenText(context, booking),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.white,
+                              color: Theme.of(context).brightness == Brightness.dark ? AppColors.black : AppColors.white,
                             ),
                           ),
                         ),

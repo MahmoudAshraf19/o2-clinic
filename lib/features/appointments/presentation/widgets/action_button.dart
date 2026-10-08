@@ -17,10 +17,13 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final bg = filled
-        ? AppColors.white
-        : AppColors.white.withValues(alpha: 0.15);
-    final fg = filled ? AppColors.primary : AppColors.white;
+        ? (isDark ? AppColors.primary : AppColors.white)
+        : (isDark ? AppColors.black.withValues(alpha: 0.1) : AppColors.white.withValues(alpha: 0.15));
+    final fg = filled 
+        ? (isDark ? AppColors.white : AppColors.primary) 
+        : (isDark ? AppColors.black87 : AppColors.white);
 
     return Semantics(
       button: true,
