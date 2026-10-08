@@ -164,6 +164,10 @@ class _BannerCard extends StatelessWidget {
                   ? CachedImageWidget(
                       imageUrl: banner.imageUrl,
                       fit: BoxFit.cover,
+                      loadingBuilder: (_, __, ___) => Image.asset(
+                        'assets/images/background_banner.png',
+                        fit: BoxFit.cover,
+                      ),
                       errorBuilder: (_, _, _) {
                         debugPrint(
                           '[Banners] Failed to load network image for banner id: ${banner.id}. '
@@ -171,13 +175,13 @@ class _BannerCard extends StatelessWidget {
                         );
 
                         return Image.asset(
-                          'assets/images/backgroung_banner.png',
+                          'assets/images/background_banner.png',
                           fit: BoxFit.cover,
                         );
                       },
                     )
                   : Image.asset(
-                      'assets/images/backgroung_banner.png',
+                      'assets/images/background_banner.png',
                       fit: BoxFit.cover,
                     ),
             ),
@@ -265,7 +269,7 @@ class _LoadingBannerCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(28),
       child: Image.asset(
-        'assets/images/backgroung_banner.png',
+        'assets/images/background_banner.png',
         fit: BoxFit.cover,
       ),
     );
@@ -290,7 +294,7 @@ class _FallbackBannerCard extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset('assets/images/backgroung_banner.png', fit: BoxFit.cover),
+          Image.asset('assets/images/background_banner.png', fit: BoxFit.cover),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(

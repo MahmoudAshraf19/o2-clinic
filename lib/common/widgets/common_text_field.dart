@@ -393,11 +393,11 @@ class _CommonTextFieldState extends State<CommonTextField> {
   }
 
   TextStyle _getHintStyle() {
-    return const TextStyle(
+    return TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w500,
 
-      color: AppColors.disabled,
+      color: Theme.of(context).brightness == Brightness.dark ? AppColors.white54 : AppColors.disabled,
     );
   }
 

@@ -26,10 +26,14 @@ class ContactUsIntro extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(18, 18, 18, 14),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLowest,
+        color: Theme.of(context).brightness == Brightness.dark 
+            ? AppColors.brandBlue.withValues(alpha: 0.1) 
+            : AppColors.surfaceLowest,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: AppColors.outlineVariant.withValues(alpha: .25),
+          color: Theme.of(context).brightness == Brightness.dark 
+              ? AppColors.brandBlue.withValues(alpha: 0.2) 
+              : AppColors.outlineVariant.withValues(alpha: .25),
         ),
       ),
       child: Row(
@@ -40,7 +44,9 @@ class ContactUsIntro extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 height: 1.6,
-                color: AppColors.grey800,
+                color: Theme.of(context).brightness == Brightness.dark 
+                    ? AppColors.pureWhite 
+                    : AppColors.grey800,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -81,10 +87,14 @@ class SupportChatTile extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: Theme.of(context).brightness == Brightness.dark 
+                ? AppColors.brandBlue.withValues(alpha: 0.05) 
+                : AppColors.white,
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
-              color: AppColors.outlineVariant.withValues(alpha: .25),
+              color: Theme.of(context).brightness == Brightness.dark 
+                  ? AppColors.brandBlue.withValues(alpha: 0.15) 
+                  : AppColors.outlineVariant.withValues(alpha: .25),
             ),
           ),
           child: Row(
@@ -119,9 +129,12 @@ class SupportChatTile extends StatelessWidget {
                   children: [
                     Text(
                       title ?? AppLocalizations.of(context)!.o2Clinic,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
+                        color: Theme.of(context).brightness == Brightness.dark 
+                            ? AppColors.pureWhite 
+                            : AppColors.black,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -143,7 +156,9 @@ class SupportChatTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 13,
-                        color: AppColors.grey600,
+                        color: Theme.of(context).brightness == Brightness.dark 
+                            ? AppColors.pureWhite.withValues(alpha: 0.7) 
+                            : AppColors.grey600,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -158,7 +173,9 @@ class SupportChatTile extends StatelessWidget {
                     lastMessageTime,
                     style: TextStyle(
                       fontSize: 11,
-                      color: AppColors.grey600,
+                      color: Theme.of(context).brightness == Brightness.dark 
+                          ? AppColors.pureWhite.withValues(alpha: 0.5) 
+                          : AppColors.grey600,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -395,7 +412,7 @@ class ChatComposer extends StatelessWidget {
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(26),
                       ),
                       child: Row(
@@ -546,7 +563,7 @@ class _AgentBubble extends StatelessWidget {
                   vertical: 10,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: Theme.of(context).cardColor,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(18),
                     topRight: Radius.circular(18),
@@ -560,10 +577,10 @@ class _AgentBubble extends StatelessWidget {
                       : message.text == '__WELCOME_MESSAGE_SHORT__'
                       ? AppLocalizations.of(context)!.welcomeToSupportShort
                       : message.text,
-                  style: const TextStyle(
+                  style: TextStyle(
                     height: 1.5,
                     fontSize: 14,
-                    color: AppColors.colorFF1E293B,
+                    color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.colorFF1E293B,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -1388,7 +1405,7 @@ class ChatDateDivider extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainerHigh,
+          color: Theme.of(context).brightness == Brightness.dark ? AppColors.white.withValues(alpha: 0.1) : AppColors.surfaceContainerHigh,
           borderRadius: BorderRadius.circular(100),
         ),
         child: Text(
@@ -1396,7 +1413,7 @@ class ChatDateDivider extends StatelessWidget {
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w700,
-            color: AppColors.grey700,
+            color: Theme.of(context).brightness == Brightness.dark ? AppColors.white70 : AppColors.grey700,
           ),
         ),
       ),

@@ -37,7 +37,7 @@ class LabTestsScreen extends StatelessWidget {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(color: AppColors.border),
               ),
@@ -82,7 +82,7 @@ class LabTestsScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(28),
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
                 color: AppColors.border.withValues(alpha: 0.5),
@@ -116,7 +116,7 @@ class LabTestsScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 32),
@@ -134,7 +134,7 @@ class LabTestsScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).brightness == Brightness.dark ? AppColors.white70 : AppColors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -152,7 +152,7 @@ class LabTestsScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textSecondary.withValues(alpha: 0.8),
+                    color: Theme.of(context).brightness == Brightness.dark ? AppColors.white70 : AppColors.textSecondary.withValues(alpha: 0.8),
                   ),
                 ),
               ],
@@ -226,7 +226,7 @@ class _OutlinedButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: AppColors.primary.withValues(alpha: 0.3),

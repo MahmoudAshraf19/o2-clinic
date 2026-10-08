@@ -8,10 +8,10 @@ import '../../data/models/banner_model.dart';
 import '../../data/services/banner_service.dart';
 import '../../../booking/presentation/screens/lab_tests_screen.dart';
 import '../../../booking/presentation/screens/radiology_profile_screen.dart';
-import '../../../booking/presentation/screens/cosmetic_booking_page.dart';
+import '../../../booking/presentation/screens/cosmetic_booking_screen.dart';
 import '../../../booking/presentation/controllers/cosmetic_booking_controller.dart';
 import '../../../booking/presentation/controllers/radiology_booking_controller.dart';
-import '../../../doctors/presentation/screens/all_doctors_page.dart';
+import '../../../doctors/presentation/screens/all_doctors_screen.dart';
 import '../../../services/data/models/radiology_category_model.dart';
 import '../../../services/data/models/cosmetic_category_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -139,7 +139,7 @@ class _BannerCard extends StatelessWidget {
 
     // Quick navigation for screens that don't need a fetched model
     if (banner.type == 'doctor') {
-      Get.to(() => AllDoctorsPage());
+      Get.to(() => AllDoctorsScreen());
       return;
     } else if (banner.type == 'lab') {
       Get.to(() => LabTestsScreen());
@@ -170,7 +170,7 @@ class _BannerCard extends StatelessWidget {
             .get(const GetOptions(source: Source.server));
         if (doc.exists && doc.data() != null) {
           final service = CosmeticCategoryModel.fromMap(doc.id, doc.data()!);
-          targetScreen = CosmeticBookingPage(model: service);
+          targetScreen = CosmeticBookingScreen(model: service);
         }
       }
     } catch (e) {
@@ -227,6 +227,10 @@ class _BannerCard extends StatelessWidget {
                   ? CachedImageWidget(
                       imageUrl: banner.imageUrl,
                       fit: BoxFit.cover,
+                      loadingBuilder: (_, __, ___) => Image.asset(
+                        'assets/images/background_banner.png',
+                        fit: BoxFit.cover,
+                      ),
                       errorBuilder: (_, _, _) {
                         debugPrint(
                           '[Banners] Failed to load network image for banner id: ${banner.id}. '
@@ -234,13 +238,13 @@ class _BannerCard extends StatelessWidget {
                         );
 
                         return Image.asset(
-                          'assets/images/backgroung_banner.png',
+                          'assets/images/background_banner.png',
                           fit: BoxFit.cover,
                         );
                       },
                     )
                   : Image.asset(
-                      'assets/images/backgroung_banner.png',
+                      'assets/images/background_banner.png',
                       fit: BoxFit.cover,
                     ),
             ),
@@ -328,7 +332,7 @@ class _LoadingBannerCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(28),
       child: Image.asset(
-        'assets/images/backgroung_banner.png',
+        'assets/images/background_banner.png',
         fit: BoxFit.cover,
       ),
     );
@@ -353,7 +357,7 @@ class _FallbackBannerCard extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset('assets/images/backgroung_banner.png', fit: BoxFit.cover),
+          Image.asset('assets/images/background_banner.png', fit: BoxFit.cover),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(

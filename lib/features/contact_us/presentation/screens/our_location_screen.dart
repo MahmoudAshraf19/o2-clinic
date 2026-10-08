@@ -259,20 +259,20 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
             child: AppBar(
               title: Text(
                 AppLocalizations.of(context)!.ourLocation,
-                style: const TextStyle(
-                  color: AppColors.colorFF1A2020,
+                style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.colorFF1A2020,
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
                 ),
               ),
               leading: IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_ios_new_rounded,
-                  color: AppColors.colorFF1A2020,
+                  color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.colorFF1A2020,
                 ),
                 onPressed: () => Get.back(),
               ),
-              backgroundColor: AppColors.white.withValues(alpha: 0.55),
+              backgroundColor: Theme.of(context).brightness == Brightness.dark ? AppColors.brandBlue.withValues(alpha: 0.55) : AppColors.white.withValues(alpha: 0.55),
               elevation: 0,
               centerTitle: true,
             ),
@@ -332,7 +332,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                         vertical: 16,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: Theme.of(context).cardColor,
                         borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(32),
                         ),
@@ -358,7 +358,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                                 height: 4,
                                 margin: const EdgeInsets.only(bottom: 24),
                                 decoration: BoxDecoration(
-                                  color: AppColors.colorFFE6ECEC,
+                                  color: Theme.of(context).brightness == Brightness.dark ? AppColors.colorFF546868 : AppColors.colorFFE6ECEC,
                                   borderRadius: BorderRadius.circular(2),
                                 ),
                               ),
@@ -366,10 +366,10 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
 
                             Text(
                               controller.getLocalizedText(loc.name, context),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w800,
-                                color: AppColors.colorFF1A2020,
+                                color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.colorFF1A2020,
                               ),
                             ),
                             const SizedBox(height: 12),
@@ -388,9 +388,9 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
                                       loc.address,
                                       context,
                                     ),
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 14,
-                                      color: AppColors.colorFF546868,
+                                      color: Theme.of(context).brightness == Brightness.dark ? AppColors.white70 : AppColors.colorFF546868,
                                       height: 1.5,
                                     ),
                                   ),
@@ -525,12 +525,12 @@ class _ContactButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, color: AppColors.primary, size: 20),
+                Icon(icon, color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.primary, size: 20),
                 const SizedBox(width: 8),
                 Text(
                   label,
-                  style: const TextStyle(
-                    color: AppColors.primary,
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark ? AppColors.white : AppColors.primary,
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
                   ),
