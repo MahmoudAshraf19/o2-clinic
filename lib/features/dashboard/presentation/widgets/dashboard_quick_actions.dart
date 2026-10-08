@@ -103,7 +103,7 @@ class _QuickActionCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  data.title,
+                  _getLocalizedTitle(context),
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -123,5 +123,16 @@ class _QuickActionCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getLocalizedTitle(BuildContext context) {
+    final lang = Localizations.localeOf(context).languageCode;
+    if (data.id == 'location') return lang == 'ar' ? 'موقعنا' : lang == 'he' ? 'המיקום\nשלנו' : 'Our\nLocation';
+    if (data.id == 'doctor') return lang == 'ar' ? 'ابحث عن\nطبيب' : lang == 'he' ? 'חפש\nרופא' : 'Find\nDoctor';
+    if (data.id == 'radiology') return lang == 'ar' ? 'حجز\nأشعة' : lang == 'he' ? 'הזמנת\nרדיולוגיה' : 'Radiology\nBooking';
+    if (data.id == 'lab') return lang == 'ar' ? 'تحاليل\nمخبرية' : lang == 'he' ? 'בדיקות\nמעבדה' : 'Lab\nTests';
+    if (data.id == 'cosmetic') return lang == 'ar' ? 'حجز\nتجميل' : lang == 'he' ? 'הזמנת\nקוסמטיקה' : 'Cosmetic\nBooking';
+    if (data.id == 'appointments') return lang == 'ar' ? 'مواعيدي' : lang == 'he' ? 'התורים\nשלי' : 'My\nAppointments';
+    return data.title;
   }
 }
