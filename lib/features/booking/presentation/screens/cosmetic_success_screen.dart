@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
@@ -74,7 +75,7 @@ class CosmeticSuccessScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.colorFFF6FAF8,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -99,7 +100,7 @@ class CosmeticSuccessScreen extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 380),
       padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
@@ -116,7 +117,11 @@ class CosmeticSuccessScreen extends StatelessWidget {
             (model.id == 'Sleep_study' || model.id == 'pulmonary_function')
                 ? _t("Booking Confirmed!")
                 : _t("Cosmetic Confirmed!"),
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).textTheme.bodyLarge?.color,
+            ),
           ),
           const SizedBox(height: 10),
           Text(
@@ -152,12 +157,28 @@ class CosmeticSuccessScreen extends StatelessWidget {
                   style: const TextStyle(color: AppColors.white70),
                 ),
                 const SizedBox(height: 6),
-                Text(
-                  bookingId,
-                  style: const TextStyle(
-                    color: AppColors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: bookingId));
+                    CommonSnackbar.showSuccess(
+                      title: _t("Copied!"),
+                      message: _t("Booking ID copied to clipboard"),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        bookingId,
+                        style: const TextStyle(
+                          color: AppColors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.copy, color: AppColors.white, size: 20),
+                    ],
                   ),
                 ),
               ],
@@ -175,7 +196,13 @@ class CosmeticSuccessScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(t, style: TextStyle(color: AppColors.grey)),
-          Text(v, style: const TextStyle(fontWeight: FontWeight.w600)),
+          Text(
+            v, 
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).textTheme.bodyLarge?.color,
+            ),
+          ),
         ],
       ),
     );

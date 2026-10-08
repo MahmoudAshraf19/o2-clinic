@@ -108,7 +108,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                color: AppColors.surface,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: AppColors.border),
               ),
@@ -271,6 +271,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     SizedBox(height: 4),
@@ -303,7 +304,10 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
             children: [
               Icon(Icons.calendar_month, color: AppColors.primary),
               SizedBox(width: 8),
-              Text(dateKey, style: TextStyle(fontWeight: FontWeight.w700)),
+              Text(dateKey, style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).textTheme.bodyLarge?.color,
+              )),
             ],
           ),
           SizedBox(height: 10),
@@ -335,7 +339,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
           Expanded(
             child: Text(
               _t("O2 Clinic Headquarters"),
-              style: TextStyle(color: AppColors.grey),
+              style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
             ),
           ),
         ],
@@ -559,7 +563,10 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(userName, style: TextStyle(fontWeight: FontWeight.w700)),
+                  Text(userName, style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  )),
                   Text(
                     email,
                     style: TextStyle(color: AppColors.grey, fontSize: 12),
@@ -606,7 +613,7 @@ class _CosmeticConfirmScreenState extends State<CosmeticConfirmScreen> {
         textStyle: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w700,
-          color: Theme.of(context).cardColor,
+          color: AppColors.white,
         ),
       ),
     );

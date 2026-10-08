@@ -370,7 +370,7 @@ class CosmeticBookingScreen extends StatelessWidget {
                               fontWeight: FontWeight.w800,
                               color: isSelected
                                   ? AppColors.white
-                                  : AppColors.textPrimary,
+                                  : Theme.of(context).textTheme.bodyLarge?.color,
                             ),
                           ),
                         ],
@@ -449,7 +449,7 @@ class CosmeticBookingScreen extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       color: isSelected
                           ? AppColors.white
-                          : AppColors.textPrimary,
+                          : Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                   ),
                 ),

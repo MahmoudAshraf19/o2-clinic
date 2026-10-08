@@ -61,7 +61,7 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(color: AppColors.border),
               ),
@@ -92,7 +92,7 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
                   AppLocalizations.of(context)!.chooseImagingService,
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.textSecondary.withValues(alpha: 0.75),
+                    color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.75),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -171,7 +171,7 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
       duration: const Duration(milliseconds: 300),
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: isExpanded
@@ -215,7 +215,7 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,
-                            color: AppColors.textPrimary,
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -225,7 +225,7 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
                           ),
                           style: TextStyle(
                             fontSize: 12,
-                            color: AppColors.textSecondary,
+                            color: Theme.of(context).textTheme.bodyMedium?.color,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -235,7 +235,7 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
                   const SizedBox(width: 8),
                   Icon(
                     Icons.arrow_forward_ios_rounded,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                     size: 18,
                   ),
                 ],
