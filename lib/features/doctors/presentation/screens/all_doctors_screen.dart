@@ -214,9 +214,13 @@ class _AllDoctorsScreenState extends State<AllDoctorsScreen> {
                 width: 42,
                 height: 42,
                 decoration: BoxDecoration(
-                  color: AppColors.surface,
+                  color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.border),
+                  border: Border.all(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.primary
+                        : AppColors.border,
+                  ),
                 ),
                 child: const Icon(
                   Icons.arrow_back_ios_new_rounded,
