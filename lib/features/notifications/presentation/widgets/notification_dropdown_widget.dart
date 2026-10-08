@@ -79,6 +79,7 @@ class NotificationDropdownWidget extends StatelessWidget {
                 constraints: const BoxConstraints(maxWidth: 380),
                 margin: const EdgeInsets.only(top: 72, right: 16, left: 16),
                 decoration: BoxDecoration(
+                  color: _surface(context),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: _outlineVariant(context).withValues(alpha: 0.30),
