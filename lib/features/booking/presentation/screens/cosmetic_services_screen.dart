@@ -60,7 +60,7 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(color: AppColors.border),
               ),
@@ -183,7 +183,7 @@ class _CosmeticServicesScreenState extends State<CosmeticServicesScreen>
       curve: Curves.easeInOut,
       margin: const EdgeInsets.only(bottom: 18),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(26),
         border: Border.all(
           color: isExpanded
