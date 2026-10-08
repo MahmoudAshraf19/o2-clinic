@@ -598,11 +598,11 @@ class AppLocalizationsAr extends AppLocalizations {
       'قم بتسجيل الدخول للوصول إلى مواعيدك وسجلاتك الطبية بسهولة.';
 
   @override
-  String get helloGuest => 'مرحباً كضيف 👋';
+  String get helloGuest => 'مرحباً كضيف 👋 🇵🇸';
 
   @override
   String hiName(String name) {
-    return 'مرحباً، $name 👋';
+    return 'مرحباً، $name 👋 🇵🇸';
   }
 
   @override

@@ -189,8 +189,8 @@
   "first": "First",
   "startYournhealthJourney": "Start Your Health Journey",
   "signInToAccessYour": "Sign in to access your appointments and medical records seamlessly.",
-  "helloGuest": "Hello Guest 👋",
-  "hiName": "Hi, {name} 👋",
+  "helloGuest": "Hello Guest 👋 🇵🇸",
+  "hiName": "Hi, {name} 👋 🇵🇸",
   "@hiName": {
     "placeholders": {
       "name": {

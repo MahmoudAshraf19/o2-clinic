@@ -1237,13 +1237,13 @@ abstract class AppLocalizations {
   /// No description provided for @helloGuest.
   ///
   /// In en, this message translates to:
-  /// **'Hello Guest 👋'**
+  /// **'Hello Guest 👋 🇵🇸'**
   String get helloGuest;
 
   /// No description provided for @hiName.
   ///
   /// In en, this message translates to:
-  /// **'Hi, {name} 👋'**
+  /// **'Hi, {name} 👋 🇵🇸'**
   String hiName(String name);
 
   /// No description provided for @tapToSignIn.

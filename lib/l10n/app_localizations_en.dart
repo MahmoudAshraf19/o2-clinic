@@ -599,11 +599,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Sign in to access your appointments and medical records seamlessly.';
 
   @override
-  String get helloGuest => 'Hello Guest 👋';
+  String get helloGuest => 'Hello Guest 👋 🇵🇸';
 
   @override
   String hiName(String name) {
-    return 'Hi, $name 👋';
+    return 'Hi, $name 👋 🇵🇸';
   }
 
   @override
