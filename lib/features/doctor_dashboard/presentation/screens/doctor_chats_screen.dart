@@ -4,11 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../chat_doctors/controllers/doctor_chats_list_controller.dart';
-import '../../../chat_doctors/services/doctor_chat_service.dart';
-import '../../../chat_doctors/views/doctor_active_chat_screen.dart';
-import '../../../chat_support/screens/chat_room_screen.dart';
-import '../../../chat_support/widgets/support_chat_widgets.dart';
+import '../../../chat_doctors/presentation/controllers/doctor_chats_list_controller.dart';
+import '../../../chat_doctors/data/services/doctor_chat_service.dart';
+import '../../../chat_doctors/presentation/screens/doctor_active_chat_screen.dart';
+import '../../../chat_support/presentation/screens/chat_room_screen.dart';
+import '../../../chat_support/presentation/widgets/support_chat_widgets.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class DoctorChatsScreen extends StatelessWidget {

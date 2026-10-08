@@ -8,8 +8,8 @@ import 'package:intl/intl.dart';
 import '../../../../core/constants/app_firestore.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../widgets/doctor_app_bar.dart';
-import '../../../notifications/controllers/notifications_controller.dart';
-import '../../../notifications/widgets/notification_dropdown_widget.dart';
+import '../../../notifications/presentation/controllers/notifications_controller.dart';
+import '../../../notifications/presentation/widgets/notification_dropdown_widget.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 

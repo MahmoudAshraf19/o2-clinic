@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 
 import 'package:get/get.dart';
 import '../controllers/doctor_navigation_controller.dart';
-import '../../../../features/notifications/controllers/notifications_controller.dart';
-import '../../../../features/notifications/widgets/notification_dropdown_widget.dart';
+import '../../../../features/notifications/presentation/controllers/notifications_controller.dart';
+import '../../../../features/notifications/presentation/widgets/notification_dropdown_widget.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/theme/app_colors.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';

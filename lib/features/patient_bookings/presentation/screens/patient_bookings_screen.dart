@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/theme/app_colors.dart';
-import '../controllers/patient_bookings_controller.dart';
-import '../widgets/patient_appointment_card.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../presentation/controllers/patient_bookings_controller.dart';
+import '../../presentation/widgets/patient_appointment_card.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class PatientBookingsScreen extends StatefulWidget {

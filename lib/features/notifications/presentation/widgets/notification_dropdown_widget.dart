@@ -2,21 +2,21 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:o2_clinic/common/widgets/common_snackbar.dart';
-import '../../../../common/widgets/common_button.dart';
+import '../../../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../controllers/notifications_controller.dart';
+import '../../presentation/controllers/notifications_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/notification_model.dart';
-import '../utils/notification_time_helper.dart';
-import '../../appointments/presentation/screens/my_appointments_screen.dart';
-import '../views/notifications_screen.dart';
-import '../../doctor_dashboard/presentation/controllers/doctor_navigation_controller.dart';
-import '../../doctor_dashboard/presentation/controllers/doctor_appointments_controller.dart';
-import '../../doctor_dashboard/presentation/screens/doctor_reviews_screen.dart';
-import '../../../core/services/notification_router.dart';
-import '../../../core/theme/app_colors.dart';
+import '../../data/models/notification_model.dart';
+import '../../presentation/utils/notification_time_helper.dart';
+import '../../../appointments/presentation/screens/my_appointments_screen.dart';
+import '../../presentation/screens/notifications_screen.dart';
+import '../../../doctor_dashboard/presentation/controllers/doctor_navigation_controller.dart';
+import '../../../doctor_dashboard/presentation/controllers/doctor_appointments_controller.dart';
+import '../../../doctor_dashboard/presentation/screens/doctor_reviews_screen.dart';
+import '../../../../core/services/notification_router.dart';
+import '../../../../core/theme/app_colors.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class NotificationDropdownWidget extends StatelessWidget {

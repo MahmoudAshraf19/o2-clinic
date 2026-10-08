@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../../../core/theme/app_colors.dart';
-import '../../../chat_doctors/models/doctor_chat_model.dart';
-import '../../../chat_doctors/views/doctor_active_chat_screen.dart';
+import '../../../chat_doctors/data/models/doctor_chat_model.dart';
+import '../../../chat_doctors/presentation/screens/doctor_active_chat_screen.dart';
 import '../screens/doctor_booking_details_screen.dart';
 
 class DoctorAppointmentCard extends StatelessWidget {

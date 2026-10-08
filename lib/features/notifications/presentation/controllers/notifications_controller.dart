@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import '../models/notification_model.dart';
-import '../services/notifications_firestore_service.dart';
+import '../../data/models/notification_model.dart';
+import '../../data/services/notifications_firestore_service.dart';
 
 class NotificationsController extends GetxController {
   final NotificationsFirestoreService _service =

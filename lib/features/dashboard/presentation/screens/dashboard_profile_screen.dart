@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../patient_bookings/views/patient_bookings_screen.dart' as o2;
+import '../../../patient_bookings/presentation/screens/patient_bookings_screen.dart' as o2;
 import '../../../profile/controllers/dashboard_profile_controller.dart';
 import '../../../profile/models/dashboard_profile_model.dart';
 import '../../../profile/widgets/profile_detail_card.dart';

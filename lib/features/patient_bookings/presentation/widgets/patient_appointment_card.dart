@@ -3,7 +3,7 @@ import 'package:o2_clinic/common/widgets/common_avatar.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
 
 class PatientAppointmentCard extends StatelessWidget {
   final Map<String, dynamic> bookingData;
