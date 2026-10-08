@@ -379,7 +379,9 @@ class _GroupLabel extends StatelessWidget {
         fontSize: 13,
         fontWeight: FontWeight.bold,
         letterSpacing: 0.4,
-        color: AppColors.grey600,
+        color: Theme.of(context).brightness == Brightness.dark 
+            ? AppColors.white54 
+            : AppColors.grey600,
       ),
     );
   }
