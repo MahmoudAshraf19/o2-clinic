@@ -5,7 +5,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../../common/widgets/common_text_field.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../search/views/global_search_screen.dart';
+import '../../../search/presentation/screens/global_search_screen.dart';
 
 class DashboardSearchBar extends StatelessWidget {
   const DashboardSearchBar({super.key});

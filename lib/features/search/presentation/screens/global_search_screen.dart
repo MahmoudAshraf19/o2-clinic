@@ -1,15 +1,15 @@
-import '../../../../common/widgets/common_text_field.dart';
-import '../../../../common/widgets/common_button.dart';
+import '../../../../../../common/widgets/common_text_field.dart';
+import '../../../../../../common/widgets/common_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/routes/app_routes.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
+import '../../../../../../core/routes/app_routes.dart';
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/theme/app_fonts.dart';
 
-import '../../doctors/presentation/screens/all_doctor_profile_page.dart';
-import '../../booking/presentation/screens/cosmetic_booking_page.dart';
-import '../../booking/presentation/screens/radiology_profile_screen.dart';
+import '../../../doctors/presentation/screens/all_doctor_profile_page.dart';
+import '../../../booking/presentation/screens/cosmetic_booking_page.dart';
+import '../../../booking/presentation/screens/radiology_profile_screen.dart';
 
 import '../controllers/global_search_controller.dart';
 import '../widgets/search_result_tile.dart';
