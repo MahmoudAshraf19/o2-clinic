@@ -101,7 +101,11 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.primary
+                      : AppColors.border,
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: AppColors.black.withValues(alpha: 0.04),
@@ -161,7 +165,11 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
       decoration: BoxDecoration(
         color: AppColors.primary.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border.withValues(alpha: 0.9)),
+        border: Border.all(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.primary
+              : AppColors.border.withValues(alpha: 0.9),
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -329,7 +337,9 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: AppColors.primary.withValues(alpha: 0.15),
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.primary
+                    : AppColors.primary.withValues(alpha: 0.15),
                 width: 1.5,
               ),
               image: DecorationImage(
@@ -551,7 +561,11 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
                   decoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor,
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppColors.border),
+                    border: Border.all(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.primary
+                          : AppColors.border,
+                    ),
                   ),
                   child: Row(
                     children: [
@@ -661,7 +675,11 @@ class _RadiologyProfileScreenState extends State<RadiologyProfileScreen> {
     return BoxDecoration(
       color: Theme.of(context).cardColor,
       borderRadius: BorderRadius.circular(24),
-      border: Border.all(color: AppColors.border.withValues(alpha: 0.85)),
+      border: Border.all(
+        color: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.primary
+            : AppColors.border.withValues(alpha: 0.85),
+      ),
       boxShadow: [
         BoxShadow(
           color: AppColors.primary.withValues(alpha: 0.05),

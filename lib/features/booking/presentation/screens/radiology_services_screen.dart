@@ -63,7 +63,11 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.primary
+                      : AppColors.border,
+                ),
               ),
               child: const Icon(
                 Icons.arrow_back_ios_new_rounded,
@@ -176,7 +180,9 @@ class _RadiologyServicesScreenState extends State<RadiologyServicesScreen>
         border: Border.all(
           color: isExpanded
               ? AppColors.primary.withValues(alpha: 0.3)
-              : AppColors.border,
+              : Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.primary
+                  : AppColors.border,
         ),
         boxShadow: [
           BoxShadow(
