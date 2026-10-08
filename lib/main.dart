@@ -17,6 +17,7 @@ import 'common/controllers/app_constants_controller.dart';
 import 'common/controllers/global_auth_controller.dart';
 import 'features/notifications/presentation/controllers/notifications_controller.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -35,7 +36,35 @@ Future<void> main() async {
     await NotificationService.instance.init();
 
     final prefs = await SharedPreferences.getInstance();
-    final String savedLanguageCode = prefs.getString('language_code') ?? 'en';
+    String? savedLanguageCode = prefs.getString('language_code');
+    String? savedThemeString = prefs.getString('theme_mode');
+
+    if (savedLanguageCode == null || savedThemeString == null) {
+      try {
+        final doc = await FirebaseFirestore.instance.collection('app_constants').doc('default').get();
+        if (doc.exists) {
+          final data = doc.data()!;
+          if (savedLanguageCode == null) {
+            final isAr = data['is_ar_default_language'] ?? false;
+            savedLanguageCode = isAr ? 'ar' : 'en';
+            await prefs.setString('language_code', savedLanguageCode);
+          }
+          if (savedThemeString == null) {
+            final isLight = data['is_light_theme_default'] ?? true;
+            savedThemeString = isLight ? 'light' : 'dark';
+            await prefs.setString('theme_mode', savedThemeString);
+          }
+        }
+      } catch (e) {
+        debugPrint('Failed to load default constants: $e');
+      }
+    }
+    
+    savedLanguageCode ??= 'en';
+    savedThemeString ??= 'light';
+
+    final ThemeMode initialThemeMode = savedThemeString == 'dark' ? ThemeMode.dark : ThemeMode.light;
+
     Get.put(LocaleController(savedLanguageCode), permanent: true);
 
     Get.put(AppConstantsController(), permanent: true);
@@ -45,7 +74,7 @@ Future<void> main() async {
     runApp(
       DevicePreview(
         enabled: kIsWeb && !kReleaseMode,
-        builder: (context) => const O2ClinicApp(),
+        builder: (context) => O2ClinicApp(initialThemeMode: initialThemeMode),
       ),
     );
   } catch (e) {
@@ -58,7 +87,9 @@ Future<void> main() async {
 }
 
 class O2ClinicApp extends StatelessWidget {
-  const O2ClinicApp({super.key});
+  final ThemeMode initialThemeMode;
+  
+  const O2ClinicApp({super.key, required this.initialThemeMode});
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +156,7 @@ class O2ClinicApp extends StatelessWidget {
           outlinedButtonTheme: AppTheme.darkTheme.outlinedButtonTheme,
           bottomNavigationBarTheme: AppTheme.darkTheme.bottomNavigationBarTheme,
         ),
-        themeMode: ThemeMode.system,
+        themeMode: initialThemeMode,
         initialRoute: '/',
         getPages: AppPages.pages,
         defaultTransition: Transition.cupertino,

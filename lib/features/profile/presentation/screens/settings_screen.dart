@@ -5,6 +5,7 @@ import 'package:o2_clinic/core/localization/locale_controller.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'change_language_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
@@ -680,9 +681,11 @@ class _ThemeSelectionBottomSheet extends StatelessWidget {
               style: TextStyle(fontWeight: !isDark ? FontWeight.w600 : FontWeight.w500),
             ),
             trailing: !isDark ? const Icon(Icons.check, color: AppColors.brandBlue) : null,
-            onTap: () {
+            onTap: () async {
               Get.changeThemeMode(ThemeMode.light);
-              Navigator.pop(context);
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString('theme_mode', 'light');
+              if (context.mounted) Navigator.pop(context);
             },
           ),
           const Divider(height: 1, color: AppColors.borderSoft),
@@ -693,9 +696,11 @@ class _ThemeSelectionBottomSheet extends StatelessWidget {
               style: TextStyle(fontWeight: isDark ? FontWeight.w600 : FontWeight.w500),
             ),
             trailing: isDark ? const Icon(Icons.check, color: AppColors.brandBlue) : null,
-            onTap: () {
+            onTap: () async {
               Get.changeThemeMode(ThemeMode.dark);
-              Navigator.pop(context);
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString('theme_mode', 'dark');
+              if (context.mounted) Navigator.pop(context);
             },
           ),
           const SizedBox(height: 16),
