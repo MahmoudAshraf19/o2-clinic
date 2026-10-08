@@ -7,11 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../patient_bookings/presentation/screens/patient_bookings_screen.dart' as o2;
-import '../../../profile/controllers/dashboard_profile_controller.dart';
-import '../../../profile/models/dashboard_profile_model.dart';
-import '../../../profile/widgets/profile_detail_card.dart';
-import '../../../profile/widgets/profile_header_section.dart';
-import '../../../profile/widgets/profile_settings_card.dart';
+import '../../../profile/presentation/controllers/dashboard_profile_controller.dart';
+import '../../../profile/data/models/dashboard_profile_model.dart';
+import '../../../profile/presentation/widgets/profile_detail_card.dart';
+import '../../../profile/presentation/widgets/profile_header_section.dart';
+import '../../../profile/presentation/widgets/profile_settings_card.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class DashboardProfileScreen extends StatelessWidget {

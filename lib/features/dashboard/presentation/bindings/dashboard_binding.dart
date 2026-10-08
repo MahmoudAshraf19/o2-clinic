@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../../../profile/controllers/dashboard_profile_controller.dart';
-import '../../../profile/services/dashboard_profile_service.dart';
+import '../../../profile/presentation/controllers/dashboard_profile_controller.dart';
+import '../../../profile/data/services/dashboard_profile_service.dart';
 import '../controllers/dashboard_controller.dart';
 import '../../data/services/dashboard_service.dart';
 

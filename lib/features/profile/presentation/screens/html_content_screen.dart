@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_fonts.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_fonts.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class HtmlContentScreen extends StatelessWidget {

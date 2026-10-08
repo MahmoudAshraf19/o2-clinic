@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../../../common/widgets/common_button.dart';
+import '../../../../../../common/widgets/common_button.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'package:get/get.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../core/localization/locale_controller.dart';
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/theme/app_fonts.dart';
+import '../../../../../../l10n/app_localizations.dart';
+import '../../../../../../core/localization/locale_controller.dart';
 import '../controllers/change_language_controller.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 

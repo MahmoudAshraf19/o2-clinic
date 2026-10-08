@@ -6,9 +6,9 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'change_language_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_fonts.dart';
-import '../../chat_support/screens/support_chat_screen.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_fonts.dart';
+import '../../../chat_support/presentation/screens/support_chat_screen.dart';
 import 'html_content_screen.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 

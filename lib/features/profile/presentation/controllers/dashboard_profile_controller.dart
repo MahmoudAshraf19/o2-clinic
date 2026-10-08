@@ -5,9 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:o2_clinic/core/routes/app_routes.dart';
-import 'package:o2_clinic/features/profile/models/dashboard_profile_model.dart';
-import 'package:o2_clinic/features/profile/services/dashboard_profile_service.dart';
-import 'package:o2_clinic/features/profile/view/settings_screen.dart';
+import 'package:o2_clinic/features/profile/data/models/dashboard_profile_model.dart';
+import 'package:o2_clinic/features/profile/data/services/dashboard_profile_service.dart';
+import 'package:o2_clinic/features/profile/presentation/screens/settings_screen.dart';
 
 class DashboardProfileController extends GetxController {
   DashboardProfileController(this.service);
