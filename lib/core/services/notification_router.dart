@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../features/notifications/views/notifications_screen.dart';
-import '../../features/chat_support/screens/chat_room_screen.dart';
+import '../../features/notifications/presentation/screens/notifications_screen.dart';
+import '../../features/chat_support/presentation/screens/chat_room_screen.dart';
 import '../../features/doctors/data/services/doctor_firestore_service.dart';
 import '../../features/doctors/data/models/doctor_model.dart';
-import '../../features/chat_doctors/views/patient_chat_screen.dart';
+import '../../features/chat_doctors/presentation/screens/patient_chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../features/chat_doctors/models/doctor_chat_model.dart';
-import '../../features/chat_doctors/views/doctor_active_chat_screen.dart';
+import '../../features/chat_doctors/data/models/doctor_chat_model.dart';
+import '../../features/chat_doctors/presentation/screens/doctor_active_chat_screen.dart';
 import '../../features/appointments/presentation/screens/my_appointments_screen.dart';
 
 class NotificationRouter {

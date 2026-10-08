@@ -4,7 +4,7 @@ import '../../../../common/widgets/common_avatar.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../chat_doctors/views/patient_chat_screen.dart';
+import '../../../chat_doctors/presentation/screens/patient_chat_screen.dart';
 import '../../data/models/doctor_model.dart';
 
 class DoctorProfileScreen extends StatelessWidget {

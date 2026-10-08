@@ -4,10 +4,10 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../chat_support/widgets/support_chat_widgets.dart'; // Reuse composer and bubbles
+import '../../../chat_support/presentation/widgets/support_chat_widgets.dart'; // Reuse composer and bubbles
 import '../../../doctors/data/models/doctor_model.dart';
 import '../../../doctors/presentation/screens/all_doctor_profile_page.dart';
-import '../../../services_firestore/models/doctor_model.dart' as fs_doctor;
+import '../../../../features/doctors/data/models/doctor_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../presentation/controllers/patient_chat_controller.dart';
 import '../../data/services/doctor_chat_service.dart';

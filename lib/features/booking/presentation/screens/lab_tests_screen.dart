@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../chat_support/screens/chat_room_screen.dart';
+import '../../../chat_support/presentation/screens/chat_room_screen.dart';
 import '../../../contact_us/presentation/screens/our_location_screen.dart';
 
 class LabTestsScreen extends StatelessWidget {

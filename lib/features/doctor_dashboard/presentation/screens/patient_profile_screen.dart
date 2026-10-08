@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../profile/models/dashboard_profile_model.dart';
-import '../../../profile/widgets/profile_detail_card.dart';
-import '../../../profile/widgets/profile_header_section.dart';
+import '../../../profile/data/models/dashboard_profile_model.dart';
+import '../../../profile/presentation/widgets/profile_detail_card.dart';
+import '../../../profile/presentation/widgets/profile_header_section.dart';
 
 class PatientProfileScreen extends StatelessWidget {
   final DashboardProfileModel patient;

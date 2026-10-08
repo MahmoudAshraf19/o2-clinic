@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
-import '../../../chat_doctors/views/patient_chat_screen.dart';
+import '../../../chat_doctors/presentation/screens/patient_chat_screen.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
-import '../../../services_firestore/models/doctor_model.dart';
+import '../../../../features/doctors/data/models/doctor_model.dart';
 import '../../data/models/doctor_model.dart' as ui_model;
 
 class DoctorCard extends StatelessWidget {

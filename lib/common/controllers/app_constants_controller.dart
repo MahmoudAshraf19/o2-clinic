@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import '../../features/services_firestore/app_constants_firestore_service.dart';
-import '../../features/services_firestore/models/app_constants_model.dart';
+import '../../common/services/app_constants_firestore_service.dart';
+import '../../common/models/app_constants_model.dart';
 
 class AppConstantsController extends GetxController {
   final currencySymbol = "EGP".obs;

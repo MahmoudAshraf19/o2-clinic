@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
-import '../../../chat_support/widgets/support_chat_widgets.dart';
+import '../../../chat_support/presentation/widgets/support_chat_widgets.dart';
 import '../../../services/data/models/radiology_category_model.dart';
 import '../controllers/radiology_booking_controller.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';

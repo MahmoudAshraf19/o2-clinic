@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 
 import '../../data/models/chat_support_model.dart';
 import '../../data/services/chat_support_service.dart';
-import '../../../chat_doctors/models/doctor_chat_model.dart';
-import '../../../chat_doctors/services/doctor_chat_service.dart';
+import '../../../chat_doctors/data/models/doctor_chat_model.dart';
+import '../../../chat_doctors/data/services/doctor_chat_service.dart';
 
 class ChatContactUsController extends GetxController {
   ChatContactUsController(this.service);

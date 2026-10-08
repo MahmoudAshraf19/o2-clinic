@@ -16,7 +16,7 @@ import '../../../services/presentation/controllers/services_controller.dart';
 import '../../../services/data/models/cosmetic_model.dart';
 import '../../../services/data/models/department_model.dart';
 import '../../../services/data/models/radiology_category_model.dart';
-import '../../../services_firestore/models/doctor_model.dart';
+import '../../../../features/doctors/data/models/doctor_model.dart';
 import '../../../services/data/models/fs_specialized_service_model.dart';
 import '../../../doctors/data/services/doctors_cache_service.dart';
 import '../../../services/data/services/fs_specialized_cache.dart';

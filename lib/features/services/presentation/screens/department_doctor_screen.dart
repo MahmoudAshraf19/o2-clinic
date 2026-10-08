@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../services_firestore/models/doctor_model.dart';
+import '../../../../features/doctors/data/models/doctor_model.dart';
 import '../../data/models/fs_specialized_service_model.dart';
 import '../../../doctors/data/services/doctors_cache_service.dart';
 import '../../data/services/fs_specialized_cache.dart';

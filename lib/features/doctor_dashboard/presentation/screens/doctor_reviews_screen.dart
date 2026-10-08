@@ -12,7 +12,7 @@ import '../controllers/doctor_profile_controller.dart';
 import '../../../../core/constants/app_firestore.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../services_firestore/models/review_model.dart';
+import '../../../../features/doctors/data/models/review_model.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class DoctorReviewsScreen extends StatefulWidget {

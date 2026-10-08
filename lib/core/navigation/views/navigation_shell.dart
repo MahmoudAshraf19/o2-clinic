@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../features/doctors/presentation/screens/all_doctors_page.dart';
 import '../../../features/booking/presentation/screens/booking_screen.dart';
-import '../../../features/chat_support/screens/contact_us_screen.dart';
+import '../../../features/chat_support/presentation/screens/contact_us_screen.dart';
 import '../../../features/dashboard/presentation/screens/dashboard_home_screen.dart';
 import '../../../features/dashboard/presentation/screens/dashboard_profile_screen.dart';
 import '../../widgets/app_bar/o2_app_bar.dart';

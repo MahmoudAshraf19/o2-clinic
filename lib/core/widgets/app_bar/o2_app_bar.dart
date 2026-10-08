@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:get/get.dart';
 import '../../../common/controllers/global_auth_controller.dart';
-import '../../../features/notifications/controllers/notifications_controller.dart';
-import '../../../features/notifications/widgets/notification_dropdown_widget.dart';
+import '../../../features/notifications/presentation/controllers/notifications_controller.dart';
+import '../../../features/notifications/presentation/widgets/notification_dropdown_widget.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../routes/app_routes.dart';
 import 'package:o2_clinic/core/theme/app_colors.dart';

@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/booking_helper.dart';
-import '../../../chat_doctors/views/patient_chat_screen.dart'; // NEW
-import '../../../services_firestore/models/doctor_model.dart';
+import '../../../chat_doctors/presentation/screens/patient_chat_screen.dart'; // NEW
+import '../../../../features/doctors/data/models/doctor_model.dart';
 import '../../data/models/doctor_model.dart' as ui_model; // NEW
 import '../../../services/data/services/fs_specialized_cache.dart';
 

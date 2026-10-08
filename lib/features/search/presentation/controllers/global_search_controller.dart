@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../services_firestore/models/doctor_model.dart';
+import '../../../../features/doctors/data/models/doctor_model.dart';
 import '../../../services/data/models/fs_specialized_service_model.dart';
 import '../../../doctors/data/services/doctors_cache_service.dart';
 import '../../../services/data/services/fs_specialized_cache.dart';

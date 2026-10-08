@@ -1,9 +1,9 @@
-import '../../../../common/widgets/common_text_field.dart';
+import '../../../../../../common/widgets/common_text_field.dart';
 import 'package:flutter/material.dart';
-import '../../../../common/widgets/common_button.dart';
+import '../../../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import '../controllers/discount_controller.dart';
-import '../../../../core/theme/app_colors.dart';
+import '../../../../../../core/theme/app_colors.dart';
 
 class DiscountInputWidget {
   static void show(BuildContext context) {

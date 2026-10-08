@@ -7,7 +7,7 @@ import '../../presentation/controllers/contact_us_controller.dart';
 import '../../data/services/chat_support_service.dart';
 import '../../presentation/widgets/support_chat_widgets.dart';
 import 'chat_room_screen.dart';
-import '../../../chat_doctors/views/patient_chat_screen.dart';
+import '../../../chat_doctors/presentation/screens/patient_chat_screen.dart';
 import '../../../doctors/data/models/doctor_model.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../chat_support/widgets/support_chat_widgets.dart';
+import '../../../chat_support/presentation/widgets/support_chat_widgets.dart';
 import '../controllers/booking_controller.dart';
 import '../widgets/service_card.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';

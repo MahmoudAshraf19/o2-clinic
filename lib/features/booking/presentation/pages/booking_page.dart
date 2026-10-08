@@ -10,10 +10,10 @@ import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
-import '../../../services_firestore/models/doctor_model.dart';
+import '../../../../features/doctors/data/models/doctor_model.dart';
 import '../controllers/booking.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../chat_support/widgets/support_chat_widgets.dart';
+import '../../../chat_support/presentation/widgets/support_chat_widgets.dart';
 import 'confirm_booking_screen.dart';
 
 class BookingPage extends StatelessWidget {

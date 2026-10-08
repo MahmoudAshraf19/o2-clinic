@@ -12,8 +12,8 @@ import '../../../../core/theme/app_fonts.dart';
 import '../../../../common/controllers/app_constants_controller.dart';
 import '../controllers/booking.dart';
 import '../widgets/Ultrasound/ultrasound_data.dart';
-import '../../../discounts/controllers/discount_controller.dart';
-import '../../../discounts/widgets/discount_input_widget.dart';
+import '../../../discounts/presentation/controllers/discount_controller.dart';
+import '../../../discounts/presentation/widgets/discount_input_widget.dart';
 import 'ultrasound_success_screen.dart';
 
 class UltrasoundConfirmScreen extends StatefulWidget {

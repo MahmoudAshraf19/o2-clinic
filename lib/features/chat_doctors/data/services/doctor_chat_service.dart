@@ -6,7 +6,7 @@ import 'package:path/path.dart' as p;
 import 'package:uuid/uuid.dart';
 
 import '../../../../core/services/notification_service.dart';
-import '../../../chat_support/models/chat_support_model.dart';
+import '../../../chat_support/data/models/chat_support_model.dart';
 import '../../data/models/doctor_chat_model.dart';
 
 class DoctorChatService {

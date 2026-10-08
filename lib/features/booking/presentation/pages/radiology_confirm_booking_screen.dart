@@ -13,11 +13,11 @@ import '../../../../common/controllers/global_auth_controller.dart';
 import '../../../../common/app_constants.dart';
 import '../../../services/data/models/radiology_category_model.dart';
 import '../controllers/radiology_booking_controller.dart';
-import '../../../discounts/controllers/discount_controller.dart';
-import '../../../discounts/widgets/discount_input_widget.dart';
+import '../../../discounts/presentation/controllers/discount_controller.dart';
+import '../../../discounts/presentation/widgets/discount_input_widget.dart';
 import 'radiology_booking_success_screen.dart';
-import '../../../chat_support/services/radiology_chat_service.dart';
-import '../../../chat_support/screens/radiology_chat_screen.dart';
+import '../../../chat_support/data/services/radiology_chat_service.dart';
+import '../../../chat_support/presentation/screens/radiology_chat_screen.dart';
 import 'dart:async';
 
 class RadiologyConfirmBookingScreen extends StatefulWidget {

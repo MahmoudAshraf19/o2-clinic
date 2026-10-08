@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../../services_firestore/models/doctor_model.dart';
+import '../../../../features/doctors/data/models/doctor_model.dart';
 import '../../../doctors/data/services/doctors_firestore_service.dart';
 import '../../data/models/dashboard_health_chip_model.dart';
 import '../../data/models/dashboard_promo_model.dart';

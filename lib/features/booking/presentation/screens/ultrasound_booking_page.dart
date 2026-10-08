@@ -6,7 +6,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../chat_support/widgets/support_chat_widgets.dart';
+import '../../../chat_support/presentation/widgets/support_chat_widgets.dart';
 import '../controllers/ultrasound_booking_controller.dart';
 import '../widgets/Ultrasound/ultrasound_data.dart';
 import 'ultrasound_confirm_screen.dart';

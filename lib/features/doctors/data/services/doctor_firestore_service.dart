@@ -1,5 +1,5 @@
-import '../../../services_firestore/firestore_paths.dart';
-import '../../../services_firestore/firestore_service.dart';
+import '../../../../core/services/firestore/firestore_paths.dart';
+import '../../../../core/services/firestore/firestore_service.dart';
 
 class DoctorFirestoreService {
   DoctorFirestoreService._();

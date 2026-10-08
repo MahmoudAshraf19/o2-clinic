@@ -12,11 +12,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../../common/controllers/global_auth_controller.dart';
-import '../../../services_firestore/models/doctor_model.dart';
+import '../../../../features/doctors/data/models/doctor_model.dart';
 import '../controllers/booking.dart';
 import '../../../../common/controllers/app_constants_controller.dart';
-import '../../../discounts/controllers/discount_controller.dart';
-import '../../../discounts/widgets/discount_input_widget.dart';
+import '../../../discounts/presentation/controllers/discount_controller.dart';
+import '../../../discounts/presentation/widgets/discount_input_widget.dart';
 import 'booking_success_screen.dart';
 
 class ConfirmBookingScreen extends StatefulWidget {

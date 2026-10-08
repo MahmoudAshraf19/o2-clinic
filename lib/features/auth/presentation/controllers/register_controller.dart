@@ -20,7 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utils/countries.dart';
-import '../../../profile/models/dashboard_profile_model.dart';
+import '../../../profile/data/models/dashboard_profile_model.dart';
 import '../../data/services/user_firestore_service.dart';
 
 class RegisterController extends GetxController {

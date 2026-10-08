@@ -12,8 +12,8 @@ import '../../../../common/app_constants.dart';
 import '../../../services/data/models/cosmetic_category_model.dart';
 import '../controllers/booking.dart';
 import '../controllers/cosmetic_booking_controller.dart';
-import '../../../discounts/controllers/discount_controller.dart';
-import '../../../discounts/widgets/discount_input_widget.dart';
+import '../../../discounts/presentation/controllers/discount_controller.dart';
+import '../../../discounts/presentation/widgets/discount_input_widget.dart';
 import 'cosmetic_success_screen.dart';
 
 class CosmeticConfirmScreen extends StatefulWidget {

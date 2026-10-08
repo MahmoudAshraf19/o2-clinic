@@ -11,7 +11,7 @@ import '../controllers/booking.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../../core/widgets/cached_image_widget.dart';
-import '../../../services_firestore/models/doctor_model.dart';
+import '../../../../features/doctors/data/models/doctor_model.dart';
 
 class OnlineConsultationBookingPage extends StatefulWidget {
   final DoctorModel doctor;

@@ -8,7 +8,7 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../services_firestore/models/review_model.dart';
+import '../../../../features/doctors/data/models/review_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ReviewDoctorScreen extends StatefulWidget {

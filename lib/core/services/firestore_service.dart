@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 // Model Imports
-import '../../features/chat_support/models/chat_support_model.dart';
+import '../../features/chat_support/data/models/chat_support_model.dart';
 import '../../features/dashboard/data/models/dashboard_appointment_model.dart';
 import '../../features/doctors/data/models/doctor_model.dart';
 import '../../features/onboarding/data/models/onboarding_slide_model.dart';
-import '../../features/profile/models/dashboard_profile_model.dart';
+import '../../features/profile/data/models/dashboard_profile_model.dart';
 import '../../features/services/data/models/category_model.dart';
 import '../../features/services/data/models/cosmetic_model.dart';
 import '../../features/services/data/models/radiology_service_model.dart';

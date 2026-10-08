@@ -12,8 +12,8 @@ import '../controllers/imaging_booking_controller.dart';
 import 'imaging_success_screen.dart';
 import '../controllers/booking.dart';
 import '../../../../common/controllers/app_constants_controller.dart';
-import '../../../discounts/controllers/discount_controller.dart';
-import '../../../discounts/widgets/discount_input_widget.dart';
+import '../../../discounts/presentation/controllers/discount_controller.dart';
+import '../../../discounts/presentation/widgets/discount_input_widget.dart';
 
 class ImagingConfirmScreen extends StatefulWidget {
   final String imagingType;

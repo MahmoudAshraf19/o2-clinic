@@ -5,7 +5,7 @@ import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../services_firestore/models/doctor_model.dart';
+import '../../../../features/doctors/data/models/doctor_model.dart';
 
 class BookingSuccessScreen extends StatelessWidget {
   final DoctorModel doctor;

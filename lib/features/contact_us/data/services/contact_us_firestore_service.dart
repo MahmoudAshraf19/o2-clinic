@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../services_firestore/firestore_paths.dart';
+import '../../../../core/services/firestore/firestore_paths.dart';
 import '../models/contact_us_model.dart';
 
 class ContactUsFirestoreService {

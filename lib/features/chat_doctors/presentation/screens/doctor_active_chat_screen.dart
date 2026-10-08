@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../chat_support/widgets/support_chat_widgets.dart';
-import '../../../chat_doctors/models/doctor_chat_model.dart';
-import '../../../chat_doctors/controllers/doctor_chat_controller.dart';
-import '../../../chat_doctors/services/doctor_chat_service.dart';
-import '../../../profile/models/dashboard_profile_model.dart';
+import '../../../chat_support/presentation/widgets/support_chat_widgets.dart';
+import '../../../chat_doctors/data/models/doctor_chat_model.dart';
+import '../../../chat_doctors/presentation/controllers/doctor_chat_controller.dart';
+import '../../../chat_doctors/data/services/doctor_chat_service.dart';
+import '../../../profile/data/models/dashboard_profile_model.dart';
 import '../../../doctor_dashboard/presentation/screens/patient_profile_screen.dart';
 import '../../../auth/data/services/user_firestore_service.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';

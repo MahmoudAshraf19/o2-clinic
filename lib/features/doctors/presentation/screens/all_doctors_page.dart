@@ -5,7 +5,7 @@ import '../../../../common/widgets/common_button.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
-import '../../../services_firestore/models/doctor_model.dart';
+import '../../../../features/doctors/data/models/doctor_model.dart';
 import '../../../services/data/models/fs_specialized_service_model.dart';
 import '../../data/services/doctors_cache_service.dart';
 import '../../../services/data/services/fs_specialized_cache.dart';

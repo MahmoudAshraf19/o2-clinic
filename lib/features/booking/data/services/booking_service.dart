@@ -1,4 +1,4 @@
-import '../../../services/data/services/fs_services_firestore_service.dart';
+import '../../../../core/services/firestore/firestore_service.dart';
 import '../models/booking_service_model.dart';
 
 class BookingService {
