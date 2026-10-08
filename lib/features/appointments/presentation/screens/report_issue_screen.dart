@@ -1,18 +1,17 @@
-import '../../../../common/widgets/common_text_field.dart';
-// ignore_for_file: use_build_context_synchronously
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:o2_clinic/common/widgets/common_snackbar.dart';
-import '../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
-import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:io';
-import 'package:flutter/foundation.dart'; // For kIsWeb
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:o2_clinic/common/widgets/common_snackbar.dart';
+import 'package:o2_clinic/l10n/app_localizations.dart';
 
+import '../../../../common/widgets/common_button.dart';
+import '../../../../common/widgets/common_text_field.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../booking/data/models/fs_booking_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReportIssueScreen extends StatefulWidget {
   final String bookingId;
@@ -29,78 +28,132 @@ class ReportIssueScreen extends StatefulWidget {
 }
 
 class _ReportIssueScreenState extends State<ReportIssueScreen> {
+  static const int _minChars = 10;
+  static const int _maxChars = 500;
+
   final _textController = TextEditingController();
-  XFile? _selectedImage;
+
+  /// Bytes (not a File) so the same code works on mobile and web.
+  Uint8List? _imageBytes;
+  String? _errorText;
   bool _isSubmitting = false;
 
+  @override
+  void initState() {
+    super.initState();
+    _textController.addListener(_onTextChanged);
+  }
+
+  @override
+  void dispose() {
+    _textController.removeListener(_onTextChanged);
+    _textController.dispose();
+    super.dispose();
+  }
+
+  void _onTextChanged() {
+    final length = _textController.text.trim().length;
+    if (_errorText != null && length >= _minChars && length <= _maxChars) {
+      setState(() => _errorText = null);
+    }
+  }
+
+  bool get _isAr => Localizations.localeOf(context).languageCode == 'ar';
+
   Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final picked = await picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 50,
-      maxWidth: 800,
-      maxHeight: 800,
-    );
-    if (picked != null) {
-      setState(() {
-        _selectedImage = picked;
-      });
+    final isAr = _isAr;
+    try {
+      final picked = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 50,
+        maxWidth: 800,
+        maxHeight: 800,
+      );
+      if (picked == null) return;
+      final bytes = await picked.readAsBytes();
+      if (!mounted) return;
+      setState(() => _imageBytes = bytes);
+    } catch (_) {
+      CommonSnackbar.showError(
+        title: isAr ? 'خطأ' : 'Error',
+        message: isAr ? 'تعذّر اختيار الصورة.' : 'Could not pick the image.',
+      );
     }
   }
 
   Future<void> _submitReport() async {
-    if (_textController.text.trim().isEmpty) return;
+    final isAr = _isAr;
+    final l10n = AppLocalizations.of(context)!;
+    final text = _textController.text.trim();
 
+    if (text.length < _minChars) {
+      setState(() {
+        _errorText = isAr
+            ? 'يرجى وصف المشكلة بشكل أوضح ($_minChars أحرف على الأقل).'
+            : 'Please describe the issue in more detail (min $_minChars characters).';
+      });
+      return;
+    }
+    if (text.length > _maxChars) {
+      setState(() {
+        _errorText = isAr
+            ? 'الحد الأقصى $_maxChars حرف.'
+            : 'Maximum $_maxChars characters.';
+      });
+      return;
+    }
+
+    FocusScope.of(context).unfocus();
     setState(() => _isSubmitting = true);
 
     try {
       String? imageUrl;
-      if (_selectedImage != null) {
+      final bytes = _imageBytes;
+      if (bytes != null) {
         final ref = FirebaseStorage.instance.ref().child(
           'reports/${widget.bookingId}_${DateTime.now().millisecondsSinceEpoch}.jpg',
         );
-
-        if (kIsWeb) {
-          await ref.putData(await _selectedImage!.readAsBytes());
-        } else {
-          await ref.putFile(File(_selectedImage!.path));
-        }
+        await ref.putData(bytes, SettableMetadata(contentType: 'image/jpeg'));
         imageUrl = await ref.getDownloadURL();
       }
 
       final report = BookingReportModel(
-        text: _textController.text.trim(),
+        text: text,
         image: imageUrl,
         createdAt: DateTime.now(),
       );
 
-      final Map<String, dynamic> updateData = {
-        'status.current': 'under_investigation',
+      final reportMap = {
+        'text': report.text,
+        'image': report.image,
+        'createdAt': Timestamp.fromDate(report.createdAt),
       };
-
-      if (widget.isPatient) {
-        updateData['patientReport'] = {
-          'text': report.text,
-          'image': report.image,
-          'createdAt': Timestamp.fromDate(report.createdAt),
-        };
-      } else {
-        updateData['doctorReport'] = {
-          'text': report.text,
-          'image': report.image,
-          'createdAt': Timestamp.fromDate(report.createdAt),
-        };
-      }
 
       await FirebaseFirestore.instance
           .collection('bookings')
           .doc(widget.bookingId)
-          .update(updateData);
+          .update({
+            'status.current': 'under_investigation',
+            if (widget.isPatient)
+              'patientReport': reportMap
+            else
+              'doctorReport': reportMap,
+          });
 
       Get.back();
-      CommonSnackbar.showSuccess(title: AppLocalizations.of(context)!.reportIssue, message: 'Submitted successfully');
-    } catch (e) {
-      CommonSnackbar.showError(title: 'Error', message: 'Failed to submit report');
+      CommonSnackbar.showSuccess(
+        title: l10n.reportIssue,
+        message: isAr
+            ? 'تم إرسال بلاغك بنجاح وسنراجعه قريباً.'
+            : 'Your report was submitted. We will review it shortly.',
+      );
+    } catch (_) {
+      CommonSnackbar.showError(
+        title: isAr ? 'خطأ' : 'Error',
+        message: isAr
+            ? 'تعذّر إرسال البلاغ، حاول مرة أخرى.'
+            : 'Failed to submit the report. Please try again.',
+      );
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
     }
@@ -109,88 +162,173 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isAr = _isAr;
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        title: Text(
-          l10n.reportIssue,
-          style: const TextStyle(color: AppColors.textPrimary),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: AppColors.white,
+          title: Text(
+            l10n.reportIssue,
+            style: const TextStyle(color: AppColors.textPrimary),
+          ),
+          iconTheme: const IconThemeData(color: AppColors.textPrimary),
+          elevation: 0,
         ),
-        iconTheme: const IconThemeData(color: AppColors.textPrimary),
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              CommonTextField(
-                controller: _textController,
-                maxLines: 5,
-                hint: l10n.describeTheIssue,
-                type: CommonTextFieldType.multiline,
-              ),
-              const SizedBox(height: 16),
-              if (_selectedImage != null)
-                Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: kIsWeb
-                          ? Image.network(
-                              _selectedImage!.path,
-                              height: 150,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.file(
-                              File(_selectedImage!.path),
-                              height: 150,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _buildInfoBanner(isAr),
+                        const SizedBox(height: 16),
+                        CommonTextField(
+                          controller: _textController,
+                          maxLines: 5,
+                          hint: l10n.describeTheIssue,
+                          type: CommonTextFieldType.multiline,
+                        ),
+                        const SizedBox(height: 6),
+                        _buildHelperRow(),
+                        const SizedBox(height: 16),
+                        _buildImageSection(l10n),
+                      ],
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.close, color: AppColors.white),
-                      onPressed: () => setState(() => _selectedImage = null),
-                      style: IconButton.styleFrom(
-                        backgroundColor: AppColors.black54,
-                      ),
-                    ),
-                  ],
-                )
-              else
+                  ),
+                ),
+                const SizedBox(height: 12),
                 CommonButton(
-                  onPressed: _pickImage,
-                  icon: Icons.image,
-                  text: l10n.attachImage,
-                  type: CommonButtonType.outline,
+                  onPressed: _isSubmitting ? null : _submitReport,
+                  text: l10n.submitReport,
+                  type: CommonButtonType.primary,
+                  backgroundColor: AppColors.error,
+                  foregroundColor: AppColors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   borderRadius: BorderRadius.circular(12),
+                  isLoading: _isSubmitting,
+                  textStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              const Spacer(),
-              CommonButton(
-                onPressed: _isSubmitting ? null : _submitReport,
-                text: l10n.submitReport,
-                type: CommonButtonType.primary,
-                backgroundColor: AppColors.error,
-                foregroundColor: AppColors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                borderRadius: BorderRadius.circular(12),
-                isLoading: _isSubmitting,
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildInfoBanner(bool isAr) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.orange50,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.info_outline_rounded, size: 20, color: AppColors.orange700),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              isAr
+                  ? 'سيقوم فريقنا بمراجعة بلاغك، وستتغير حالة الحجز إلى "قيد المراجعة".'
+                  : 'Our team will review your report and the booking status will change to "Under review".',
+              style: TextStyle(
+                fontSize: 13,
+                height: 1.4,
+                color: AppColors.orange700,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHelperRow() {
+    return ValueListenableBuilder<TextEditingValue>(
+      valueListenable: _textController,
+      builder: (context, value, _) {
+        final length = value.text.trim().length;
+        final overLimit = length > _maxChars;
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _errorText == null
+                  ? const SizedBox.shrink()
+                  : Text(
+                      _errorText!,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.red,
+                      ),
+                    ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              '$length/$_maxChars',
+              style: TextStyle(
+                fontSize: 12,
+                color: overLimit ? AppColors.red : AppColors.grey500,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildImageSection(AppLocalizations l10n) {
+    final bytes = _imageBytes;
+
+    if (bytes == null) {
+      return CommonButton(
+        onPressed: _isSubmitting ? null : _pickImage,
+        icon: Icons.image,
+        text: l10n.attachImage,
+        type: CommonButtonType.outline,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        borderRadius: BorderRadius.circular(12),
+      );
+    }
+
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Image.memory(
+            bytes,
+            height: 180,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        ),
+        PositionedDirectional(
+          top: 6,
+          end: 6,
+          child: IconButton(
+            icon: const Icon(Icons.close, color: AppColors.white),
+            onPressed: _isSubmitting
+                ? null
+                : () => setState(() => _imageBytes = null),
+            style: IconButton.styleFrom(backgroundColor: AppColors.black54),
+          ),
+        ),
+      ],
     );
   }
 }

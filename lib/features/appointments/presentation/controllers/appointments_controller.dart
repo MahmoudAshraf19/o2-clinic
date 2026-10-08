@@ -1,11 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../../booking/data/models/fs_booking_model.dart';
-import '../../../../booking/data/services/fs_bookings_firestore_service.dart';
+import '../../../booking/data/models/fs_booking_model.dart';
+import '../../../booking/data/services/fs_bookings_firestore_service.dart';
 import '../../../dashboard/presentation/controllers/dashboard_pending_actions_controller.dart';
-import 'package:o2_clinic/common/widgets/common_dialogs.dart';
-import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 
 enum AppointmentStatusFilter {
   all,
@@ -24,6 +24,8 @@ class AppointmentsController extends GetxController {
   final BookingsFirestoreService _service = BookingsFirestoreService();
   final searchController = TextEditingController();
 
+  StreamSubscription<List<BookingModel>>? _subscription;
+
   final statusFilter = AppointmentStatusFilter.all.obs;
   final typeFilter = AppointmentTypeFilter.all.obs;
   final timeFilter = AppointmentTimeFilter.all.obs;
@@ -32,10 +34,21 @@ class AppointmentsController extends GetxController {
   final bookings = <BookingModel>[].obs;
   final isLoading = true.obs;
   final error = Rx<String?>(null);
-
   final showFilters = false.obs;
 
-  String? _showBookingId;
+  /// Set when a deep-link (`showBookingId`) matches a loaded booking.
+  /// The screen listens to it, opens the details sheet and resets it.
+  final bookingToOpen = Rxn<BookingModel>();
+
+  String? _pendingOpenId;
+
+  /// Statuses after which a booking is no longer "upcoming".
+  static const Set<String> closedStatuses = {
+    'completed',
+    'cancelled',
+    'no_show',
+    'under_investigation',
+  };
 
   User? get user => FirebaseAuth.instance.currentUser;
 
@@ -46,76 +59,182 @@ class AppointmentsController extends GetxController {
       searchText.value = searchController.text.trim();
     });
 
-    if (Get.arguments is Map) {
-      _showBookingId = Get.arguments['showBookingId']?.toString();
+    final args = Get.arguments;
+    if (args is Map) {
+      _pendingOpenId = args['showBookingId']?.toString();
 
-      final filterArg = Get.arguments['filter']?.toString();
-      if (filterArg == 'requiresAction') {
+      if (args['filter']?.toString() == 'requiresAction') {
         statusFilter.value = AppointmentStatusFilter.requiresAction;
-        showFilters.value = true;
       }
     }
 
-    _loadBookings();
+    _subscribe();
   }
 
   @override
   void onClose() {
+    _subscription?.cancel();
     searchController.dispose();
     super.onClose();
   }
 
-  void _loadBookings() {
-    if (user != null) {
-      isLoading.value = true;
-      _service.streamBookingsByUserId(user.uid).listen((data) {
+  // ---------------------------------------------------------------------------
+  // Data
+  // ---------------------------------------------------------------------------
+
+  void _subscribe({Completer<void>? firstEvent}) {
+    void completeFirst() {
+      if (firstEvent != null && !firstEvent.isCompleted) firstEvent.complete();
+    }
+
+    _subscription?.cancel();
+    _subscription = null;
+
+    final currentUser = user;
+    if (currentUser == null) {
+      isLoading.value = false;
+      completeFirst();
+      return;
+    }
+
+    // Do not flash the skeleton when refreshing an already loaded list.
+    if (bookings.isEmpty) isLoading.value = true;
+    error.value = null;
+
+    _subscription = _service.streamBookingsByUserId(currentUser.uid).listen(
+      (data) {
         bookings.value = data;
         isLoading.value = false;
-        
-        if (_showBookingId != null && data.isNotEmpty) {
-           // We keep _showBookingId to potentially open it via UI later,
-           // or we can just leave it to the view to observe
-        }
-      }, onError: (err) {
+        error.value = null;
+        _tryOpenPendingBooking(data);
+        completeFirst();
+      },
+      onError: (Object err) {
         error.value = err.toString();
         isLoading.value = false;
-      });
-    } else {
-      isLoading.value = false;
+        completeFirst();
+      },
+    );
+  }
+
+  void _tryOpenPendingBooking(List<BookingModel> data) {
+    final id = _pendingOpenId;
+    if (id == null) return;
+    for (final booking in data) {
+      if (booking.id == id) {
+        _pendingOpenId = null;
+        bookingToOpen.value = booking;
+        return;
+      }
     }
   }
 
+  /// Re-subscribes and completes when the first fresh event arrives
+  /// (so the pull-to-refresh spinner reflects real loading).
   Future<void> refreshBookings() async {
-    _loadBookings();
+    final firstEvent = Completer<void>();
+    _subscribe(firstEvent: firstEvent);
+    await firstEvent.future.timeout(
+      const Duration(seconds: 8),
+      onTimeout: () {},
+    );
   }
 
-  void setStatusFilter(AppointmentStatusFilter filter) {
-    statusFilter.value = filter;
+  // ---------------------------------------------------------------------------
+  // Filter setters
+  // ---------------------------------------------------------------------------
+
+  void setStatusFilter(AppointmentStatusFilter filter) =>
+      statusFilter.value = filter;
+
+  void setTypeFilter(AppointmentTypeFilter filter) =>
+      typeFilter.value = filter;
+
+  void setTimeFilter(AppointmentTimeFilter filter) =>
+      timeFilter.value = filter;
+
+  void toggleFilters() => showFilters.value = !showFilters.value;
+
+  void clearFilters() {
+    statusFilter.value = AppointmentStatusFilter.all;
+    typeFilter.value = AppointmentTypeFilter.all;
+    timeFilter.value = AppointmentTimeFilter.all;
+    searchController.clear();
   }
 
-  void setTypeFilter(AppointmentTypeFilter filter) {
-    typeFilter.value = filter;
-  }
+  /// Number of active filters inside the "advanced" panel (type + time).
+  int get activeAdvancedFiltersCount =>
+      (typeFilter.value != AppointmentTypeFilter.all ? 1 : 0) +
+      (timeFilter.value != AppointmentTimeFilter.all ? 1 : 0);
 
-  void setTimeFilter(AppointmentTimeFilter filter) {
-    timeFilter.value = filter;
-  }
+  bool get hasActiveFilters =>
+      statusFilter.value != AppointmentStatusFilter.all ||
+      activeAdvancedFiltersCount > 0 ||
+      searchText.value.isNotEmpty;
 
-  void toggleFilters() {
-    showFilters.value = !showFilters.value;
-  }
+  // ---------------------------------------------------------------------------
+  // Derived data
+  // ---------------------------------------------------------------------------
+
+  int countFor(AppointmentStatusFilter filter) =>
+      bookings.where((b) => _matchesStatus(b, filter)).length;
 
   List<BookingModel> get filteredBookings {
     final query = searchText.value.toLowerCase().trim();
 
-    return bookings.where((booking) {
-      final matchesSearch = query.isEmpty || _matchesSearch(booking, query);
-      final matchesStatus = _matchesStatus(booking, statusFilter.value);
-      final matchesType = _matchesType(booking, typeFilter.value);
-      final matchesTime = _matchesTime(booking, timeFilter.value);
-      return matchesSearch && matchesStatus && matchesType && matchesTime;
+    final list = bookings.where((booking) {
+      return (query.isEmpty || _matchesSearch(booking, query)) &&
+          _matchesStatus(booking, statusFilter.value) &&
+          _matchesType(booking, typeFilter.value) &&
+          _matchesTime(booking, timeFilter.value);
     }).toList();
+
+    // Upcoming first (soonest first), then past (most recent first).
+    list.sort((a, b) {
+      final aUp = isUpcoming(a);
+      final bUp = isUpcoming(b);
+      if (aUp != bUp) return aUp ? -1 : 1;
+      final aDate = _dateOf(a);
+      final bDate = _dateOf(b);
+      if (aDate == null && bDate == null) return 0;
+      if (aDate == null) return 1;
+      if (bDate == null) return -1;
+      return aUp ? aDate.compareTo(bDate) : bDate.compareTo(aDate);
+    });
+    return list;
   }
+
+  BookingModel? get nextAppointment {
+    final upcoming = bookings.where(isUpcoming).toList();
+    if (upcoming.isEmpty) return null;
+    upcoming.sort((a, b) {
+      final aDate = a.schedule.timestamp?.toDate();
+      final bDate = b.schedule.timestamp?.toDate();
+      if (aDate == null && bDate == null) return 0;
+      if (aDate == null) return 1;
+      if (bDate == null) return -1;
+      return aDate.compareTo(bDate);
+    });
+    return upcoming.first;
+  }
+
+  DateTime? _dateOf(BookingModel b) =>
+      b.schedule.timestamp?.toDate() ?? b.timeline.createdAt?.toDate();
+
+  bool isUpcoming(BookingModel booking) {
+    final status = booking.status.current.toLowerCase();
+    if (closedStatuses.contains(status)) return false;
+
+    final date = booking.schedule.timestamp?.toDate();
+    if (date == null) return status == 'confirmed' || status == 'upcoming';
+
+    // 1h grace so a booking that just started is still shown as upcoming.
+    return date.isAfter(DateTime.now().subtract(const Duration(hours: 1)));
+  }
+
+  // ---------------------------------------------------------------------------
+  // Matchers
+  // ---------------------------------------------------------------------------
 
   bool _matchesSearch(BookingModel booking, String query) {
     final text = [
@@ -178,45 +297,25 @@ class AppointmentsController extends GetxController {
 
   bool _matchesTime(BookingModel booking, AppointmentTimeFilter filter) {
     if (filter == AppointmentTimeFilter.all) return true;
-    final date = booking.schedule.timestamp?.toDate() ??
-        booking.timeline.createdAt?.toDate();
+    final date = _dateOf(booking);
     if (date == null) return false;
 
     final now = DateTime.now();
-    final diffDays = now.difference(date).inDays;
+    final today = DateTime(now.year, now.month, now.day);
 
     switch (filter) {
       case AppointmentTimeFilter.all:
         return true;
       case AppointmentTimeFilter.thisWeek:
-        return date.isAfter(now.subtract(Duration(days: now.weekday - 1))) &&
-            date.isBefore(now.add(Duration(days: 7 - now.weekday + 1)));
+        final startOfWeek = today.subtract(Duration(days: now.weekday - 1));
+        final endOfWeek = startOfWeek.add(const Duration(days: 7));
+        return !date.isBefore(startOfWeek) && date.isBefore(endOfWeek);
       case AppointmentTimeFilter.thisMonth:
         return date.month == now.month && date.year == now.year;
       case AppointmentTimeFilter.last30Days:
-        return diffDays >= 0 && diffDays <= 30;
+        final from = today.subtract(const Duration(days: 30));
+        final to = today.add(const Duration(days: 1));
+        return !date.isBefore(from) && date.isBefore(to);
     }
-  }
-
-  BookingModel? get nextAppointment {
-    final upcomingBookings = bookings.where(isUpcoming).toList();
-    upcomingBookings.sort((a, b) {
-      final aDate = a.schedule.timestamp?.toDate() ??
-          DateTime.fromMillisecondsSinceEpoch(0);
-      final bDate = b.schedule.timestamp?.toDate() ??
-          DateTime.fromMillisecondsSinceEpoch(0);
-      return aDate.compareTo(bDate);
-    });
-    return upcomingBookings.isEmpty ? null : upcomingBookings.first;
-  }
-
-  bool isUpcoming(BookingModel booking) {
-    final status = booking.status.current.toLowerCase();
-    if (status == 'completed' || status == 'cancelled') return false;
-    final date = booking.schedule.timestamp?.toDate();
-    if (date == null) return status == 'confirmed' || status == 'upcoming';
-    return date.isAfter(DateTime.now().subtract(const Duration(hours: 1))) ||
-        status == 'confirmed' ||
-        status == 'upcoming';
   }
 }

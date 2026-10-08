@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:o2_clinic/core/theme/app_colors.dart';
-import 'package:o2_clinic/l10n/app_localizations.dart';
-import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
-import 'package:o2_clinic/common/widgets/common_button.dart';
-import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
-import 'package:o2_clinic/common/widgets/common_snackbar.dart';
-import 'package:o2_clinic/common/widgets/common_dialogs.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../booking/data/models/fs_booking_model.dart';
-import '../../../booking/data/services/fs_bookings_firestore_service.dart';
-import '../../../services/data/models/radiology_category_model.dart';
-import '../../../booking/presentation/pages/radiology_confirm_booking_screen.dart';
 
 class ActionButton extends StatelessWidget {
   final String text;
@@ -20,6 +8,7 @@ class ActionButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const ActionButton({
+    super.key,
     required this.text,
     required this.icon,
     required this.filled,
@@ -33,28 +22,36 @@ class ActionButton extends StatelessWidget {
         : AppColors.white.withValues(alpha: 0.15);
     final fg = filled ? AppColors.primary : AppColors.white;
 
-    return Material(
-      color: bg,
-      borderRadius: BorderRadius.circular(14),
-      child: InkWell(
+    return Semantics(
+      button: true,
+      label: text,
+      child: Material(
+        color: bg,
         borderRadius: BorderRadius.circular(14),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: fg, size: 18),
-              const SizedBox(width: 8),
-              Text(
-                text,
-                style: TextStyle(
-                  color: fg,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: fg, size: 18),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    text,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: fg,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
