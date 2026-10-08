@@ -136,7 +136,11 @@ class CosmeticBookingScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.border),
+              border: Border.all(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.primary
+                    : AppColors.border,
+              ),
             ),
             child: const Icon(
               Icons.arrow_back_ios_new_rounded,
@@ -166,7 +170,7 @@ class CosmeticBookingScreen extends StatelessWidget {
               _t("Select Date & Time"),
               style: TextStyle(
                 fontSize: 13,
-                color: AppColors.textSecondary.withValues(alpha: 0.75),
+                color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.75),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -184,7 +188,11 @@ class CosmeticBookingScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.primary
+              : AppColors.border,
+        ),
         boxShadow: [
           BoxShadow(
             color: AppColors.black.withValues(alpha: 0.03),
@@ -213,10 +221,10 @@ class CosmeticBookingScreen extends StatelessWidget {
               children: [
                 Text(
                   model.getName(langCode),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -225,7 +233,10 @@ class CosmeticBookingScreen extends StatelessWidget {
                           model.id == 'pulmonary_function')
                       ? _t("Direct Services")
                       : _t("Cosmetic Department"),
-                  style: TextStyle(color: AppColors.grey, fontSize: 13),
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                    fontSize: 13,
+                  ),
                 ),
               ],
             ),
@@ -335,7 +346,9 @@ class CosmeticBookingScreen extends StatelessWidget {
                         border: Border.all(
                           color: isSelected
                               ? AppColors.primary
-                              : AppColors.border,
+                              : Theme.of(context).brightness == Brightness.dark
+                                  ? AppColors.primary
+                                  : AppColors.border,
                         ),
                         boxShadow: isSelected
                             ? [
@@ -359,7 +372,7 @@ class CosmeticBookingScreen extends StatelessWidget {
                               letterSpacing: 1.5,
                               color: isSelected
                                   ? AppColors.white
-                                  : AppColors.textSecondary,
+                                  : Theme.of(context).textTheme.bodyMedium?.color,
                             ),
                           ),
                           const SizedBox(height: 6),
@@ -437,7 +450,11 @@ class CosmeticBookingScreen extends StatelessWidget {
                         : Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
-                      color: isSelected ? AppColors.primary : AppColors.border,
+                      color: isSelected
+                          ? AppColors.primary
+                          : Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.primary
+                              : AppColors.border,
                     ),
                   ),
                   child: Text(
