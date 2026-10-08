@@ -2,13 +2,13 @@ import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../controllers/contact_us_controller.dart';
-import '../services/chat_support_service.dart';
-import '../widgets/support_chat_widgets.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../presentation/controllers/contact_us_controller.dart';
+import '../../data/services/chat_support_service.dart';
+import '../../presentation/widgets/support_chat_widgets.dart';
 import 'chat_room_screen.dart';
-import '../../chat_doctors/views/patient_chat_screen.dart';
-import '../../doctors/data/models/doctor_model.dart';
+import '../../../chat_doctors/views/patient_chat_screen.dart';
+import '../../../doctors/data/models/doctor_model.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class ContactUsScreen extends StatelessWidget {

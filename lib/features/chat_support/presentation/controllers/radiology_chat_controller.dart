@@ -8,9 +8,9 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:record/record.dart';
 
-import '../../../core/routes/app_routes.dart';
-import '../models/chat_support_model.dart';
-import '../services/radiology_chat_service.dart';
+import '../../../../core/routes/app_routes.dart';
+import '../../data/models/chat_support_model.dart';
+import '../../data/services/radiology_chat_service.dart';
 
 class RadiologyPendingAttachment {
   final ChatMessageKind kind;

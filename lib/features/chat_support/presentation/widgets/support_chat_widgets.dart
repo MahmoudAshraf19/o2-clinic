@@ -1,20 +1,20 @@
-import '../../../../common/widgets/common_text_field.dart';
+import '../../../../../../common/widgets/common_text_field.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../../common/widgets/common_avatar.dart';
-import '../../../../common/widgets/common_button.dart';
+import '../../../../common/widgets/common_avatar.dart';
+import '../../../../../../common/widgets/common_button.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../core/routes/app_routes.dart';
-import '../../../core/theme/app_colors.dart';
-import '../controllers/support_chat_controller.dart';
-import '../models/chat_support_model.dart';
+import '../../../../core/routes/app_routes.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../presentation/controllers/support_chat_controller.dart';
+import '../../data/models/chat_support_model.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
 class ContactUsIntro extends StatelessWidget {

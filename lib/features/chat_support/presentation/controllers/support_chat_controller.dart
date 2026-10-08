@@ -8,10 +8,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:record/record.dart';
 
-import '../../../core/routes/app_routes.dart';
-import '../../../core/utils/media_compressor.dart';
-import '../models/chat_support_model.dart';
-import '../services/chat_support_service.dart';
+import '../../../../core/routes/app_routes.dart';
+import '../../../../core/utils/media_compressor.dart';
+import '../../data/models/chat_support_model.dart';
+import '../../data/services/chat_support_service.dart';
 
 class PendingAttachment {
   final ChatMessageKind kind;
