@@ -2433,6 +2433,330 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Passwords do not match'**
   String get passwordsNotMatch;
+
+  /// No description provided for @completedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completedStatus;
+
+  /// No description provided for @cancelledStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get cancelledStatus;
+
+  /// No description provided for @underReviewStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Under review'**
+  String get underReviewStatus;
+
+  /// No description provided for @missedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed'**
+  String get missedStatus;
+
+  /// No description provided for @upcomingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get upcomingStatus;
+
+  /// No description provided for @soon.
+  ///
+  /// In en, this message translates to:
+  /// **'Soon'**
+  String get soon;
+
+  /// No description provided for @yourNextAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Your next appointment'**
+  String get yourNextAppointment;
+
+  /// No description provided for @clinicVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic visit'**
+  String get clinicVisit;
+
+  /// No description provided for @onlineConsult.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get onlineConsult;
+
+  /// No description provided for @doctorType.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor'**
+  String get doctorType;
+
+  /// No description provided for @serviceTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get serviceTypeLabel;
+
+  /// No description provided for @imagingType.
+  ///
+  /// In en, this message translates to:
+  /// **'Imaging'**
+  String get imagingType;
+
+  /// No description provided for @cosmeticType.
+  ///
+  /// In en, this message translates to:
+  /// **'Cosmetic'**
+  String get cosmeticType;
+
+  /// No description provided for @bookingWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking'**
+  String get bookingWord;
+
+  /// No description provided for @todayWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todayWord;
+
+  /// No description provided for @tomorrowWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tomorrowWord;
+
+  /// No description provided for @floorWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Floor'**
+  String get floorWord;
+
+  /// No description provided for @roomWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get roomWord;
+
+  /// No description provided for @bookingRef.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking ref'**
+  String get bookingRef;
+
+  /// No description provided for @cancelBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel booking'**
+  String get cancelBooking;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @copiedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get copiedStatus;
+
+  /// No description provided for @errorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get errorTitle;
+
+  /// No description provided for @serviceNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Service not found.'**
+  String get serviceNotFound;
+
+  /// No description provided for @failedToLoadDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load details.'**
+  String get failedToLoadDetails;
+
+  /// No description provided for @yesCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, cancel'**
+  String get yesCancel;
+
+  /// No description provided for @keepIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it'**
+  String get keepIt;
+
+  /// No description provided for @failedToCancelBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to cancel booking.'**
+  String get failedToCancelBooking;
+
+  /// No description provided for @allFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allFilter;
+
+  /// No description provided for @clinicalFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinical'**
+  String get clinicalFilter;
+
+  /// No description provided for @allTimeFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'All time'**
+  String get allTimeFilter;
+
+  /// No description provided for @thisWeekFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get thisWeekFilter;
+
+  /// No description provided for @thisMonthFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get thisMonthFilter;
+
+  /// No description provided for @oldestFirstFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest first'**
+  String get oldestFirstFilter;
+
+  /// No description provided for @serviceTypeFilterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Service type'**
+  String get serviceTypeFilterTitle;
+
+  /// No description provided for @timePeriodFilterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time period'**
+  String get timePeriodFilterTitle;
+
+  /// No description provided for @clearAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all'**
+  String get clearAll;
+
+  /// No description provided for @advancedFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced filters'**
+  String get advancedFilters;
+
+  /// No description provided for @allAppointmentsFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'All appointments'**
+  String get allAppointmentsFilter;
+
+  /// No description provided for @upcomingAppointmentsFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming appointments'**
+  String get upcomingAppointmentsFilter;
+
+  /// No description provided for @pastAppointmentsFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Past appointments'**
+  String get pastAppointmentsFilter;
+
+  /// No description provided for @clearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear filters'**
+  String get clearFilters;
+
+  /// No description provided for @bookingCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get bookingCancelled;
+
+  /// No description provided for @noAppointmentsYetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No appointments yet'**
+  String get noAppointmentsYetTitle;
+
+  /// No description provided for @noAppointmentsYetDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bookings will appear here once you book your first appointment.'**
+  String get noAppointmentsYetDesc;
+
+  /// No description provided for @somethingWentWrongTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get somethingWentWrongTitle;
+
+  /// No description provided for @couldNotLoadAppointmentsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not load your appointments. Check your connection and try again.'**
+  String get couldNotLoadAppointmentsDesc;
+
+  /// No description provided for @tryAgainBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgainBtn;
+
+  /// No description provided for @loginBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get loginBtn;
+
+  /// No description provided for @couldNotPickImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not pick the image.'**
+  String get couldNotPickImage;
+
+  /// No description provided for @reportDescLengthError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please describe the issue in more detail (min {minChars} characters).'**
+  String reportDescLengthError(int minChars);
+
+  /// No description provided for @reportDescMaxLengthError.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum {maxChars} characters.'**
+  String reportDescMaxLengthError(int maxChars);
+
+  /// No description provided for @reportSubmittedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Your report was submitted. We will review it shortly.'**
+  String get reportSubmittedSuccess;
+
+  /// No description provided for @reportSubmitFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to submit the report. Please try again.'**
+  String get reportSubmitFailed;
 }
 
 class _AppLocalizationsDelegate

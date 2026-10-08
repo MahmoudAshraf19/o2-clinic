@@ -13,49 +13,51 @@ class AppointmentFilterLabels {
   static String status(
     BuildContext context,
     AppointmentStatusFilter filter,
-    bool isAr,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     switch (filter) {
       case AppointmentStatusFilter.all:
-        return isAr ? 'الكل' : 'All';
+        return l10n.allFilter;
       case AppointmentStatusFilter.upcoming:
-        return isAr ? 'قادم' : 'Upcoming';
+        return l10n.upcomingStatus;
       case AppointmentStatusFilter.pending:
-        return isAr ? 'معلق' : 'Pending';
+        return l10n.pending;
       case AppointmentStatusFilter.completed:
-        return isAr ? 'مكتمل' : 'Completed';
+        return l10n.completedStatus;
       case AppointmentStatusFilter.cancelled:
-        return isAr ? 'ملغي' : 'Cancelled';
+        return l10n.cancelledStatus;
       case AppointmentStatusFilter.requiresAction:
         return AppLocalizations.of(context)!.requiresActionFilter;
     }
   }
 
-  static String type(AppointmentTypeFilter filter, bool isAr) {
+  static String type(BuildContext context, AppointmentTypeFilter filter) {
+    final l10n = AppLocalizations.of(context)!;
     switch (filter) {
       case AppointmentTypeFilter.all:
-        return isAr ? 'الكل' : 'All';
+        return l10n.allFilter;
       case AppointmentTypeFilter.doctor:
-        return isAr ? 'كشف عيادة' : 'Clinical';
+        return l10n.clinicalFilter;
       case AppointmentTypeFilter.online:
-        return isAr ? 'استشارة عن بعد' : 'Online';
+        return l10n.onlineConsult;
       case AppointmentTypeFilter.imaging:
-        return isAr ? 'أشعة' : 'Imaging';
+        return l10n.imagingType;
       case AppointmentTypeFilter.cosmetic:
-        return isAr ? 'تجميل' : 'Cosmetic';
+        return l10n.cosmeticType;
     }
   }
 
-  static String time(AppointmentTimeFilter filter, bool isAr) {
+  static String time(BuildContext context, AppointmentTimeFilter filter) {
+    final l10n = AppLocalizations.of(context)!;
     switch (filter) {
       case AppointmentTimeFilter.all:
-        return isAr ? 'كل الوقت' : 'All time';
+        return l10n.allTimeFilter;
       case AppointmentTimeFilter.thisWeek:
-        return isAr ? 'هذا الأسبوع' : 'This week';
+        return l10n.thisWeekFilter;
       case AppointmentTimeFilter.thisMonth:
-        return isAr ? 'هذا الشهر' : 'This month';
+        return l10n.thisMonthFilter;
       case AppointmentTimeFilter.last30Days:
-        return isAr ? 'آخر 30 يوم' : 'Last 30 days';
+        return BookingHelper.isArabic(context) ? 'آخر 30 يوم' : 'Last 30 days';
     }
   }
 }
@@ -93,7 +95,7 @@ class AppointmentStatusChips extends StatelessWidget {
             final f = visible[index];
             return Center(
               child: FilterChipWidget(
-                label: AppointmentFilterLabels.status(context, f, isAr),
+                label: AppointmentFilterLabels.status(context, f),
                 isSelected: selected == f,
                 count: f == AppointmentStatusFilter.all ? null : counts[f],
                 icon: f == AppointmentStatusFilter.requiresAction
@@ -143,26 +145,26 @@ class AppointmentAdvancedFilters extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _sectionTitle(isAr ? 'نوع الخدمة' : 'Service type'),
+                      _sectionTitle(AppLocalizations.of(context)!.serviceTypeFilterTitle),
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
                         children: AppointmentTypeFilter.values.map((f) {
                           return FilterChipWidget(
-                            label: AppointmentFilterLabels.type(f, isAr),
+                            label: AppointmentFilterLabels.type(context, f),
                             isSelected: selectedType == f,
                             onTap: () => controller.setTypeFilter(f),
                           );
                         }).toList(),
                       ),
                       const SizedBox(height: 16),
-                      _sectionTitle(isAr ? 'الفترة الزمنية' : 'Time period'),
+                      _sectionTitle(AppLocalizations.of(context)!.timePeriodFilterTitle),
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
                         children: AppointmentTimeFilter.values.map((f) {
                           return FilterChipWidget(
-                            label: AppointmentFilterLabels.time(f, isAr),
+                            label: AppointmentFilterLabels.time(context, f),
                             isSelected: selectedTime == f,
                             onTap: () => controller.setTimeFilter(f),
                           );
@@ -179,7 +181,7 @@ class AppointmentAdvancedFilters extends StatelessWidget {
                               size: 18,
                             ),
                             label: Text(
-                              isAr ? 'مسح الكل' : 'Clear all',
+                              AppLocalizations.of(context)!.clearAll,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -226,7 +228,7 @@ class AppointmentFilterButton extends StatelessWidget {
 
       return Semantics(
         button: true,
-        label: isAr ? 'تصفية متقدمة' : 'Advanced filters',
+        label: AppLocalizations.of(context)!.advancedFilters,
         child: Material(
           color: expanded ? AppColors.primary : Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(18),

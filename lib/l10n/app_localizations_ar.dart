@@ -1226,4 +1226,172 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get passwordsNotMatch => 'كلمات المرور غير متطابقة';
+
+  @override
+  String get completedStatus => 'مكتمل';
+
+  @override
+  String get cancelledStatus => 'ملغي';
+
+  @override
+  String get underReviewStatus => 'قيد المراجعة';
+
+  @override
+  String get missedStatus => 'لم يحضر';
+
+  @override
+  String get upcomingStatus => 'قادم';
+
+  @override
+  String get soon => 'قريباً';
+
+  @override
+  String get yourNextAppointment => 'موعدك القادم';
+
+  @override
+  String get clinicVisit => 'كشف عيادة';
+
+  @override
+  String get onlineConsult => 'استشارة عن بعد';
+
+  @override
+  String get doctorType => 'طبيب';
+
+  @override
+  String get serviceTypeLabel => 'خدمة';
+
+  @override
+  String get imagingType => 'أشعة';
+
+  @override
+  String get cosmeticType => 'تجميل';
+
+  @override
+  String get bookingWord => 'حجز';
+
+  @override
+  String get todayWord => 'اليوم';
+
+  @override
+  String get tomorrowWord => 'غداً';
+
+  @override
+  String get floorWord => 'طابق';
+
+  @override
+  String get roomWord => 'غرفة';
+
+  @override
+  String get bookingRef => 'رقم الحجز';
+
+  @override
+  String get cancelBooking => 'إلغاء الحجز';
+
+  @override
+  String get close => 'إغلاق';
+
+  @override
+  String get copiedStatus => 'تم النسخ';
+
+  @override
+  String get errorTitle => 'خطأ';
+
+  @override
+  String get serviceNotFound => 'الخدمة غير متاحة حالياً.';
+
+  @override
+  String get failedToLoadDetails => 'تعذّر تحميل التفاصيل.';
+
+  @override
+  String get yesCancel => 'نعم، إلغاء';
+
+  @override
+  String get keepIt => 'تراجع';
+
+  @override
+  String get failedToCancelBooking => 'تعذّر إلغاء الحجز.';
+
+  @override
+  String get allFilter => 'الكل';
+
+  @override
+  String get clinicalFilter => 'كشف عيادة';
+
+  @override
+  String get allTimeFilter => 'كل الوقت';
+
+  @override
+  String get thisWeekFilter => 'هذا الأسبوع';
+
+  @override
+  String get thisMonthFilter => 'هذا الشهر';
+
+  @override
+  String get oldestFirstFilter => 'الأقدم أولاً';
+
+  @override
+  String get serviceTypeFilterTitle => 'نوع الخدمة';
+
+  @override
+  String get timePeriodFilterTitle => 'الفترة الزمنية';
+
+  @override
+  String get clearAll => 'مسح الكل';
+
+  @override
+  String get advancedFilters => 'تصفية متقدمة';
+
+  @override
+  String get allAppointmentsFilter => 'كل المواعيد';
+
+  @override
+  String get upcomingAppointmentsFilter => 'مواعيد قادمة';
+
+  @override
+  String get pastAppointmentsFilter => 'مواعيد سابقة';
+
+  @override
+  String get clearFilters => 'مسح التصفية';
+
+  @override
+  String get bookingCancelled => 'تم الإلغاء';
+
+  @override
+  String get noAppointmentsYetTitle => 'لا توجد مواعيد بعد';
+
+  @override
+  String get noAppointmentsYetDesc =>
+      'ستظهر هنا جميع حجوزاتك بمجرد أن تحجز موعدك الأول.';
+
+  @override
+  String get somethingWentWrongTitle => 'حدث خطأ ما';
+
+  @override
+  String get couldNotLoadAppointmentsDesc =>
+      'تعذّر تحميل مواعيدك. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get tryAgainBtn => 'إعادة المحاولة';
+
+  @override
+  String get loginBtn => 'تسجيل الدخول';
+
+  @override
+  String get couldNotPickImage => 'تعذّر اختيار الصورة.';
+
+  @override
+  String reportDescLengthError(int minChars) {
+    return 'يرجى وصف المشكلة بشكل أوضح ($minChars أحرف على الأقل).';
+  }
+
+  @override
+  String reportDescMaxLengthError(int maxChars) {
+    return 'الحد الأقصى $maxChars حرف.';
+  }
+
+  @override
+  String get reportSubmittedSuccess => 'تم إرسال بلاغك بنجاح وسنراجعه قريباً.';
+
+  @override
+  String get reportSubmitFailed => 'تعذّر إرسال البلاغ، حاول مرة أخرى.';
 }

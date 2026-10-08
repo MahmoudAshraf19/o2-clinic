@@ -51,14 +51,14 @@ class BookingHelper {
 
   static String typeFriendly(BuildContext context, String type) {
     final t = type.toLowerCase();
-    final isAr = isArabic(context);
-    if (t == 'clinical') return isAr ? 'كشف عيادة' : 'Clinic visit';
-    if (t == 'online') return isAr ? 'استشارة عن بعد' : 'Online';
-    if (t.contains('doctor')) return isAr ? 'طبيب' : 'Doctor';
-    if (t.contains('service')) return isAr ? 'خدمة' : 'Service';
-    if (t.contains('imaging')) return isAr ? 'أشعة' : 'Imaging';
-    if (t.contains('cosmetic')) return isAr ? 'تجميل' : 'Cosmetic';
-    return isAr ? 'حجز' : 'Booking';
+    final l10n = AppLocalizations.of(context)!;
+    if (t == 'clinical') return l10n.clinicVisit;
+    if (t == 'online') return l10n.onlineConsult;
+    if (t.contains('doctor')) return l10n.doctorType;
+    if (t.contains('service')) return l10n.serviceTypeLabel;
+    if (t.contains('imaging')) return l10n.imagingType;
+    if (t.contains('cosmetic')) return l10n.cosmeticType;
+    return l10n.bookingWord;
   }
 
   static IconData typeIcon(String type) {
@@ -106,9 +106,10 @@ class BookingHelper {
     final target = DateTime.utc(date.year, date.month, date.day);
     final diff = target.difference(today).inDays;
 
+    final l10n = AppLocalizations.of(context)!;
     if (diff < 0) return null;
-    if (diff == 0) return isAr ? 'اليوم' : 'Today';
-    if (diff == 1) return isAr ? 'غداً' : 'Tomorrow';
+    if (diff == 0) return l10n.todayWord;
+    if (diff == 1) return l10n.tomorrowWord;
     if (isAr) {
       if (diff == 2) return 'بعد يومين';
       if (diff <= 10) return 'بعد $diff أيام';
@@ -130,13 +131,14 @@ class BookingHelper {
     final clinic = loc.clinic.trim();
     if (clinic.isNotEmpty) parts.add(clinic);
 
+    final l10n = AppLocalizations.of(context)!;
     final floor = loc.floor.toString().trim();
     if (floor.isNotEmpty && floor != 'null') {
-      parts.add('${isAr ? 'طابق' : 'Floor'} $floor');
+      parts.add('${l10n.floorWord} $floor');
     }
     final room = loc.room.toString().trim();
     if (room.isNotEmpty && room != 'null') {
-      parts.add('${isAr ? 'غرفة' : 'Room'} $room');
+      parts.add('${l10n.roomWord} $room');
     }
     return parts.join(' - ');
   }

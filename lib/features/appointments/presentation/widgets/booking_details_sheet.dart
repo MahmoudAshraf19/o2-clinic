@@ -137,34 +137,34 @@ class BookingDetailsSheet extends StatelessWidget {
                   children: [
                     _DetailRow(
                       icon: Icons.calendar_today_rounded,
-                      label: isAr ? 'التاريخ' : 'Date',
+                      label: l10n.date,
                       value: BookingHelper.dateText(context, booking),
                     ),
                     _divider(),
                     _DetailRow(
                       icon: Icons.access_time_rounded,
-                      label: isAr ? 'الوقت' : 'Time',
+                      label: l10n.time,
                       value: BookingHelper.timeText(context, booking),
                     ),
                     if (location.isNotEmpty) ...[
                       _divider(),
                       _DetailRow(
                         icon: Icons.location_on_rounded,
-                        label: isAr ? 'المكان' : 'Location',
+                        label: l10n.location,
                         value: location,
                       ),
                     ],
                     _divider(),
                     _DetailRow(
                       icon: Icons.confirmation_number_rounded,
-                      label: isAr ? 'رقم الحجز' : 'Booking ref',
+                      label: l10n.bookingRef,
                       value: _shortRef(booking.id),
                       trailing: Icon(
                         Icons.copy_rounded,
                         size: 18,
                         color: AppColors.grey500,
                       ),
-                      onTap: () => _copyRef(isAr),
+                      onTap: () => _copyRef(context, isAr),
                     ),
                   ],
                 ),
@@ -174,7 +174,7 @@ class BookingDetailsSheet extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: CommonButton(
-                    onPressed: () => _continueImagingBooking(isAr),
+                    onPressed: () => _continueImagingBooking(context, isAr),
                     text: l10n.continueBookingOrChat,
                     type: CommonButtonType.primary,
                     backgroundColor: AppColors.primary,
@@ -224,7 +224,7 @@ class BookingDetailsSheet extends StatelessWidget {
                   child: CommonButton(
                     onPressed: () => _cancelBooking(context, isAr),
                     type: CommonButtonType.outline,
-                    text: isAr ? 'إلغاء الحجز' : 'Cancel booking',
+                    text: l10n.cancelBooking,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     borderColor: AppColors.error,
                     borderWidth: 1.5,
@@ -242,7 +242,7 @@ class BookingDetailsSheet extends StatelessWidget {
                 width: double.infinity,
                 child: CommonButton(
                   onPressed: () => Get.back(),
-                  text: isAr ? 'إغلاق' : 'Close',
+                  text: l10n.close,
                   type: canContinueImaging
                       ? CommonButtonType.text
                       : CommonButtonType.primary,
@@ -277,10 +277,11 @@ class BookingDetailsSheet extends StatelessWidget {
     return clean.substring(clean.length - 8).toUpperCase();
   }
 
-  Future<void> _copyRef(bool isAr) async {
+  Future<void> _copyRef(BuildContext context, bool isAr) async {
+    final l10n = AppLocalizations.of(context)!;
     await Clipboard.setData(ClipboardData(text: booking.id));
     CommonSnackbar.showSuccess(
-      title: isAr ? 'تم النسخ' : 'Copied',
+      title: l10n.copiedStatus,
       message: isAr
           ? 'تم نسخ رقم الحجز.'
           : 'Booking reference copied to clipboard.',
@@ -294,7 +295,8 @@ class BookingDetailsSheet extends StatelessWidget {
     );
   }
 
-  Future<void> _continueImagingBooking(bool isAr) async {
+  Future<void> _continueImagingBooking(BuildContext context, bool isAr) async {
+    final l10n = AppLocalizations.of(context)!;
     final imaging = booking.imaging;
     if (imaging == null) return;
 
@@ -317,8 +319,8 @@ class BookingDetailsSheet extends StatelessWidget {
       final data = catDoc.data();
       if (!catDoc.exists || data == null) {
         CommonSnackbar.showError(
-          title: isAr ? 'خطأ' : 'Error',
-          message: isAr ? 'الخدمة غير متاحة حالياً.' : 'Service not found.',
+          title: l10n.errorTitle,
+          message: l10n.serviceNotFound,
         );
         return;
       }
@@ -338,21 +340,22 @@ class BookingDetailsSheet extends StatelessWidget {
     } catch (_) {
       closeLoading();
       CommonSnackbar.showError(
-        title: isAr ? 'خطأ' : 'Error',
-        message: isAr ? 'تعذّر تحميل التفاصيل.' : 'Failed to load details.',
+        title: l10n.errorTitle,
+        message: l10n.failedToLoadDetails,
       );
     }
   }
 
   Future<void> _cancelBooking(BuildContext context, bool isAr) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirm = await CommonDialogs.showConfirmationDialog(
       context,
-      title: isAr ? 'إلغاء الحجز' : 'Cancel booking',
+      title: l10n.cancelBooking,
       message: isAr
           ? 'هل أنت متأكد من إلغاء حجزك؟'
           : 'Are you sure you want to cancel your booking?',
-      confirmText: isAr ? 'نعم، إلغاء' : 'Yes, cancel',
-      cancelText: isAr ? 'تراجع' : 'Keep it',
+      confirmText: l10n.yesCancel,
+      cancelText: l10n.keepIt,
       isDestructive: true,
     );
     if (confirm != true) return;
@@ -371,7 +374,7 @@ class BookingDetailsSheet extends StatelessWidget {
       closeLoading();
       Get.back(); // close sheet
       CommonSnackbar.showSuccess(
-        title: isAr ? 'تم الإلغاء' : 'Cancelled',
+        title: l10n.bookingCancelled,
         message: isAr
             ? 'تم إلغاء حجزك بنجاح.'
             : 'Your booking has been cancelled successfully.',
@@ -379,8 +382,8 @@ class BookingDetailsSheet extends StatelessWidget {
     } catch (_) {
       closeLoading();
       CommonSnackbar.showError(
-        title: isAr ? 'خطأ' : 'Error',
-        message: isAr ? 'تعذّر إلغاء الحجز.' : 'Failed to cancel booking.',
+        title: l10n.errorTitle,
+        message: l10n.failedToCancelBooking,
       );
     }
   }

@@ -1230,4 +1230,174 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get passwordsNotMatch => 'Passwords do not match';
+
+  @override
+  String get completedStatus => 'Completed';
+
+  @override
+  String get cancelledStatus => 'Cancelled';
+
+  @override
+  String get underReviewStatus => 'Under review';
+
+  @override
+  String get missedStatus => 'Missed';
+
+  @override
+  String get upcomingStatus => 'Upcoming';
+
+  @override
+  String get soon => 'Soon';
+
+  @override
+  String get yourNextAppointment => 'Your next appointment';
+
+  @override
+  String get clinicVisit => 'Clinic visit';
+
+  @override
+  String get onlineConsult => 'Online';
+
+  @override
+  String get doctorType => 'Doctor';
+
+  @override
+  String get serviceTypeLabel => 'Service';
+
+  @override
+  String get imagingType => 'Imaging';
+
+  @override
+  String get cosmeticType => 'Cosmetic';
+
+  @override
+  String get bookingWord => 'Booking';
+
+  @override
+  String get todayWord => 'Today';
+
+  @override
+  String get tomorrowWord => 'Tomorrow';
+
+  @override
+  String get floorWord => 'Floor';
+
+  @override
+  String get roomWord => 'Room';
+
+  @override
+  String get bookingRef => 'Booking ref';
+
+  @override
+  String get cancelBooking => 'Cancel booking';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get copiedStatus => 'Copied';
+
+  @override
+  String get errorTitle => 'Error';
+
+  @override
+  String get serviceNotFound => 'Service not found.';
+
+  @override
+  String get failedToLoadDetails => 'Failed to load details.';
+
+  @override
+  String get yesCancel => 'Yes, cancel';
+
+  @override
+  String get keepIt => 'Keep it';
+
+  @override
+  String get failedToCancelBooking => 'Failed to cancel booking.';
+
+  @override
+  String get allFilter => 'All';
+
+  @override
+  String get clinicalFilter => 'Clinical';
+
+  @override
+  String get allTimeFilter => 'All time';
+
+  @override
+  String get thisWeekFilter => 'This week';
+
+  @override
+  String get thisMonthFilter => 'This month';
+
+  @override
+  String get oldestFirstFilter => 'Oldest first';
+
+  @override
+  String get serviceTypeFilterTitle => 'Service type';
+
+  @override
+  String get timePeriodFilterTitle => 'Time period';
+
+  @override
+  String get clearAll => 'Clear all';
+
+  @override
+  String get advancedFilters => 'Advanced filters';
+
+  @override
+  String get allAppointmentsFilter => 'All appointments';
+
+  @override
+  String get upcomingAppointmentsFilter => 'Upcoming appointments';
+
+  @override
+  String get pastAppointmentsFilter => 'Past appointments';
+
+  @override
+  String get clearFilters => 'Clear filters';
+
+  @override
+  String get bookingCancelled => 'Cancelled';
+
+  @override
+  String get noAppointmentsYetTitle => 'No appointments yet';
+
+  @override
+  String get noAppointmentsYetDesc =>
+      'Your bookings will appear here once you book your first appointment.';
+
+  @override
+  String get somethingWentWrongTitle => 'Something went wrong';
+
+  @override
+  String get couldNotLoadAppointmentsDesc =>
+      'We could not load your appointments. Check your connection and try again.';
+
+  @override
+  String get tryAgainBtn => 'Try again';
+
+  @override
+  String get loginBtn => 'Login';
+
+  @override
+  String get couldNotPickImage => 'Could not pick the image.';
+
+  @override
+  String reportDescLengthError(int minChars) {
+    return 'Please describe the issue in more detail (min $minChars characters).';
+  }
+
+  @override
+  String reportDescMaxLengthError(int maxChars) {
+    return 'Maximum $maxChars characters.';
+  }
+
+  @override
+  String get reportSubmittedSuccess =>
+      'Your report was submitted. We will review it shortly.';
+
+  @override
+  String get reportSubmitFailed =>
+      'Failed to submit the report. Please try again.';
 }

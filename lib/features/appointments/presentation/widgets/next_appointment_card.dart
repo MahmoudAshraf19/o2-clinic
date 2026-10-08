@@ -23,7 +23,7 @@ class NextAppointmentCard extends StatelessWidget {
     final isAr = BookingHelper.isArabic(context);
     final date = booking.schedule.timestamp?.toDate();
     final countdown =
-        BookingHelper.relativeDay(context, date) ?? (isAr ? 'قريباً' : 'Soon');
+        BookingHelper.relativeDay(context, date) ?? l10n.soon;
 
     return Container(
       width: double.infinity,
@@ -62,7 +62,7 @@ class NextAppointmentCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isAr ? 'موعدك القادم' : 'Your next appointment',
+                    l10n.yourNextAppointment,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,

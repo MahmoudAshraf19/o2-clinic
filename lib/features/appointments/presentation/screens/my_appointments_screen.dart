@@ -214,11 +214,11 @@ class _MyAppointmentsScreenState extends State<MyAppointmentsScreen> {
   }
 
   Widget _buildSectionTitle(BuildContext context, int count) {
-    final isAr = BookingHelper.isArabic(context);
+    final l10n = AppLocalizations.of(context)!;
     final status = _controller.statusFilter.value;
     final title = status == AppointmentStatusFilter.all
-        ? (isAr ? 'كل المواعيد' : 'All appointments')
-        : AppointmentFilterLabels.status(context, status, isAr);
+        ? l10n.allAppointmentsFilter
+        : AppointmentFilterLabels.status(context, status);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -361,9 +361,9 @@ class _GroupHeader {
   const _GroupHeader({required this.isUpcoming});
 
   String label(BuildContext context) {
-    final isAr = BookingHelper.isArabic(context);
-    if (isUpcoming) return isAr ? 'القادمة' : 'Upcoming';
-    return isAr ? 'السابقة' : 'Past';
+    final l10n = AppLocalizations.of(context)!;
+    if (isUpcoming) return l10n.upcomingAppointmentsFilter;
+    return l10n.pastAppointmentsFilter;
   }
 }
 

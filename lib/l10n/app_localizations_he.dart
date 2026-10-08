@@ -1217,4 +1217,172 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get passwordsNotMatch => 'הסיסמאות אינן תואמות';
+
+  @override
+  String get completedStatus => 'הושלם';
+
+  @override
+  String get cancelledStatus => 'בוטל';
+
+  @override
+  String get underReviewStatus => 'בבדיקה';
+
+  @override
+  String get missedStatus => 'הוחמץ';
+
+  @override
+  String get upcomingStatus => 'קרוב';
+
+  @override
+  String get soon => 'בקרוב';
+
+  @override
+  String get yourNextAppointment => 'התור הבא שלך';
+
+  @override
+  String get clinicVisit => 'ביקור במרפאה';
+
+  @override
+  String get onlineConsult => 'באינטרנט';
+
+  @override
+  String get doctorType => 'רופא';
+
+  @override
+  String get serviceTypeLabel => 'שירות';
+
+  @override
+  String get imagingType => 'הדמיה';
+
+  @override
+  String get cosmeticType => 'קוסמטיקה';
+
+  @override
+  String get bookingWord => 'הזמנה';
+
+  @override
+  String get todayWord => 'היום';
+
+  @override
+  String get tomorrowWord => 'מחר';
+
+  @override
+  String get floorWord => 'קומה';
+
+  @override
+  String get roomWord => 'חדר';
+
+  @override
+  String get bookingRef => 'מספר הזמנה';
+
+  @override
+  String get cancelBooking => 'בטל הזמנה';
+
+  @override
+  String get close => 'סגור';
+
+  @override
+  String get copiedStatus => 'הועתק';
+
+  @override
+  String get errorTitle => 'שגיאה';
+
+  @override
+  String get serviceNotFound => 'השירות לא נמצא.';
+
+  @override
+  String get failedToLoadDetails => 'טעינת פרטים נכשלה.';
+
+  @override
+  String get yesCancel => 'כן, בטל';
+
+  @override
+  String get keepIt => 'השאר';
+
+  @override
+  String get failedToCancelBooking => 'ביטול ההזמנה נכשל.';
+
+  @override
+  String get allFilter => 'הכל';
+
+  @override
+  String get clinicalFilter => 'קליני';
+
+  @override
+  String get allTimeFilter => 'כל הזמן';
+
+  @override
+  String get thisWeekFilter => 'השבוע';
+
+  @override
+  String get thisMonthFilter => 'החודש';
+
+  @override
+  String get oldestFirstFilter => 'הישן ביותר תחילה';
+
+  @override
+  String get serviceTypeFilterTitle => 'סוג השירות';
+
+  @override
+  String get timePeriodFilterTitle => 'תקופת זמן';
+
+  @override
+  String get clearAll => 'נקה הכל';
+
+  @override
+  String get advancedFilters => 'מסננים מתקדמים';
+
+  @override
+  String get allAppointmentsFilter => 'כל התורים';
+
+  @override
+  String get upcomingAppointmentsFilter => 'תורים קרובים';
+
+  @override
+  String get pastAppointmentsFilter => 'תורים קודמים';
+
+  @override
+  String get clearFilters => 'נקה מסננים';
+
+  @override
+  String get bookingCancelled => 'בוטל';
+
+  @override
+  String get noAppointmentsYetTitle => 'אין עדיין תורים';
+
+  @override
+  String get noAppointmentsYetDesc =>
+      'ההזמנות שלך יופיעו כאן לאחר שתזמין את התור הראשון שלך.';
+
+  @override
+  String get somethingWentWrongTitle => 'משהו השתבש';
+
+  @override
+  String get couldNotLoadAppointmentsDesc =>
+      'לא הצלחנו לטעון את התורים שלך. בדוק את החיבור שלך ונסה שוב.';
+
+  @override
+  String get tryAgainBtn => 'נסה שוב';
+
+  @override
+  String get loginBtn => 'התחבר';
+
+  @override
+  String get couldNotPickImage => 'לא ניתן היה לבחור את התמונה.';
+
+  @override
+  String reportDescLengthError(int minChars) {
+    return 'נא לתאר את הבעיה בפירוט רב יותר (לפחות $minChars תווים).';
+  }
+
+  @override
+  String reportDescMaxLengthError(int maxChars) {
+    return 'מקסימום $maxChars תווים.';
+  }
+
+  @override
+  String get reportSubmittedSuccess => 'הדיווח שלך נשלח בהצלחה ויבדק בקרוב.';
+
+  @override
+  String get reportSubmitFailed => 'שליחת הדיווח נכשלה. נסה שוב.';
 }

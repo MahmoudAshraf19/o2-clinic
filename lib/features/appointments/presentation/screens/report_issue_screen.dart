@@ -75,8 +75,8 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
       setState(() => _imageBytes = bytes);
     } catch (_) {
       CommonSnackbar.showError(
-        title: isAr ? 'خطأ' : 'Error',
-        message: isAr ? 'تعذّر اختيار الصورة.' : 'Could not pick the image.',
+        title: AppLocalizations.of(context)!.errorTitle,
+        message: AppLocalizations.of(context)!.couldNotPickImage,
       );
     }
   }
@@ -88,17 +88,13 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
 
     if (text.length < _minChars) {
       setState(() {
-        _errorText = isAr
-            ? 'يرجى وصف المشكلة بشكل أوضح ($_minChars أحرف على الأقل).'
-            : 'Please describe the issue in more detail (min $_minChars characters).';
+        _errorText = l10n.reportDescLengthError(_minChars);
       });
       return;
     }
     if (text.length > _maxChars) {
       setState(() {
-        _errorText = isAr
-            ? 'الحد الأقصى $_maxChars حرف.'
-            : 'Maximum $_maxChars characters.';
+        _errorText = l10n.reportDescMaxLengthError(_maxChars);
       });
       return;
     }
@@ -143,16 +139,12 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
       Get.back();
       CommonSnackbar.showSuccess(
         title: l10n.reportIssue,
-        message: isAr
-            ? 'تم إرسال بلاغك بنجاح وسنراجعه قريباً.'
-            : 'Your report was submitted. We will review it shortly.',
+        message: l10n.reportSubmittedSuccess,
       );
     } catch (_) {
       CommonSnackbar.showError(
-        title: isAr ? 'خطأ' : 'Error',
-        message: isAr
-            ? 'تعذّر إرسال البلاغ، حاول مرة أخرى.'
-            : 'Failed to submit the report. Please try again.',
+        title: l10n.errorTitle,
+        message: l10n.reportSubmitFailed,
       );
     } finally {
       if (mounted) setState(() => _isSubmitting = false);

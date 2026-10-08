@@ -98,7 +98,7 @@ class AppointmentsEmptyState extends StatelessWidget {
         message: l10n.tryChangingTheFilterOr,
         action: CommonButton(
           onPressed: onClearFilters,
-          text: isAr ? 'مسح التصفية' : 'Clear filters',
+          text: l10n.clearFilters,
           type: CommonButtonType.outline,
           borderColor: AppColors.primary,
           borderRadius: BorderRadius.circular(16),
@@ -115,10 +115,8 @@ class AppointmentsEmptyState extends StatelessWidget {
     return _StateCard(
       icon: Icons.event_available_rounded,
       iconColor: AppColors.primary,
-      title: isAr ? 'لا توجد مواعيد بعد' : 'No appointments yet',
-      message: isAr
-          ? 'ستظهر هنا جميع حجوزاتك بمجرد أن تحجز موعدك الأول.'
-          : 'Your bookings will appear here once you book your first appointment.',
+      title: l10n.noAppointmentsYetTitle,
+      message: l10n.noAppointmentsYetDesc,
     );
   }
 }
@@ -134,13 +132,11 @@ class AppointmentsErrorState extends StatelessWidget {
     return _StateCard(
       icon: Icons.cloud_off_rounded,
       iconColor: AppColors.red,
-      title: isAr ? 'حدث خطأ ما' : 'Something went wrong',
-      message: isAr
-          ? 'تعذّر تحميل مواعيدك. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.'
-          : 'We could not load your appointments. Check your connection and try again.',
+      title: l10n.somethingWentWrongTitle,
+      message: l10n.couldNotLoadAppointmentsDesc,
       action: CommonButton(
         onPressed: onRetry,
-        text: isAr ? 'إعادة المحاولة' : 'Try again',
+        text: l10n.tryAgainBtn,
         type: CommonButtonType.primary,
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
@@ -167,7 +163,7 @@ class AppointmentsLoginRequired extends StatelessWidget {
       message: l10n.pleaseLoginOrCreateAn,
       action: CommonButton(
         onPressed: () => Get.toNamed(AppRoutes.login),
-        text: isAr ? 'تسجيل الدخول' : 'Login',
+        text: l10n.loginBtn,
         type: CommonButtonType.primary,
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
