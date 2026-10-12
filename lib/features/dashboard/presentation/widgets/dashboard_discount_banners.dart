@@ -223,32 +223,29 @@ class _BannerCard extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             Positioned.fill(
-              child: Transform.flip(
-                flipX: Localizations.localeOf(context).languageCode == 'ar',
-                child: useRemoteBackground
-                    ? CachedImageWidget(
-                        imageUrl: banner.imageUrl,
-                        fit: BoxFit.cover,
-                        loadingBuilder: (_, __, ___) => Image.asset(
-                          'assets/images/background_banner.png',
-                          fit: BoxFit.cover,
-                        ),
-                        errorBuilder: (_, _, _) {
-                          debugPrint(
-                            '[Banners] Failed to load network image for banner id: ${banner.id}. '
-                            'Using local asset fallback.',
-                          );
-                          return Image.asset(
-                            'assets/images/background_banner.png',
-                            fit: BoxFit.cover,
-                          );
-                        },
-                      )
-                    : Image.asset(
+              child: useRemoteBackground
+                  ? CachedImageWidget(
+                      imageUrl: banner.imageUrl,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (_, __, ___) => Image.asset(
                         'assets/images/background_banner.png',
                         fit: BoxFit.cover,
                       ),
-              ),
+                      errorBuilder: (_, _, _) {
+                        debugPrint(
+                          '[Banners] Failed to load network image for banner id: ${banner.id}. '
+                          'Using local asset fallback.',
+                        );
+                        return Image.asset(
+                          'assets/images/background_banner.png',
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    )
+                  : Image.asset(
+                      'assets/images/background_banner.png',
+                      fit: BoxFit.cover,
+                    ),
             ),
             Padding(
               padding: const EdgeInsets.all(16),
