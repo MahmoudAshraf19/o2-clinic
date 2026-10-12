@@ -154,11 +154,10 @@ class LoginScreen extends GetView<LoginController> {
                         elevation: 0,
                         borderRadius: BorderRadius.circular(28),
                         isLoading: controller.isLoading.value,
-                        customIconWidget: const Icon(
-                          Icons.arrow_forward_rounded,
-                          color: AppColors.white,
-                          matchTextDirection: true,
-                        ),
+                        icon: Directionality.of(context) == TextDirection.rtl
+                            ? Icons.arrow_back_rounded
+                            : Icons.arrow_forward_rounded,
+                        iconColor: AppColors.white,
                         iconPosition: IconPosition.end,
                         textStyle: GoogleFonts.cairo(
                           fontSize: 16,
