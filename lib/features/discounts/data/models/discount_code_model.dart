@@ -10,6 +10,8 @@ class DiscountCodeModel {
   final num value;
   final String currency;
   final String? bookingId;
+  final String? doctorId;
+  final String? doctorName;
   final num minimumBookingPrice;
   final num? maximumDiscountAmount;
   final String status;
@@ -29,6 +31,8 @@ class DiscountCodeModel {
     required this.value,
     required this.currency,
     this.bookingId,
+    this.doctorId,
+    this.doctorName,
     required this.minimumBookingPrice,
     this.maximumDiscountAmount,
     required this.status,
@@ -65,6 +69,8 @@ class DiscountCodeModel {
       value: data['value'] ?? 0,
       currency: data['currency'] ?? 'ILS',
       bookingId: data['booking_id'],
+      doctorId: data['doctor_id'],
+      doctorName: data['doctor_name'],
       minimumBookingPrice: data['minimum_booking_price'] ?? 0,
       maximumDiscountAmount: data['maximum_discount_amount'],
       status: data['status'] ?? 'active',

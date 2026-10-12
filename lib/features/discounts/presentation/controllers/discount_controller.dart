@@ -64,6 +64,11 @@ class DiscountController extends GetxController {
       if (lang == 'he') return "הגעת להגבלת השימוש בקוד ההנחה";
       return "تم تجاوز الحد الأقصى لاستخدام كود الخصم";
     }
+    if (key == 'doctor_mismatch') {
+      if (lang == 'en') return "This coupon is only valid for a specific doctor";
+      if (lang == 'he') return "קופון זה תקף לרופא ספציפי בלבד";
+      return "هذا الكوبون مخصص لدكتور آخر فقط";
+    }
     if (key == 'error') {
       if (lang == 'en') return "Error verifying code";
       if (lang == 'he') return "שגיאה באימות קוד";
@@ -72,7 +77,7 @@ class DiscountController extends GetxController {
     return key;
   }
 
-  Future<void> verifyDiscountCode(String codeText) async {
+  Future<void> verifyDiscountCode(String codeText, {String? doctorId}) async {
     if (codeText.trim().isEmpty) return;
 
     try {
@@ -87,6 +92,14 @@ class DiscountController extends GetxController {
       if (code == null) {
         verificationError(_getErrorMessage('invalid'));
         return;
+      }
+
+      // Check doctor specific coupon
+      if (code.doctorId != null && code.doctorId!.isNotEmpty) {
+        if (doctorId == null || doctorId.isEmpty || code.doctorId != doctorId) {
+          verificationError(_getErrorMessage('doctor_mismatch'));
+          return;
+        }
       }
 
       final now = DateTime.now();

@@ -6,12 +6,17 @@ import '../controllers/discount_controller.dart';
 import '../../../../../../core/theme/app_colors.dart';
 
 class DiscountInputWidget {
-  static void show(BuildContext context) {
+  static void show(BuildContext context, {String? doctorId}) {
     final discountController = Get.find<DiscountController>();
     final TextEditingController textController = TextEditingController();
 
     // Reset errors when opening
     discountController.verificationError.value = '';
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor = Theme.of(context).cardColor;
+    final textCol =
+        Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.textPrimary;
 
     Get.bottomSheet(
       Padding(
@@ -20,12 +25,20 @@ class DiscountInputWidget {
         ),
         child: Container(
           padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(24),
               topRight: Radius.circular(24),
             ),
+            border: isDark
+                ? Border(
+                    top: BorderSide(
+                      color: AppColors.primary.withValues(alpha: 0.3),
+                      width: 1,
+                    ),
+                  )
+                : null,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -39,11 +52,10 @@ class DiscountInputWidget {
                       'enter_coupon',
                       Get.locale?.languageCode,
                     ),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-
-                      color: AppColors.textPrimary,
+                      color: textCol,
                     ),
                   ),
                   IconButton(
@@ -68,7 +80,7 @@ class DiscountInputWidget {
                     child: Text(
                       discountController.verificationError.value,
                       style: const TextStyle(
-                        color: AppColors.red,
+                         color: AppColors.red,
                         fontSize: 13,
                       ),
                     ),
@@ -88,6 +100,7 @@ class DiscountInputWidget {
                             if (textController.text.trim().isEmpty) return;
                             await discountController.verifyDiscountCode(
                               textController.text.trim(),
+                              doctorId: doctorId,
                             );
                             if (discountController.currentValidCode.value !=
                                 null) {

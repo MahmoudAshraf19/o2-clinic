@@ -454,7 +454,10 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
         );
       }
       return GestureDetector(
-        onTap: () => DiscountInputWidget.show(context),
+        onTap: () => DiscountInputWidget.show(
+          context,
+          doctorId: widget.doctor.id,
+        ),
         child: Row(
           children: [
             Icon(
@@ -627,6 +630,8 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                           "type": type.calculationMethod,
                           "discount_value": discountAmount,
                           "original_amount": originalPrice,
+                          if (code.doctorId != null) "doctor_id": code.doctorId,
+                          if (code.doctorName != null) "doctor_name": code.doctorName,
                         };
                       }
 
