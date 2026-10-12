@@ -226,7 +226,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       foregroundColor: AppColors.white,
                       borderRadius: BorderRadius.circular(28),
                       elevation: 0,
-                      icon: Icons.arrow_forward,
+                      icon: Directionality.of(context) == TextDirection.rtl
+                          ? Icons.arrow_back_rounded
+                          : Icons.arrow_forward_rounded,
+                      iconColor: AppColors.white,
+                      iconPosition: IconPosition.end,
                       textStyle: GoogleFonts.cairo(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
