@@ -161,6 +161,7 @@ class LoginScreen extends GetView<LoginController> {
                       ),
                     ),
                   ),
+                  /*
                   const SizedBox(height: 24),
 
                   // Divider
@@ -214,6 +215,7 @@ class LoginScreen extends GetView<LoginController> {
                       onPressed: () {},
                     ),
                   ],
+                  */
 
                   const SizedBox(height: 32),
 
