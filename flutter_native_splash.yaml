@@ -1,0 +1,10 @@
+flutter_native_splash:
+  color: "#F4F9F8"        # AppColors.scaffoldLight
+  fullscreen: true
+  android: true
+  ios: true
+  web: false
+
+  android_12:
+    color: "#F4F9F8"
+    image: assets/images/splash_transparent.png 

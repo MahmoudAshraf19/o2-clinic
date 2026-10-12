@@ -12,7 +12,7 @@ import 'package:o2_clinic/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const O2ClinicApp());
+    await tester.pumpWidget(const O2ClinicApp(initialThemeMode: ThemeMode.light));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -18,11 +18,13 @@ import 'common/controllers/global_auth_controller.dart';
 import 'features/notifications/presentation/controllers/notifications_controller.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
   try {
-    WidgetsFlutterBinding.ensureInitialized();
+    final binding = WidgetsFlutterBinding.ensureInitialized();
+    FlutterNativeSplash.preserve(widgetsBinding: binding);
     await initializeDateFormatting();
 
     if (kIsWeb) {
@@ -41,7 +43,11 @@ Future<void> main() async {
 
     if (savedLanguageCode == null || savedThemeString == null) {
       try {
-        final doc = await FirebaseFirestore.instance.collection('app_constants').doc('default').get();
+        final doc = await FirebaseFirestore.instance
+            .collection('app_constants')
+            .doc('default')
+            .get()
+            .timeout(const Duration(seconds: 3));
         if (doc.exists) {
           final data = doc.data()!;
           if (savedLanguageCode == null) {
@@ -78,6 +84,7 @@ Future<void> main() async {
       ),
     );
   } catch (e) {
+    FlutterNativeSplash.remove();
     runApp(
       MaterialApp(
         home: Scaffold(body: Center(child: Text('Error: $e'))),

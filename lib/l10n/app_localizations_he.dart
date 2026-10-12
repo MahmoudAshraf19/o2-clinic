@@ -592,11 +592,11 @@ class AppLocalizationsHe extends AppLocalizations {
       'היכנס כדי לגשת לפגישות ולתיעוד הרפואי שלך בצורה חלקה.';
 
   @override
-  String get helloGuest => 'שלום אורח 👋';
+  String get helloGuest => 'שלום אורח 👋 🇵🇸';
 
   @override
   String hiName(String name) {
-    return 'היי, $name 👋';
+    return 'היי, $name 👋 🇵🇸';
   }
 
   @override
