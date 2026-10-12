@@ -142,7 +142,8 @@ class LoginScreen extends GetView<LoginController> {
                   // Log In Button
                   Obx(
                     () => SizedBox(
-                      height: 56,                      child: CommonButton(
+                      height: 56,
+                      child: CommonButton(
                         onPressed: controller.isLoading.value
                             ? null
                             : controller.login,
@@ -153,7 +154,12 @@ class LoginScreen extends GetView<LoginController> {
                         elevation: 0,
                         borderRadius: BorderRadius.circular(28),
                         isLoading: controller.isLoading.value,
-                        icon: Icons.arrow_forward,
+                        customIconWidget: const Icon(
+                          Icons.arrow_forward_rounded,
+                          color: AppColors.white,
+                          matchTextDirection: true,
+                        ),
+                        iconPosition: IconPosition.end,
                         textStyle: GoogleFonts.cairo(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,

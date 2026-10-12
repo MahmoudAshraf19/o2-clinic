@@ -16,7 +16,7 @@ class CommonButton extends StatelessWidget {
     this.customIconWidget,
     this.iconSize,
     this.iconColor,
-    this.iconPosition = IconPosition.left,
+    this.iconPosition = IconPosition.start,
     this.isLoading = false,
     this.disabled = false,
     this.backgroundColor,
@@ -152,18 +152,22 @@ class CommonButton extends StatelessWidget {
     }
 
     switch (iconPosition) {
+      case IconPosition.start:
       case IconPosition.left:
         return Row(
           mainAxisSize: MainAxisSize.min,
+          textDirection: iconPosition == IconPosition.left ? TextDirection.ltr : null,
           children: [
             iconWidget,
             const SizedBox(width: 8),
             Flexible(child: Text(text, style: textStyle)),
           ],
         );
+      case IconPosition.end:
       case IconPosition.right:
         return Row(
           mainAxisSize: MainAxisSize.min,
+          textDirection: iconPosition == IconPosition.right ? TextDirection.ltr : null,
           children: [
             Flexible(child: Text(text, style: textStyle)),
             const SizedBox(width: 8),
@@ -307,4 +311,4 @@ class CommonButton extends StatelessWidget {
 
 enum CommonButtonSize { small, medium, large, extraLarge }
 
-enum IconPosition { left, right, top, bottom }
+enum IconPosition { start, end, left, right, top, bottom }
