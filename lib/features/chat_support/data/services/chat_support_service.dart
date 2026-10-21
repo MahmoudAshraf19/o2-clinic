@@ -106,7 +106,7 @@ class SupportChatService {
 
     batch.set(_messagesRef(uid).doc(message.id), message.toMap());
 
-    batch.set(_chatRef(uid), {
+    final chatUpdate: Map<String, dynamic> = {
       'uid': uid,
       'title': 'O2 Clinic',
       'avatarPath': 'assets/images/logos/logo.png',
@@ -115,7 +115,14 @@ class SupportChatService {
       'lastMessageKind': 'text',
       'lastMessageAt': Timestamp.fromDate(now),
       'lastSender': 'user',
-    }, SetOptions(merge: true));
+    };
+
+    if (replyTo != null) {
+      chatUpdate['hasDeviceInquiry'] = true;
+      chatUpdate['lastReplyTo'] = replyTo.toMap();
+    }
+
+    batch.set(_chatRef(uid), chatUpdate, SetOptions(merge: true));
 
     await batch.commit();
   }
