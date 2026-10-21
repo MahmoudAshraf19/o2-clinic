@@ -406,5 +406,21 @@
 "reportDescMaxLengthError": "الحد الأقصى {maxChars} حرف.",
 "@reportDescMaxLengthError": { "placeholders": { "maxChars": { "type": "int" } } },
 "reportSubmittedSuccess": "تم إرسال بلاغك بنجاح وسنراجعه قريباً.", "reportSubmitFailed": "تعذّر إرسال البلاغ، حاول مرة أخرى.",
-"noRecentVisit": "لا توجد زيارة حديثة"
+"noRecentVisit": "لا توجد زيارة حديثة",
+"deleteMyAccount": "حذف حسابي",
+"deleteAccountDialogTitle": "هل أنت متأكد من حذف الحساب؟",
+"deleteAccountDialogDesc": "سيتم إلغاء تفعيل حسابك ولن تتمكن من الوصول إلى مواعيدك أو خدماتك الطبية المسجلة. هل ترغب بالتأكيد؟",
+"confirmDelete": "نعم، حذف الحساب",
+"cancel": "إلغاء",
+"accountDeletedNotice": "هذا الحساب محذوف منذ {date}. إذا كان هذا عن طريق الخطأ يرجى مراجعة إدارة المركز.",
+"accountDeletedSuccess": "تم حذف الحساب بنجاح.",
+"medicalDevices": "الأجهزة الطبية",
+"medicalDevicesSubtitle": "أجهزة طبية متطورة لرعايتك الصحية",
+"inquireAndPurchase": "استفسار وشراء",
+"readMore": "قراءة المزيد",
+"readLess": "عرض أقل",
+"availableNow": "متوفر الآن",
+"currentlyUnavailable": "غير متوفر حالياً",
+"specialDiscount": "خصم خاص",
+"noMedicalDevicesFound": "لا توجد أجهزة طبية متاحة حالياً"
 }

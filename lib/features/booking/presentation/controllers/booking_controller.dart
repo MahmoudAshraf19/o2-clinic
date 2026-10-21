@@ -6,10 +6,11 @@ import '../../../services/data/services/fs_specialized_cache.dart';
 import '../../data/models/booking_service_model.dart';
 import '../../data/services/booking_service.dart';
 import '../screens/radiology_services_screen.dart';
-import '../widgets/department_doctor_widget.dart'; // فيه DepartmentDoctorScreen
+import '../widgets/department_doctor_widget.dart'; 
 import '../screens/cosmetic_services_screen.dart';
 import '../../../services/data/models/cosmetic_category_model.dart';
 import '../screens/cosmetic_booking_screen.dart';
+import '../../../services/presentation/screens/medical_devices_screen.dart';
 
 class BookingController extends GetxController {
   final services = <BookingServiceModel>[].obs;
@@ -44,6 +45,15 @@ class BookingController extends GetxController {
 
   Future<void> _handleService(BookingServiceModel service) async {
     final type = _getServiceType(service);
+
+    if (type == 'medical_device') {
+      Get.to(
+        () => const MedicalDevicesScreen(),
+        transition: Transition.rightToLeftWithFade,
+        duration: const Duration(milliseconds: 350),
+      );
+      return;
+    }
 
     if (type == 'radiology') {
       Get.to(() => const RadiologyServicesScreen());
@@ -133,10 +143,15 @@ class BookingController extends GetxController {
   }
 
   String _getServiceType(BookingServiceModel service) {
+    final id = service.id.toLowerCase();
     final title = service.titleEn.toLowerCase();
     final category = service.category.toLowerCase();
 
-    if (title.contains('radiology') || category.contains('diagnostics')) {
+    if (id == 'medical_device' ||
+        title.contains('medical device') ||
+        category.contains('device')) {
+      return 'medical_device';
+    } else if (title.contains('radiology') || category.contains('diagnostics')) {
       return 'radiology';
     } else if (title.contains('cosmetic') || category.contains('aesthetics')) {
       return 'cosmetic';

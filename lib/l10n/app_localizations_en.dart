@@ -1406,4 +1406,55 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noRecentVisit => 'No recent visit';
+
+  @override
+  String get deleteMyAccount => 'Delete My Account';
+
+  @override
+  String get deleteAccountDialogTitle => 'Delete Your Account?';
+
+  @override
+  String get deleteAccountDialogDesc =>
+      'Are you sure you want to delete your account? All your active bookings, sessions, and personal access will be permanently disabled.';
+
+  @override
+  String get confirmDelete => 'Yes, Delete';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String accountDeletedNotice(String date) {
+    return 'This account was deleted on $date. If this was a mistake, please contact clinic administration.';
+  }
+
+  @override
+  String get accountDeletedSuccess =>
+      'Your account has been deleted successfully.';
+
+  @override
+  String get medicalDevices => 'Medical Devices';
+
+  @override
+  String get medicalDevicesSubtitle =>
+      'Advanced medical equipment for your health care';
+
+  @override
+  String get inquireAndPurchase => 'Inquire & Purchase';
+
+  @override
+  String get readLess => 'Read less';
+
+  @override
+  String get availableNow => 'Available Now';
+
+  @override
+  String get currentlyUnavailable => 'Currently Unavailable';
+
+  @override
+  String get specialDiscount => 'Special Discount';
+
+  @override
+  String get noMedicalDevicesFound =>
+      'No medical devices available at this time';
 }

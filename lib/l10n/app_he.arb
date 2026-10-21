@@ -406,5 +406,22 @@
 "reportDescMaxLengthError": "מקסימום {maxChars} תווים.",
 "@reportDescMaxLengthError": { "placeholders": { "maxChars": { "type": "int" } } },
 "reportSubmittedSuccess": "הדיווח שלך נשלח בהצלחה ויבדק בקרוב.", "reportSubmitFailed": "שליחת הדיווח נכשלה. נסה שוב.",
-"noRecentVisit": "אין ביקור אחרון"
+"noRecentVisit": "אין ביקור אחרון",
+"deleteMyAccount": "מחק את החשבון שלי",
+"deleteAccountDialogTitle": "למחוק את חשבונך?",
+"deleteAccountDialogDesc": "האם אתה בטוח שברצונך למחוק את החשבון? כל התורים וההפעלות הפעילות שלך יושבתו לצמיתות.",
+"confirmDelete": "כן, מחק",
+"cancel": "ביטול",
+"accountDeletedNotice": "חשבון זה נמחק בתאריך {date}. אם זו הייתה טעות, פנה להנהלת המרפאה.",
+"@accountDeletedNotice": { "placeholders": { "date": { "type": "String" } } },
+"accountDeletedSuccess": "חשבונך נמחק בהצלחה.",
+"medicalDevices": "ציוד ומכשירים רפואיים",
+"medicalDevicesSubtitle": "ציוד רפואי מתקדם לבריאותך",
+"inquireAndPurchase": "בירור ורכישה",
+"readMore": "קרא עוד",
+"readLess": "הצג פחות",
+"availableNow": "זמין כעת",
+"currentlyUnavailable": "לא זמין כרגע",
+"specialDiscount": "הנחה מיוחדת",
+"noMedicalDevicesFound": "אין מכשירים רפואיים זמינים כרגע"
 }

@@ -1400,4 +1400,52 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noRecentVisit => 'لا توجد زيارة حديثة';
+
+  @override
+  String get deleteMyAccount => 'حذف حسابي';
+
+  @override
+  String get deleteAccountDialogTitle => 'هل أنت متأكد من حذف الحساب؟';
+
+  @override
+  String get deleteAccountDialogDesc =>
+      'سيتم إلغاء تفعيل حسابك ولن تتمكن من الوصول إلى مواعيدك أو خدماتك الطبية المسجلة. هل ترغب بالتأكيد؟';
+
+  @override
+  String get confirmDelete => 'نعم، حذف الحساب';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String accountDeletedNotice(String date) {
+    return 'هذا الحساب محذوف منذ $date. إذا كان هذا عن طريق الخطأ يرجى مراجعة إدارة المركز.';
+  }
+
+  @override
+  String get accountDeletedSuccess => 'تم حذف الحساب بنجاح.';
+
+  @override
+  String get medicalDevices => 'الأجهزة الطبية';
+
+  @override
+  String get medicalDevicesSubtitle => 'أجهزة طبية متطورة لرعايتك الصحية';
+
+  @override
+  String get inquireAndPurchase => 'استفسار وشراء';
+
+  @override
+  String get readLess => 'عرض أقل';
+
+  @override
+  String get availableNow => 'متوفر الآن';
+
+  @override
+  String get currentlyUnavailable => 'غير متوفر حالياً';
+
+  @override
+  String get specialDiscount => 'خصم خاص';
+
+  @override
+  String get noMedicalDevicesFound => 'لا توجد أجهزة طبية متاحة حالياً';
 }

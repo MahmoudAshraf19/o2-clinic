@@ -1391,4 +1391,52 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get noRecentVisit => 'אין ביקור אחרון';
+
+  @override
+  String get deleteMyAccount => 'מחק את החשבון שלי';
+
+  @override
+  String get deleteAccountDialogTitle => 'למחוק את חשבונך?';
+
+  @override
+  String get deleteAccountDialogDesc =>
+      'האם אתה בטוח שברצונך למחוק את החשבון? כל התורים וההפעלות הפעילות שלך יושבתו לצמיתות.';
+
+  @override
+  String get confirmDelete => 'כן, מחק';
+
+  @override
+  String get cancel => 'ביטול';
+
+  @override
+  String accountDeletedNotice(String date) {
+    return 'חשבון זה נמחק בתאריך $date. אם זו הייתה טעות, פנה להנהלת המרפאה.';
+  }
+
+  @override
+  String get accountDeletedSuccess => 'חשבונך נמחק בהצלחה.';
+
+  @override
+  String get medicalDevices => 'ציוד ומכשירים רפואיים';
+
+  @override
+  String get medicalDevicesSubtitle => 'ציוד רפואי מתקדם לבריאותך';
+
+  @override
+  String get inquireAndPurchase => 'בירור ורכישה';
+
+  @override
+  String get readLess => 'הצג פחות';
+
+  @override
+  String get availableNow => 'זמין כעת';
+
+  @override
+  String get currentlyUnavailable => 'לא זמין כרגע';
+
+  @override
+  String get specialDiscount => 'הנחה מיוחדת';
+
+  @override
+  String get noMedicalDevicesFound => 'אין מכשירים רפואיים זמינים כרגע';
 }

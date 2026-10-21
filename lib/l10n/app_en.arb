@@ -443,5 +443,22 @@
 "reportDescMaxLengthError": "Maximum {maxChars} characters.",
 "@reportDescMaxLengthError": { "placeholders": { "maxChars": { "type": "int" } } },
 "reportSubmittedSuccess": "Your report was submitted. We will review it shortly.", "reportSubmitFailed": "Failed to submit the report. Please try again.",
-"noRecentVisit": "No recent visit"
+"noRecentVisit": "No recent visit",
+"deleteMyAccount": "Delete My Account",
+"deleteAccountDialogTitle": "Delete Your Account?",
+"deleteAccountDialogDesc": "Are you sure you want to delete your account? All your active bookings, sessions, and personal access will be permanently disabled.",
+"confirmDelete": "Yes, Delete",
+"cancel": "Cancel",
+"accountDeletedNotice": "This account was deleted on {date}. If this was a mistake, please contact clinic administration.",
+"@accountDeletedNotice": { "placeholders": { "date": { "type": "String" } } },
+"accountDeletedSuccess": "Your account has been deleted successfully.",
+"medicalDevices": "Medical Devices",
+"medicalDevicesSubtitle": "Advanced medical equipment for your health care",
+"inquireAndPurchase": "Inquire & Purchase",
+"readMore": "Read more",
+"readLess": "Read less",
+"availableNow": "Available Now",
+"currentlyUnavailable": "Currently Unavailable",
+"specialDiscount": "Special Discount",
+"noMedicalDevicesFound": "No medical devices available at this time"
 }

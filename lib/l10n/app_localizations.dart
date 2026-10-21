@@ -2769,6 +2769,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No recent visit'**
   String get noRecentVisit;
+
+  /// No description provided for @deleteMyAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete My Account'**
+  String get deleteMyAccount;
+
+  /// No description provided for @deleteAccountDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Your Account?'**
+  String get deleteAccountDialogTitle;
+
+  /// No description provided for @deleteAccountDialogDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account? All your active bookings, sessions, and personal access will be permanently disabled.'**
+  String get deleteAccountDialogDesc;
+
+  /// No description provided for @confirmDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, Delete'**
+  String get confirmDelete;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @accountDeletedNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'This account was deleted on {date}. If this was a mistake, please contact clinic administration.'**
+  String accountDeletedNotice(String date);
+
+  /// No description provided for @accountDeletedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted successfully.'**
+  String get accountDeletedSuccess;
+
+  /// No description provided for @medicalDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical Devices'**
+  String get medicalDevices;
+
+  /// No description provided for @medicalDevicesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced medical equipment for your health care'**
+  String get medicalDevicesSubtitle;
+
+  /// No description provided for @inquireAndPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Inquire & Purchase'**
+  String get inquireAndPurchase;
+
+  /// No description provided for @readLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Read less'**
+  String get readLess;
+
+  /// No description provided for @availableNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Now'**
+  String get availableNow;
+
+  /// No description provided for @currentlyUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Currently Unavailable'**
+  String get currentlyUnavailable;
+
+  /// No description provided for @specialDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Special Discount'**
+  String get specialDiscount;
+
+  /// No description provided for @noMedicalDevicesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No medical devices available at this time'**
+  String get noMedicalDevicesFound;
 }
 
 class _AppLocalizationsDelegate

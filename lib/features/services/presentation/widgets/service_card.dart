@@ -5,6 +5,7 @@ import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../data/models/fs_specialized_service_model.dart';
 import '../../data/models/service_model.dart';
+import '../screens/medical_devices_screen.dart';
 
 class ServiceCard extends StatelessWidget {
   final ServiceModel department;
@@ -29,6 +30,14 @@ class ServiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        if (department.id.toLowerCase() == 'medical_device') {
+          Get.to(
+            () => const MedicalDevicesScreen(),
+            transition: Transition.rightToLeftWithFade,
+          );
+          return;
+        }
+
         // Navigate to department doctors using the specialized model
         final specializedModel = SpecializedServiceModel(
           id: department.id,
