@@ -20,63 +20,63 @@ class _CountryPickerSheetState extends State<CountryPickerSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      height: MediaQuery.of(context).size.height * 0.85,
-      decoration: const BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: 50,
-            height: 5,
-            decoration: BoxDecoration(
-              color: AppColors.grey300,
-              borderRadius: BorderRadius.circular(20),
+    return Material(
+      color: AppColors.white,
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        height: MediaQuery.of(context).size.height * 0.85,
+        child: Column(
+          children: [
+            Container(
+              width: 50,
+              height: 5,
+              decoration: BoxDecoration(
+                color: AppColors.grey300,
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
-          ),
 
-          const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
-          Text(
-            AppLocalizations.of(context)!.selectCountry,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-
-          const SizedBox(height: 10),
-
-          CommonTextField(
-            controller: search,
-            onChanged: _filter,
-            prefixIcon: Icons.search,
-            hint: AppLocalizations.of(context)!.searchCountry,
-            type: CommonTextFieldType.search,
-            showBorder: false,
-          ),
-
-          const SizedBox(height: 10),
-
-          Expanded(
-            child: ListView.builder(
-              itemCount: filtered.length,
-              itemBuilder: (_, i) {
-                final c = filtered[i];
-
-                return ListTile(
-                  onTap: () {
-                    widget.onSelect(c);
-                    Navigator.pop(context);
-                  },
-                  leading: Text(c.flag, style: const TextStyle(fontSize: 22)),
-                  title: Text(c.name),
-                  trailing: Text(c.dialCode),
-                );
-              },
+            Text(
+              AppLocalizations.of(context)!.selectCountry,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-          ),
-        ],
+
+            const SizedBox(height: 10),
+
+            CommonTextField(
+              controller: search,
+              onChanged: _filter,
+              prefixIcon: Icons.search,
+              hint: AppLocalizations.of(context)!.searchCountry,
+              type: CommonTextFieldType.search,
+              showBorder: false,
+            ),
+
+            const SizedBox(height: 10),
+
+            Expanded(
+              child: ListView.builder(
+                itemCount: filtered.length,
+                itemBuilder: (_, i) {
+                  final c = filtered[i];
+
+                  return ListTile(
+                    onTap: () {
+                      widget.onSelect(c);
+                      Navigator.pop(context);
+                    },
+                    leading: Text(c.flag, style: const TextStyle(fontSize: 22)),
+                    title: Text(c.name),
+                    trailing: Text(c.dialCode),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
