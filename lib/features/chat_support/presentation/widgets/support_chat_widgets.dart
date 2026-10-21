@@ -618,10 +618,13 @@ class _UserBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final maxBubbleWidth = (screenWidth * 0.78).clamp(260.0, 480.0);
+
     return Align(
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 310),
+        constraints: BoxConstraints(maxWidth: maxBubbleWidth),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [

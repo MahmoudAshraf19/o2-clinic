@@ -246,9 +246,10 @@ class _MedicalDeviceCard extends StatelessWidget {
                       const SizedBox(height: 10),
 
                       // Price Tag
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 8,
+                        runSpacing: 4,
                         children: [
                           if (hasDiscount) ...[
                             Text(
@@ -259,7 +260,6 @@ class _MedicalDeviceCard extends StatelessWidget {
                                 color: AppColors.primary,
                               ),
                             ),
-                            const SizedBox(width: 8),
                             Text(
                               '${device.price} $currency',
                               style: TextStyle(

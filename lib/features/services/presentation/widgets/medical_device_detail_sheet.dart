@@ -214,9 +214,10 @@ class _MedicalDeviceDetailSheetState extends State<MedicalDeviceDetailSheet> {
                     const SizedBox(height: 10),
 
                     // Price Section
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 10,
+                      runSpacing: 4,
                       children: [
                         if (hasDiscount) ...[
                           Text(
@@ -227,7 +228,6 @@ class _MedicalDeviceDetailSheetState extends State<MedicalDeviceDetailSheet> {
                               color: AppColors.primary,
                             ),
                           ),
-                          const SizedBox(width: 10),
                           Text(
                             '${widget.device.price} $currency',
                             style: TextStyle(
