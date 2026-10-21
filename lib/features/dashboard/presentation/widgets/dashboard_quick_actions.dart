@@ -12,6 +12,7 @@ import '../../../booking/presentation/screens/radiology_services_screen.dart';
 import '../../../booking/presentation/screens/cosmetic_services_screen.dart';
 import '../../../booking/presentation/screens/lab_tests_screen.dart';
 import '../../../contact_us/presentation/screens/our_location_screen.dart';
+import '../../../services/presentation/screens/medical_devices_screen.dart';
 
 class DashboardQuickActions extends StatelessWidget {
   const DashboardQuickActions({super.key});
@@ -64,6 +65,8 @@ class _QuickActionCard extends StatelessWidget {
             Get.toNamed(AppRoutes.allDoctors);
           } else if (data.id == 'radiology') {
             Get.to(() => const RadiologyServicesScreen());
+          } else if (data.id == 'medical_device') {
+            Get.to(() => const MedicalDevicesScreen());
           } else if (data.id == 'cosmetic') {
             Get.to(() => const CosmeticServicesScreen());
           } else if (data.id == 'lab') {

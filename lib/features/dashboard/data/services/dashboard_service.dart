@@ -71,13 +71,13 @@ class DashboardService {
           imagePath: 'assets/icons/svg_icons/lab.svg',
         ),
         DashboardQuickActionModel(
-          id: 'cosmetic',
+          id: 'medical_device',
           title: isAr
-              ? 'حجز\nتجميل'
+              ? 'أجهزة\nطبية'
               : isHe
-              ? 'הזמנת\nקוסמטיקה'
-              : 'Cosmetic\nBooking',
-          imagePath: 'assets/icons/svg_icons/cosmetic.svg',
+              ? 'מכשירים\nרפואיים'
+              : 'Medical\nDevices',
+          imagePath: 'assets/icons/svg_icons/medical_device.svg',
         ),
         DashboardQuickActionModel(
           id: 'appointments',
