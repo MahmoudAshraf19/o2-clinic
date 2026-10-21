@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:o2_clinic/common/controllers/app_constants_controller.dart';
 import 'package:o2_clinic/core/theme/app_colors.dart';
 import 'package:o2_clinic/core/widgets/cached_image_widget.dart';
+import 'package:o2_clinic/features/chat_support/data/models/chat_support_model.dart';
 import 'package:o2_clinic/features/chat_support/presentation/screens/chat_room_screen.dart';
 import 'package:o2_clinic/l10n/app_localizations.dart';
 import '../../data/models/medical_device_model.dart';
@@ -320,9 +321,26 @@ class _MedicalDeviceDetailSheetState extends State<MedicalDeviceDetailSheet> {
                 height: 52,
                 child: ElevatedButton.icon(
                   onPressed: () {
+                    final isAr = Get.locale?.languageCode == 'ar';
+                    final isHe = Get.locale?.languageCode == 'he';
+                    final defaultMsg = isAr
+                        ? 'اهلين\nممكن انا اسال عن الجهاز "${widget.device.name}"'
+                        : isHe
+                        ? 'שלום,\nאפשר בבקשה לשאול על המכשיר "${widget.device.name}"?'
+                        : 'Hello,\nMay I please inquire about the device "${widget.device.name}"?';
+
                     Navigator.of(context).pop();
                     Get.to(
-                      () => const ChatRoomScreen(),
+                      () => ChatRoomScreen(
+                        initialText: defaultMsg,
+                        initialReply: ChatReplyInfo(
+                          title: widget.device.name,
+                          description: hasDiscount
+                              ? '${widget.device.discountedPrice} $currency'
+                              : '${widget.device.price} $currency',
+                          imageUrl: widget.device.imageUrl,
+                        ),
+                      ),
                       transition: Transition.rightToLeftWithFade,
                     );
                   },

@@ -64,6 +64,34 @@ class ChatAttachment {
   }
 }
 
+class ChatReplyInfo {
+  final String title;
+  final String description;
+  final String? imageUrl;
+
+  const ChatReplyInfo({
+    required this.title,
+    required this.description,
+    this.imageUrl,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'description': description,
+      'imageUrl': imageUrl,
+    };
+  }
+
+  factory ChatReplyInfo.fromMap(Map<String, dynamic> map) {
+    return ChatReplyInfo(
+      title: (map['title'] ?? '').toString(),
+      description: (map['description'] ?? '').toString(),
+      imageUrl: map['imageUrl']?.toString(),
+    );
+  }
+}
+
 class ChatMessage {
   final String id;
   final ChatSender sender;
@@ -72,6 +100,7 @@ class ChatMessage {
   final DateTime createdAt;
   final ChatAttachment? attachment;
   final List<ChatOption> options;
+  final ChatReplyInfo? replyTo;
 
   const ChatMessage({
     required this.id,
@@ -81,11 +110,13 @@ class ChatMessage {
     required this.createdAt,
     this.attachment,
     this.options = const [],
+    this.replyTo,
   });
 
   bool get isUser => sender == ChatSender.user;
   bool get isAgent => sender == ChatSender.agent;
   bool get hasAttachment => attachment != null;
+  bool get hasReply => replyTo != null;
 
   Map<String, dynamic> toMap() {
     return {
@@ -102,6 +133,7 @@ class ChatMessage {
       'attachmentFileName': attachment?.fileName,
       'attachmentSizeBytes': attachment?.sizeBytes,
       'options': options.map((e) => e.toMap()).toList(),
+      'replyTo': replyTo?.toMap(),
     };
   }
 
@@ -141,6 +173,12 @@ class ChatMessage {
       );
     }
 
+    ChatReplyInfo? replyTo;
+    final replyMap = map['replyTo'];
+    if (replyMap is Map<String, dynamic>) {
+      replyTo = ChatReplyInfo.fromMap(replyMap);
+    }
+
     return ChatMessage(
       id: (map['id'] ?? '').toString(),
       sender: (map['sender'] ?? 'agent').toString() == 'user'
@@ -153,6 +191,7 @@ class ChatMessage {
       options: (map['options'] as List? ?? [])
           .map((e) => ChatOption.fromMap(Map<String, dynamic>.from(e)))
           .toList(),
+      replyTo: replyTo,
     );
   }
 }

@@ -89,6 +89,7 @@ class SupportChatService {
   Future<void> sendUserTextMessage({
     required String uid,
     required String text,
+    ChatReplyInfo? replyTo,
   }) async {
     final now = DateTime.now();
 
@@ -98,6 +99,7 @@ class SupportChatService {
       kind: ChatMessageKind.text,
       text: text,
       createdAt: now,
+      replyTo: replyTo,
     );
 
     final batch = _firestore.batch();

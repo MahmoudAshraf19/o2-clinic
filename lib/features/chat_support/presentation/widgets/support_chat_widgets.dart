@@ -394,6 +394,13 @@ class ChatComposer extends StatelessWidget {
                   onStop: controller.startOrStopVoiceRecording,
                   onCancel: controller.cancelPendingAttachment,
                 ),
+              if (controller.activeReply.value != null) ...[
+                const SizedBox(height: 8),
+                _ActiveReplyComposerPreview(
+                  reply: controller.activeReply.value!,
+                  onCancel: () => controller.activeReply.value = null,
+                ),
+              ],
               if (draft != null) ...[
                 const SizedBox(height: 10),
                 _AttachmentPreview(
@@ -629,14 +636,26 @@ class _UserBubble extends StatelessWidget {
                   bottomRight: Radius.circular(4),
                 ),
               ),
-              child: Text(
-                message.text,
-                style: const TextStyle(
-                  color: AppColors.pureWhite,
-                  height: 1.5,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (message.replyTo != null) ...[
+                    _ReplyQuoteCard(
+                      reply: message.replyTo!,
+                      isUser: true,
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                  Text(
+                    message.text,
+                    style: const TextStyle(
+                      color: AppColors.pureWhite,
+                      height: 1.5,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 4),
@@ -1428,4 +1447,201 @@ String formatTime(DateTime time) {
   final minute = time.minute.toString().padLeft(2, '0');
   final period = time.hour >= 12 ? 'PM' : 'AM';
   return '$hour:$minute $period';
+}
+
+class _ActiveReplyComposerPreview extends StatelessWidget {
+  final ChatReplyInfo reply;
+  final VoidCallback onCancel;
+
+  const _ActiveReplyComposerPreview({
+    required this.reply,
+    required this.onCancel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.colorFF1A2625 : AppColors.pureWhite,
+        borderRadius: BorderRadius.circular(16),
+        border: Border(
+          right: BorderSide(
+            color: AppColors.primary,
+            width: 4,
+          ),
+          left: BorderSide(
+            color: isDark ? AppColors.white12 : AppColors.colorFFF2F7F6,
+          ),
+          top: BorderSide(
+            color: isDark ? AppColors.white12 : AppColors.colorFFF2F7F6,
+          ),
+          bottom: BorderSide(
+            color: isDark ? AppColors.white12 : AppColors.colorFFF2F7F6,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          if (reply.imageUrl != null && reply.imageUrl!.isNotEmpty) ...[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                reply.imageUrl!,
+                width: 38,
+                height: 38,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+              ),
+            ),
+            const SizedBox(width: 10),
+          ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.reply_rounded,
+                      size: 14,
+                      color: AppColors.primary,
+                    ),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        reply.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                if (reply.description.isNotEmpty) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    reply.description,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 11.5,
+                      color: isDark ? AppColors.white70 : AppColors.grey700,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(width: 6),
+          InkWell(
+            onTap: onCancel,
+            borderRadius: BorderRadius.circular(100),
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: isDark ? AppColors.white12 : AppColors.grey200,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.close_rounded,
+                size: 15,
+                color: isDark ? AppColors.white70 : AppColors.grey700,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ReplyQuoteCard extends StatelessWidget {
+  final ChatReplyInfo reply;
+  final bool isUser;
+
+  const _ReplyQuoteCard({
+    required this.reply,
+    this.isUser = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: isUser
+            ? AppColors.white.withValues(alpha: 0.15)
+            : AppColors.primary.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(12),
+        border: Border(
+          right: BorderSide(
+            color: isUser ? AppColors.white : AppColors.primary,
+            width: 3.5,
+          ),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (reply.imageUrl != null && reply.imageUrl!.isNotEmpty) ...[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: Image.network(
+                reply.imageUrl!,
+                width: 34,
+                height: 34,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+              ),
+            ),
+            const SizedBox(width: 8),
+          ],
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  reply.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.w800,
+                    color: isUser ? AppColors.white : AppColors.primary,
+                  ),
+                ),
+                if (reply.description.isNotEmpty) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    reply.description,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                      color: isUser
+                          ? AppColors.white.withValues(alpha: 0.85)
+                          : AppColors.grey700,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

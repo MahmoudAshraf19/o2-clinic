@@ -3,21 +3,48 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../data/models/chat_support_model.dart';
 import '../../presentation/controllers/support_chat_controller.dart';
 import '../../data/services/chat_support_service.dart';
 import '../../presentation/widgets/support_chat_widgets.dart';
 import 'package:o2_clinic/common/widgets/common_loading_indicator.dart';
 
-class ChatRoomScreen extends StatelessWidget {
-  const ChatRoomScreen({super.key});
+class ChatRoomScreen extends StatefulWidget {
+  final String? initialText;
+  final ChatReplyInfo? initialReply;
+
+  const ChatRoomScreen({
+    super.key,
+    this.initialText,
+    this.initialReply,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    final controller = Get.put(
+  State<ChatRoomScreen> createState() => _ChatRoomScreenState();
+}
+
+class _ChatRoomScreenState extends State<ChatRoomScreen> {
+  late final SupportChatController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(
       SupportChatController(SupportChatService.instance),
       permanent: false,
     );
 
+    if (widget.initialReply != null) {
+      controller.activeReply.value = widget.initialReply;
+    }
+    if (widget.initialText != null && widget.initialText!.isNotEmpty) {
+      controller.textController.text = widget.initialText!;
+      controller.currentText.value = widget.initialText!;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       resizeToAvoidBottomInset: true,

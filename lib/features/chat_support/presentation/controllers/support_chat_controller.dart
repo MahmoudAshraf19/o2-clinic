@@ -40,6 +40,7 @@ class SupportChatController extends GetxController {
   final RxBool isSending = false.obs;
   final RxString currentText = ''.obs;
   final Rxn<PendingAttachment> pendingAttachment = Rxn<PendingAttachment>();
+  final Rxn<ChatReplyInfo> activeReply = Rxn<ChatReplyInfo>();
   final RxList<ChatMessage> uploadingItems = <ChatMessage>[].obs;
   final RxBool isCompressing = false.obs;
   final RxBool isRecording = false.obs;
@@ -126,9 +127,13 @@ class SupportChatController extends GetxController {
 
       // No pending attachment logic, media sends automatically in background
       if (text.isNotEmpty) {
-        service.sendUserTextMessage(uid: u.uid, text: text).catchError((e) {
+        final reply = activeReply.value;
+        service
+            .sendUserTextMessage(uid: u.uid, text: text, replyTo: reply)
+            .catchError((e) {
           debugPrint('Error sending message: $e');
         });
+        activeReply.value = null;
         textController.clear();
         currentText.value = '';
         _scrollToBottom();
