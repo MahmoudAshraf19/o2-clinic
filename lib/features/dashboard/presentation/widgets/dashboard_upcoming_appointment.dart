@@ -70,7 +70,14 @@ class _UpcomingDoctorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isArabic = Get.locale?.languageCode == 'ar';
+    final DashboardController controller = Get.find<DashboardController>();
+    final currentLang = Get.locale?.languageCode ?? 'ar';
+    final isArabic = currentLang == 'ar';
+    final localizedSpecialty = controller.getLocalizedSpecialty(
+      doctor.specialty,
+      currentLang,
+    );
+
     final availabilityPreview = _buildAvailabilityPreview(
       doctor.availabilityDay,
     );
@@ -207,7 +214,9 @@ class _UpcomingDoctorCard extends StatelessWidget {
                               children: [
                                 _InfoChip(
                                   icon: Icons.local_hospital_rounded,
-                                  text: doctor.specialty,
+                                  text: localizedSpecialty.isNotEmpty
+                                      ? localizedSpecialty
+                                      : doctor.specialty,
                                 ),
                                 _InfoChip(
                                   icon: Icons.work_history_rounded,

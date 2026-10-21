@@ -61,7 +61,13 @@ class _DoctorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isArabic = Get.locale?.languageCode == 'ar';
+    final DashboardController controller = Get.find<DashboardController>();
+    final currentLang = Get.locale?.languageCode ?? 'ar';
+    final isArabic = currentLang == 'ar';
+    final localizedSpecialty = controller.getLocalizedSpecialty(
+      doctor.specialty,
+      currentLang,
+    );
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -121,7 +127,9 @@ class _DoctorCard extends StatelessWidget {
                   children: [
                     _MiniInfoChip(
                       icon: Icons.workspace_premium_rounded,
-                      text: doctor.specialty,
+                      text: localizedSpecialty.isNotEmpty
+                          ? localizedSpecialty
+                          : doctor.specialty,
                     ),
                     _MiniInfoChip(
                       icon: Icons.timelapse_rounded,
@@ -133,10 +141,6 @@ class _DoctorCard extends StatelessWidget {
                       text:
                           '${AppLocalizations.of(context)!.max} ${doctor.maxBooking}',
                     ),
-                    // _MiniInfoChip(
-                    //   icon: Icons.payments_rounded,
-                    //   text: '${doctor.price.toString()} EGP',
-                    // ),
                   ],
                 ),
               ],
@@ -226,8 +230,8 @@ class _MiniInfoChip extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: Theme.of(context).brightness == Brightness.dark
-                    ? AppColors.white70
-                    : AppColors.colorFF334155,
+                ? AppColors.white70
+                : AppColors.colorFF334155,
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
               ),

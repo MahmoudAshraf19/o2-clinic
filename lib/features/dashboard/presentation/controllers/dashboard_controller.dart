@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../../../../common/models/fs_doctor_model.dart';
 import '../../../doctors/data/services/doctors_firestore_service.dart';
+import '../../../services/data/models/fs_specialized_service_model.dart';
+import '../../../services/data/services/fs_specialized_cache.dart';
 import '../../data/models/dashboard_health_chip_model.dart';
 import '../../data/models/dashboard_promo_model.dart';
 import '../../data/models/dashboard_quick_action_model.dart';
@@ -30,6 +32,9 @@ class DashboardController extends GetxController {
   final RxList<DashboardHealthChipModel> healthChips =
       <DashboardHealthChipModel>[].obs;
 
+  final RxList<SpecializedServiceModel> specializedServices =
+      <SpecializedServiceModel>[].obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -56,16 +61,44 @@ class DashboardController extends GetxController {
     try {
       await loadLocalStaticData();
 
-      final topDoctorsResult = await _doctorsService.getTopRatedDoctors();
-      topDoctors.assignAll(topDoctorsResult);
+      final results = await Future.wait([
+        _doctorsService.getTopRatedDoctors(),
+        _doctorsService.getTheTopDoctors(),
+        SpecializedCache.getData(),
+      ]);
 
-      final upcomingDoctorsResult = await _doctorsService.getTheTopDoctors();
-      upcomingDoctors.assignAll(upcomingDoctorsResult);
+      topDoctors.assignAll(results[0] as List<DoctorModel>);
+      upcomingDoctors.assignAll(results[1] as List<DoctorModel>);
+      specializedServices.assignAll(results[2] as List<SpecializedServiceModel>);
     } catch (e) {
       topDoctors.clear();
       upcomingDoctors.clear();
+      specializedServices.clear();
     } finally {
       isLoading.value = false;
     }
+  }
+
+  String getLocalizedSpecialty(String specialtyId, String langCode) {
+    if (specialtyId.trim().isEmpty) return '';
+
+    final normalizedTarget = specialtyId
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z0-9]'), '');
+
+    for (final service in specializedServices) {
+      final normalizedId = service.id
+          .toLowerCase()
+          .replaceAll(RegExp(r'[^a-z0-9]'), '');
+      final normalizedEn = service.nameEn
+          .toLowerCase()
+          .replaceAll(RegExp(r'[^a-z0-9]'), '');
+
+      if (normalizedId == normalizedTarget || normalizedEn == normalizedTarget) {
+        return service.getLocalizedName(langCode);
+      }
+    }
+
+    return specialtyId;
   }
 }
