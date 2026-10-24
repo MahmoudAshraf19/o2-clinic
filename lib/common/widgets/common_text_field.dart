@@ -194,6 +194,14 @@ class _CommonTextFieldState extends State<CommonTextField> {
   }
 
   @override
+  void didUpdateWidget(covariant CommonTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.obscureText != widget.obscureText) {
+      _obscureText = widget.obscureText;
+    }
+  }
+
+  @override
   void dispose() {
     if (widget.focusNode == null) {
       _focusNode.removeListener(_onFocusChange);

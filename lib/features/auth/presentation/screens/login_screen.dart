@@ -120,23 +120,6 @@ class LoginScreen extends GetView<LoginController> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
-
-                  // Forgot Password
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        l10n.forgotPassword,
-                        style: GoogleFonts.cairo(
-                          color: AppColors.vibrantCyan,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 24),
 
                   // Log In Button

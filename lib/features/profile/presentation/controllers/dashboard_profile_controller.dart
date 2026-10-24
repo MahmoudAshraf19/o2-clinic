@@ -147,4 +147,47 @@ class DashboardProfileController extends GetxController {
       CommonSnackbar.showError(title: 'Error', message: 'Could not sign out');
     }
   }
+
+  Future<void> deleteAccount() async {
+    final uid = _resolveUid();
+    if (uid == null || uid.isEmpty) return;
+
+    try {
+      isLoading.value = true;
+      final now = DateTime.now();
+      final dateStr = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+
+      await service.updateProfile(
+        uid: uid,
+        data: {
+          'isDeleted': true,
+          'status': 'deleted',
+          'deletedAt': now.toIso8601String(),
+          'deletedDateFormatted': dateStr,
+        },
+      );
+
+      await FirebaseAuth.instance.signOut();
+      service.clearCache();
+      user.value = null;
+      errorMessage.value = '';
+
+      final isAr = Get.locale?.languageCode == 'ar';
+      CommonSnackbar.showSuccess(
+        title: isAr ? 'تم بنجاح' : 'Success',
+        message: isAr ? 'تم حذف حسابك بنجاح.' : 'Your account has been deleted successfully.',
+      );
+
+      Get.offAllNamed(AppRoutes.login);
+    } catch (e) {
+      debugPrint('[PROFILE ERROR] Delete account failed -> $e');
+      final isAr = Get.locale?.languageCode == 'ar';
+      CommonSnackbar.showError(
+        title: isAr ? 'خطأ' : 'Error',
+        message: isAr ? 'تعذر حذف الحساب، حاول مرة أخرى.' : 'Could not delete account. Please try again.',
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

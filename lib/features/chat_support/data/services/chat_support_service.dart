@@ -106,7 +106,7 @@ class SupportChatService {
 
     batch.set(_messagesRef(uid).doc(message.id), message.toMap());
 
-    final chatUpdate: Map<String, dynamic> = {
+    final Map<String, dynamic> chatUpdate = {
       'uid': uid,
       'title': 'O2 Clinic',
       'avatarPath': 'assets/images/logos/logo.png',

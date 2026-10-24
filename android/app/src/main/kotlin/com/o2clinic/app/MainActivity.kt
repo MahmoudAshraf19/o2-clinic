@@ -1,5 +1,5 @@
-package com.example.o2_clinic
-
+package com.o2clinic.app
+ 
 import io.flutter.embedding.android.FlutterActivity
-
+ 
 class MainActivity : FlutterActivity()

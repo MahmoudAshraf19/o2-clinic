@@ -48,30 +48,31 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDNWiIinvmgGdO6Co7DLeP_azFJIAeqxIw',
-    appId: '1:640506659754:web:90d3dbf1ced5e359c3a1d3',
+    appId: '1:640506659754:web:2a10fb6e29813181c3a1d3',
     messagingSenderId: '640506659754',
     projectId: 'o2-clinic-a5631',
     authDomain: 'o2-clinic-a5631.firebaseapp.com',
+    databaseURL: 'https://o2-clinic-a5631-default-rtdb.firebaseio.com',
     storageBucket: 'o2-clinic-a5631.firebasestorage.app',
-    measurementId: 'G-C9D68V8G7Q',
+    measurementId: 'G-YSL8NM0WRG',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA2gYwQSCAQ2yARLnTcA0AnYb_dauzYgh0',
-    appId: '1:640506659754:android:9f5cddf9d58fac19c3a1d3',
+    appId: '1:640506659754:android:2d85b78f0ef57e94c3a1d3',
     messagingSenderId: '640506659754',
     projectId: 'o2-clinic-a5631',
+    databaseURL: 'https://o2-clinic-a5631-default-rtdb.firebaseio.com',
     storageBucket: 'o2-clinic-a5631.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBChXwEWz2zQ_4IO_lVOAhoGwUVecWCehI',
     appId: '1:640506659754:ios:05ff9d4d10c17aa3c3a1d3',
     messagingSenderId: '640506659754',
     projectId: 'o2-clinic-a5631',
+    databaseURL: 'https://o2-clinic-a5631-default-rtdb.firebaseio.com',
     storageBucket: 'o2-clinic-a5631.firebasestorage.app',
-    iosClientId:
-        '640506659754-ui3uhepeiq52hfva7gn3g8sj4c9ukncg.apps.googleusercontent.com',
+    iosClientId: '640506659754-ui3uhepeiq52hfva7gn3g8sj4c9ukncg.apps.googleusercontent.com',
     iosBundleId: 'com.example.o2Clinic',
   );
 }

@@ -150,6 +150,30 @@ class DashboardProfileScreen extends StatelessWidget {
                                       ),
                                     ),
                                 ),
+                                if (!controller.isGuest) ...[
+                                  const SizedBox(height: 12),
+                                  Align(
+                                    alignment: isDesktop
+                                        ? Alignment.centerLeft
+                                        : Alignment.center,
+                                    child: TextButton.icon(
+                                      onPressed: () => _showDeleteAccountDialog(context, controller),
+                                      icon: const Icon(Icons.delete_outline, size: 18, color: AppColors.error),
+                                      label: Text(
+                                        AppLocalizations.of(context)!.deleteMyAccount,
+                                        style: const TextStyle(
+                                          color: AppColors.error,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      style: TextButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                        visualDensity: VisualDensity.compact,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                                 SizedBox(height: isDesktop ? 8 : 18),
                               ],
                             ],
@@ -386,4 +410,63 @@ class _ErrorBanner extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showDeleteAccountDialog(BuildContext context, DashboardProfileController controller) {
+  showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      title: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: AppColors.error.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 24),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              AppLocalizations.of(context)!.deleteAccountDialogTitle,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+      content: Text(
+        AppLocalizations.of(context)!.deleteAccountDialogDesc,
+        style: const TextStyle(fontSize: 14, height: 1.5, color: Colors.grey),
+      ),
+      actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(ctx).pop(),
+          child: Text(
+            AppLocalizations.of(context)!.cancel,
+            style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.grey),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(ctx).pop();
+            controller.deleteAccount();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.error,
+            foregroundColor: Colors.white,
+            elevation: 0,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          ),
+          child: Text(
+            AppLocalizations.of(context)!.confirmDelete,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    ),
+  );
 }

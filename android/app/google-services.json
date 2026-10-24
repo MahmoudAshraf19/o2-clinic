@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "640506659754",
+    "firebase_url": "https://o2-clinic-a5631-default-rtdb.firebaseio.com",
     "project_id": "o2-clinic-a5631",
     "storage_bucket": "o2-clinic-a5631.firebasestorage.app"
   },
@@ -10,6 +11,42 @@
         "mobilesdk_app_id": "1:640506659754:android:9f5cddf9d58fac19c3a1d3",
         "android_client_info": {
           "package_name": "com.example.o2_clinic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640506659754-anlmt8d3vcohsq8fdkd60cu9eujn7rcd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2gYwQSCAQ2yARLnTcA0AnYb_dauzYgh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640506659754-anlmt8d3vcohsq8fdkd60cu9eujn7rcd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "640506659754-ui3uhepeiq52hfva7gn3g8sj4c9ukncg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.o2Clinic"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640506659754:android:2d85b78f0ef57e94c3a1d3",
+        "android_client_info": {
+          "package_name": "com.o2clinic.app"
         }
       },
       "oauth_client": [

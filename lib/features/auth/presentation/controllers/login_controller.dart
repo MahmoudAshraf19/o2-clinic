@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:o2_clinic/common/widgets/common_snackbar.dart';
 import 'package:get/get.dart';
@@ -42,11 +43,40 @@ class LoginController extends GetxController {
       if (userCred.user != null) {
         final userData = await UserFirestoreService.instance.getUser(
           userCred.user!.uid,
+          forceRefresh: true,
         );
 
         if (userData == null) {
           await FirebaseAuth.instance.signOut();
           CommonSnackbar.showError(title: 'Login Failed', message: 'Email does not exist in our records.');
+          return;
+        }
+
+        if (userData['isDeleted'] == true || userData['status'] == 'deleted') {
+          await FirebaseAuth.instance.signOut();
+          String deletedDate = '';
+          if (userData['deletedAt'] != null) {
+            try {
+              if (userData['deletedAt'] is String) {
+                deletedDate = userData['deletedAt'].toString().split('T').first;
+              } else if (userData['deletedAt'] is Timestamp) {
+                final dt = (userData['deletedAt'] as Timestamp).toDate();
+                deletedDate = "${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}";
+              }
+            } catch (_) {}
+          }
+          if (deletedDate.isEmpty) {
+            deletedDate = DateTime.now().toString().split(' ').first;
+          }
+
+          final isAr = Get.locale?.languageCode == 'ar';
+          final msg = isAr
+              ? 'هذا الحساب محذوف منذ $deletedDate. إذا كان هذا عن طريق الخطأ يرجى مراجعة إدارة المركز.'
+              : 'This account was deleted on $deletedDate. If this was a mistake, please contact clinic administration.';
+          CommonSnackbar.showError(
+            title: isAr ? 'حساب محذوف' : 'Account Deleted',
+            message: msg,
+          );
           return;
         }
 

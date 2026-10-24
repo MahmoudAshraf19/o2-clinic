@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
@@ -82,10 +83,27 @@ class HtmlContentScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Html(
               data: htmlData,
+              onLinkTap: (url, attributes, element) async {
+                if (url != null && url.isNotEmpty) {
+                  final uri = Uri.tryParse(url.trim());
+                  if (uri != null) {
+                    try {
+                      await launchUrl(uri, mode: LaunchMode.externalApplication);
+                    } catch (e) {
+                      debugPrint('Error launching url $url: $e');
+                    }
+                  }
+                }
+              },
               style: {
                 "body": Style(
                   color: AppColors.textPrimary,
                   fontSize: FontSize(14.0),
+                ),
+                "a": Style(
+                  color: AppColors.primary,
+                  textDecoration: TextDecoration.underline,
+                  fontWeight: FontWeight.w600,
                 ),
               },
             ),
